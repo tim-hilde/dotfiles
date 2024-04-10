@@ -1,0 +1,119 @@
+{
+  "title": "MacroPad",
+  "rules": [
+    {
+      "description": "1 to shift, cmd + a & shift, cmd, m",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "1"
+          },
+          "to": [
+            {
+              "key_code": "a",
+              "modifiers": [
+                "command",
+                "left_shift"
+              ]
+            },
+            {
+              "key_code": "m",
+              "modifiers": [
+                "command",
+                "left_shift"
+              ]
+            }
+          ],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [
+                {
+                  "product_id": 8217,
+                  "is_keyboard": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "2 to shift, cmd + a & shift, cmd, m",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "2"
+          },
+          "to": [
+            {
+              "key_code": "a",
+              "modifiers": [
+                "command",
+                "left_shift"
+              ]
+            },
+            {
+              "key_code": "m",
+              "modifiers": [
+                "command",
+                "left_shift"
+              ]
+            }
+          ],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [
+                {
+                  "product_id": 8217,
+                  "is_keyboard": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "3 to shift, cmd + a & shift, cmd, m",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "3"
+          },
+          "to": [
+            {
+              "key_code": "a",
+              "modifiers": [
+                "command",
+                "left_shift"
+              ]
+            },
+            {
+              "key_code": "m",
+              "modifiers": [
+                "command",
+                "left_shift"
+              ]
+            }
+          ],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [
+                {
+                  "product_id": 8217,
+                  "is_keyboard": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

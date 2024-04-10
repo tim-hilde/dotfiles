@@ -1,0 +1,317 @@
+title: 🔺 App Switcher
+homepage: https://github.com/chrisgrieser/dotfiles/karabiner
+rules:
+  - description: '🔺 L-Ctrl (Non-Apple) / fn (Apple)'
+    manipulators:
+      - type: basic
+        description: Non-Apple Keyboard
+        from:
+          key_code: left_control
+        to:
+          - key_code: left_control
+        parameters:
+          basic.to_if_alone_timeout_milliseconds: 600
+        conditions:
+          - type: variable_unless
+            name: LEADER_ACTIVE
+            value: true
+          - type: device_unless
+            identifiers:
+              - product_id: 641
+                is_keyboard: true
+        to_if_alone:
+          - key_code: left_control
+          - set_variable:
+              name: LEADER_ACTIVE
+              value: true
+          - set_notification_message:
+              id: leader-notice
+              text: 🔺 Leader
+      - type: basic
+        description: Apple Keyboard
+        from:
+          key_code: fn
+        to:
+          - key_code: fn
+        conditions:
+          - type: variable_unless
+            name: LEADER_ACTIVE
+            value: true
+          - type: device_if
+            identifiers:
+              - product_id: 641
+                is_keyboard: true
+        parameters:
+          basic.to_if_alone_timeout_milliseconds: 600
+        to_if_alone:
+          - key_code: fn
+          - set_variable:
+              name: LEADER_ACTIVE
+              value: true
+          - set_notification_message:
+              id: leader-notice
+              text: 🔺 Leader
+  - description: 🔺 App Switcher Actions
+    manipulators:
+      # Cancel (Esc/Hyper)
+      - type: basic
+        description: Leader Cancel
+        from:
+          key_code: escape
+        conditions:
+          - type: variable_if
+            name: LEADER_ACTIVE
+            value: true
+        to:
+          - set_variable:
+              name: LEADER_ACTIVE
+              value: false
+          - set_notification_message:
+              id: leader-notice
+              text: ""
+      - type: basic
+        description: 'Hyper (Esc): Leader Cancel'
+        from:
+          key_code: caps_lock
+        conditions:
+          - type: variable_if
+            name: LEADER_ACTIVE
+            value: true
+        to_if_alone:
+          - set_variable:
+              name: LEADER_ACTIVE
+              value: false
+          - set_notification_message:
+              id: leader-notice
+              text: ""
+      # [.] Emoji Inserter
+      - type: basic
+        from:
+          key_code: period
+        to:
+          - key_code: spacebar
+            modifiers:
+              - right_control
+              - right_command
+          - set_variable:
+              name: LEADER_ACTIVE
+              value: false
+          - set_notification_message:
+              id: leader-notice
+              text: ""
+        conditions:
+          - type: variable_if
+            name: LEADER_ACTIVE
+            value: true
+      # [o] Obsidian
+      - type: basic
+        from:
+          key_code: o
+        conditions:
+          - type: variable_if
+            name: LEADER_ACTIVE
+            value: true
+        to:
+          - shell_command: open -a 'Obsidian'
+          - set_variable:
+              name: LEADER_ACTIVE
+              value: false
+          - set_notification_message:
+              id: leader-notice
+              text: ""
+      # [S]afari
+      - type: basic
+        from:
+          key_code: s
+        conditions:
+          - type: variable_if
+            name: LEADER_ACTIVE
+            value: true
+        to:
+          - shell_command: open -a 'Safari'
+          - set_variable:
+              name: LEADER_ACTIVE
+              value: false
+          - set_notification_message:
+              id: leader-notice
+      # [P]DF Expert
+      - type: basic
+        from:
+          key_code: p
+        conditions:
+          - type: variable_if
+            name: LEADER_ACTIVE
+            value: true
+        to:
+          - shell_command: open -a 'PDF Expert'
+          - set_variable:
+              name: LEADER_ACTIVE
+              value: false
+          - set_notification_message:
+              id: leader-notice
+              text: ""
+      # [Z]otero
+      - type: basic
+        from:
+          key_code: y
+        conditions:
+          - type: variable_if
+            name: LEADER_ACTIVE
+            value: true
+        to:
+          - shell_command: open -a 'Zotero'
+          - set_variable:
+              name: LEADER_ACTIVE
+              value: false
+          - set_notification_message:
+              id: leader-notice
+      # [K]alender
+      - type: basic
+        from:
+          key_code: k
+        conditions:
+          - type: variable_if
+            name: LEADER_ACTIVE
+            value: true
+        to:
+          - shell_command: open -a 'Calendar'
+          - set_variable:
+              name: LEADER_ACTIVE
+              value: false
+          - set_notification_message:
+              id: leader-notice
+      # [M]ail
+      - type: basic
+        from:
+          key_code: m
+        conditions:
+          - type: variable_if
+            name: LEADER_ACTIVE
+            value: true
+        to:
+          - shell_command: open -a 'Mail'
+          - set_variable:
+              name: LEADER_ACTIVE
+              value: false
+          - set_notification_message:
+              id: leader-notice
+      # [A]lfred Preferences
+      - type: basic
+        from:
+          key_code: a
+        conditions:
+          - type: variable_if
+            name: LEADER_ACTIVE
+            value: true
+        to:
+          - shell_command: open -a 'Alfred Preferences'
+          - set_variable:
+              name: LEADER_ACTIVE
+              value: false
+          - set_notification_message:
+              id: leader-notice
+      # [W]ebEx
+      - type: basic
+        from:
+          key_code: w
+        conditions:
+          - type: variable_if
+            name: LEADER_ACTIVE
+            value: true
+        to:
+          - shell_command: open -a 'WebEx'
+          - set_variable:
+              name: LEADER_ACTIVE
+              value: false
+          - set_notification_message:
+              id: leader-notice
+      # i[T]erm
+      - type: basic
+        from:
+          key_code: t
+        conditions:
+          - type: variable_if
+            name: LEADER_ACTIVE
+            value: true
+        to:
+          - shell_command: open -a 'iTerm'
+          - set_variable:
+              name: LEADER_ACTIVE
+              value: false
+          - set_notification_message:
+              id: leader-notice
+      # [,]Systemeinstellungen
+      - type: basic
+        from:
+          key_code: comma
+        conditions:
+          - type: variable_if
+            name: LEADER_ACTIVE
+            value: true
+        to:
+          - shell_command: open -a 'System Preferences'
+          - set_variable:
+              name: LEADER_ACTIVE
+              value: false
+          - set_notification_message:
+              id: leader-notice
+      # [F]inder
+      - type: basic
+        from:
+          key_code: f
+        conditions:
+          - type: variable_if
+            name: LEADER_ACTIVE
+            value: true
+        to:
+          - shell_command: open -a 'Finder'
+          - set_variable:
+              name: LEADER_ACTIVE
+              value: false
+          - set_notification_message:
+              id: leader-notice
+      # [C]lickUp
+      - type: basic
+        from:
+          key_code: c
+        conditions:
+          - type: variable_if
+            name: LEADER_ACTIVE
+            value: true
+        to:
+          - shell_command: open -a 'ClickUp'
+          - set_variable:
+              name: LEADER_ACTIVE
+              value: false
+          - set_notification_message:
+              id: leader-notice
+      # S[u]blime 
+      - type: basic
+        from:
+          key_code: u
+        conditions:
+          - type: variable_if
+            name: LEADER_ACTIVE
+            value: true
+        to:
+          - shell_command: open -a 'Sublime Text'
+          - set_variable:
+              name: LEADER_ACTIVE
+              value: false
+          - set_notification_message:
+              id: leader-notice
+      # [V]S Code
+      - type: basic
+        from:
+          key_code: v
+        conditions:
+          - type: variable_if
+            name: LEADER_ACTIVE
+            value: true
+        to:
+          - shell_command: open -a 'Visual Studio Code'
+          - set_variable:
+              name: LEADER_ACTIVE
+              value: false
+          - set_notification_message:
+              id: leader-notice

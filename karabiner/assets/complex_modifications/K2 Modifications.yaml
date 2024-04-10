@@ -1,0 +1,12 @@
+title: K2 Modifications
+rules: 
+  - description: "Post right_option if right_control is pressed alone."
+    manipulators:
+      - type: basic
+        from: 
+          key_code: right_control
+          modifiers:
+              optional:
+                - any
+        to: 
+          - key_code: right_option

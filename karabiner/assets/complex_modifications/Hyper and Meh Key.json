@@ -1,0 +1,152 @@
+{
+  "title": "⇪ Hyper and ↹ Meh Key",
+  "homepage": "https://github.com/chrisgrieser/dotfiles/karabiner",
+  "rules": [
+    {
+      "description": "↹ Tab →  Meh",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "tab"
+          },
+          "to_if_alone": [
+            {
+              "key_code": "tab"
+            }
+          ],
+          "to": [
+            {
+              "key_code": "right_shift",
+              "modifiers": [
+                "right_control",
+                "right_option"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "⇪ Capslock → Hyper/Esc",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "caps_lock"
+          },
+          "to_if_alone": [
+            {
+              "key_code": "escape"
+            }
+          ],
+          "to": [
+            {
+              "key_code": "right_shift",
+              "modifiers": [
+                "command",
+                "control",
+                "option"
+              ]
+            }
+          ],
+          "conditions": [
+            {
+              "type": "variable_unless",
+              "name": "LEADER_ACTIVE",
+              "value": true
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "caps_lock",
+            "modifiers": {
+              "mandatory": [
+                "left_shift"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "left_shift",
+              "modifiers": [
+                "command",
+                "right_shift",
+                "control",
+                "option"
+              ]
+            }
+          ],
+          "conditions": [
+            {
+              "type": "variable_unless",
+              "name": "LEADER_ACTIVE",
+              "value": true
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "comma",
+            "modifiers": {
+              "mandatory": [
+                "command",
+                "shift",
+                "option",
+                "control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "vk_none"
+            }
+          ],
+          "type": "basic"
+        }
+      ]
+    },
+    {
+      "description": "Hyper + Esc → Sleep",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "escape",
+            "modifiers": {
+              "mandatory": [
+                "command",
+                "right_shift",
+                "control",
+                "option"
+              ]
+            }
+          },
+          "to": [
+            {
+              "shell_command": "osascript -e 'tell application \"System Events\" to sleep'"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "f24/lightbulb → Sleep",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "f24"
+          },
+          "to": [
+            {
+              "shell_command": "osascript -e 'tell application \"System Events\" to keystroke \"q\" using {control down, command down}'"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

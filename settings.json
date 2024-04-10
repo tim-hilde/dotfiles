@@ -91,7 +91,7 @@
     "workbench.colorCustomizations": {
 
     },
-    "workbench.colorTheme": "GitHub Dark",
+    "workbench.colorTheme": "GitHub Light Default",
     "editor.inlineSuggest.showToolbar": "always",
     "jupyter.interactiveWindow.textEditor.executeSelection": true,
     "woke.enable": false,
@@ -178,5 +178,7 @@
     "indentRainbow.indicatorStyle": "light",
     "github.copilot.editor.enableCodeActions": false,
     "github.copilot.chat.useProjectTemplates": false,
+    "workbench.sideBar.location": "right",
+    "terminal.external.osxExec": "iTerm.app",
 
 }

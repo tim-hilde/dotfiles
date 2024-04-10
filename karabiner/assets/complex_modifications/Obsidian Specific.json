@@ -1,0 +1,93 @@
+{
+  "title": "Obsidian move around",
+  "rules": [
+    {
+      "description": "Page down to option+command+left arrow",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "page_down"
+          },
+          "to": [
+            {
+              "key_code": "left_arrow",
+              "modifiers": [
+                "left_alt",
+                "left_gui"
+              ]
+            }
+          ],
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "md.obsidian"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Page up to option+command+right arrow",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "page_up"
+          },
+          "to": [
+            {
+              "key_code": "right_arrow",
+              "modifiers": [
+                "left_alt",
+                "left_gui"
+              ]
+            }
+          ],
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "md.obsidian"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "fn Enter to ctrl Enter",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "return_or_enter",
+            "modifiers": {
+              "mandatory": [
+                "fn"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "return_or_enter",
+              "modifiers": [
+                "left_control"
+              ]
+            }
+          ],
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "md.obsidian"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

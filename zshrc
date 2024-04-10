@@ -4,7 +4,7 @@ ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="robbyrussell"
 
 # Useful oh-my-zsh plugins for Le Wagon bootcamps
-plugins=(git gitfast common-aliases zsh-syntax-highlighting history-substring-search python)
+plugins=(git gitfast common-aliases copypath dirhistory jsontools last-working-dir zsh-syntax-highlighting history-substring-search python)
 
 # (macOS-only) Prevent Homebrew from reporting - https://github.com/Homebrew/brew/blob/master/docs/Analytics.md
 export HOMEBREW_NO_ANALYTICS=1
