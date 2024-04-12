@@ -10,5 +10,9 @@
         "command": "python.execInTerminal",
         "when": "editorTextFocus && isWorkspaceTrusted && !findInputFocussed && !notebookEditorFocused && !replaceInputFocussed && editorLangId == 'python'"
     },
-
+    {
+        "key": "cmd+shift+v",
+        "command": "pasteAndIndent.action",
+        "when": "editorTextFocus && !editorReadonly"
+    }
 ]

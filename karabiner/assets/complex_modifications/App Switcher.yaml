@@ -270,21 +270,6 @@ rules:
               value: false
           - set_notification_message:
               id: leader-notice
-      # [C]lickUp
-      - type: basic
-        from:
-          key_code: c
-        conditions:
-          - type: variable_if
-            name: LEADER_ACTIVE
-            value: true
-        to:
-          - shell_command: open -a 'ClickUp'
-          - set_variable:
-              name: LEADER_ACTIVE
-              value: false
-          - set_notification_message:
-              id: leader-notice
       # S[u]blime 
       - type: basic
         from:
@@ -310,6 +295,21 @@ rules:
             value: true
         to:
           - shell_command: open -a 'Visual Studio Code'
+          - set_variable:
+              name: LEADER_ACTIVE
+              value: false
+          - set_notification_message:
+              id: leader-notice
+      # S[L]ack
+      - type: basic
+        from:
+          key_code: l
+        conditions:
+          - type: variable_if
+            name: LEADER_ACTIVE
+            value: true
+        to:
+          - shell_command: open -a 'Slack'
           - set_variable:
               name: LEADER_ACTIVE
               value: false

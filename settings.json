@@ -11,7 +11,7 @@
     "git.enableSmartCommit": true,
     "git.confirmSync": false,
     "git.autofetch": true,
-    "python.defaultInterpreterPath": "~/.pyenv/shims/python",
+    "python.defaultInterpreterPath": "/Users/tim/.pyenv/versions/3.10.6/envs/lewagon",
     "editor.fontFamily": "'Monaspace Neon', monospace",
     "terminal.integrated.fontFamily": "'Monaspace Neon', monospace",
     "editor.minimap.enabled": false,
@@ -91,7 +91,7 @@
     "workbench.colorCustomizations": {
 
     },
-    "workbench.colorTheme": "GitHub Light Default",
+    "workbench.colorTheme": "GitHub Dark",
     "editor.inlineSuggest.showToolbar": "always",
     "jupyter.interactiveWindow.textEditor.executeSelection": true,
     "woke.enable": false,
