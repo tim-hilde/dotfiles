@@ -13,7 +13,7 @@
     "git.autofetch": true,
     "python.defaultInterpreterPath": "/Users/tim/.pyenv/versions/3.10.6/envs/lewagon",
     "editor.fontFamily": "'Monaspace Neon', monospace",
-    "terminal.integrated.fontFamily": "'Monaspace Neon', monospace",
+    "terminal.integrated.fontFamily": "'MonaspiceNe Nerd Font Mono', monospace",
     "editor.minimap.enabled": false,
     "editor.fontLigatures": "'calt', 'liga', 'dlig', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08'",
     "editor.renderControlCharacters": true,
@@ -91,7 +91,7 @@
     "workbench.colorCustomizations": {
 
     },
-    "workbench.colorTheme": "GitHub Dark",
+    "workbench.colorTheme": "GitHub Light Default",
     "editor.inlineSuggest.showToolbar": "always",
     "jupyter.interactiveWindow.textEditor.executeSelection": true,
     "woke.enable": false,

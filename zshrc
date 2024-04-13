@@ -3,8 +3,23 @@ ZSH=$HOME/.oh-my-zsh
 # You can change the theme with another one from https://github.com/robbyrussell/oh-my-zsh/wiki/themes
 ZSH_THEME="robbyrussell"
 
+ZSH_CUSTOM=$HOME/code/tim-hilde/dotfiles/oh-my-zsh
+
 # Useful oh-my-zsh plugins for Le Wagon bootcamps
-plugins=(git gitfast common-aliases copypath dirhistory jsontools last-working-dir zsh-syntax-highlighting history-substring-search python)
+plugins=(
+    zsh-bat
+    common-aliases
+    copypath
+    dirhistory
+    git
+    gitfast
+    history-substring-search
+    jsontools
+    last-working-dir
+    python
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+)
 
 # (macOS-only) Prevent Homebrew from reporting - https://github.com/Homebrew/brew/blob/master/docs/Analytics.md
 export HOMEBREW_NO_ANALYTICS=1
