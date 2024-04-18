@@ -60,7 +60,7 @@
 [init]
   defaultBranch = main
 [user]
-	email = tim.hildebrandt@me.com
+	email = 44113468+tim-hilde@users.noreply.github.com
 	name = Tim Hildebrandt
 [filter "lfs"]
 	required = true

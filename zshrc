@@ -101,3 +101,6 @@ export GOOGLE_APPLICATION_CREDENTIALS=/Users/tim/code/tim-hilde/gcp/le-wagon-419
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# zoxide
+eval "$(zoxide init zsh)"
