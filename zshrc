@@ -103,4 +103,11 @@ export GOOGLE_APPLICATION_CREDENTIALS=/Users/tim/code/tim-hilde/gcp/le-wagon-419
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # zoxide
+autoload -U compinit; compinit
 eval "$(zoxide init zsh)"
+
+# fzf
+eval "$(fzf --zsh)"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_OPTS=' --preview="bat --color=always {}" --preview-window=right:60%:wrap'

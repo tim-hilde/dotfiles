@@ -11,5 +11,8 @@ alias stt="echo 'Launching VS Code instead of Sublime Text... (cf ~/.aliases)' &
 # eza
 alias ls=eza
 
+## tree
+alias tree="eza --tree"
+
 # zoxide
 alias cd=z
