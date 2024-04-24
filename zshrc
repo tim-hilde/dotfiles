@@ -10,7 +10,7 @@ ZSH=$HOME/.oh-my-zsh
 # You can change the theme with another one from https://github.com/robbyrussell/oh-my-zsh/wiki/themes
 ZSH_THEME="powerlevel10k/powerlevel10k" #"robbyrussell"
 
-# Useful oh-my-zsh plugins for Le Wagon bootcamps
+#oh-my-zsh plugins
 plugins=(
     zsh-bat
     common-aliases
@@ -21,8 +21,10 @@ plugins=(
     history-substring-search
     jsontools
     last-working-dir
+    pyenv
     python
     you-should-use
+    virtualenv
     #zsh-autosuggestions
     zsh-syntax-highlighting
 )
@@ -111,3 +113,6 @@ eval "$(fzf --zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_OPTS=' --preview="bat --color=always {}" --preview-window=right:60%:wrap'
+
+# Export python Path for decision science project
+export PYTHONPATH="/Users/tim/code/tim-hilde/04-Decision-Science/01-Project-Setup/data-context-and-setup:$PYTHONPATH"

@@ -113,7 +113,6 @@
         "**/*.scss",
         "**/*.ipynb"
     ],
-    "python.languageServer": "Pylance",
     "python.autoComplete.extraPaths": [
         "/usr/local/bin/python3",
         "/Users/tim/.vscode/extensions/continue.continue-0.2.0-darwin-arm64",
