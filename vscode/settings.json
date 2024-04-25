@@ -65,7 +65,6 @@
     "workbench.startupEditor": "none",
     "editor.parameterHints.enabled": false,
     "jupyter.themeMatplotlibPlots": true,
-    "python.analysis.autoImportCompletions": true,
     "python.pylanceLspNotebooksEnabled": true,
     "editor.quickSuggestions": {
         "strings": "inline"
@@ -180,6 +179,6 @@
     "workbench.sideBar.location": "right",
     "terminal.external.osxExec": "iTerm.app",
     "editor.fontVariations": false,
-    "editor.quickSuggestionsDelay": 1,
+    "editor.acceptSuggestionOnEnter": "off",
 
 }
