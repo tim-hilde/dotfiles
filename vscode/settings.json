@@ -18,11 +18,9 @@
     "editor.fontLigatures": true,
     "editor.renderControlCharacters": true,
     "editor.showFoldingControls": "always",
-    "editor.snippetSuggestions": "top",
     "emmet.includeLanguages": {
         "erb": "html"
     },
-    "emmet.showSuggestionsAsSnippets": true,
     "emmet.triggerExpansionOnTab": true,
     "explorer.confirmDelete": false,
     "files.exclude": {
@@ -84,13 +82,13 @@
     "notebook.lineNumbers": "on",
     "explorer.confirmDragAndDrop": false,
    // "prettier.useTabs": true,
-    "ruff.showNotifications": "onWarning",
+    "ruff.showNotifications": "onError",
     "editor.defaultFormatter": "charliermarsh.ruff",
     "RainbowBrackets.depreciation-notice": false,
     "workbench.colorCustomizations": {
 
     },
-    "workbench.colorTheme": "GitHub Light Default",
+    "workbench.colorTheme": "GitHub Dark",
     "editor.inlineSuggest.showToolbar": "always",
     "jupyter.interactiveWindow.textEditor.executeSelection": true,
     "woke.enable": false,
@@ -179,6 +177,6 @@
     "workbench.sideBar.location": "right",
     "terminal.external.osxExec": "iTerm.app",
     "editor.fontVariations": false,
-    "editor.acceptSuggestionOnEnter": "off",
+    "editor.acceptSuggestionOnEnter": "smart",
 
 }

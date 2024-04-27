@@ -98,6 +98,10 @@ symlink $PWD/iterm2 $HOME/.config/iterm2
 backup $HOME/.config/karabiner
 symlink $PWD/karabiner $HOME/.config/karabiner
 
+# Ruff
+backup $HOME/ruff
+symlink $PWD/ruff $HOME/Library/Application Support/ruff
+
 # Refresh the current terminal with the newly installed configuration
 exec zsh
 
