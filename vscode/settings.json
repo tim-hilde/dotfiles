@@ -178,5 +178,9 @@
     "terminal.external.osxExec": "iTerm.app",
     "editor.fontVariations": false,
     "editor.acceptSuggestionOnEnter": "smart",
+    "editor.snippetSuggestions": "top",
+    "emmet.showSuggestionsAsSnippets": true,
+    "jupyter.executionAnalysis.enabled": true,
+    "python.languageServer": "Pylance",
 
 }

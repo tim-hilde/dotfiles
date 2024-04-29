@@ -14,5 +14,14 @@
         "key": "cmd+shift+v",
         "command": "pasteAndIndent.action",
         "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "shift+cmd+space",
+        "command": "-editor.action.triggerParameterHints",
+        "when": "editorHasSignatureHelpProvider && editorTextFocus"
+    },
+    {
+        "key": "shift+cmd+space",
+        "command": "editor.action.showDefinitionPreviewHover"
     }
 ]
