@@ -88,7 +88,7 @@
     "workbench.colorCustomizations": {
 
     },
-    "workbench.colorTheme": "GitHub Dark",
+    "workbench.colorTheme": "GitHub Light Default",
     "editor.inlineSuggest.showToolbar": "always",
     "jupyter.interactiveWindow.textEditor.executeSelection": true,
     "woke.enable": false,
