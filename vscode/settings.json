@@ -182,5 +182,6 @@
     "emmet.showSuggestionsAsSnippets": true,
     "jupyter.executionAnalysis.enabled": true,
     "python.languageServer": "Pylance",
+    "python.analysis.autoFormatStrings": true,
 
 }

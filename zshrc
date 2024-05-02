@@ -116,3 +116,6 @@ export FZF_DEFAULT_OPTS=' --preview="bat --color=always {}" --preview-window=rig
 
 # Export python Path for decision science project
 export PYTHONPATH="/Users/tim/code/tim-hilde/04-Decision-Science/01-Project-Setup/data-context-and-setup:$PYTHONPATH"
+
+ZSH_THEME_TERM_TITLE_IDLE="%n@%m: %~"
+ZSH_THEME_TERM_TAB_TITLE_IDLE="%n@%m: %1~"

@@ -4,6 +4,8 @@
 <dict>
 	<key>AlternateMouseScroll</key>
 	<true/>
+	<key>ClickToSelectCommand</key>
+	<false/>
 	<key>CopySelection</key>
 	<false/>
 	<key>Custom Color Presets</key>
@@ -1073,6 +1075,8 @@
 	<true/>
 	<key>EnableProxyIcon</key>
 	<false/>
+	<key>EnterCopyModeAutomatically</key>
+	<true/>
 	<key>HapticFeedbackForEsc</key>
 	<false/>
 	<key>HideActivityIndicator</key>
@@ -1937,7 +1941,7 @@
 			<key>Custom Tab Title</key>
 			<string>\(currentSession.path)</string>
 			<key>Custom Window Title</key>
-			<string>\(currentTab.currentSession.path)</string>
+			<string>\(currentTab.currentSession.path[0])</string>
 			<key>Default Bookmark</key>
 			<string>No</string>
 			<key>Description</key>
@@ -2780,7 +2784,7 @@
 			<key>Thin Strokes</key>
 			<integer>0</integer>
 			<key>Title Components</key>
-			<integer>2</integer>
+			<integer>6</integer>
 			<key>Transparency</key>
 			<real>0.0</real>
 			<key>Unicode Version</key>
