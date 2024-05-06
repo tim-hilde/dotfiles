@@ -174,7 +174,6 @@
     "indentRainbow.indicatorStyle": "light",
     "github.copilot.editor.enableCodeActions": false,
     "github.copilot.chat.useProjectTemplates": false,
-    "workbench.sideBar.location": "right",
     "terminal.external.osxExec": "iTerm.app",
     "editor.fontVariations": false,
     "editor.acceptSuggestionOnEnter": "smart",
@@ -186,5 +185,6 @@
     "python.analysis.ignore": [
         "*"
     ],
+    "workbench.activityBar.location": "top",
 
 }

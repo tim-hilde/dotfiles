@@ -119,3 +119,6 @@ export PYTHONPATH="/Users/tim/code/tim-hilde/04-Decision-Science/01-Project-Setu
 
 ZSH_THEME_TERM_TITLE_IDLE="%n@%m: %~"
 ZSH_THEME_TERM_TAB_TITLE_IDLE="%n@%m: %1~"
+
+# To customize prompt, run `p10k configure` or edit ~/dotfiles/p10k.zsh.
+[[ ! -f ~/dotfiles/p10k.zsh ]] || source ~/dotfiles/p10k.zsh
