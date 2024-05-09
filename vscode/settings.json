@@ -180,6 +180,10 @@
     "editor.snippetSuggestions": "top",
     "emmet.showSuggestionsAsSnippets": true,
     "jupyter.executionAnalysis.enabled": true,
+    "jupyter.runStartupCommands": [
+        "%load_ext autoreload",
+        "%autoreload 2"
+    ],
     "python.languageServer": "Pylance",
     "python.analysis.autoFormatStrings": true,
     "python.analysis.ignore": [
