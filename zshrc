@@ -10,6 +10,15 @@ ZSH=$HOME/.oh-my-zsh
 # You can change the theme with another one from https://github.com/robbyrussell/oh-my-zsh/wiki/themes
 ZSH_THEME="powerlevel10k/powerlevel10k" #"robbyrussell"
 
+
+# load pyenv plugin from oh-myzsh
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
+
+ZSH_PYENV_QUIET=0
+ZSH_PYENV_VIRTUALENV=1
+
 #oh-my-zsh plugins
 plugins=(
     zsh-bat
@@ -45,8 +54,8 @@ export PATH="${HOME}/.rbenv/bin:${PATH}" # Needed for Linux/WSL
 type -a rbenv > /dev/null && eval "$(rbenv init -)"
 
 # Load pyenv (to manage your Python versions)
-export PYENV_VIRTUALENV_DISABLE_PROMPT=0
-type -a pyenv > /dev/null && eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init - 2> /dev/null)"
+# export PYENV_VIRTUALENV_DISABLE_PROMPT=0
+# type -a pyenv > /dev/null && eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init - 2> /dev/null)"
 
 # Load nvm (to manage your node versions)
 export NVM_DIR="$HOME/.nvm"
