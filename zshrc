@@ -45,8 +45,8 @@ export PATH="${HOME}/.rbenv/bin:${PATH}" # Needed for Linux/WSL
 type -a rbenv > /dev/null && eval "$(rbenv init -)"
 
 # Load pyenv (to manage your Python versions)
-export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-type -a pyenv > /dev/null && eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init - 2> /dev/null)" && RPROMPT+='[🐍 $(pyenv version-name)]'
+export PYENV_VIRTUALENV_DISABLE_PROMPT=0
+type -a pyenv > /dev/null && eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init - 2> /dev/null)"
 
 # Load nvm (to manage your node versions)
 export NVM_DIR="$HOME/.nvm"
@@ -117,7 +117,7 @@ export FZF_DEFAULT_OPTS=' --preview="bat --color=always {}" --preview-window=rig
 # Export python Path for decision science project
 export PYTHONPATH="/Users/tim/code/tim-hilde/04-Decision-Science/01-Project-Setup/data-context-and-setup:$PYTHONPATH"
 
-ZSH_THEME_TERM_TITLE_IDLE="%n@%m: %~"
+ZSH_THEME_TERM_TITLE_IDLE="%n@%m: %1~"
 ZSH_THEME_TERM_TAB_TITLE_IDLE="%n@%m: %1~"
 
 # To customize prompt, run `p10k configure` or edit ~/dotfiles/p10k.zsh.
