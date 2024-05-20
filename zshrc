@@ -53,7 +53,7 @@ unalias lt # we need `lt` for https://github.com/localtunnel/localtunnel
 export PATH="${HOME}/.rbenv/bin:${PATH}" # Needed for Linux/WSL
 type -a rbenv > /dev/null && eval "$(rbenv init -)"
 
-# Load pyenv (to manage your Python versions)
+# Load pyenv (to manage your Python versions) (deactivated in favour of ohmyzsh plugin)
 # export PYENV_VIRTUALENV_DISABLE_PROMPT=0
 # type -a pyenv > /dev/null && eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init - 2> /dev/null)"
 
