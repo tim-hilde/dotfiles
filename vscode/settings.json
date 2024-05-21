@@ -72,7 +72,6 @@
         "editor.bracketPairColorization.enabled": true,
         "editor.tabSize": 4
     },
-    "window.autoDetectColorScheme": true,
     "pylint.showNotifications": "always",
     "black-formatter.showNotifications": "always",
     "flake8.showNotifications": "always",
@@ -198,5 +197,6 @@
     "jupyter.enableExtendedPythonKernelCompletions": true,
     "workbench.tree.indent": 12,
     "editor.stickyScroll.defaultModel": "foldingProviderModel",
+    "window.autoDetectColorScheme": true,
 
 }
