@@ -1,8 +1,6 @@
 #!/bin/zsh
 
-# Prompt the user and set the VM variable
-read "choice?Is this a virtual machine? (y/n): "
-if [[ "$choice" =~ [Yy] ]]; then
+if read -q "choice?Is this a virtual machine? y/n "; then
     VM=true
 else
     VM=false
