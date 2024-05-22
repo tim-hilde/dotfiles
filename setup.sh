@@ -1,14 +1,16 @@
 #!/bin/zsh
 
 # Prompt the user and set the VM variable
-while true; do
+test_vm() {
   read "choice?Is this a virtual machine? (y/n): "
   if [[ "$choice" =~ [Yy] ]]; then
-    VM=true; break
+    echo true
   else
-    VM=false; break
+    echo false
   fi
-done
+}
+
+VM=`test_vm`
 
 echo "Installing packages"
 # install oh my zsh
@@ -25,15 +27,17 @@ EOF
 
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
+# bat
+git clone https://github.com/fdellwing/zsh-bat.git $HOME/.oh-my-zsh/custom/plugins/zsh-bat
 # you should use
-git clone https://github.com/fdellwing/zsh-bat.git $ZSH_CUSTOM/plugins/zsh-bat
-# you should use
-git clone https://github.com/MichaelAquilina/zsh-you-should-use.git $ZSH_CUSTOM/plugins/you-should-use
+git clone https://github.com/MichaelAquilina/zsh-you-should-use.git $HOME/.oh-my-zsh/custom/plugins/you-should-use
 # zoxide
 curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
-eval "$(zoxide init zsh)"
 
-if [ "$VM" = false ]; then
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
+
+if [ "$VM" = true ]; then
   export PATH="$HOME/.local/bin:$PATH"
 fi
 

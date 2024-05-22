@@ -59,7 +59,7 @@ backup $HOME/.p10k.zsh
 symlink $PWD/p10k.zsh $HOME/.p10k.zsh
 
 # Symlink SSH config file to the present `config` file for macOS and add SSH passphrase to the keychain
-if [[ `uname` =~ "Darwin" ]]; then
+if [ `uname` =~ "Darwin" ]; then
   target=~/.ssh/config
   backup $target
   symlink $PWD/config $target
