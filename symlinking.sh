@@ -1,11 +1,5 @@
 #!/bin/zsh
 
-if read -q "choice?Is this a virtual machine? y/n "; then
-    VM=true
-else
-    VM=false
-fi
-
 # Define a function which renames a `target` file to `target.backup` if the file
 # exists and if it's a 'real' file, ie not a symlink
 backup() {
