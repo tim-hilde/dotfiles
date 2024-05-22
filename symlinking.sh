@@ -1,11 +1,14 @@
 #!/bin/zsh
-if read -q "choice?Is this a virtual machine? y/n "; then
+
+# Prompt the user and set the VM variable
+read "choice?Is this a virtual machine? (y/n): "
+if [[ "$choice" =~ [Yy] ]]; then
     VM=true
 else
     VM=false
 fi
 
-# Define a function which rename a `target` file to `target.backup` if the file
+# Define a function which renames a `target` file to `target.backup` if the file
 # exists and if it's a 'real' file, ie not a symlink
 backup() {
   target=$1
@@ -22,7 +25,7 @@ symlink() {
   link=$2
   if [ ! -e "$link" ]; then
     echo "-----> Symlinking your new $link"
-    if [ -L "$target" ]; then
+    if [ -L "$link" ]; then
         echo "Symlink already exists."
         if read -q "choice?Remove existing file? y/n "; then
             rm $link
@@ -36,7 +39,6 @@ symlink() {
 
 # For all files `$name` in the present folder except `*.sh`, `README.md`, `settings.json`, gitconfig
 # and `config`, backup the target file located at `~/.$name` and symlink `$name` to `~/.$name`
-
 
 for name in aliases irbrc rspec zprofile zshrc; do
   if [ ! -d "$name" ]; then
@@ -56,8 +58,7 @@ ZSH_PLUGINS_DIR="$HOME/.oh-my-zsh/custom/plugins"
 mkdir -p "$ZSH_PLUGINS_DIR" && cd "$ZSH_PLUGINS_DIR"
 if [ ! -d "$ZSH_PLUGINS_DIR/zsh-syntax-highlighting" ]; then
   echo "-----> Installing zsh plugin 'zsh-syntax-highlighting'..."
-  git clone https://github.com/zsh-users/zsh-autosuggestions
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
 fi
 cd "$CURRENT_DIR"
 
@@ -76,7 +77,7 @@ fi
 # If virtual machine
 if [ "$VM" = false ]; then
 
-# Symlink VS Code settings and keybindings to the present `settings.json` and `keybindings.json` files
+  # Symlink VS Code settings and keybindings to the present `settings.json` and `keybindings.json` files
   # If it's a macOS
   if [[ `uname` =~ "Darwin" ]]; then
     CODE_PATH=~/Library/Application\ Support/Code/User
@@ -107,7 +108,8 @@ if [ "$VM" = false ]; then
 
   # Ruff
   backup $HOME/ruff
-  symlink $PWD/ruff $HOME/Library/Application Support/ruff
+  symlink $PWD/ruff $HOME/Library/Application\ Support/ruff
+fi
 
 echo "Finished symlinking"
 
