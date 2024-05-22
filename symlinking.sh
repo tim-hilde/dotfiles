@@ -74,7 +74,7 @@ if [[ `uname` =~ "Darwin" ]]; then
 fi
 
 # If virtual machine
-if not VM; then
+if [ "$VM" = false ]; then
 
 # Symlink VS Code settings and keybindings to the present `settings.json` and `keybindings.json` files
   # If it's a macOS
