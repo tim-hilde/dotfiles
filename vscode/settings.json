@@ -195,8 +195,7 @@
     ],
     "workbench.activityBar.location": "top",
     "jupyter.enableExtendedPythonKernelCompletions": true,
-    "workbench.tree.indent": 12,
-    "editor.stickyScroll.defaultModel": "foldingProviderModel",
     "window.autoDetectColorScheme": true,
+    "workbench.iconTheme": "material-icon-theme",
 
 }

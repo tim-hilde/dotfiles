@@ -1,5 +1,9 @@
 #!/bin/zsh
-
+if read -q "choice?Is this a virtual machine? y/n "; then
+    VM=true
+else
+    VM=false
+fi
 
 # Define a function which rename a `target` file to `target.backup` if the file
 # exists and if it's a 'real' file, ie not a symlink
@@ -61,28 +65,6 @@ cd "$CURRENT_DIR"
 backup $HOME/.p10k.zsh
 symlink $PWD/p10k.zsh $HOME/.p10k.zsh
 
-# Symlink VS Code settings and keybindings to the present `settings.json` and `keybindings.json` files
-# If it's a macOS
-if [[ `uname` =~ "Darwin" ]]; then
-  CODE_PATH=~/Library/Application\ Support/Code/User
-# Else, it's a Linux
-else
-  CODE_PATH=~/.config/Code/User
-  # If this folder doesn't exist, it's a WSL
-  if [ ! -e $CODE_PATH ]; then
-    CODE_PATH=~/.vscode-server/data/Machine
-  fi
-fi
-
-for name in settings.json keybindings.json; do
-  target="$CODE_PATH/$name"
-  backup $target
-  symlink $PWD/vscode/$name $target
-done
-
-symlink $PWD/vscode $HOME/.vscode
-
-
 # Symlink SSH config file to the present `config` file for macOS and add SSH passphrase to the keychain
 if [[ `uname` =~ "Darwin" ]]; then
   target=~/.ssh/config
@@ -91,20 +73,43 @@ if [[ `uname` =~ "Darwin" ]]; then
   ssh-add --apple-use-keychain ~/.ssh/id_ed25519
 fi
 
-# iTerm
-backup $HOME/.config/iterm2
-symlink $PWD/iterm2 $HOME/.config/iterm2
+# If virtual machine
+if not VM; then
 
-# Karabiner
-backup $HOME/.config/karabiner
-symlink $PWD/karabiner $HOME/.config/karabiner
+# Symlink VS Code settings and keybindings to the present `settings.json` and `keybindings.json` files
+  # If it's a macOS
+  if [[ `uname` =~ "Darwin" ]]; then
+    CODE_PATH=~/Library/Application\ Support/Code/User
+  # Else, it's a Linux
+  else
+    CODE_PATH=~/.config/Code/User
+    # If this folder doesn't exist, it's a WSL
+    if [ ! -e $CODE_PATH ]; then
+      CODE_PATH=~/.vscode-server/data/Machine
+    fi
+  fi
 
-# Ruff
-backup $HOME/ruff
-symlink $PWD/ruff $HOME/Library/Application Support/ruff
+  for name in settings.json keybindings.json; do
+    target="$CODE_PATH/$name"
+    backup $target
+    symlink $PWD/vscode/$name $target
+  done
+
+  symlink $PWD/vscode $HOME/.vscode
+
+  # iTerm
+  backup $HOME/.config/iterm2
+  symlink $PWD/iterm2 $HOME/.config/iterm2
+
+  # Karabiner
+  backup $HOME/.config/karabiner
+  symlink $PWD/karabiner $HOME/.config/karabiner
+
+  # Ruff
+  backup $HOME/ruff
+  symlink $PWD/ruff $HOME/Library/Application Support/ruff
 
 echo "Finished symlinking"
-
 
 # Refresh the current terminal with the newly installed configuration
 exec zsh

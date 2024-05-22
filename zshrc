@@ -24,6 +24,7 @@ plugins=(
     last-working-dir
     pyenv
     python
+    ssh-agent
     you-should-use
     virtualenv
     # zsh-autosuggestions
@@ -35,6 +36,10 @@ export HOMEBREW_NO_ANALYTICS=1
 
 # Disable warning about insecure completion-dependent directories
 ZSH_DISABLE_COMPFIX=true
+
+# ssh-agent settings
+zstyle :omz:plugins:ssh-agent quiet yes
+zstyle :omz:plugins:ssh-agent lazy yes
 
 # Actually load Oh-My-Zsh
 source "${ZSH}/oh-my-zsh.sh"
