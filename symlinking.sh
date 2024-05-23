@@ -15,8 +15,8 @@ backup() {
 symlink() {
   file=$1
   link=$2
-  if [ ! -e "$link" ]; then
-    echo "-----> Symlinking your new $link"
+  if [ ! -e "$file" ]; then
+    echo "-----> Symlinking $file to $link"
     if [ -L "$link" ]; then
         echo "Symlink already exists."
         if read -q "choice?Remove existing file? y/n "; then
@@ -59,16 +59,19 @@ backup $HOME/.p10k.zsh
 symlink $PWD/p10k.zsh $HOME/.p10k.zsh
 
 # Symlink SSH config file to the present `config` file for macOS and add SSH passphrase to the keychain
-if [ `uname` =~ "Darwin" ]; then
+if [[ `uname` =~ "Darwin" ]]; then
   target=~/.ssh/config
   backup $target
   symlink $PWD/config $target
   ssh-add --apple-use-keychain ~/.ssh/id_ed25519
 fi
 
-# If virtual machine
-if [ "$VM" = false ]; then
+if [[ $VM -eq 0 ]]; then
+  VM=false
+fi
 
+# If not virtual machine
+if [ "$VM" = false ]; then
   # Symlink VS Code settings and keybindings to the present `settings.json` and `keybindings.json` files
   # If it's a macOS
   if [[ `uname` =~ "Darwin" ]]; then
@@ -88,11 +91,15 @@ if [ "$VM" = false ]; then
     symlink $PWD/vscode/$name $target
   done
 
-  symlink $PWD/vscode $HOME/.vscode
+#   symlink $PWD/vscode $HOME/.vscode
 
   # iTerm
   backup $HOME/.config/iterm2
   symlink $PWD/iterm2 $HOME/.config/iterm2
+
+  # wezterm
+  backup $HOME/.config/wezterm
+  symlink $PWD/wezterm $HOME/wezterm
 
   # Karabiner
   backup $HOME/.config/karabiner
