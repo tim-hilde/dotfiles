@@ -16,3 +16,6 @@ alias tree="eza --tree"
 
 # zoxide
 alias cd=z
+
+# skhd / yabai
+alias skhdrc="code ~/dotfiles/skhd/skhdrc"
