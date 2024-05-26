@@ -10,6 +10,8 @@ ZSH=$HOME/.oh-my-zsh
 # You can change the theme with another one from https://github.com/robbyrussell/oh-my-zsh/wiki/themes
 ZSH_THEME="powerlevel10k/powerlevel10k" #"robbyrussell"
 
+export DIRENV_LOG_FORMAT=""
+
 #oh-my-zsh plugins
 plugins=(
     zsh-bat
@@ -118,7 +120,8 @@ eval "$(zoxide init zsh)"
 eval "$(fzf --zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_OPTS=' --preview="bat --color=always {}" --preview-window=right:60%:wrap'
+export FZF_DEFAULT_OPTS=' --preview="echo {} --color=always {}" --preview-window=down,3,wrap --height=80%'
+# export FZF_DEFAULT_OPTS=' --preview="echo {} --color=always {} --preview-window=down,60%,wrap --layout=reverse --height=80%"'
 
 # Export python Path for decision science project
 export PYTHONPATH="/Users/tim/code/tim-hilde/04-Decision-Science/01-Project-Setup/data-context-and-setup:$PYTHONPATH"

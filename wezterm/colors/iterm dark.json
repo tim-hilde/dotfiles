@@ -1,0 +1,24 @@
+{
+    "name": "iterm dark",
+    "author": "",
+    "color": [
+      "#15191e",
+      "#a74532",
+      "#57bf38",
+      "#c7c43f",
+      "#2e43c0",
+      "#b149b8",
+      "#59c2c6",
+      "#c7c7c7",
+      "#686868",
+      "#d07e78",
+      "#82e498",
+      "#eae24a",
+      "#a7abed",
+      "#d483dc",
+      "#8efafd",
+      "#ffffff"
+    ],
+    "foreground": "#dcdcdc",
+    "background": "#15191e"
+  }

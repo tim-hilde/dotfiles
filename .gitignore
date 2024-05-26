@@ -1,1 +1,28 @@
+# MAC
+.DS_Store
+*.icloud
+
+# Logs
+*.log
+
+# production stuff / builds
+node_modules
+.venv
+__pycache__
+*.pyc
+*.alfredworkflow
+*.dmg
 vscode/extensions/
+
+
+# Microsoft Office temporary files
+~$*.docx
+~$*.xlsx
+~$*.pptx
+
+# safety net to prevent sensitive data being accidentally moved
+*.kdb
+*.kdbx
+*.pfx
+*.key
+.*_history

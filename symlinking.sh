@@ -62,7 +62,7 @@ symlink $PWD/p10k.zsh $HOME/.p10k.zsh
 if [[ `uname` =~ "Darwin" ]]; then
   target=~/.ssh/config
   backup $target
-  symlink $PWD/config $target
+  symlink $PWD/config_ssh $target
   ssh-add --apple-use-keychain ~/.ssh/id_ed25519
 fi
 
