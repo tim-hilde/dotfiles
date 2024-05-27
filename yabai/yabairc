@@ -41,5 +41,6 @@ yabai -m rule --add app="^Alfred Preferences$" manage=off
 yabai -m rule --add app="^ChatGPT$" manage=off
 yabai -m rule --add app="^Shottr$" manage=off
 yabai -m rule --add app="^BetterTouch" manage=off
+yabai -m rule --add app="^Finder$" manage=off
 yabai -m rule --add label="The Unarchiver" app="^The Unarchiver$" manage=off
 yabai -m rule --add label="Safari" app="^Safari$" title="^(Allgemein|Tabs|Automatisch ausfüllen|Passwörter|Suchen|Sicherheit|Datenschutz|Websites|Profile|Erweiterungen|Erweitert|Entwickler|Feature Flags)$" manage=off

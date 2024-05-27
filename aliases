@@ -19,3 +19,4 @@ alias cd=z
 
 # skhd / yabai
 alias skhdrc="code ~/dotfiles/skhd/skhdrc"
+alias yabairc="code ~/dotfiles/yabai/yabairc"
