@@ -11,7 +11,7 @@
     "git.enableSmartCommit": true,
     "git.confirmSync": false,
     "git.autofetch": true,
-    "python.defaultInterpreterPath": "/Users/tim/.pyenv/versions/3.10.6/envs/lewagon",
+    "python.defaultInterpreterPath": "/Users/tim/.pyenv/versions/3.10.6/envs/kestrix",
     "editor.fontFamily": "'JetBrainsMono Nerd Font Mono', monospace",
     "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font Mono', monospace",
     "editor.minimap.enabled": false,
@@ -87,7 +87,7 @@
     "workbench.colorCustomizations": {
 
     },
-    "workbench.colorTheme": "GitHub Light Default",
+    "workbench.colorTheme": "Dracula",
     "editor.inlineSuggest.showToolbar": "always",
     "jupyter.interactiveWindow.textEditor.executeSelection": true,
     "woke.enable": false,
@@ -195,7 +195,7 @@
     ],
     "workbench.activityBar.location": "top",
     "jupyter.enableExtendedPythonKernelCompletions": true,
-    "window.autoDetectColorScheme": true,
     "workbench.iconTheme": "material-icon-theme",
+    "autoDocstring.docstringFormat": "numpy",
 
 }

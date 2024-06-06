@@ -120,7 +120,7 @@ eval "$(zoxide init zsh)"
 eval "$(fzf --zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_OPTS=' --preview="echo {} --color=always {}" --preview-window=down,3,wrap --height=80%'
+export FZF_DEFAULT_OPTS=' --preview="echo {}" --preview-window=down,3,wrap --height=80%'
 # export FZF_DEFAULT_OPTS=' --preview="echo {} --color=always {} --preview-window=down,60%,wrap --layout=reverse --height=80%"'
 
 # Export python Path for decision science project
