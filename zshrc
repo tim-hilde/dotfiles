@@ -12,6 +12,20 @@ ZSH_THEME="powerlevel10k/powerlevel10k" #"robbyrussell"
 
 export DIRENV_LOG_FORMAT=""
 
+# magic dashboard
+source $HOME/.oh-my-zsh/zsh-magic-dashboard/magic_dashboard.zsh
+# Size of the dashboard
+export MAGIC_DASHBOARD_GITLOG_LINES=5
+export MAGIC_DASHBOARD_FILES_LINES=0
+
+# Disable dashboard in low terminal windows.
+# (Useful for tmux or for terminals embedded in your IDE.)
+export MAGIC_DASHBOARD_DISABLED_BELOW_TERM_HEIGHT=15
+
+# Make commit hashes & files clickable. Requires `git-delta`.
+export MAGIC_DASHBOARD_USE_HYPERLINKS=0 # set to `1` to enable
+
+
 #oh-my-zsh plugins
 plugins=(
     zsh-bat
@@ -120,7 +134,7 @@ eval "$(zoxide init zsh)"
 eval "$(fzf --zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_OPTS=' --preview="echo {}" --preview-window=down,3,wrap --height=80%'
+export FZF_DEFAULT_OPTS=' --preview="echo {}" --preview-window=down,3,wrap --height=60%'
 # export FZF_DEFAULT_OPTS=' --preview="echo {} --color=always {} --preview-window=down,60%,wrap --layout=reverse --height=80%"'
 
 # Export python Path for decision science project
