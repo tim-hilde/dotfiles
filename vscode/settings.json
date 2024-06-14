@@ -200,5 +200,7 @@
     "files.associations": {
         "yabairc": "shellscript"
     },
+    "editor.unicodeHighlight.invisibleCharacters": false,
+    "editor.unicodeHighlight.ambiguousCharacters": false,
 
 }
