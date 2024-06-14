@@ -63,6 +63,7 @@ hyper - 6 : yabai -m window --space 6;
 hyper - 7 : yabai -m window --space 7;
 hyper - 8 : yabai -m window --space 8;
 hyper - 9 : yabai -m window --space 9;
+hyper - 0 : yabai -m window --space 10;
 
 # move space left
 hyper - q : yabai -m window --space prev

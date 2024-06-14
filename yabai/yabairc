@@ -51,5 +51,6 @@ yabai -m rule --add app="^Ice$" manage=off
 yabai -m rule --add app="^Nachrichtenna$" manage=off
 yabai -m rule --add app="^zoom.us$" title="^Zoom Workplace$" manage=off
 yabai -m rule --add app="^Mail$" title="^Neue E-Mail$" manage=off
+yabai -m rule --add app="^Mail$" title="^(Allgemein|Accounts|Spam|Schrift & Farbe|Darstellung|Verfassen|Signaturen|Regeln|Erweiterungen|Datenschutz)$" manage=off
 yabai -m rule --add label="The Unarchiver" app="^The Unarchiver$" manage=off
 yabai -m rule --add label="Safari" app="^Safari$" title="^(Allgemein|Tabs|Automatisch ausfüllen|Passwörter|Suchen|Sicherheit|Datenschutz|Websites|Profile|Erweiterungen|Erweitert|Entwickler|Feature Flags)$" manage=off
