@@ -4,9 +4,9 @@ meh - d : yabai --stop-service
 meh - r : skhd --restart-service; yabai --restart-service
 
 # change window focus within space
-lalt - j : yabai -m window --focus north
-lalt - k : yabai -m window --focus south
 lalt - h : yabai -m window --focus west
+lalt - j : yabai -m window --focus south
+lalt - k : yabai -m window --focus north
 lalt - l : yabai -m window --focus east
 
 # change focus to space
@@ -48,9 +48,9 @@ hyper - e : yabai -m space --balance
 
 # MOVE WINDOWS
 # swap windows
-hyper - j : yabai -m window --swap north
-hyper - k : yabai -m window --swap south
 hyper - h : yabai -m window --swap west
+hyper - k : yabai -m window --swap south
+hyper - j : yabai -m window --swap north
 hyper - l : yabai -m window --swap east
 
 # move window to space #
