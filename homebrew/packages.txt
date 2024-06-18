@@ -18,6 +18,7 @@ graphviz
 highlight
 imagemagick
 jq
+jsoncpp
 koekeishiya/formulae/skhd
 koekeishiya/formulae/yabai
 mgmeyers/pdfannots2json/pdfannots2json
