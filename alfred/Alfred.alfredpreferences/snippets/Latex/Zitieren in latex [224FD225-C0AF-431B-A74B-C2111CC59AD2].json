@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "\\setstretch{1}\n\\small\n\n> {clipboard}\n\n\\normalsize\n\\setstretch{1.5} \n\\noindent\n",
+    "uid" : "224FD225-C0AF-431B-A74B-C2111CC59AD2",
+    "name" : "Zitieren in latex",
+    "keyword" : "!cite"
+  }
+}

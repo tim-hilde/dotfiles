@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>h_lvl_ignore</key>
+	<string>h1 h2 h3 h4 h5 h6</string>
+	<key>vault_path</key>
+	<string>~/Zettelkasten</string>
+</dict>
+</plist>

@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "{date:yyyy-MM-dd}",
+    "uid" : "E7F252CF-75FF-4693-A26E-F24E64E318D6",
+    "name" : "Obsidian Date",
+    "keyword" : "!odate"
+  }
+}

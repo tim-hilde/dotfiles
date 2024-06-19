@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "if __name__ == \"__main__\":\n\t",
+    "uid" : "BFF50F73-FD71-4FE6-99F2-58BF96C2087A",
+    "name" : "__main__",
+    "keyword" : "!main"
+  }
+}

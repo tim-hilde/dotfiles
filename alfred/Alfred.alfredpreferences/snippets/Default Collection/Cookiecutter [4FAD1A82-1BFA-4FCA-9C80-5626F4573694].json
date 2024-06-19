@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "cookiecutter ~\/dotfiles\/cookiecutter\/DataScience -o .",
+    "uid" : "4FAD1A82-1BFA-4FCA-9C80-5626F4573694",
+    "name" : "Cookiecutter",
+    "keyword" : "!cookie datascience"
+  }
+}

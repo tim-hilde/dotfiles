@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>customSites</key>
+	<dict>
+		<key>17EEE3DD-DBFE-4098-97A9-83150DFB1187</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>scholar</string>
+			<key>spaces</key>
+			<string>+</string>
+			<key>text</key>
+			<string>Search Google Scholar for {query}</string>
+			<key>url</key>
+			<string>https://scholar.google.com/scholar?hl=de&amp;as_sdt=0%2C5&amp;q={query}</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
+		<key>1BAE9C40-C664-4BAF-93C6-2C7ED11C272C</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>bib</string>
+			<key>text</key>
+			<string>Suche in der TU Bibliothek</string>
+			<key>url</key>
+			<string>https://tu-berlin.hosted.exlibrisgroup.com/primo-explore/search?query=any,contains,{query}&amp;tab=tub_all&amp;search_scope=TUB_ALL&amp;vid=TUB&amp;lang=de_DE&amp;offset=0</string>
+		</dict>
+		<key>2EEDFDAA-1BC4-45E1-9A73-EE1D3F76D919</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>libgen</string>
+			<key>spaces</key>
+			<string>+</string>
+			<key>text</key>
+			<string>Search Library Genesis for '{query}'</string>
+			<key>url</key>
+			<string>https://libgen.rs/search.php?req={query}</string>
+		</dict>
+		<key>3BF88FDC-DFC0-4DFF-86BA-0B4F6F276EEF</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>sci</string>
+			<key>text</key>
+			<string>Search Sci-Hub for DOI '{query}'</string>
+			<key>url</key>
+			<string>https://sci-hub.st/{query}</string>
+		</dict>
+		<key>813EC17B-252F-4288-863E-C5A5433263F3</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>archive</string>
+			<key>text</key>
+			<string>Internet Archive</string>
+			<key>url</key>
+			<string>https://web.archive.org/web/20230000000000*/{query}</string>
+		</dict>
+		<key>B88EB8B7-16C4-445C-AB4B-9815EC576818</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>plato</string>
+			<key>spaces</key>
+			<string>+</string>
+			<key>text</key>
+			<string>Search Stanford Encyclopedia of Philosophy for '{query}'</string>
+			<key>url</key>
+			<string>https://plato.stanford.edu/search/searcher.py?query={query}</string>
+		</dict>
+		<key>BEDE536B-79A5-4358-9822-C7ED001DFBFB</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>anna</string>
+			<key>spaces</key>
+			<string>+</string>
+			<key>text</key>
+			<string>Anna's Archive</string>
+			<key>url</key>
+			<string>https://www.annas-archive.org/search?q={query}</string>
+		</dict>
+		<key>C16FC2F1-8F98-43EF-8033-C4B8F99E89F0</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>werstreamtes</string>
+			<key>spaces</key>
+			<string>+</string>
+			<key>text</key>
+			<string>Wer streamt es</string>
+			<key>url</key>
+			<string>https://www.werstreamt.es/filme-serien/?q={query}</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

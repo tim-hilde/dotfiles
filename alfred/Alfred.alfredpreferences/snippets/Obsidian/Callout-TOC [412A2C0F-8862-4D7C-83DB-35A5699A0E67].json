@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "> [!toc]-\n> ```toc\n> ```",
+    "uid" : "412A2C0F-8862-4D7C-83DB-35A5699A0E67",
+    "name" : "Callout-TOC",
+    "keyword" : "!toc"
+  }
+}

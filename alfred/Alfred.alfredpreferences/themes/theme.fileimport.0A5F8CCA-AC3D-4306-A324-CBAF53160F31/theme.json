@@ -1,0 +1,65 @@
+{
+  "alfredtheme" : {
+    "result" : {
+      "textSpacing" : 6,
+      "subtext" : {
+        "size" : 11,
+        "colorSelected" : "#FFFFFFBE",
+        "font" : "System",
+        "color" : "#2F3031D8"
+      },
+      "shortcut" : {
+        "size" : 14,
+        "colorSelected" : "#E5E9E9FF",
+        "font" : "System",
+        "color" : "#011529B2"
+      },
+      "backgroundSelected" : "#0046BCC6",
+      "text" : {
+        "size" : 14,
+        "colorSelected" : "#EFEFEFFF",
+        "font" : "System",
+        "color" : "#272829FF"
+      },
+      "iconPaddingHorizontal" : 8,
+      "roundness" : 7,
+      "paddingVertical" : 8,
+      "iconSize" : 32
+    },
+    "search" : {
+      "backgroundSelected" : "#B2D7FFC9",
+      "paddingHorizontal" : 8,
+      "spacing" : 0,
+      "text" : {
+        "size" : 28,
+        "colorSelected" : "#050605FF",
+        "font" : "System",
+        "color" : "#121213FF"
+      },
+      "background" : "#FEFFFE00",
+      "roundness" : 10,
+      "paddingVertical" : 6
+    },
+    "window" : {
+      "color" : "#C5C5C50F",
+      "paddingHorizontal" : 10,
+      "width" : 657,
+      "borderPadding" : 0,
+      "borderColor" : "#0000007F",
+      "blur" : 0,
+      "roundness" : 10,
+      "paddingVertical" : 7
+    },
+    "credit" : "Chris Messina",
+    "visualEffectMode" : 1,
+    "separator" : {
+      "color" : "#47474A00",
+      "thickness" : 1
+    },
+    "scrollbar" : {
+      "color" : "#4C4D4C7F",
+      "thickness" : 7
+    },
+    "name" : "Monterey Blue (Light)"
+  }
+}

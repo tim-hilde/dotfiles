@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "jupyter nbconvert --to markdown ",
+    "uid" : "017FEDC0-4AB3-4716-9F44-D37D75858EC5",
+    "name" : "Convert Jupyter Notebook to Markdown",
+    "keyword" : ""
+  }
+}

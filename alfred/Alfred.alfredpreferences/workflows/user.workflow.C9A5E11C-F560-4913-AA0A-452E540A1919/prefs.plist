@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>apikey_fixer</key>
+	<string>3df28ebf3544a81c2b51c5b5b4a10b26</string>
+	<key>base_currencies</key>
+	<string>EUR</string>
+	<key>currency_cache_hours</key>
+	<string>12</string>
+	<key>decimal_separator</key>
+	<string>comma</string>
+</dict>
+</plist>

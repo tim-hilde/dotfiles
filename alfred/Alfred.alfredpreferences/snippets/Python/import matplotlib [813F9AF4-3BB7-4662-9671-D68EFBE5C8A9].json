@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "import matplotlib.pyplot as plt\n%config InlineBackend.figure_format = \"retina\"\n%matplotlib inline\nplt.style.use(\"default\")\n",
+    "uid" : "813F9AF4-3BB7-4662-9671-D68EFBE5C8A9",
+    "name" : "import matplotlib",
+    "keyword" : "!plt"
+  }
+}

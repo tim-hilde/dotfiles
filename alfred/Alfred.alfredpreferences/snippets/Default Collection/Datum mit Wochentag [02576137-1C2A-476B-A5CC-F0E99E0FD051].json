@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "{date:ccc, YYYY-MM-dd}",
+    "uid" : "02576137-1C2A-476B-A5CC-F0E99E0FD051",
+    "name" : "Datum mit Wochentag",
+    "keyword" : "!wodate"
+  }
+}

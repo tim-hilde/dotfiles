@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.github.com30n.alfredotp</string>
+	<key>connections</key>
+	<dict>
+		<key>94B35AEC-7089-4AFF-AA3E-597BE8B78D6F</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>48C93950-4BFB-4AF9-9DA5-CA4B3385D68B</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>9DD92436-340B-4CCA-AA1E-ACC20FA56CE5</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>94B35AEC-7089-4AFF-AA3E-597BE8B78D6F</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Evgeniy Shubin</string>
+	<key>description</key>
+	<string>Generate OTP using keychain backed token</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Keychain OTP</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>service=$(echo $1 | cut -f1 -d' ')
+token=$(echo $1 | cut -f2 -d' ')
+
+security add-generic-password -a "$service-otp" -p "$token" -s "$service"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>FC36327A-DE98-44F5-8A29-C3725F3427D0</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>service=$1
+
+
+token="$(security find-generic-password -a "$service-otp" -w | tr -d '\n')"
+
+/opt/homebrew/bin/oathtool --totp --base32 $token 2&gt;/dev/null | tr -d '\n'</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>94B35AEC-7089-4AFF-AA3E-597BE8B78D6F</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>otp</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>script</key>
+				<string>query=$1
+
+header='{"items": ['
+body=''
+footer=']}'
+
+for service in $(security dump-keychain | grep acct | awk -F= '{print $2}' | grep '\-otp' | grep "$query" | sort -u | tr -d '"' |cut -f1 -d '-'
+);
+do
+body="${body} {\"title\":\"$service\",\"arg\":\"$service\"},"
+done
+
+echo -n "${header}${body}${footer}"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>example: otp google</string>
+				<key>title</key>
+				<string>Generate OTP</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>9DD92436-340B-4CCA-AA1E-ACC20FA56CE5</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<true/>
+				<key>clipboardtext</key>
+				<string></string>
+				<key>ignoredynamicplaceholders</key>
+				<false/>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>48C93950-4BFB-4AF9-9DA5-CA4B3385D68B</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string>Alfred OTP:
+Alfred workflow to generate OTP secured in keychain.
+
+
+Prerequisites:
+ - Install oathtool via brew install oath-toolkit
+ - Keychain
+
+Credits:
+Forked from https://github.com/caalberts/alfred-otp</string>
+	<key>uidata</key>
+	<dict>
+		<key>48C93950-4BFB-4AF9-9DA5-CA4B3385D68B</key>
+		<dict>
+			<key>xpos</key>
+			<real>645</real>
+			<key>ypos</key>
+			<real>205</real>
+		</dict>
+		<key>94B35AEC-7089-4AFF-AA3E-597BE8B78D6F</key>
+		<dict>
+			<key>xpos</key>
+			<real>400</real>
+			<key>ypos</key>
+			<real>205</real>
+		</dict>
+		<key>9DD92436-340B-4CCA-AA1E-ACC20FA56CE5</key>
+		<dict>
+			<key>xpos</key>
+			<real>170</real>
+			<key>ypos</key>
+			<real>205</real>
+		</dict>
+		<key>FC36327A-DE98-44F5-8A29-C3725F3427D0</key>
+		<dict>
+			<key>xpos</key>
+			<real>640</real>
+			<key>ypos</key>
+			<real>70</real>
+		</dict>
+	</dict>
+	<key>userconfigurationconfig</key>
+	<array/>
+	<key>variablesdontexport</key>
+	<array/>
+	<key>version</key>
+	<string>1.0.1</string>
+	<key>webaddress</key>
+	<string>https://github.com/com30n/alfred-otp</string>
+</dict>
+</plist>

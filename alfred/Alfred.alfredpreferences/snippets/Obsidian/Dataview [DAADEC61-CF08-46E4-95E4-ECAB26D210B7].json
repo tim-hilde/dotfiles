@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "```dataview\n{cursor}\n```",
+    "uid" : "DAADEC61-CF08-46E4-95E4-ECAB26D210B7",
+    "name" : "Dataview",
+    "keyword" : "!dataview"
+  }
+}

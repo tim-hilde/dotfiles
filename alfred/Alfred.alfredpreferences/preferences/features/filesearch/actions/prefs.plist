@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>disabledDefaultActions</key>
+	<dict>
+		<key>alfred.action.copy</key>
+		<true/>
+		<key>alfred.action.getinfo</key>
+		<true/>
+		<key>alfred.action.move</key>
+		<true/>
+		<key>alfred.action.openwith</key>
+		<true/>
+		<key>alfred.action.recent</key>
+		<true/>
+		<key>alfred.action.showpackagecontents</key>
+		<true/>
+	</dict>
+	<key>finderSelectionHotkey</key>
+	<dict>
+		<key>key</key>
+		<integer>0</integer>
+		<key>mod</key>
+		<integer>1966080</integer>
+		<key>string</key>
+		<string>A</string>
+	</dict>
+	<key>showWithRightArrow</key>
+	<false/>
+</dict>
+</plist>

@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "brew cu -a -y && brew upgrade",
+    "uid" : "6DDD7E35-9D51-4EA1-9096-CF9E2402E1EF",
+    "name" : "update brew",
+    "keyword" : "!brew"
+  }
+}

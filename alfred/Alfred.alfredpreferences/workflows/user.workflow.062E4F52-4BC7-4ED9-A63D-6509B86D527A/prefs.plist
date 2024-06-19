@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>keyword_01</key>
+	<string>pd</string>
+	<key>keyword_02</key>
+	<string>py</string>
+	<key>keyword_03</key>
+	<string>np</string>
+	<key>keyword_04</key>
+	<string>scikit_learn</string>
+	<key>keyword_05</key>
+	<string>statsmodels</string>
+	<key>keyword_06</key>
+	<string>tf</string>
+</dict>
+</plist>

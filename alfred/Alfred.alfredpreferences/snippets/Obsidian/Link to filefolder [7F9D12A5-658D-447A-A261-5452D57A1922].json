@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "[{cursor}](<file:\/\/\/{clipboard}>)",
+    "uid" : "7F9D12A5-658D-447A-A261-5452D57A1922",
+    "name" : "Link to file\/folder",
+    "keyword" : ""
+  }
+}

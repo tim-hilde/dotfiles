@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "X_train, X_test, y_train, y_test = train_test_split({cursor})",
+    "uid" : "35431FFC-6A31-471F-8831-91A482280936",
+    "name" : "train_test_split",
+    "keyword" : "!train"
+  }
+}

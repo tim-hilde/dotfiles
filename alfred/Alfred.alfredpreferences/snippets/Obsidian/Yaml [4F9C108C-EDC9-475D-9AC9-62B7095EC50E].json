@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "---\n{cursor}\n---\n",
+    "uid" : "4F9C108C-EDC9-475D-9AC9-62B7095EC50E",
+    "name" : "Yaml",
+    "keyword" : "!yaml"
+  }
+}

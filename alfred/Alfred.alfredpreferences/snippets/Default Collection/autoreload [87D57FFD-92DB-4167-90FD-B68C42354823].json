@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "%load_ext autoreload\n%autoreload 2",
+    "uid" : "87D57FFD-92DB-4167-90FD-B68C42354823",
+    "name" : "autoreload",
+    "keyword" : "!autoreload"
+  }
+}

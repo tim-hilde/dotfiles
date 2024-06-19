@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : " --track-changes=all --wrap=none -t markdown -o",
+    "uid" : "F0532335-8876-4C79-95F6-352A66CD98D4",
+    "name" : "Track docx changes",
+    "keyword" : "!track"
+  }
+}

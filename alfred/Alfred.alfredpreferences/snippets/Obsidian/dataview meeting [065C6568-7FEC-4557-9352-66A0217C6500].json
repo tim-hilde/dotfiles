@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "```dataview\nTABLE \nfile.cday as Datum, Thema, Personen\nFROM #meeting \nWHERE contains(string(Thema), this.file.name)\nSORT file.cday DESC\n```",
+    "uid" : "065C6568-7FEC-4557-9352-66A0217C6500",
+    "name" : "dataview meeting",
+    "keyword" : "!meetings"
+  }
+}

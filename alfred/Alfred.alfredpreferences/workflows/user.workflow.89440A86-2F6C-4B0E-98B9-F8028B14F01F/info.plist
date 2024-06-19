@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>de.tim-hildebrandt.remove-annotations</string>
+	<key>connections</key>
+	<dict>
+		<key>1D91688F-36C9-40FE-A9D1-EB80EFB33213</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>FF5E77A5-13E6-4B0E-860D-32DC1D02DDB3</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>55D2D14F-5406-493D-A309-CED2DA2E1937</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>1D91688F-36C9-40FE-A9D1-EB80EFB33213</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>C4E76B33-E2CC-44C9-B9D8-AA5715825334</key>
+		<array/>
+		<key>E2BA4243-32EE-47E1-AD21-A2DA18FB7E45</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>C4E76B33-E2CC-44C9-B9D8-AA5715825334</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Tim Hildebrandt</string>
+	<key>description</key>
+	<string>Remove annotations from PDF files</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Remove Annotations</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>acceptsfiles</key>
+				<true/>
+				<key>acceptsmulti</key>
+				<integer>1</integer>
+				<key>acceptstext</key>
+				<false/>
+				<key>acceptsurls</key>
+				<false/>
+				<key>name</key>
+				<string>Remove Annotations</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.universalaction</string>
+			<key>uid</key>
+			<string>E2BA4243-32EE-47E1-AD21-A2DA18FB7E45</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>script</key>
+				<string>export PATH=/usr/local/bin:$PATH
+
+export LC_CTYPE=C
+export LANG=C
+
+for FILE in {query}; do
+argv="$FILE"
+
+filename=`sed -e "s/.*\/\(.*\.pdf$\)/\1/"&lt;&lt;&lt;"$argv"`
+path=`sed -e "s/\(\/.*\)\/.*\.pdf$/\1/"&lt;&lt;&lt;"$argv"`
+
+cd "$path"
+
+outname=`sed -e "s/\.pdf$/_.pdf/"&lt;&lt;&lt;"$filename"`
+
+pdftk "$filename" output - uncompress | sed '/^\/Annots/d' | pdftk - output "$outname" compress
+
+finalname=`sed -e "s/\_\.pdf$/.pdf/"&lt;&lt;&lt;"$outname"`
+mv "$outname" "$exportPath"/"$finalname"
+
+done
+
+if [ "$openFolder" == "1" ]; then
+	open "$exportPath"
+fi</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string>Remove-Annotations.sh</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>C4E76B33-E2CC-44C9-B9D8-AA5715825334</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>Success</string>
+				<key>title</key>
+				<string>Remove Annotations</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>FF5E77A5-13E6-4B0E-860D-32DC1D02DDB3</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>acceptsfiles</key>
+				<true/>
+				<key>acceptsmulti</key>
+				<integer>1</integer>
+				<key>acceptstext</key>
+				<false/>
+				<key>acceptsurls</key>
+				<false/>
+				<key>name</key>
+				<string>Remove Annotations (in same file)</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.universalaction</string>
+			<key>uid</key>
+			<string>55D2D14F-5406-493D-A309-CED2DA2E1937</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>126</integer>
+				<key>script</key>
+				<string>export PATH=/usr/local/bin:$PATH
+
+export LC_CTYPE=C
+export LANG=C
+
+process_pdf() {
+  local filepath="$1"
+  
+  if [[ -f "$filepath" &amp;&amp; "$filepath" == *.pdf ]]; then
+    local filename=$(basename "$filepath")
+    local path=$(dirname "$filepath")
+
+    cd "$path" || return
+
+    pdftk "$filename" output - uncompress | sed '/^\/Annots/d' | pdftk - output "$filename" compress
+  elif [[ -d "$filepath" ]]; then
+    # Recursively process files in subdirectories
+    while IFS= read -r -d '' file; do
+      process_pdf "$file"
+    done &lt; &lt;(find "$filepath" -type f -name "*.pdf" -print0)
+  fi
+}
+
+folder_path="{query}" # Set the folder path as an argument
+
+process_pdf "$folder_path" || exit
+
+folder=$(sed -e "s/\(\/.*\)\/.*\.pdf$/\1/"&lt;&lt;&lt;"$folder_path")
+
+open "$folder"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>1D91688F-36C9-40FE-A9D1-EB80EFB33213</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string>This workflow creates a copy of a pdf file without any annotations in a desired path.</string>
+	<key>uidata</key>
+	<dict>
+		<key>1D91688F-36C9-40FE-A9D1-EB80EFB33213</key>
+		<dict>
+			<key>xpos</key>
+			<real>280</real>
+			<key>ypos</key>
+			<real>560</real>
+		</dict>
+		<key>55D2D14F-5406-493D-A309-CED2DA2E1937</key>
+		<dict>
+			<key>xpos</key>
+			<real>75</real>
+			<key>ypos</key>
+			<real>555</real>
+		</dict>
+		<key>C4E76B33-E2CC-44C9-B9D8-AA5715825334</key>
+		<dict>
+			<key>xpos</key>
+			<real>310</real>
+			<key>ypos</key>
+			<real>400</real>
+		</dict>
+		<key>E2BA4243-32EE-47E1-AD21-A2DA18FB7E45</key>
+		<dict>
+			<key>xpos</key>
+			<real>55</real>
+			<key>ypos</key>
+			<real>400</real>
+		</dict>
+		<key>FF5E77A5-13E6-4B0E-860D-32DC1D02DDB3</key>
+		<dict>
+			<key>xpos</key>
+			<real>465</real>
+			<key>ypos</key>
+			<real>545</real>
+		</dict>
+	</dict>
+	<key>userconfigurationconfig</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string></string>
+				<key>filtermode</key>
+				<integer>1</integer>
+				<key>placeholder</key>
+				<string></string>
+				<key>required</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>Please enter the folder where the files should be exported to</string>
+			<key>label</key>
+			<string>Path to export folder</string>
+			<key>type</key>
+			<string>filepicker</string>
+			<key>variable</key>
+			<string>exportPath</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<true/>
+				<key>required</key>
+				<false/>
+				<key>text</key>
+				<string></string>
+			</dict>
+			<key>description</key>
+			<string></string>
+			<key>label</key>
+			<string>Open the folder afterwards</string>
+			<key>type</key>
+			<string>checkbox</string>
+			<key>variable</key>
+			<string>openFolder</string>
+		</dict>
+	</array>
+	<key>variablesdontexport</key>
+	<array/>
+	<key>version</key>
+	<string>1.0</string>
+	<key>webaddress</key>
+	<string></string>
+</dict>
+</plist>

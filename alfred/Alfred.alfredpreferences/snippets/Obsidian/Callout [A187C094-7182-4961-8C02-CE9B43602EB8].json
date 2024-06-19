@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "> [!{cursor}]\n> ",
+    "uid" : "A187C094-7182-4961-8C02-CE9B43602EB8",
+    "name" : "Callout",
+    "keyword" : "!callout"
+  }
+}

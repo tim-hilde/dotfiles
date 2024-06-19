@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "---\nTitel: {cursor}\nModul: [[]]\nSemester: \ntag: LV\n---\n",
+    "uid" : "E8144046-8872-40D0-82F2-A4E43CD99876",
+    "name" : "Yaml Lehre",
+    "keyword" : "!lv"
+  }
+}

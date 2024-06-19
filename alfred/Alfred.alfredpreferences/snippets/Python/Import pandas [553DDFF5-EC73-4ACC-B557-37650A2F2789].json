@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "import pandas as pd\npd.set_option(\"mode.copy_on_write\", True)",
+    "uid" : "553DDFF5-EC73-4ACC-B557-37650A2F2789",
+    "name" : "Import pandas",
+    "keyword" : "!pd"
+  }
+}

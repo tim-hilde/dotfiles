@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "import seaborn as sns\n\n%config InlineBackend.figure_format = \"retina\"",
+    "uid" : "E4730F90-ADAD-4B71-ACBB-C406C1792805",
+    "name" : "import seaborn",
+    "keyword" : "!sns"
+  }
+}

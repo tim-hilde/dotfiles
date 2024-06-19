@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "#meeting \nThema:: {cursor}\nPersonen:: \n- [ ] Meetingergebnisse einarbeiten",
+    "uid" : "5A6B419F-26DB-442A-AC7B-05C30CE280F9",
+    "name" : "Meetingnotiz",
+    "keyword" : "!mn"
+  }
+}
