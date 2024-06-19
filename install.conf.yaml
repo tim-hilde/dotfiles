@@ -1,0 +1,119 @@
+- defaults:
+    link:
+      relink: true
+
+- create:
+  - $HOME/.oh-my-zsh/custom/plugins
+
+- shell:
+  -
+    command: if [[ ! `uname` =~ "Darwin" ]]; then sudo apt update; fi
+    description: Updating apt
+    quiet: true
+  -
+    command: if [[ ! `uname` =~ "Darwin" ]]; then sudo apt installing -y zsh; fi
+    description: Installing zsh
+    quiet: true
+  -
+    command: if [[ ! -d "$HOME/.oh-my-zsh" ]]; then yes | sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"; fi
+    description: Installing oh-my-zsh
+    quiet: true
+  -
+    command: if [[ ! -d "$HOME/.pyenv" ]]; then git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv; fi
+    description: Installing pyenv
+    quiet: true
+  -
+    command: if [[ ! -d "$HOME/.pyenv/plugins/pyenv-virtualenv" ]]; then git clone https://github.com/pyenv/pyenv-virtualenv.git $HOME/.pyenv/plugins/pyenv-virtualenv; fi
+    quiet: true
+  -
+    command: |
+      cat << EOF >> $HOME/.zprofile
+      export PYENV_ROOT="$HOME/.pyenv"
+      export PATH="$PYENV_ROOT/bin:$PATH"
+      eval "$(pyenv init --path)"
+      EOF
+    quiet: true
+  -
+    command: if [[ `uname` =~ "Darwin" ]]; then ssh-add --apple-use-keychain $HOME/.ssh/id_ed25519; fi
+    quiet: true
+  -
+    command: if [[ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" ]]; then git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting; fi
+    description: Installing zsh syntax highlighting
+    quiet: true
+  -
+    command: if [[ ! -d "$HOME/.oh-my-zsh/custom/themes/powerlevel10k" ]]; then git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $HOME/.oh-my-zsh/custom/themes/powerlevel10k; fi
+    description: Installing powerlevel10k theme
+    quiet: true
+  -
+    command: if [[ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-bat" ]]; then git clone https://github.com/fdellwing/zsh-bat.git $HOME/.oh-my-zsh/custom/plugins/zsh-bat; fi
+    description: Installing bat zsh plugin
+    quiet: true
+  -
+    command: if [[ ! -d "$HOME/.oh-my-zsh/custom/plugins/you-should-use" ]]; then git clone https://github.com/MichaelAquilina/zsh-you-should-use.git $HOME/.oh-my-zsh/custom/plugins/you-should-use; fi
+    description: Installing you should use plugin
+    quiet: true
+  -
+    command: curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+    description: Installing zoxide
+    quiet: true
+  -
+    command: if [[ ! -d "$HOME/.fzf" ]]; then git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf && $HOME/.fzf/install; fi
+    description: Installing fzf
+    quiet: true
+  -
+    command: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    description: Installing homebrew
+    quiet: true
+  -
+    command: brew bundle --file=brew/Brewfile
+    description: Installing from brewfile
+    quiet: true
+
+- link:
+    ~/.aliases:
+      relative: true
+    ~/.zshrc:
+      relative: true
+    ~/.zprofile:
+      relative: true
+    ~/.gitconfig:
+      path: git/gitconfig
+      relative: true
+    ~/.p10k.zsh:
+    ~/.ssh/config:
+      if: '[ `uname` = Darwin ]'
+      path: config_ssh
+      relative: true
+    ~/Library/Application Support/Code/User/settings.json:
+      if: '[ `uname` = Darwin ]'
+      path: vscode/settings.json
+      relative: true
+      create: true
+    ~/Library/Application Support/Code/User/keybindings.json:
+      if: '[ `uname` = Darwin ]'
+      path: vscode/keybindings.json
+      relative: true
+      create: true
+    ~/.config/iterm2:
+      if: '[ `uname` = Darwin ]'
+      path: iterm2
+      relative: true
+      create: true
+    ~/.config/karabiner:
+      if: '[ `uname` = Darwin ]'
+      path: karabiner
+      relative: true
+      create: true
+    ~/Library/Application Support/ruff:
+      if: '[ `uname` = Darwin ]'
+      path: ruff
+      relative: true
+      create: true
+    ~/.simplebarrc:
+      if: '[ `uname` = Darwin ]'
+      path: simplebarrc
+      relative: true
+- shell:
+  -
+    command: exec zsh
+    description: Restarting shell
