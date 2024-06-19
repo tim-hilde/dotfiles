@@ -26,3 +26,6 @@ vscode/extensions/
 *.pfx
 *.key
 .*_history
+
+# alfred settings with secrets
+alfred/Alfred.alfredpreferences/workflows/user.workflow.9EC67259-0811-4749-9385-1E79E03FA358/prefs.plist
