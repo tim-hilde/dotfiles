@@ -139,8 +139,5 @@ eval "$(fzf --zsh)"
 export FZF_DEFAULT_OPTS=' --preview="echo {}" --preview-window=down,3,wrap --height=60%'
 # export FZF_DEFAULT_OPTS=' --preview="echo {} --color=always {} --preview-window=down,60%,wrap --layout=reverse --height=80%"'
 
-# Export python Path for decision science project
-export PYTHONPATH="/Users/tim/code/tim-hilde/04-Decision-Science/01-Project-Setup/data-context-and-setup:$PYTHONPATH"
-
 ZSH_THEME_TERM_TITLE_IDLE="%n@%m: %1~"
 ZSH_THEME_TERM_TAB_TITLE_IDLE="%n@%m: %1~"
