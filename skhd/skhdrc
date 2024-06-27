@@ -38,7 +38,8 @@ hyper - y : yabai -m space --mirror y-axis
 hyper - x : yabai -m space --mirror x-axis
 
 # toggle window float
-hyper - t : yabai -m window --toggle float --grid 12:12:2:2:8:8
+# The grid format is <rows>:<cols>:<start-x>:<start-y>:<width>:<height>
+hyper - t : yabai -m window --toggle float --grid 10:16:2:1:12:8
 
 # maximize a window
 hyper - m : yabai -m window --toggle zoom-fullscreen
