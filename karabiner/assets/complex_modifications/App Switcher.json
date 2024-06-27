@@ -632,6 +632,35 @@
               }
             }
           ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "c"
+          },
+          "conditions": [
+            {
+              "type": "variable_if",
+              "name": "LEADER_ACTIVE",
+              "value": true
+            }
+          ],
+          "to": [
+            {
+              "shell_command": "open -a 'ChatGPT'"
+            },
+            {
+              "set_variable": {
+                "name": "LEADER_ACTIVE",
+                "value": false
+              }
+            },
+            {
+              "set_notification_message": {
+                "id": "leader-notice"
+              }
+            }
+          ]
         }
       ]
     }
