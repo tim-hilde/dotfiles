@@ -11,7 +11,6 @@
     "git.enableSmartCommit": true,
     "git.confirmSync": false,
     "git.autofetch": true,
-    "python.defaultInterpreterPath": "/Users/tim/.pyenv/versions/3.10.6/envs/kestrix",
     "editor.fontFamily": "'JetBrainsMono Nerd Font Mono', monospace",
     "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font Mono', monospace",
     "editor.minimap.enabled": false,
