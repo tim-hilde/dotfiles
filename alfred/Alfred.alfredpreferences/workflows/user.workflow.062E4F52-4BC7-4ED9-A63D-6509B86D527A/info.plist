@@ -227,6 +227,29 @@
 				<true/>
 			</dict>
 		</array>
+		<key>73A7B71E-71A0-4C0D-A135-B163627350F8</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>70C4F79D-D608-41A7-B2FF-723F59D79DDF</string>
+				<key>modifiers</key>
+				<integer>524288</integer>
+				<key>modifiersubtext</key>
+				<string>⌥: Copy URL</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>A6A588B4-6474-4862-B661-C38931F307FA</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>807968C5-83D0-4F80-8188-636A8D536DBE</key>
 		<array>
 			<dict>
@@ -512,7 +535,7 @@
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
-				<string>devdocs/dev-docs-search.js</string>
+				<string>scripts/devdocs/search-devdocs.js</string>
 				<key>subtext</key>
 				<string>{var:keyword_01} {var:keyword_02} {var:keyword_03} {var:keyword_04} {var:keyword_05} {var:keyword_06} {var:keyword_07} {var:keyword_08} {var:keyword_09} {var:keyword_10} {var:keyword_11} {var:keyword_12} {var:keyword_13} {var:keyword_14} {var:keyword_15} {var:keyword_16} {var:keyword_17} {var:keyword_18} {var:keyword_19} {var:keyword_20} {var:keyword_21} {var:keyword_22} {var:keyword_23} {var:keyword_24} {var:keyword_25} {var:keyword_26} {var:keyword_27} {var:keyword_28} {var:keyword_29} {var:keyword_30} {var:keyword_31} {var:keyword_32} {var:keyword_33} {var:keyword_34} {var:keyword_35} {var:keyword_36} {var:keyword_37} {var:keyword_38} {var:keyword_39} {var:keyword_40}</string>
 				<key>title</key>
@@ -541,7 +564,7 @@
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
-				<string>./scripts/appid.sh</string>
+				<string>./scripts/extra-utilities/appid.sh</string>
 				<key>type</key>
 				<integer>8</integer>
 			</dict>
@@ -584,7 +607,7 @@
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
-				<string>./scripts/appid.js</string>
+				<string>./scripts/extra-utilities/appid.js</string>
 				<key>subtext</key>
 				<string></string>
 				<key>title</key>
@@ -669,7 +692,7 @@
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
-				<string>./scripts/applescript-dictionaries.js</string>
+				<string>./scripts/extra-utilities/applescript-dictionaries.js</string>
 				<key>subtext</key>
 				<string></string>
 				<key>title</key>
@@ -718,7 +741,7 @@
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
-				<string>./scripts/wezterm-docs-search.js</string>
+				<string>./scripts/manual-docs-searches/wezterm-docs-search.js</string>
 				<key>subtext</key>
 				<string></string>
 				<key>title</key>
@@ -847,7 +870,7 @@
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
-				<string>./scripts/biome-docs-search.js</string>
+				<string>./scripts/manual-docs-searches/biome-docs-search.js</string>
 				<key>subtext</key>
 				<string></string>
 				<key>title</key>
@@ -976,7 +999,7 @@
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
-				<string>./scripts/ruff-rules.js</string>
+				<string>./scripts/manual-docs-searches/ruff-rules.js</string>
 				<key>subtext</key>
 				<string></string>
 				<key>title</key>
@@ -1114,7 +1137,7 @@
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
-				<string>./scripts/shellcheck-wiki.js</string>
+				<string>./scripts/manual-docs-searches/shellcheck-wiki.js</string>
 				<key>subtext</key>
 				<string></string>
 				<key>title</key>
@@ -1252,7 +1275,7 @@
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
-				<string>./scripts/pandoc-docs.js</string>
+				<string>./scripts/manual-docs-searches/pandoc-docs.js</string>
 				<key>subtext</key>
 				<string></string>
 				<key>title</key>
@@ -1301,7 +1324,7 @@
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
-				<string>./scripts/sounds-preview.js</string>
+				<string>./scripts/extra-utilities/sounds-preview.js</string>
 				<key>subtext</key>
 				<string></string>
 				<key>title</key>
@@ -1373,7 +1396,7 @@
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
-				<string>./scripts/can-i-use.js</string>
+				<string>./scripts/manual-docs-searches/can-i-use.js</string>
 				<key>subtext</key>
 				<string></string>
 				<key>title</key>
@@ -1429,13 +1452,13 @@
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
-				<integer>102</integer>
+				<integer>0</integer>
 				<key>script</key>
 				<string></string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
-				<string>./scripts/get-window-information.applescript</string>
+				<string>./scripts/extra-utilities/get-window-information.applescript</string>
 				<key>type</key>
 				<integer>8</integer>
 			</dict>
@@ -1482,6 +1505,55 @@
 				<integer>1</integer>
 				<key>escaping</key>
 				<integer>0</integer>
+				<key>keyword</key>
+				<string>just</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>loading…</string>
+				<key>script</key>
+				<string></string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string>./scripts/manual-docs-searches/just-docs.js</string>
+				<key>subtext</key>
+				<string>task runner</string>
+				<key>title</key>
+				<string>Just</string>
+				<key>type</key>
+				<integer>8</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>73A7B71E-71A0-4C0D-A135-B163627350F8</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<true/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>0</integer>
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
@@ -1497,7 +1569,7 @@
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
-				<string>./scripts/search-manpage-sections.js</string>
+				<string>./scripts/manual-docs-searches/search-manpage-sections.js</string>
 				<key>subtext</key>
 				<string></string>
 				<key>title</key>
@@ -1511,6 +1583,25 @@
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
 			<string>F912A4EE-E269-4F06-87C3-7A08275A3D4F</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>ignoredynamicplaceholders</key>
+				<false/>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>DD866690-B895-469A-936D-2A018AA4D25E</string>
 			<key>version</key>
 			<integer>3</integer>
 		</dict>
@@ -1546,7 +1637,7 @@
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
-				<string>./scripts/search-man-pages.js</string>
+				<string>./scripts/manual-docs-searches/search-man-pages.js</string>
 				<key>subtext</key>
 				<string></string>
 				<key>title</key>
@@ -1560,25 +1651,6 @@
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
 			<string>D10E485C-BB78-4681-A267-D6B57E3E6EA3</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>autopaste</key>
-				<false/>
-				<key>clipboardtext</key>
-				<string>{query}</string>
-				<key>ignoredynamicplaceholders</key>
-				<false/>
-				<key>transient</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.clipboard</string>
-			<key>uid</key>
-			<string>DD866690-B895-469A-936D-2A018AA4D25E</string>
 			<key>version</key>
 			<integer>3</integer>
 		</dict>
@@ -1656,7 +1728,7 @@
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
-				<string>scripts/reload-cache.js</string>
+				<string>./scripts/extra-utilities/reload-cache.js</string>
 				<key>type</key>
 				<integer>8</integer>
 			</dict>
@@ -1680,20 +1752,39 @@ A handful of documentation sites that are not included in DevDocs are made avail
 ---
 
 ## DevDocs
-Enabled the devdocs you want to use in the workflow configuration. The
+Enable the devdocs you want to use in the workflow configuration. The
 enabled devdocs are searched by using the name as keyword, for example `haskell
 foobar` to search the Haskell DevDocs for "foobar."
 
 A few common languages have short-hands noted in the popup selection, such as
 `js` for JavaScript. In this case, you use `js foobar` to search instead.
 
-**Usage**
+### Usage
 - &lt;kbd&gt;⏎&lt;/kbd&gt;: Open the documentation site.
 - &lt;kbd&gt;⌥&lt;/kbd&gt;&lt;kbd&gt;⏎&lt;/kbd&gt;: Copy the URL of the documentation site to the clipboard.
 
-**Usage**
-- &lt;kbd&gt;⏎&lt;/kbd&gt;: Open the documentation site.
-- &lt;kbd&gt;⌥&lt;/kbd&gt;&lt;kbd&gt;⏎&lt;/kbd&gt;: Copy the URL of the documentation site to the clipboard.
+### Pinning specific versions
+1. In the workflow configuration, go to the `pinned devdocs versions` section.
+   (Depending on your screen height, you might need to scroll down.)
+2. The replacements take the form `alfred_keyword:pinned_version`, one version
+   change per line. For example to pin the `node` and `python` versions:
+
+   ```
+   node:node~18_lts
+   ```
+
+   ```
+   py:python~3.11
+   ```
+
+3. The versions available are listed under the key `slug` in [this json
+   file](https://devdocs.io/docs.json).
+4. Afterward, reload the caches via the Alfred keyword `:docs-reload` once to
+   ensure the new versions are used.
+
+### Icons
+Search icons for specific documentation sites are provided by adding a file to
+the directory `./devdocs/icons/{keyword}.png`. PRs are welcome.
 
 ## Extras
 
@@ -1705,6 +1796,7 @@ A few common languages have short-hands noted in the popup selection, such as
 - `man`: man pages at [mankier.com](https://www.mankier.com/)
 - `wt`: WezTerm docs
 - `cani`: caniuse.com
+- `just`: [just (task runner) docs](https://just.systems/man/en/)
 
 ### Utilities
 - `color`: named CSS colors
@@ -1728,7 +1820,7 @@ refreshing the cache via the Alfred keyword `:docs-reload`.
 
 ---
 
-Created by [Chris Grieser](https://chris-grieser.de/).</string>
+Workflow created by [Chris Grieser](https://chris-grieser.de/).</string>
 	<key>uidata</key>
 	<dict>
 		<key>090678C4-E32D-408A-A3F2-88B39DCCE851</key>
@@ -1907,6 +1999,15 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 			<key>ypos</key>
 			<real>755</real>
 		</dict>
+		<key>73A7B71E-71A0-4C0D-A135-B163627350F8</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>7</integer>
+			<key>xpos</key>
+			<real>30</real>
+			<key>ypos</key>
+			<real>900</real>
+		</dict>
 		<key>807968C5-83D0-4F80-8188-636A8D536DBE</key>
 		<dict>
 			<key>colorindex</key>
@@ -2030,7 +2131,7 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 			<key>xpos</key>
 			<real>30</real>
 			<key>ypos</key>
-			<real>900</real>
+			<real>1015</real>
 		</dict>
 		<key>D13B43E8-0DC2-4E8C-AE56-365D8620A0FA</key>
 		<dict>
@@ -2077,7 +2178,7 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 			<key>xpos</key>
 			<real>190</real>
 			<key>ypos</key>
-			<real>900</real>
+			<real>1015</real>
 		</dict>
 		<key>FC4A9CCB-0458-42DE-9CFE-4110B7E0CADF</key>
 		<dict>
@@ -2181,6 +2282,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>chef</string>
 						<string>chef</string>
+					</array>
+					<array>
+						<string>click</string>
+						<string>click</string>
 					</array>
 					<array>
 						<string>clojure</string>
@@ -2569,6 +2674,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -3061,6 +3170,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -3447,6 +3560,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -3939,6 +4056,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -4325,6 +4446,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -4817,6 +4942,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -5203,6 +5332,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -5695,6 +5828,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -6081,6 +6218,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -6573,6 +6714,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -6959,6 +7104,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -7451,6 +7600,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -7837,6 +7990,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -8329,6 +8486,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -8715,6 +8876,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -9207,6 +9372,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -9593,6 +9762,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -10085,6 +10258,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -10471,6 +10648,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -10963,6 +11144,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -11349,6 +11534,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -11841,6 +12030,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -12227,6 +12420,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -12719,6 +12916,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -13105,6 +13306,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -13597,6 +13802,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -13983,6 +14192,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -14475,6 +14688,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -14861,6 +15078,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -15353,6 +15574,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -15739,6 +15964,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -16231,6 +16460,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -16617,6 +16850,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -17109,6 +17346,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -17495,6 +17736,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -17987,6 +18232,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -18373,6 +18622,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -18865,6 +19118,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -19251,6 +19508,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -19743,6 +20004,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -20129,6 +20394,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -20621,6 +20890,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -21007,6 +21280,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -21499,6 +21776,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -21885,6 +22166,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -22377,6 +22662,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -22763,6 +23052,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -23255,6 +23548,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -23641,6 +23938,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -24133,6 +24434,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -24519,6 +24824,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -25011,6 +25320,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -25397,6 +25710,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -25889,6 +26206,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -26275,6 +26596,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -26767,6 +27092,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -27153,6 +27482,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -27645,6 +27978,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -28031,6 +28368,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -28523,6 +28864,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -28909,6 +29254,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -29401,6 +29750,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -29787,6 +30140,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -30279,6 +30636,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -30665,6 +31026,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -31157,6 +31522,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -31543,6 +31912,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -32035,6 +32408,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -32421,6 +32798,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -32913,6 +33294,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -33299,6 +33684,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -33791,6 +34180,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -34177,6 +34570,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -34669,6 +35066,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -35055,6 +35456,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -35547,6 +35952,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -35933,6 +36342,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -36425,6 +36838,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 						<string>chef</string>
 					</array>
 					<array>
+						<string>click</string>
+						<string>click</string>
+					</array>
+					<array>
 						<string>clojure</string>
 						<string>clojure</string>
 					</array>
@@ -36811,6 +37228,10 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 					<array>
 						<string>mongoose</string>
 						<string>mongoose</string>
+					</array>
+					<array>
+						<string>nextjs</string>
+						<string>nextjs</string>
 					</array>
 					<array>
 						<string>nginx (keyword: ngx)</string>
@@ -37211,9 +37632,30 @@ Created by [Chris Grieser](https://chris-grieser.de/).</string>
 			<key>variable</key>
 			<string>keyword_40</string>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string></string>
+				<key>required</key>
+				<false/>
+				<key>trim</key>
+				<true/>
+				<key>verticalsize</key>
+				<integer>3</integer>
+			</dict>
+			<key>description</key>
+			<string>one per line; see to the right for explanations</string>
+			<key>label</key>
+			<string>pinned devdocs versions</string>
+			<key>type</key>
+			<string>textarea</string>
+			<key>variable</key>
+			<string>select_versions</string>
+		</dict>
 	</array>
 	<key>version</key>
-	<string>2.4.1</string>
+	<string>2.7.5</string>
 	<key>webaddress</key>
 	<string>https://chris-grieser.de/</string>
 </dict>

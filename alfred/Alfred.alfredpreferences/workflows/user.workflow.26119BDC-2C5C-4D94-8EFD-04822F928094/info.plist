@@ -90,6 +90,8 @@ Application("System Events")
 				<integer>2</integer>
 				<key>keyword</key>
 				<string>{var:clear_keyword}</string>
+				<key>skipuniversalaction</key>
+				<true/>
 				<key>subtext</key>
 				<string>Close notification banners</string>
 				<key>text</key>
@@ -191,7 +193,7 @@ Configure the [Hotkey](https://www.alfredapp.com/help/workflows/triggers/hotkey/
 		</dict>
 	</array>
 	<key>version</key>
-	<string>2023.2</string>
+	<string>2024.1</string>
 	<key>webaddress</key>
 	<string>https://github.com/alfredapp/banner-be-gone-workflow/</string>
 </dict>

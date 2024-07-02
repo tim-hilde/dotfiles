@@ -1,10 +1,20 @@
 #!/usr/bin/env node
+//──────────────────────────────────────────────────────────────────────────────
+// INFO
+// - needs to be run from repo root: `node ./scripts/devdocs/update-devdocs.mjs`
+// - updates which devdocs are available, and also the versions of devdocs
+//   (automatically switches to the latest version)
+// - WARN this overwrites all available workflow configuration, so changes need
+//   to be added here manually, such as the field for using specific devdocs
+//   versions.
+//──────────────────────────────────────────────────────────────────────────────
+// biome-ignore lint/correctness/noNodejsModules: unsure how to fix this
 import fs from "node:fs";
 //──────────────────────────────────────────────────────────────────────────────
 
 /** @type {Record<string, string>} */
 const aliases = {
-	// alises added on top of the ones from devdocs
+	// aliases added on top of the ones from devdocs
 	hammerspoon: "hs",
 
 	// PENDING https://github.com/freeCodeCamp/devdocs/issues/2210
@@ -43,8 +53,13 @@ const aliases = {
 };
 
 //──────────────────────────────────────────────────────────────────────────────
-// INFO to be run from repo root
-//──────────────────────────────────────────────────────────────────────────────
+
+const slugRegex = /~.*/;
+
+// add extra line for workflow versions, since it's overridden further below
+const extraWorkflowConfig = [
+	"<dict> <key>config</key> <dict> <key>default</key> <string></string> <key>required</key> <false/> <key>trim</key> <true/> <key>verticalsize</key> <integer>3</integer> </dict> <key>description</key> <string>one per line; see to the right for explanations</string> <key>label</key> <string>pinned devdocs versions</string> <key>type</key> <string>textarea</string> <key>variable</key> <string>select_versions</string> </dict>",
+];
 
 async function run() {
 	const response = await fetch("https://devdocs.io/docs.json");
@@ -57,7 +72,7 @@ async function run() {
 	const infoPlistPopup = [noneItem];
 	for (const lang of json) {
 		// allLangs json -> keyword-slug-map
-		const id = lang.slug.replace(/~.*/, "");
+		const id = lang.slug.replace(slugRegex, "");
 		const keyword = aliases[id] || id;
 		if (allLangs[keyword]) continue; // do not add old versions of the same language
 		allLangs[keyword] = lang.slug;
@@ -91,6 +106,7 @@ async function run() {
 			`</array> </dict> <key>description</key> <string></string> <key>label</key> <string>${label}</string> <key>type</key> <string>popupbutton</string> <key>variable</key> <string>keyword_${number}</string> </dict>`,
 		);
 	}
+	newXmlLines.push(...extraWorkflowConfig);
 
 	const start = xmlLines.indexOf("\t<key>userconfigurationconfig</key>") + 2;
 	const end = xmlLines.indexOf("\t</array>", start);

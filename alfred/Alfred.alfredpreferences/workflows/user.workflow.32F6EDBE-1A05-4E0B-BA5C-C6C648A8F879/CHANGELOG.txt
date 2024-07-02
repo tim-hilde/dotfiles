@@ -1,4 +1,6 @@
 ### Changelog
-- **fix**: `o` search broken
+- **chore**: extra validation for `osetup` and `ov`
+- **feat**: `ov` with `shift+enter` to control a different vault (#152)
 - **chore**: Updated documentation index
-- **fix**: bug-report template
+- **build**: minor fix for build-and-release script
+- **build**: update build-and-release script

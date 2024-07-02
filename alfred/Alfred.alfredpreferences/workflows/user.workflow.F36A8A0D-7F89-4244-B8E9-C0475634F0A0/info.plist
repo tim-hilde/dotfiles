@@ -590,19 +590,6 @@
 		</array>
 		<key>D84E30BC-1391-41D8-908A-D95EFCA645A4</key>
 		<array/>
-		<key>DCE17FBF-477C-44D9-A526-E80EAA51C327</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>53172C76-0F6F-4E84-8C96-D0E81629CBA4</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
 		<key>E1E3A9E7-0EEF-4745-A62C-79E46A2AF51F</key>
 		<array>
 			<dict>
@@ -1016,6 +1003,8 @@ variables={allvars}
 			<integer>1</integer>
 		</dict>
 		<dict>
+			<key>config</key>
+			<dict/>
 			<key>type</key>
 			<string>alfred.workflow.utility.hidealfred</string>
 			<key>uid</key>
@@ -1126,37 +1115,6 @@ python3 zh.py attachments $id "$1"</string>
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
 			<string>5D1E28B8-C1D6-495B-856F-F48C59150FE0</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>action</key>
-				<integer>0</integer>
-				<key>argument</key>
-				<integer>0</integer>
-				<key>focusedappvariable</key>
-				<false/>
-				<key>focusedappvariablename</key>
-				<string></string>
-				<key>hotkey</key>
-				<integer>16</integer>
-				<key>hotmod</key>
-				<integer>524288</integer>
-				<key>hotstring</key>
-				<string>Z</string>
-				<key>leftcursor</key>
-				<false/>
-				<key>modsmode</key>
-				<integer>0</integer>
-				<key>relatedAppsMode</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.trigger.hotkey</string>
-			<key>uid</key>
-			<string>DCE17FBF-477C-44D9-A526-E80EAA51C327</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
@@ -1486,6 +1444,8 @@ python3 zh.py copy $flags "$style" "$id"</string>
 			<integer>1</integer>
 		</dict>
 		<dict>
+			<key>config</key>
+			<dict/>
 			<key>type</key>
 			<string>alfred.workflow.utility.hidealfred</string>
 			<key>uid</key>
@@ -2652,13 +2612,6 @@ These are the workflow's default keywords in Alfred:
 			<key>ypos</key>
 			<real>1065</real>
 		</dict>
-		<key>DCE17FBF-477C-44D9-A526-E80EAA51C327</key>
-		<dict>
-			<key>xpos</key>
-			<real>45</real>
-			<key>ypos</key>
-			<real>365</real>
-		</dict>
 		<key>E1E3A9E7-0EEF-4745-A62C-79E46A2AF51F</key>
 		<dict>
 			<key>note</key>
@@ -2864,7 +2817,7 @@ These are the workflow's default keywords in Alfred:
 	<key>variablesdontexport</key>
 	<array/>
 	<key>version</key>
-	<string>2.1</string>
+	<string>2.2</string>
 	<key>webaddress</key>
 	<string>https://github.com/giovannicoppola/zothero/</string>
 </dict>
