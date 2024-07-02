@@ -17,3 +17,36 @@ alias cd=z
 # skhd / yabai
 alias skhdrc="code ~/dotfiles/skhd/skhdrc"
 alias yabairc="code ~/dotfiles/yabai/yabairc"
+
+# set env variables for docker/gcloud
+function set_gcloud_env() {
+  # Standardwerte für die Umgebungsvariablen
+  local default_docker_image_name="name-of-my-image-in-kebab-case"
+  local default_GCP_REGION="europe-west1"
+
+  echo -n "GCP_PROJECT_ID: "
+  read input_var1
+  echo -n "DOCKER_IMAGE_NAME ($default_docker_image_name): "
+  read input_var2
+  echo -n "GCP_REGION ($default_GCP_REGION): "
+  read input_var3
+  echo -n "DOCKER_REPO_NAME: "
+  read input_var4
+
+  echo GCP_PROJECT_ID="$input_var1" > .env
+  echo DOCKER_IMAGE_NAME="${input_var2:-$default_docker_image_name}" >> .env
+  echo GCP_REGION="${input_var3:-$default_GCP_REGION}" >> .env
+  echo DOCKER_REPO_NAME="$input_var4" >> .env
+
+  echo "GCP_PROJECT_ID=$input_var1"
+  echo "DOCKER_IMAGE_NAME=${input_var2:-$default_docker_image_name}"
+  echo "GCP_REGION=${input_var3:-$default_GCP_REGION}"
+  echo "DOCKER_REPO_NAME=$DOCKER_REPO_NAME"
+}
+
+function get_gcloud_env() {
+    echo $GCP_PROJECT_ID
+    echo $DOCKER_IMAGE_NAME
+    echo $GCP_REGION
+    echo $DOCKER_REPO_NAME
+}
