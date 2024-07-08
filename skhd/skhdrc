@@ -70,3 +70,6 @@ hyper - 0 : yabai -m window --space 10;
 hyper - q : yabai -m window --space prev
 # move space right
 hyper - w : yabai -m window --space next
+
+# turn off internal display
+hyper - b : brightness -d 1 0
