@@ -1,7 +1,9 @@
 .DEFAULT_GOAL := default
 #################### PACKAGE ACTIONS ###################
 
-make_create_pyenv:
+setup: create_pyenv install
+
+create_pyenv:
 	@if pyenv virtualenvs | grep -q "{{cookiecutter.package_name}}"; then \
 		echo "Virtual environment "{{cookiecutter.package_name}}" already exists."; \
 	else \
@@ -9,7 +11,7 @@ make_create_pyenv:
 	fi
 	@pyenv local {{cookiecutter.package_name}}
 
-make install:
+install:
 	@pip install --upgrade pip
 	@pip install -e .
 

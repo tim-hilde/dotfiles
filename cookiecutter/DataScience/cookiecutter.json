@@ -3,7 +3,6 @@
     "package_name": "{{cookiecutter.repo_name}}",
     "authors": "Tim Hildebrandt",
     "mail": "tim.hildebrandt@me.com",
-    "description": "",
-    "url": ""
+    "description": ""
 
 }
