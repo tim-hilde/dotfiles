@@ -1,0 +1,7 @@
+### Changelog
+- **ci**: indicate errors in auto-updated commit messages
+- **ci**: auto-update the `info.plist` with new docs sites
+- **refactor**: rename files
+- **refactor**: reorganize folder structure
+- **ci**: run automated update twice per month instead of once
+- **ci**: prepare fully automated updates of devdocs
