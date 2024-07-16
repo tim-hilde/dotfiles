@@ -178,7 +178,7 @@
     "indentRainbow.indicatorStyle": "light",
     "github.copilot.editor.enableCodeActions": false,
     "github.copilot.chat.useProjectTemplates": false,
-    "terminal.external.osxExec": "iTerm.app",
+    "terminal.external.osxExec": "Alacritty.app",
     "editor.fontVariations": false,
     "editor.acceptSuggestionOnEnter": "smart",
     "editor.snippetSuggestions": "top",
@@ -201,5 +201,6 @@
     },
     "editor.unicodeHighlight.invisibleCharacters": false,
     "editor.unicodeHighlight.ambiguousCharacters": false,
+    "terminal.integrated.enableImages": true,
 
 }

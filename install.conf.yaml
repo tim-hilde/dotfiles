@@ -117,3 +117,10 @@
   -
     command: exec zsh
     description: Restarting shell
+- shell:
+  -
+    command: gh auth login -s 'user:email' -w
+  -
+    command: pyenv install 3.10.6 && pyenv global 3.10.6
+  -
+    command: pip install --upgrade pip

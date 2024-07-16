@@ -16,6 +16,12 @@
 		<true/>
 		<key>alfred.action.showpackagecontents</key>
 		<true/>
+		<key>alfred.action.text.searchwithfinder</key>
+		<true/>
+		<key>alfred.action.url.openin</key>
+		<true/>
+		<key>alfred.action.url.usedomainfromurl</key>
+		<true/>
 	</dict>
 	<key>finderSelectionHotkey</key>
 	<dict>

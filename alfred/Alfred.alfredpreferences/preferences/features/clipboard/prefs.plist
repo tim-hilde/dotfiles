@@ -12,6 +12,8 @@
 	<true/>
 	<key>fastAppendBackToClipboard</key>
 	<true/>
+	<key>fastAppendPlaySound</key>
+	<false/>
 	<key>fastAppendSeparator</key>
 	<integer>1</integer>
 	<key>hotkey</key>
