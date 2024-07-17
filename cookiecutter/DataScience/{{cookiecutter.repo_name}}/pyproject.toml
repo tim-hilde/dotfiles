@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "{{cookiecutter.repo.name}}"
+version = "0.1.0"
+description = "{{cookiecutter.description}}"
+authors = ["{{cookiecutter.authors}} <{{cookiecutter.mail}}>"]
+readme = "readme.md"
+
+[tool.poetry.dependencies]
+python = "^3.10.6"
+ipdb = "^0.13.13"
+ipykernel = "^6.29.5"
+jupyter = "^1.0.0"
+notebook = "^7.2.1"
+pandas = "^2.2.2"
+pyarrow = "^17.0.0"
+scikit-learn = "^1.5.1"
+seaborn = "^0.13.2"
+pylint = "^3.2.5"
+pytest = "^7.4.2"
+numpy = "^1.26.4"
+tensorflow = "^2.16"
+tensorflow-metal = { version = "1.1", platform = "darwin", markers = "'ARM' in platform_version" }
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
