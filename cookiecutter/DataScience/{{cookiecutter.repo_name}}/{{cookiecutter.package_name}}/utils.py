@@ -1,6 +1,6 @@
 import os
 
-from {{cookiecutter.repo.name}}.config import (
+from {{cookiecutter.repo_name}}.config import (
 	STATIC_DIR,
 	DATA_DIR,
 	RAW_DIR,

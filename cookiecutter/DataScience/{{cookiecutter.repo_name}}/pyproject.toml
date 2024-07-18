@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "{{cookiecutter.repo.name}}"
+name = "{{cookiecutter.repo_name}}"
 version = "0.1.0"
 description = "{{cookiecutter.description}}"
 authors = ["{{cookiecutter.authors}} <{{cookiecutter.mail}}>"]
@@ -19,8 +19,7 @@ pylint = "^3.2.5"
 pytest = "^7.4.2"
 numpy = "^1.26.4"
 tensorflow = "^2.16"
-tensorflow-metal = { version = "1.1", platform = "darwin", markers = "'ARM' in platform_version" }
-
+tensorflow-metal = { version = "^1.1", platform = "darwin", markers = "platform_machine == 'arm64'" }
 
 [build-system]
 requires = ["poetry-core"]

@@ -1,7 +1,6 @@
 # About this project
 
-This section should briefly explain what the project is about, and what the codebase is actually doing.
-<p align="right">(<a href="#top">back to top</a>)</p>
+{{cookiecutter.description}}
 
 # Getting started
 
