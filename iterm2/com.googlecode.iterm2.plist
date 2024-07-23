@@ -8,6 +8,8 @@
 	<false/>
 	<key>ClickToSelectCommand</key>
 	<false/>
+	<key>CompactMinimalTabBarHeight</key>
+	<real>22</real>
 	<key>CopySelection</key>
 	<false/>
 	<key>Custom Color Presets</key>
@@ -1950,12 +1952,16 @@
 	</dict>
 	<key>Default Bookmark Guid</key>
 	<string>E7A302DD-42D6-4100-AA6E-88C7BD6D261F</string>
+	<key>DefaultTabBarHeight</key>
+	<real>22</real>
 	<key>DimBackgroundWindows</key>
 	<false/>
 	<key>DimOnlyText</key>
 	<false/>
 	<key>DisableFullscreenTransparency</key>
 	<false/>
+	<key>DrawBottomLineForHorizontalTabBar</key>
+	<true/>
 	<key>EnableDivisionView</key>
 	<true/>
 	<key>EnableProxyIcon</key>
@@ -2115,6 +2121,8 @@
 			<string></string>
 		</dict>
 	</dict>
+	<key>HTMLTabTitles</key>
+	<false/>
 	<key>HapticFeedbackForEsc</key>
 	<false/>
 	<key>HideActivityIndicator</key>
@@ -3710,7 +3718,7 @@
 			<key>Thin Strokes</key>
 			<integer>0</integer>
 			<key>Title Components</key>
-			<integer>6</integer>
+			<integer>2</integer>
 			<key>Transparency</key>
 			<real>0.0</real>
 			<key>Unicode Version</key>
@@ -5643,6 +5651,8 @@
 	<false/>
 	<key>SoundForEsc</key>
 	<false/>
+	<key>StatusBarHeight</key>
+	<real>22</real>
 	<key>StatusBarPosition</key>
 	<integer>0</integer>
 	<key>StretchTabsToFillBar</key>
