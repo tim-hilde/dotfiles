@@ -26,14 +26,6 @@
     command: if [[ ! -d "$HOME/.pyenv/plugins/pyenv-virtualenv" ]]; then git clone https://github.com/pyenv/pyenv-virtualenv.git $HOME/.pyenv/plugins/pyenv-virtualenv; fi
     quiet: true
   -
-    command: |
-      grep -qxF 'export PYENV_ROOT="$HOME/.pyenv"' $HOME/.zprofile || cat << EOF >> $HOME/.zprofile
-      export PYENV_ROOT="$HOME/.pyenv"
-      export PATH="$PYENV_ROOT/bin:$PATH"
-      eval "$(pyenv init --path)"
-      EOF
-    quiet: true
-  -
     command: if [[ `uname` =~ "Darwin" ]]; then ssh-add --apple-use-keychain $HOME/.ssh/id_ed25519; fi
     quiet: true
   -
@@ -63,6 +55,9 @@
   -
     command: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     description: Installing homebrew
+    quiet: true
+  -
+    command: curl -sSL https://install.python-poetry.org | python3 -
     quiet: true
   -
     command: brew bundle --file=brew/Brewfile
