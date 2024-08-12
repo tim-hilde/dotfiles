@@ -63,6 +63,9 @@
     command: brew bundle --file=brew/Brewfile
     # description: Installing from brewfile
     quiet: true
+  -
+    command: git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
+    quiet: true
 
 - link:
     ~/.aliases:
@@ -97,11 +100,6 @@
     ~/.config/karabiner:
       if: '[ `uname` = Darwin ]'
       path: karabiner
-      relative: true
-      create: true
-    ~/Library/Application Support/ruff:
-      if: '[ `uname` = Darwin ]'
-      path: ruff
       relative: true
       create: true
     ~/.simplebarrc:

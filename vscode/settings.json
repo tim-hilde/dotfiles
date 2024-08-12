@@ -82,6 +82,7 @@
    // "prettier.useTabs": true,
     "ruff.showNotifications": "onError",
     "editor.defaultFormatter": "charliermarsh.ruff",
+    "notebook.formatOnSave.enabled": true,
     "RainbowBrackets.depreciation-notice": false,
     "workbench.colorCustomizations": {
 
@@ -145,7 +146,6 @@
         "/Users/tim/.vscode/extensions/continue.continue-0.6.15-darwin-arm64"
     ],
     "python.linting.enabled": false,
-    "python.terminal.activateEnvironment": false,
     "jupyter.pythonExportMethod": "commentMagics",
     "CodeGPT.apiKey": "HuggingFace",
     "CodeGPT.query.language": "German",
@@ -178,7 +178,7 @@
     "indentRainbow.indicatorStyle": "light",
     "github.copilot.editor.enableCodeActions": false,
     "github.copilot.chat.useProjectTemplates": false,
-    "terminal.external.osxExec": "Alacritty.app",
+    "terminal.external.osxExec": "Iterm.app",
     "editor.fontVariations": false,
     "editor.acceptSuggestionOnEnter": "smart",
     "editor.snippetSuggestions": "top",
@@ -202,5 +202,12 @@
     "editor.unicodeHighlight.invisibleCharacters": false,
     "editor.unicodeHighlight.ambiguousCharacters": false,
     "terminal.integrated.enableImages": true,
-
+    "autoDocstring.startOnNewLine": true,
+    "python.terminal.activateEnvironment": false,
+    "terminal.integrated.defaultProfile.osx": "zsh",
+    "terminal.integrated.inheritEnv": false,
+    "editor.formatOnSave": true,
+    "codesnap.transparentBackground": true,
+    "codesnap.backgroundColor": "",
+    "codesnap.shutterAction": "copy",
 }
