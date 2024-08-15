@@ -15,6 +15,10 @@
     description: Installing zsh
     quiet: true
   -
+    command: curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+    description: Installing kitty
+    quiet: true
+  -
     command: if [[ ! -d "$HOME/.oh-my-zsh" ]]; then yes | sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"; fi
     description: Installing oh-my-zsh
     quiet: true
@@ -53,11 +57,8 @@
     # description: Installing fzf
     quiet: true
   -
-    command: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    command: git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
     description: Installing homebrew
-    quiet: true
-  -
-    command: curl -sSL https://install.python-poetry.org | python3 -
     quiet: true
   -
     command: brew bundle --file=brew/Brewfile
@@ -92,6 +93,10 @@
       path: vscode/keybindings.json
       relative: true
       create: true
+    ~/.config/kitty:
+      path: kitty
+      relative: true
+      create: true
     ~/.config/iterm2:
       if: '[ `uname` = Darwin ]'
       path: iterm2
@@ -113,7 +118,11 @@
 - shell:
   -
     command: gh auth login -s 'user:email' -w
+    stdin: true
   -
     command: pyenv install 3.10.6 && pyenv global 3.10.6
   -
     command: pip install --upgrade pip
+  -
+    command: curl -sSL https://install.python-poetry.org | python3 -
+    quiet: true

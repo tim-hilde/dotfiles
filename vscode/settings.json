@@ -87,7 +87,7 @@
     "workbench.colorCustomizations": {
 
     },
-    "workbench.colorTheme": "Dracula Theme",
+    "workbench.colorTheme": "Catppuccin Mocha",
     "editor.inlineSuggest.showToolbar": "always",
     "jupyter.interactiveWindow.textEditor.executeSelection": true,
     "woke.enable": false,
@@ -156,7 +156,6 @@
     },
     "explorer.compactFolders": false,
     "github.copilot.chat.welcomeMessage": "never",
-    "github.copilot.editor.enableAutoCompletions": false,
     "github.copilot.advanced": {
 
     },
@@ -176,7 +175,6 @@
     "workbench.panel.defaultLocation": "bottom",
     "editor.accessibilitySupport": "off",
     "indentRainbow.indicatorStyle": "light",
-    "github.copilot.editor.enableCodeActions": false,
     "github.copilot.chat.useProjectTemplates": false,
     "terminal.external.osxExec": "Iterm.app",
     "editor.fontVariations": false,
@@ -192,7 +190,7 @@
     "python.analysis.ignore": [
         "*"
     ],
-    "workbench.activityBar.location": "top",
+    // "workbench.activityBar.location": "top",
     "jupyter.enableExtendedPythonKernelCompletions": true,
     "workbench.iconTheme": "material-icon-theme",
     "autoDocstring.docstringFormat": "numpy",
@@ -210,4 +208,5 @@
     "codesnap.transparentBackground": true,
     "codesnap.backgroundColor": "",
     "codesnap.shutterAction": "copy",
+    "python.defaultInterpreterPath": "/Users/tim/Library/Caches/pypoetry/virtualenvs/deep-live-cam-BmGjDei0-py3.10",
 }
