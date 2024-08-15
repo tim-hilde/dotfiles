@@ -234,7 +234,7 @@ rules:
             name: LEADER_ACTIVE
             value: true
         to:
-          - shell_command: open -a 'iterm'
+          - shell_command: open -a 'kitty'
           - set_variable:
               name: LEADER_ACTIVE
               value: false

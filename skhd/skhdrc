@@ -50,8 +50,8 @@ hyper - e : yabai -m space --balance
 # MOVE WINDOWS
 # swap windows
 hyper - h : yabai -m window --swap west
-hyper - k : yabai -m window --swap south
-hyper - j : yabai -m window --swap north
+hyper - j : yabai -m window --swap south
+hyper - k : yabai -m window --swap north
 hyper - l : yabai -m window --swap east
 
 # move window to space #

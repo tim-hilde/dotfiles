@@ -7,11 +7,11 @@
 
 - shell:
   -
-    command: if [[ ! `uname` =~ "Darwin" ]]; then sudo apt update; fi
+    command: if [[ ! `uname` =$HOME "Darwin" ]]; then sudo apt update; fi
     description: Updating apt
     quiet: true
   -
-    command: if [[ ! `uname` =~ "Darwin" ]]; then sudo apt installing -y zsh; fi
+    command: if [[ ! `uname` =$HOME "Darwin" ]]; then sudo apt installing -y zsh; fi
     description: Installing zsh
     quiet: true
   -
@@ -30,12 +30,16 @@
     command: if [[ ! -d "$HOME/.pyenv/plugins/pyenv-virtualenv" ]]; then git clone https://github.com/pyenv/pyenv-virtualenv.git $HOME/.pyenv/plugins/pyenv-virtualenv; fi
     quiet: true
   -
-    command: if [[ `uname` =~ "Darwin" ]]; then ssh-add --apple-use-keychain $HOME/.ssh/id_ed25519; fi
+    command: if [[ `uname` =$HOME "Darwin" ]]; then ssh-add --apple-use-keychain $HOME/.ssh/id_ed25519; fi
     quiet: true
   -
     command: if [[ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" ]]; then git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting; fi
     # description: Installing zsh syntax highlighting
     quiet: true
+  -
+    command: wget -P $HOME/.zsh https://raw.githubusercontent.com/catppuccin/zsh-syntax-highlighting/main/themes/catppuccin_mocha-zsh-syntax-highlighting.zsh
+    # description: Installing zsh syntax highlighting cattpuccin theme
+    quit: true
   -
     command: if [[ ! -d "$HOME/.oh-my-zsh/custom/themes/powerlevel10k" ]]; then git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $HOME/.oh-my-zsh/custom/themes/powerlevel10k; fi
     # description: Installing powerlevel10k theme
@@ -69,55 +73,63 @@
     quiet: true
 
 - link:
-    ~/.aliases:
+    $HOME/.aliases:
       relative: true
-    ~/.zshrc:
+    $HOME/.config/bat:
+      path: bat
       relative: true
-    ~/.zprofile:
+      create: true
+    $HOME/.zshrc:
       relative: true
-    ~/.gitconfig:
+    $HOME/.zprofile:
+      relative: true
+    $HOME/.gitconfig:
       path: git/gitconfig
       relative: true
-    ~/.p10k.zsh:
-    ~/.ssh/config:
+    $HOME/.p10k.zsh:
+    $HOME/.ssh/config:
       if: '[ `uname` = Darwin ]'
       path: config_ssh
       relative: true
-    ~/Library/Application Support/Code/User/settings.json:
+    $HOME/Library/Application Support/Code/User/settings.json:
       if: '[ `uname` = Darwin ]'
       path: vscode/settings.json
       relative: true
       create: true
-    ~/Library/Application Support/Code/User/keybindings.json:
+    $HOME/Library/Application Support/Code/User/keybindings.json:
       if: '[ `uname` = Darwin ]'
       path: vscode/keybindings.json
       relative: true
       create: true
-    ~/.config/kitty:
+    $HOME/.config/kitty:
       path: kitty
       relative: true
       create: true
-    ~/.config/iterm2:
+    $HOME/.config/iterm2:
       if: '[ `uname` = Darwin ]'
       path: iterm2
       relative: true
       create: true
-    ~/.config/karabiner:
+    $HOME/.config/karabiner:
       if: '[ `uname` = Darwin ]'
       path: karabiner
       relative: true
       create: true
-    ~/.simplebarrc:
+    $HOME/.simplebarrc:
       if: '[ `uname` = Darwin ]'
       path: simplebarrc
       relative: true
+    $HOME/.config/yazi:
+      path: yazi
+      relative: true
+      create: true
 - shell:
   -
     command: exec zsh
     description: Restarting shell
 - shell:
   -
-    command: gh auth login -s 'user:email' -w
+    command: gh auth login -s "user:email" -w
     stdin: true
   -
     command: pyenv install 3.10.6 && pyenv global 3.10.6

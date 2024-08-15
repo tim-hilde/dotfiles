@@ -176,7 +176,7 @@
     "editor.accessibilitySupport": "off",
     "indentRainbow.indicatorStyle": "light",
     "github.copilot.chat.useProjectTemplates": false,
-    "terminal.external.osxExec": "Iterm.app",
+    "terminal.external.osxExec": "kitty.app",
     "editor.fontVariations": false,
     "editor.acceptSuggestionOnEnter": "smart",
     "editor.snippetSuggestions": "top",

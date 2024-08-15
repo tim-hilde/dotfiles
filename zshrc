@@ -26,6 +26,9 @@ export MAGIC_DASHBOARD_DISABLED_BELOW_TERM_HEIGHT=15
 # Make commit hashes & files clickable. Requires `git-delta`.
 export MAGIC_DASHBOARD_USE_HYPERLINKS=0 # set to `1` to enable
 
+# zsh-syntax-highlighting catppuccino theme
+source ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh
+
 #oh-my-zsh plugins
 plugins=(
     common-aliases
@@ -48,9 +51,6 @@ plugins=(
     zsh-bat
     zsh-syntax-highlighting
 )
-
-# bat theme
-export BAT_THEME="Dracula"
 
 # (macOS-only) Prevent Homebrew from reporting - https://github.com/Homebrew/brew/blob/master/docs/Analytics.md
 export HOMEBREW_NO_ANALYTICS=1
