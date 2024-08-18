@@ -19,7 +19,7 @@
     description: Set execute permission on scripts
     quiet: true
   -
-    command: if [[ `uname` =~ Linux ]]; then mkdir $HOME/.local; fi
+    command: if [[ ! -d "$HOME/.local" && `uname` =~ Linux ]]; then mkdir $HOME/.local; fi
     quiet: true
   -
     command: curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
@@ -63,6 +63,8 @@
     command: if [[ `uname` =~ Linux ]]; then test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)" &&
               test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" &&
               echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.bashrc; fi
+    stdout: true
+    stderr: true
     quiet: true
   -
     command: brew bundle --file=brew/Brewfile
@@ -77,8 +79,12 @@
     description: Setting up git
   -
     command: pyenv install 3.10.6 && pyenv global 3.10.6
+    stdout: true
+    stderr: true
   -
     command: pip install --upgrade pip
+    stdout: true
+    stderr: true
   -
     command: curl -sSL https://install.python-poetry.org | python3 -
     quiet: true
