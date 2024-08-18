@@ -30,7 +30,7 @@
     description: Installing kitty
     quiet: true
   -
-    command: if [[ ! -d "$HOME/.oh-my-zsh" ]]; then sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended; fi
+    command: if [[ ! -d "$HOME/.oh-my-zsh" ]]; then git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh; fi
     description: Installing oh-my-zsh
     quiet: true
   -
