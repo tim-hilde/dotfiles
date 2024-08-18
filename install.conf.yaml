@@ -60,11 +60,7 @@
     description: Installing homebrew
     quiet: true
   -
-    command: if [[ `uname` =~ Linux ]]; then test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)" &&
-              test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" &&
-              echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.bashrc; fi
-    stdout: true
-    stderr: true
+    command: if [[ `uname` =~ Linux ]]; then (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/tim/.bashrc && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"; fi
     quiet: true
   -
     command: brew bundle --file=brew/Brewfile
@@ -79,6 +75,10 @@
     description: Setting up git
   -
     command: pyenv install 3.10.6 && pyenv global 3.10.6
+    stdout: true
+    stderr: true
+  -
+    command: sudo apt install python3-pip
     stdout: true
     stderr: true
   -
@@ -123,6 +123,7 @@
       path: kitty
       relative: true
       create: true
+      force: true
     $HOME/.config/iterm2:
       if: '[ `uname` =~ Darwin ]'
       path: iterm2
@@ -144,6 +145,6 @@
 
 - shell:
   -
-    command: sh ./scripts/setup_zsh.sh
+    command: sh ./scripts/setup_zsh.sh && zsh
     description: Make zsh default shell
     quiet: true
