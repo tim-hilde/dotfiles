@@ -22,7 +22,7 @@
     description: Set execute permission on scripts
     quiet: true
   -
-    command: ./scripts/setup_zsh.sh
+    command: sh ./scripts/setup_zsh.sh
     description: Make zsh default shell
     quiet: true
   -
@@ -68,19 +68,15 @@
     # description: Installing zoxide
     quiet: true
   -
-    command: if [[ ! -d "$HOME/.fzf" ]]; then git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf && $HOME/.fzf/install; fi
-    # description: Installing fzf
-    quiet: true
-  -
-    command: if [[ `uname` =~ Darwin ]]; then /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; fi
+    command: NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     description: Installing homebrew
     quiet: true
   -
-    command: if [[ `uname` =~ Darwin ]]; then brew bundle --file=brew/Brewfile
+    command: brew bundle --file=brew/Brewfile
     # description: Installing from brewfile
     quiet: true
   -
-    command: if [[ `uname` =~ Darwin && `uname -m` =~ arm ]]; then git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
+    command: if [[ `uname` =~ Darwin ]]; then git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar; fi
     quiet: true
 
 - link:
@@ -140,7 +136,7 @@
     description: Restarting shell
 - shell:
   -
-    command: if [[ `uname` =~ Darwin ]]; then ./scripts/setup_git.sh; fi
+    command: sh ./scripts/setup_git.sh
     description: Setting up git
   -
     command: pyenv install 3.10.6 && pyenv global 3.10.6
