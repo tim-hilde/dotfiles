@@ -144,7 +144,7 @@
       relative: true
       create: true
 
- - shell:
+- shell:
   -
     command: exec zsh
     description: Restarting shell
