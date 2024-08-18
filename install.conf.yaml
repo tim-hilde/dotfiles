@@ -18,8 +18,12 @@
     quiet: true
     stdin: true
   -
-    command: if [[ ! `uname` =~ Darwin ]]; then chsh -s $(which zsh); fi
-    description: Changing shell to zsh
+    command: chmod +x scripts/setup_zsh.sh  && chmod +x scripts/setup_git.sh
+    description: Set execute permission on scripts
+    quiet: true
+  -
+    command: ./scripts/setup_zsh.sh
+    description: Make zsh default shell
     quiet: true
   -
     command: curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
@@ -136,8 +140,8 @@
     description: Restarting shell
 - shell:
   -
-    command: gh auth login -s "user:email" -w
-    stdin: true
+    command: if [[ `uname` =~ Darwin ]]; then ./scripts/setup_git.sh; fi
+    description: Setting up git
   -
     command: pyenv install 3.10.6 && pyenv global 3.10.6
   -
