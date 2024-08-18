@@ -111,6 +111,7 @@
   -
     command: NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     description: Installing homebrew
+    stdout: true
     quiet: true
   -
     command: if [[ `uname` =~ Linux ]]; then echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.zshrc; fi
