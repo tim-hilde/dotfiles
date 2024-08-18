@@ -18,10 +18,6 @@
     command: chmod +x scripts/setup_zsh.sh  && chmod +x scripts/setup_git.sh
     description: Set execute permission on scripts
     quiet: true
-  # -
-  #   command: sh ./scripts/setup_zsh.sh
-  #   description: Make zsh default shell
-  #   quiet: true
   -
     command: if [[ `uname` =~ Linux ]]; then mkdir $HOME/.local; fi
     quiet: true
@@ -32,10 +28,6 @@
   -
     command: if [[ ! -d "$HOME/.oh-my-zsh" ]]; then git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh; fi
     description: Installing oh-my-zsh
-    quiet: true
-  -
-    command: chsh -s $(which zsh)
-    description: Changing shell to zsh
     quiet: true
   -
     command: if [[ ! -d "$HOME/.pyenv/plugins/pyenv-virtualenv" ]]; then git clone https://github.com/pyenv/pyenv-virtualenv.git $HOME/.pyenv/plugins/pyenv-virtualenv; fi
@@ -146,5 +138,6 @@
 
 - shell:
   -
-    command: exec zsh
-    description: Restarting shell
+    command: sh ./scripts/setup_zsh.sh
+    description: Make zsh default shell
+    quiet: true
