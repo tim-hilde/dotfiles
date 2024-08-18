@@ -16,6 +16,7 @@
     command: if [[ ! `uname` =~ Darwin ]]; then sudo apt install -y zsh; fi
     description: Installing zsh
     quiet: true
+    stdin: true
   -
     command: if [[ ! `uname` =~ Darwin ]]; then chsh -s $(which zsh); fi
     description: Changing shell to zsh
