@@ -13,19 +13,6 @@ ZSH_THEME="powerlevel10k/powerlevel10k" #"robbyrussell"
 
 export DIRENV_LOG_FORMAT=""
 
-# magic dashboard
-source $HOME/.oh-my-zsh/zsh-magic-dashboard/magic_dashboard.zsh
-# Size of the dashboard
-export MAGIC_DASHBOARD_GITLOG_LINES=5
-export MAGIC_DASHBOARD_FILES_LINES=0
-
-# Disable dashboard in low terminal windows.
-# (Useful for tmux or for terminals embedded in your IDE.)
-export MAGIC_DASHBOARD_DISABLED_BELOW_TERM_HEIGHT=15
-
-# Make commit hashes & files clickable. Requires `git-delta`.
-export MAGIC_DASHBOARD_USE_HYPERLINKS=0 # set to `1` to enable
-
 # zsh-syntax-highlighting catppuccino theme
 source ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh
 
