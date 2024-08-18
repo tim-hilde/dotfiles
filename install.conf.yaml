@@ -4,58 +4,6 @@
       create: true
     force: true
 
-- link:
-    $HOME/.aliases:
-      relative: true
-    $HOME/.config/bat:
-      path: bat
-      relative: true
-      create: true
-    $HOME/.zshrc:
-      relative: true
-    $HOME/.zprofile:
-      relative: true
-    $HOME/.gitconfig:
-      path: git/gitconfig
-      relative: true
-    $HOME/.p10k.zsh:
-    $HOME/.ssh/config:
-      if: '[ `uname` =~ Darwin ]'
-      path: config_ssh
-      relative: true
-    $HOME/Library/Application Support/Code/User/settings.json:
-      if: '[ `uname` =~ Darwin ]'
-      path: vscode/settings.json
-      relative: true
-      create: true
-    $HOME/Library/Application Support/Code/User/keybindings.json:
-      if: '[ `uname` =~ Darwin ]'
-      path: vscode/keybindings.json
-      relative: true
-      create: true
-    $HOME/.config/kitty:
-      path: kitty
-      relative: true
-      create: true
-    $HOME/.config/iterm2:
-      if: '[ `uname` =~ Darwin ]'
-      path: iterm2
-      relative: true
-      create: true
-    $HOME/.config/karabiner:
-      if: '[ `uname` =~ Darwin ]'
-      path: karabiner
-      relative: true
-      create: true
-    $HOME/.simplebarrc:
-      if: '[ `uname` =~ Darwin ]'
-      path: simplebarrc
-      relative: true
-    $HOME/.config/yazi:
-      path: yazi
-      relative: true
-      create: true
-
 - shell:
   -
     command: if [[ ! `uname` =~ Darwin ]]; then sudo apt update; fi
@@ -75,15 +23,19 @@
   #   description: Make zsh default shell
   #   quiet: true
   -
+    command: if [[ `uname` =~ Linux ]]; then mkdir $HOME/.local; fi
+    quiet: true
+  -
     command: curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
     description: Installing kitty
     quiet: true
   -
-    command: if [[ `uname` =~ Linux ]]; then mkdir $HOME/.local; fi
+    command: if [[ ! -d "$HOME/.oh-my-zsh" ]]; then sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended; fi
+    description: Installing oh-my-zsh
     quiet: true
   -
-    command: if [[ ! -d "$HOME/.oh-my-zsh" ]]; then yes | sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"; fi
-    description: Installing oh-my-zsh
+    command: chsh -s $(which zsh)
+    description: Changing shell to zsh
     quiet: true
   -
     command: if [[ ! -d "$HOME/.pyenv/plugins/pyenv-virtualenv" ]]; then git clone https://github.com/pyenv/pyenv-virtualenv.git $HOME/.pyenv/plugins/pyenv-virtualenv; fi
@@ -138,6 +90,61 @@
   -
     command: curl -sSL https://install.python-poetry.org | python3 -
     quiet: true
+
+
+- link:
+    $HOME/.aliases:
+      relative: true
+    $HOME/.config/bat:
+      path: bat
+      relative: true
+      create: true
+    $HOME/.zshrc:
+      relative: true
+    $HOME/.zprofile:
+      relative: true
+    $HOME/.gitconfig:
+      path: git/gitconfig
+      relative: true
+    $HOME/.p10k.zsh:
+    $HOME/.ssh/config:
+      if: '[ `uname` =~ Darwin ]'
+      path: config_ssh
+      relative: true
+    $HOME/Library/Application Support/Code/User/settings.json:
+      if: '[ `uname` =~ Darwin ]'
+      path: vscode/settings.json
+      relative: true
+      create: true
+    $HOME/Library/Application Support/Code/User/keybindings.json:
+      if: '[ `uname` =~ Darwin ]'
+      path: vscode/keybindings.json
+      relative: true
+      create: true
+    $HOME/.config/kitty:
+      path: kitty
+      relative: true
+      create: true
+    $HOME/.config/iterm2:
+      if: '[ `uname` =~ Darwin ]'
+      path: iterm2
+      relative: true
+      create: true
+    $HOME/.config/karabiner:
+      if: '[ `uname` =~ Darwin ]'
+      path: karabiner
+      relative: true
+      create: true
+    $HOME/.simplebarrc:
+      if: '[ `uname` =~ Darwin ]'
+      path: simplebarrc
+      relative: true
+    $HOME/.config/yazi:
+      path: yazi
+      relative: true
+      create: true
+
+ - shell:
   -
     command: exec zsh
     description: Restarting shell
