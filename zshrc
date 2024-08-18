@@ -143,8 +143,7 @@ eval "$(zoxide init zsh)"
 eval "$(fzf --zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_OPTS=' --preview="echo {}" --preview-window=down,3,wrap --height=60%'
-# export FZF_DEFAULT_OPTS=' --preview="echo {} --color=always {} --preview-window=down,60%,wrap --layout=reverse --height=80%"'
+# export FZF_DEFAULT_OPTS=' --preview "bat --color=always {}" --preview-window=right,60%,wrap --layout=reverse --height=80%'
 
 ZSH_THEME_TERM_TITLE_IDLE="%n@%m: %1~"
 ZSH_THEME_TERM_TAB_TITLE_IDLE="%n@%m: %1~"

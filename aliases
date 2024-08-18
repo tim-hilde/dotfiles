@@ -1,9 +1,6 @@
 # Get External IP / Internet Speed
-alias myip="curl https://ipinfo.io/json" # or /ip for plain-text ip
+alias myip="curl https://ipinfo.io/ip" # or /ip for plain-text ip
 alias speedtest="curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -"
-
-# Quickly serve the current directory as HTTP
-alias serve='ruby -run -e httpd . -p 8000' # Or python -m SimpleHTTPServer :)
 
 # eza
 alias ls=eza
@@ -13,6 +10,8 @@ alias tree="eza --tree"
 
 # zoxide
 alias cd=z
+
+alias s="kitten ssh"
 
 # skhd / yabai
 alias skhdrc="code ~/dotfiles/skhd/skhdrc"

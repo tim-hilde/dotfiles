@@ -7,11 +7,11 @@
 
 - shell:
   -
-    command: if [[ ! `uname` =$HOME "Darwin" ]]; then sudo apt update; fi
+    command: if [[ ! `uname` =~ "Darwin" ]]; then sudo apt update; fi
     description: Updating apt
     quiet: true
   -
-    command: if [[ ! `uname` =$HOME "Darwin" ]]; then sudo apt installing -y zsh; fi
+    command: if [[ ! `uname` =~ "Darwin" ]]; then sudo apt installing -y zsh; fi
     description: Installing zsh
     quiet: true
   -
@@ -30,7 +30,7 @@
     command: if [[ ! -d "$HOME/.pyenv/plugins/pyenv-virtualenv" ]]; then git clone https://github.com/pyenv/pyenv-virtualenv.git $HOME/.pyenv/plugins/pyenv-virtualenv; fi
     quiet: true
   -
-    command: if [[ `uname` =$HOME "Darwin" ]]; then ssh-add --apple-use-keychain $HOME/.ssh/id_ed25519; fi
+    command: if [[ `uname` =~ "Darwin" ]]; then ssh-add --apple-use-keychain $HOME/.ssh/id_ed25519; fi
     quiet: true
   -
     command: if [[ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" ]]; then git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting; fi
@@ -61,15 +61,15 @@
     # description: Installing fzf
     quiet: true
   -
-    command: git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
+    command: if [[ `uname` =~ "Darwin" ]]; then git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
     description: Installing homebrew
     quiet: true
   -
-    command: brew bundle --file=brew/Brewfile
+    command: if [[ `uname` =~ "Darwin" ]]; then brew bundle --file=brew/Brewfile
     # description: Installing from brewfile
     quiet: true
   -
-    command: git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
+    command: if [[ `uname` =~ "Darwin" ]]; then git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
     quiet: true
 
 - link:
@@ -88,16 +88,16 @@
       relative: true
     $HOME/.p10k.zsh:
     $HOME/.ssh/config:
-      if: '[ `uname` = Darwin ]'
+      if: '[ `uname` =~ Darwin ]'
       path: config_ssh
       relative: true
     $HOME/Library/Application Support/Code/User/settings.json:
-      if: '[ `uname` = Darwin ]'
+      if: '[ `uname` =~ Darwin ]'
       path: vscode/settings.json
       relative: true
       create: true
     $HOME/Library/Application Support/Code/User/keybindings.json:
-      if: '[ `uname` = Darwin ]'
+      if: '[ `uname` =~ Darwin ]'
       path: vscode/keybindings.json
       relative: true
       create: true
@@ -106,17 +106,17 @@
       relative: true
       create: true
     $HOME/.config/iterm2:
-      if: '[ `uname` = Darwin ]'
+      if: '[ `uname` =~ Darwin ]'
       path: iterm2
       relative: true
       create: true
     $HOME/.config/karabiner:
-      if: '[ `uname` = Darwin ]'
+      if: '[ `uname` =~ Darwin ]'
       path: karabiner
       relative: true
       create: true
     $HOME/.simplebarrc:
-      if: '[ `uname` = Darwin ]'
+      if: '[ `uname` =~ Darwin ]'
       path: simplebarrc
       relative: true
     $HOME/.config/yazi:
