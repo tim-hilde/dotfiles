@@ -1,18 +1,24 @@
 - defaults:
     link:
       relink: true
+      create: true
+    force: true
 
 - create:
   - $HOME/.oh-my-zsh/custom/plugins
 
 - shell:
   -
-    command: if [[ ! `uname` =~ "Darwin" ]]; then sudo apt update; fi
+    command: if [[ ! `uname` =~ Darwin ]]; then sudo apt update; fi
     description: Updating apt
     quiet: true
   -
-    command: if [[ ! `uname` =~ "Darwin" ]]; then sudo apt installing -y zsh; fi
+    command: if [[ ! `uname` =~ Darwin ]]; then sudo apt install -y zsh; fi
     description: Installing zsh
+    quiet: true
+  -
+    command: if [[ ! `uname` =~ Darwin ]]; then chsh -s $(which zsh); fi
+    description: Changing shell to zsh
     quiet: true
   -
     command: curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
@@ -30,7 +36,7 @@
     command: if [[ ! -d "$HOME/.pyenv/plugins/pyenv-virtualenv" ]]; then git clone https://github.com/pyenv/pyenv-virtualenv.git $HOME/.pyenv/plugins/pyenv-virtualenv; fi
     quiet: true
   -
-    command: if [[ `uname` =~ "Darwin" ]]; then ssh-add --apple-use-keychain $HOME/.ssh/id_ed25519; fi
+    command: if [[ `uname` =~ Darwin ]]; then ssh-add --apple-use-keychain $HOME/.ssh/id_ed25519; fi
     quiet: true
   -
     command: if [[ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" ]]; then git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting; fi
@@ -61,15 +67,15 @@
     # description: Installing fzf
     quiet: true
   -
-    command: if [[ `uname` =~ "Darwin" ]]; then git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
+    command: if [[ `uname` =~ Darwin ]]; then /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; fi
     description: Installing homebrew
     quiet: true
   -
-    command: if [[ `uname` =~ "Darwin" ]]; then brew bundle --file=brew/Brewfile
+    command: if [[ `uname` =~ Darwin ]]; then brew bundle --file=brew/Brewfile
     # description: Installing from brewfile
     quiet: true
   -
-    command: if [[ `uname` =~ "Darwin" ]]; then git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
+    command: if [[ `uname` =~ Darwin && `uname -m` =~ arm ]]; then git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
     quiet: true
 
 - link:
