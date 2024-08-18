@@ -4,9 +4,6 @@
       create: true
     force: true
 
-- create:
-  - $HOME/.oh-my-zsh/custom/plugins
-
 - link:
     $HOME/.aliases:
       relative: true
