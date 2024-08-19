@@ -102,7 +102,7 @@
     description: Installing you should use plugin
     quiet: true
   -
-    command: curl https://pyenv.run | bash
+    command: if [[ ! -d "$HOME/.pyenv" ]]; then curl https://pyenv.run | bash; fi
     description: Installing pyenv
     quiet: true
   -
