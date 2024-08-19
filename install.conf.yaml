@@ -4,7 +4,6 @@
       create: true
     force: true
 
-
 - link:
     $HOME/.aliases:
       relative: true
@@ -105,6 +104,9 @@
   -
     command: curl https://pyenv.run | bash
     description: Installing pyenv
+    quiet: true
+  -
+    command: exec zsh
     quiet: true
   -
     command: if [[ `uname` =~ Linux ]]; then sudo apt-get install make build-essential libssl-dev zlib1g-dev \
