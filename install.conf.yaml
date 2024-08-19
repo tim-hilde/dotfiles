@@ -71,7 +71,7 @@
     description: Make zsh default shell
     quiet: true
   -
-    command: [ "$RUNNING_IN_ZSH" != "true" ] && export RUNNING_IN_ZSH=true && exec zsh -c "./install"
+    command: '[ "$RUNNING_IN_ZSH" != "true" ] && export RUNNING_IN_ZSH=true && exec zsh -c "./install"'
     # Running install in zsh
     quiet: true
   -
