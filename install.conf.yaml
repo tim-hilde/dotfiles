@@ -129,9 +129,7 @@
     command: if [[ `uname` =~ Linux ]]; then (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/tim/.zshrc && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"; fi
     quiet: true
   -
-    command: exec zsh
-    quiet: true
-  -
+    program: zsh
     command: brew bundle --file=brew/Brewfile
     description: Installing from brewfile
     stdout: true
