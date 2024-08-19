@@ -106,7 +106,7 @@
     description: Installing pyenv
     quiet: true
   -
-    command: if [[ `uname` =~ Linux ]]; echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc && echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc && echo 'eval "$(pyenv init -)"' >> ~/.bashrc; fi
+    command: if [[ `uname` =~ Linux ]]; then echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc && echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc && echo 'eval "$(pyenv init -)"' >> ~/.bashrc && exec bash; fi
     quiet: true
   -
     command: if [[ `uname` =~ Linux ]]; then sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev python3-dev; fi
@@ -128,7 +128,7 @@
     description: Installing homebrew
     quiet: true
   -
-    command: if [[ `uname` =~ Linux ]]; then eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"; fi
+    command: if [[ `uname` =~ Linux ]]; then (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/tim/.bashrc && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"; fi
     quiet: true
   -
     command: brew bundle --file=brew/Brewfile
