@@ -112,6 +112,7 @@
   -
     command: yes N | pyenv install 3.10.6 && pyenv global 3.10.6
     quiet: true
+    stdout: true
   -
     command: pip install --upgrade pip
     quiet: true
