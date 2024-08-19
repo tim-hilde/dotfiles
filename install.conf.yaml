@@ -10,13 +10,17 @@
     description: Updating apt
     quiet: true
   -
+    command: if [[ ! `uname` =~ Darwin ]]; then sudo apt-get install build-essential; fi
+    description: Installing build-essential
+    quiet: true
+  -
     command: if [[ ! `uname` =~ Darwin ]]; then sudo apt install -y zsh; fi
     description: Installing zsh
     quiet: true
     stdin: true
   -
-    command: chmod +x scripts/setup_zsh.sh  && chmod +x scripts/setup_git.sh
-    description: Set execute permission on scripts
+    command: chmod +x scripts/setup_git.sh
+    description: Set execute permission on script
     quiet: true
   -
     command: if [[ ! -d "$HOME/.local" && `uname` =~ Linux ]]; then mkdir $HOME/.local; fi
@@ -28,9 +32,6 @@
   -
     command: if [[ ! -d "$HOME/.oh-my-zsh" ]]; then git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh; fi
     description: Installing oh-my-zsh
-    quiet: true
-  -
-    command: if [[ ! -d "$HOME/.pyenv/plugins/pyenv-virtualenv" ]]; then git clone https://github.com/pyenv/pyenv-virtualenv.git $HOME/.pyenv/plugins/pyenv-virtualenv; fi
     quiet: true
   -
     command: if [[ `uname` =~ Darwin ]]; then ssh-add --apple-use-keychain $HOME/.ssh/id_ed25519; fi
@@ -60,33 +61,7 @@
     description: Installing homebrew
     quiet: true
   -
-    command: if [[ `uname` =~ Linux ]]; then (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/tim/.bashrc && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"; fi
-    quiet: true
-  -
-    command: brew bundle --file=brew/Brewfile
-    description: Installing from brewfile
-    stdout: true
-    quiet: true
-  -
-    command: if [[ `uname` =~ Darwin ]]; then git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar; fi
-    quiet: true
-  -
-    command: sh ./scripts/setup_git.sh
-    description: Setting up git
-  -
-    command: pyenv install 3.10.6 && pyenv global 3.10.6
-    stdout: true
-    stderr: true
-  -
-    command: sudo apt install python3-pip
-    stdout: true
-    stderr: true
-  -
-    command: pip install --upgrade pip
-    stdout: true
-    stderr: true
-  -
-    command: curl -sSL https://install.python-poetry.org | python3 -
+    command: if [[ `uname` =~ Linux ]]; then (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/tim/.zshrc && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"; fi
     quiet: true
 
 
@@ -145,6 +120,25 @@
 
 - shell:
   -
-    command: sh ./scripts/setup_zsh.sh && zsh
+    command: sudo chsh -s $(which zsh) $USER && zsh
     description: Make zsh default shell
+    quiet: true
+  -
+    command: brew bundle --file=brew/Brewfile
+    description: Installing from brewfile
+    stdout: true
+    quiet: true
+  -
+    command: if [[ `uname` =~ Darwin ]]; then git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar; fi
+    quiet: true
+  -
+    command: pyenv install 3.10.6 && pyenv global 3.10.6
+    stdout: true
+    stderr: true
+  -
+    command: pip install --upgrade pip
+    stdout: true
+    stderr: true
+  -
+    command: curl -sSL https://install.python-poetry.org | python3 -
     quiet: true
