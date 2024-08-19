@@ -123,7 +123,7 @@
     description: Installing homebrew
     quiet: true
   -
-    command: if [[ `uname` =~ Linux ]]; then (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> $HOME.bashrc && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"; fi
+    command: if [[ `uname` =~ Linux ]]; then eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"; fi
     quiet: true
   -
     command: brew bundle --file=brew/Brewfile
@@ -131,10 +131,10 @@
     stdout: true
     quiet: true
   -
-    command: bat cache --build
+    command: if [[ `uname` =~ Darwin ]]; then git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar; fi
     quiet: true
   -
-    command: if [[ `uname` =~ Darwin ]]; then git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar; fi
+    command: bat cache --build
     quiet: true
   -
     command: exec zsh
