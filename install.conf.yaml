@@ -71,6 +71,10 @@
     description: Make zsh default shell
     quiet: true
   -
+    command: [ "$RUNNING_IN_ZSH" != "true" ] && export RUNNING_IN_ZSH=true && exec zsh -c "./install"
+    # Running install in zsh
+    quiet: true
+  -
     command: curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
     description: Installing kitty
     quiet: true
@@ -106,9 +110,6 @@
     description: Installing pyenv
     quiet: true
   -
-    command: exec zsh
-    quiet: true
-  -
     command: if [[ `uname` =~ Linux ]]; then sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev python3-dev; fi
     description: Installing python dependencies
     quiet: true
@@ -129,7 +130,6 @@
     command: if [[ `uname` =~ Linux ]]; then (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/tim/.zshrc && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"; fi
     quiet: true
   -
-    program: /usr/bin/zsh
     command: brew bundle --file=brew/Brewfile
     description: Installing from brewfile
     stdout: true
