@@ -4,66 +4,6 @@
       create: true
     force: true
 
-- shell:
-  -
-    command: if [[ ! `uname` =~ Darwin ]]; then sudo apt update; fi
-    description: Updating apt
-    quiet: true
-  -
-    command: if [[ ! `uname` =~ Darwin ]]; then sudo apt-get install build-essential; fi
-    description: Installing build-essential
-    quiet: true
-  -
-    command: if [[ ! `uname` =~ Darwin ]]; then sudo apt install -y zsh; fi
-    description: Installing zsh
-    quiet: true
-    stdin: true
-  -
-    command: chmod +x scripts/setup_git.sh
-    description: Set execute permission on script
-    quiet: true
-  -
-    command: if [[ ! -d "$HOME/.local" && `uname` =~ Linux ]]; then mkdir $HOME/.local; fi
-    quiet: true
-  -
-    command: curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
-    description: Installing kitty
-    quiet: true
-  -
-    command: if [[ ! -d "$HOME/.oh-my-zsh" ]]; then git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh; fi
-    description: Installing oh-my-zsh
-    quiet: true
-  -
-    command: if [[ `uname` =~ Darwin ]]; then ssh-add --apple-use-keychain $HOME/.ssh/id_ed25519; fi
-    quiet: true
-  -
-    command: if [[ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" ]]; then git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting; fi
-    description: Installing zsh syntax highlighting
-    quiet: true
-  -
-    command: wget -P $HOME/.zsh https://raw.githubusercontent.com/catppuccin/zsh-syntax-highlighting/main/themes/catppuccin_mocha-zsh-syntax-highlighting.zsh
-    description: Installing zsh syntax highlighting cattpuccin theme
-    quiet: true
-  -
-    command: if [[ ! -d "$HOME/.oh-my-zsh/custom/themes/powerlevel10k" ]]; then git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $HOME/.oh-my-zsh/custom/themes/powerlevel10k; fi
-    description: Installing powerlevel10k theme
-    quiet: true
-  -
-    command: if [[ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-bat" ]]; then git clone https://github.com/fdellwing/zsh-bat.git $HOME/.oh-my-zsh/custom/plugins/zsh-bat; fi
-    description: Installing bat zsh plugin
-    quiet: true
-  -
-    command: if [[ ! -d "$HOME/.oh-my-zsh/custom/plugins/you-should-use" ]]; then git clone https://github.com/MichaelAquilina/zsh-you-should-use.git $HOME/.oh-my-zsh/custom/plugins/you-should-use; fi
-    description: Installing you should use plugin
-    quiet: true
-  -
-    command: NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    description: Installing homebrew
-    quiet: true
-  -
-    command: if [[ `uname` =~ Linux ]]; then (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/tim/.zshrc && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"; fi
-    quiet: true
-
 
 - link:
     $HOME/.aliases:
@@ -120,19 +60,62 @@
 
 - shell:
   -
+    command: if [[ ! `uname` =~ Darwin ]]; then sudo apt update; fi
+    description: Updating apt
+    quiet: true
+  -
+    command: if [[ ! `uname` =~ Darwin ]]; then sudo apt install -y zsh; fi
+    description: Installing zsh
+    quiet: true
+  -
     command: sudo chsh -s $(which zsh) $USER && zsh
     description: Make zsh default shell
     quiet: true
   -
-    command: brew bundle --file=brew/Brewfile
-    description: Installing from brewfile
-    stdout: true
+    command: curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+    description: Installing kitty
     quiet: true
   -
-    command: if [[ `uname` =~ Darwin ]]; then git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar; fi
+    command: if [[ ! -d "$HOME/.oh-my-zsh" ]]; then git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh; fi
+    description: Installing oh-my-zsh
+    quiet: true
+  -
+    command: if [[ `uname` =~ Darwin ]]; then ssh-add --apple-use-keychain $HOME/.ssh/id_ed25519; fi
+    quiet: true
+  -
+    command: if [[ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" ]]; then git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting; fi
+    description: Installing zsh syntax highlighting
+    quiet: true
+  -
+    command: wget -P $HOME/.zsh https://raw.githubusercontent.com/catppuccin/zsh-syntax-highlighting/main/themes/catppuccin_mocha-zsh-syntax-highlighting.zsh
+    description: Installing zsh syntax highlighting cattpuccin theme
+    quiet: true
+  -
+    command: if [[ ! -d "$HOME/.oh-my-zsh/custom/themes/powerlevel10k" ]]; then git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $HOME/.oh-my-zsh/custom/themes/powerlevel10k; fi
+    description: Installing powerlevel10k theme
+    quiet: true
+  -
+    command: if [[ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-bat" ]]; then git clone https://github.com/fdellwing/zsh-bat.git $HOME/.oh-my-zsh/custom/plugins/zsh-bat; fi
+    description: Installing bat zsh plugin
+    quiet: true
+  -
+    command: if [[ ! -d "$HOME/.oh-my-zsh/custom/plugins/you-should-use" ]]; then git clone https://github.com/MichaelAquilina/zsh-you-should-use.git $HOME/.oh-my-zsh/custom/plugins/you-should-use; fi
+    description: Installing you should use plugin
+    quiet: true
+  -
+    command: curl https://pyenv.run | bash
+    description: Installing pyenv
+    quiet: true
+  -
+    command: if [[ `uname` =~ Linux ]]; then sudo apt-get install make build-essential libssl-dev zlib1g-dev \
+              libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+              libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev \
+              python3-dev; fi
+    description: Installing python dependencies
     quiet: true
   -
     command: pyenv install 3.10.6 && pyenv global 3.10.6
+    quiet: true
     stdout: true
     stderr: true
   -
@@ -141,4 +124,25 @@
     stderr: true
   -
     command: curl -sSL https://install.python-poetry.org | python3 -
+    quiet: true
+  -
+    command: NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    description: Installing homebrew
+    quiet: true
+  -
+    command: if [[ `uname` =~ Linux ]]; then (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/tim/.zshrc && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"; fi
+    quiet: true
+  -
+    command: exec zsh
+    quiet: true
+  -
+    command: brew bundle --file=brew/Brewfile
+    description: Installing from brewfile
+    stdout: true
+    quiet: true
+  -
+    command: bat cache --build
+    quiet: true
+  -
+    command: if [[ `uname` =~ Darwin ]]; then git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar; fi
     quiet: true
