@@ -110,7 +110,7 @@
     description: Installing python dependencies
     quiet: true
   -
-    command: yes N | pyenv install -n 3.10.6 && pyenv global 3.10.6
+    command: yes N | pyenv install 3.10.6 && pyenv global 3.10.6
     quiet: true
   -
     command: pip install --upgrade pip
