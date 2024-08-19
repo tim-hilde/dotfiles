@@ -59,7 +59,7 @@ export PYENV_VIRTUALENV_DISABLE_PROMPT=0
 type -a pyenv > /dev/null && eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init - 2> /dev/null)"
 
 # add and load poetry
-export PATH="/Users/tim/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # Actually load Oh-My-Zsh
 source "${ZSH}/oh-my-zsh.sh"

@@ -109,21 +109,18 @@
     command: exec zsh
     quiet: true
   -
-    command: if [[ `uname` =~ Linux ]]; then sudo apt-get install make build-essential libssl-dev zlib1g-dev \
-              libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
-              libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev \
-              python3-dev; fi
+    command: if [[ `uname` =~ Linux ]]; then sudo apt-get update; sudo apt-get install -y make build-essential libssl-dev zlib1g-dev \
+    libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+    libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev \
+    python3-dev; fi
     description: Installing python dependencies
     quiet: true
   -
     command: pyenv install 3.10.6 && pyenv global 3.10.6
     quiet: true
-    stdout: true
-    stderr: true
   -
     command: pip install --upgrade pip
-    stdout: true
-    stderr: true
+    quiet: true
   -
     command: curl -sSL https://install.python-poetry.org | python3 -
     quiet: true
@@ -147,4 +144,7 @@
     quiet: true
   -
     command: if [[ `uname` =~ Darwin ]]; then git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar; fi
+    quiet: true
+  -
+    command: exec zsh
     quiet: true
