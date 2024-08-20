@@ -71,10 +71,6 @@
     description: Make zsh default shell
     quiet: true
   -
-    command: curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
-    description: Installing kitty
-    quiet: true
-  -
     command: if [[ ! -d "$HOME/.oh-my-zsh" ]]; then git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh; fi
     description: Installing oh-my-zsh
     quiet: true
@@ -102,7 +98,7 @@
     description: Installing you should use plugin
     quiet: true
   -
-    command: if [[ ! -d "$HOME/.pyenv" ]]; then curl https://pyenv.run | bash; fi
+    command: if [[ `uname` =~ Linux && ! -d "$HOME/.pyenv" ]]; then curl https://pyenv.run | bash; fi
     description: Installing pyenv
     quiet: true
   -
@@ -128,7 +124,7 @@
     description: Installing homebrew
     quiet: true
   -
-    command: if [[ `uname` =~ Linux ]]; then (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/tim/.bashrc && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"; fi
+    command: if [[ `uname` =~ Linux ]]; then (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/tim/.bashrc && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && exec bash; fi
     quiet: true
   -
     command: brew bundle --file=brew/Brewfile
