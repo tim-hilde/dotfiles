@@ -225,10 +225,10 @@ rules:
               value: false
           - set_notification_message:
               id: leader-notice
-      # i[T]erm
+      # termina[l]
       - type: basic
         from:
-          key_code: t
+          key_code: l
         conditions:
           - type: variable_if
             name: LEADER_ACTIVE
@@ -300,25 +300,10 @@ rules:
               value: false
           - set_notification_message:
               id: leader-notice
-      # S[L]ack
+      # [t]odoist
       - type: basic
         from:
-          key_code: l
-        conditions:
-          - type: variable_if
-            name: LEADER_ACTIVE
-            value: true
-        to:
-          - shell_command: open -a 'Slack'
-          - set_variable:
-              name: LEADER_ACTIVE
-              value: false
-          - set_notification_message:
-              id: leader-notice
-      # Todo[I]st
-      - type: basic
-        from:
-          key_code: i
+          key_code: t
         conditions:
           - type: variable_if
             name: LEADER_ACTIVE

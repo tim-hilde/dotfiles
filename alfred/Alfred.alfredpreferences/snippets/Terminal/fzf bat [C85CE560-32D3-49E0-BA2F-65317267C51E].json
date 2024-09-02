@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "fzf --preview \"bat --color=always {}\" --preview-window=right,60% --layout=reverse --height=80%",
+    "uid" : "C85CE560-32D3-49E0-BA2F-65317267C51E",
+    "name" : "fzf bat",
+    "keyword" : "!fzf"
+  }
+}

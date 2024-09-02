@@ -36,7 +36,7 @@ plugins=(
     ssh-agent
     you-should-use
     virtualenv
-    # zsh-autosuggestions
+    zsh-autosuggestions
     zsh-bat
     zsh-syntax-highlighting
 )
@@ -130,9 +130,14 @@ eval "$(zoxide init zsh)"
 
 # fzf
 eval "$(fzf --zsh)"
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-# export FZF_DEFAULT_OPTS=' --preview "bat --color=always {}" --preview-window=right,60%,wrap --layout=reverse --height=80%'
+
+export FZF_DEFAULT_OPTS=" \
+--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+--color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+--color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
+--color=selected-bg:#45475a \
+--multi"
 
 ZSH_THEME_TERM_TITLE_IDLE="%n@%m: %1~"
 ZSH_THEME_TERM_TAB_TITLE_IDLE="%n@%m: %1~"

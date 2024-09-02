@@ -32,19 +32,6 @@
 				<false/>
 			</dict>
 		</array>
-		<key>540BCCC6-390A-4720-AE56-B8D5AA41FDD9</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>5B252180-78CF-4401-8C29-EB10775761F0</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
 		<key>A4125F74-562A-4A00-A377-83F3CD27735E</key>
 		<array>
 			<dict>
@@ -256,7 +243,7 @@
 				<key>escaping</key>
 				<integer>0</integer>
 				<key>script</key>
-				<string>yt-dlp -S res:1080 -f b "{query}"</string>
+				<string>yt-dlp -S "res:1080" -f "b*" --remux-video "mp4" "{query}"</string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.action.terminalcommand</string>
@@ -283,42 +270,6 @@
 			<string>alfred.workflow.trigger.universalaction</string>
 			<key>uid</key>
 			<string>0F166346-87DF-47D0-954D-2C58A4FFC0FA</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>escaping</key>
-				<integer>0</integer>
-				<key>script</key>
-				<string>cd "/Users/tim/Data Science/Projects/Data Science Jobs/Scripts" &amp;&amp; /usr/local/bin/python3 "scraping.py" &amp;&amp; /usr/local/bin/python3 "add_info.py"</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.terminalcommand</string>
-			<key>uid</key>
-			<string>5B252180-78CF-4401-8C29-EB10775761F0</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>keyword</key>
-				<string>Scrape jobs</string>
-				<key>subtext</key>
-				<string></string>
-				<key>text</key>
-				<string>Scrape jobs</string>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>540BCCC6-390A-4720-AE56-B8D5AA41FDD9</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -381,20 +332,6 @@
 		<dict>
 			<key>xpos</key>
 			<real>30</real>
-			<key>ypos</key>
-			<real>705</real>
-		</dict>
-		<key>540BCCC6-390A-4720-AE56-B8D5AA41FDD9</key>
-		<dict>
-			<key>xpos</key>
-			<real>440</real>
-			<key>ypos</key>
-			<real>715</real>
-		</dict>
-		<key>5B252180-78CF-4401-8C29-EB10775761F0</key>
-		<dict>
-			<key>xpos</key>
-			<real>585</real>
 			<key>ypos</key>
 			<real>705</real>
 		</dict>
