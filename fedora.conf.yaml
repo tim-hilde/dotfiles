@@ -1,0 +1,9 @@
+- defaults:
+    link:
+      relink: true
+      create: true
+    force: true
+
+- shell:
+  -
+    command: yes | sudo dnf install zsh

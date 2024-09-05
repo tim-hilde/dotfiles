@@ -1,0 +1,59 @@
+- defaults:
+    link:
+      relink: true
+      create: true
+    force: true
+
+- link:
+    $HOME/.aliases:
+      relative: true
+    $HOME/.config/bat:
+      path: bat
+      relative: true
+      create: true
+    $HOME/.zshrc:
+      relative: true
+    $HOME/.zprofile:
+      relative: true
+    $HOME/.gitconfig:
+      path: git/gitconfig
+      relative: true
+    $HOME/.p10k.zsh:
+    $HOME/.config/kitty:
+      path: kitty
+      relative: true
+      create: true
+      force: true
+    $HOME/.config/yazi:
+      path: yazi
+      relative: true
+      create: true
+
+- shell:
+  -
+    command: if [[ ! -d "$HOME/.oh-my-zsh" ]]; then git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh; fi
+    description: Installing oh-my-zsh
+    quiet: true
+  -
+    command: if [[ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" ]]; then git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting; fi
+    description: Installing zsh syntax highlighting
+    quiet: true
+  -
+    command: wget -P $HOME/.zsh https://raw.githubusercontent.com/catppuccin/zsh-syntax-highlighting/main/themes/catppuccin_mocha-zsh-syntax-highlighting.zsh
+    description: Installing zsh syntax highlighting cattpuccin theme
+    quiet: true
+  -
+    command: if [[ ! -d "$HOME/.oh-my-zsh/custom/themes/powerlevel10k" ]]; then git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $HOME/.oh-my-zsh/custom/themes/powerlevel10k; fi
+    description: Installing powerlevel10k theme
+    quiet: true
+  -
+    command: if [[ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-bat" ]]; then git clone https://github.com/fdellwing/zsh-bat.git $HOME/.oh-my-zsh/custom/plugins/zsh-bat; fi
+    description: Installing bat zsh plugin
+    quiet: true
+  -
+    command: if [[ ! -d "$HOME/.oh-my-zsh/custom/plugins/you-should-use" ]]; then git clone https://github.com/MichaelAquilina/zsh-you-should-use.git $HOME/.oh-my-zsh/custom/plugins/you-should-use; fi
+    description: Installing you should use plugin
+    quiet: true
+  -
+    command: if [[ $(less /etc/*release | grep "^ID=") =~ fedora ]]; then echo "Fedora system detected, run \n- yes | sudo dnf install zsh \n- yes | sudo dnf groupinstall "Development Tools" \n- yes | sudo dnf install kitty gcc openssl-devel bzip2-devel libffi-devel ncurses-devel readline-devel sqlite-devel tk-devel bat zoxide snapd\- sudo snapp intall snap-store"; fi
+    quiet: true

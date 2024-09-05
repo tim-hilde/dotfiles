@@ -36,7 +36,7 @@ plugins=(
     ssh-agent
     you-should-use
     virtualenv
-    zsh-autosuggestions
+    # zsh-autosuggestions
     zsh-bat
     zsh-syntax-highlighting
 )
