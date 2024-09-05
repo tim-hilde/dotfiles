@@ -57,3 +57,4 @@
   -
     command: if [[ $(less /etc/*release | grep "^ID=") =~ fedora ]]; then echo "Fedora system detected, run \n- yes | sudo dnf install zsh \n- yes | sudo dnf groupinstall "Development Tools" \n- yes | sudo dnf install kitty gcc openssl-devel bzip2-devel libffi-devel ncurses-devel readline-devel sqlite-devel tk-devel bat zoxide snapd\- sudo snapp intall snap-store"; fi
     quiet: true
+    stdout: true
