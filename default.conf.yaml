@@ -28,6 +28,10 @@
       path: yazi
       relative: true
       create: true
+    $HOME/.config/nvim:
+      path: nvim
+      relative: true
+      create: true
 
 - shell:
   -
@@ -54,7 +58,3 @@
     command: if [[ ! -d "$HOME/.oh-my-zsh/custom/plugins/you-should-use" ]]; then git clone https://github.com/MichaelAquilina/zsh-you-should-use.git $HOME/.oh-my-zsh/custom/plugins/you-should-use; fi
     description: Installing you should use plugin
     quiet: true
-  -
-    command: if [[ $(less /etc/*release | grep "^ID=") =~ fedora ]]; then echo "Fedora system detected, run \n- yes | sudo dnf install zsh \n- yes | sudo dnf groupinstall "Development Tools" \n- yes | sudo dnf install kitty gcc openssl-devel bzip2-devel libffi-devel ncurses-devel readline-devel sqlite-devel tk-devel bat zoxide snapd\- sudo snapp intall snap-store"; fi
-    quiet: true
-    stdout: true

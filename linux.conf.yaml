@@ -10,7 +10,7 @@
     description: Updating apt
     quiet: true
   -
-    command: if [[ ! $(less /etc/*release | grep "^ID=") =~ fedora ]]; then sudo apt install -y zsh kitty; fi
+    command: if [[ ! $(less /etc/*release | grep "^ID=") =~ fedora ]]; then sudo apt install -y zsh; else yes | sudo dnf install kitty; fi
     description: Installing zsh
     quiet: true
   -
@@ -33,6 +33,10 @@
     description: Installing python dependencies (apt)
     quiet: true
   -
+    command: if [[ $(less /etc/*release | grep "^ID=") =~ fedora ]]; then yes | sudo dnf groupinstall "Development Tools" && yes | sudo dnf install gcc openssl-devel bzip2-devel libffi-devel ncurses-devel readline-devel sqlite-devel tk-devel; fi
+    description: Installing python dependencies (dnf)
+    quiet: true
+  -
     command: yes N | pyenv install 3.10.6 && pyenv global 3.10.6
     description: Installing python 3.10.6
     quiet: true
@@ -44,6 +48,25 @@
     command: curl -sSL https://install.python-poetry.org | python3 -
     quiet: true
   -
+    command: if [[ $(less /etc/*release | grep "^ID=") =~ fedora ]]; then yes | sudo dnf install kitty eza direnv fzf gh tree jq bat zoxide snapd gnome-tweak-tool copyq pipx xournalpp yaru-theme ulauncher; fi
+    description: Installing packages
+    quiet: true
+  -
+    command: if [[ $(less /etc/*release | grep "^ID=") =~ fedora ]]; then yes | flatpak install flathub com.mattjakeman.ExtensionManager; fi
+    description: Installing ExtensionManager
+    quiet: true
+  -
+    command: if [[ $(less /etc/*release | grep "^ID=") =~ fedora ]]; then pipx install gnome-extensions-cli --system-site-packages; fi
+    description: Installing gnome-extensions-cli
+    quiet: true
+  -
+    command: if [[ $(less /etc/*release | grep "^ID=") =~ fedora ]]; then wget -O ~/.local/share/fonts/JetBrainsMono.tar.xz https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz && \
+    mkdir -p ~/.local/share/fonts/JetBrainsMono && \
+    tar -xf ~/.local/share/fonts/JetBrainsMono.tar.xz -C ~/.local/share/fonts/JetBrainsMono && \
+    rm ~/.local/share/fonts/JetBrainsMono.tar.xz; fi
+    description: Installing JetBrainsMono font
+    quiet: true
+  -
     command: if [[ ! $(less /etc/*release | grep "^ID=") =~ fedora ]]; then NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; fi
     description: Installing homebrew
     quiet: true
@@ -53,6 +76,11 @@
   -
     command: if [[ ! $(less /etc/*release | grep "^ID=") =~ fedora ]]; then brew bundle --file=brew/Brewfile; fi
     description: Installing from brewfile
+    stdout: true
+    quiet: true
+  -
+    command: if [[ $(less /etc/*release | grep "^ID=") =~ fedora ]]; then source ./fedora/setup_fedora.sh; fi
+    description: Running fedora setup script
     stdout: true
     quiet: true
   -
