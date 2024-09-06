@@ -17,6 +17,9 @@ alias s="kitten ssh"
 alias skhdrc="code ~/dotfiles/skhd/skhdrc"
 alias yabairc="code ~/dotfiles/yabai/yabairc"
 
+# lazygit
+alias lg="lazygit --use-config-file=$HOME/dotfiles/lazygit/config.yml"
+
 # set env variables for docker/gcloud
 function set_gcloud_env() {
   # Standardwerte für die Umgebungsvariablen
