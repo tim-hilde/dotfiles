@@ -243,7 +243,7 @@
 				<key>escaping</key>
 				<integer>0</integer>
 				<key>script</key>
-				<string>yt-dlp -S "res:1080" -f "b*" --remux-video "mp4" "{query}"</string>
+				<string>yt-dlp -S "res:1080" -f "bestvideo+bestaudio" --remux-video "mp4" "{query}"</string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.action.terminalcommand</string>
@@ -331,9 +331,9 @@
 		<key>0F166346-87DF-47D0-954D-2C58A4FFC0FA</key>
 		<dict>
 			<key>xpos</key>
-			<real>30</real>
+			<real>45</real>
 			<key>ypos</key>
-			<real>705</real>
+			<real>610</real>
 		</dict>
 		<key>81D189FF-D03F-47FE-A9BE-57C03FAC5B9B</key>
 		<dict>
@@ -380,9 +380,9 @@
 		<key>CE7CCDBC-A43D-404F-9A64-448A693EACB5</key>
 		<dict>
 			<key>xpos</key>
-			<real>270</real>
+			<real>285</real>
 			<key>ypos</key>
-			<real>700</real>
+			<real>605</real>
 		</dict>
 		<key>E2D67ABA-6908-476E-9651-5D20816EBA71</key>
 		<dict>

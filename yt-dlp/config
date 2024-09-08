@@ -1,0 +1,2 @@
+# Save all videos under YouTube directory in your home directory
+-o "~/YouTube/%(playlist_title&{}|)s/%(playlist_index&{}|)s%(playlist_index&_|)s%(title)s.%(ext)s"

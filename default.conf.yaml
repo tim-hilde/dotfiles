@@ -7,6 +7,7 @@
 - link:
     $HOME/.aliases:
       relative: true
+    $HOME/.yt-dlp:
     $HOME/.config/bat:
       path: bat
       relative: true
