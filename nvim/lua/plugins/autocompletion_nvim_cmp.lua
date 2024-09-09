@@ -41,6 +41,14 @@ return {
 		luasnip.config.setup {}
 
 		cmp.setup {
+			view = {
+				docs = {
+					auto_open = false,
+				},
+			},
+			performance = {
+				max_view_entries = 20,
+			},
 			snippet = {
 				expand = function(args)
 					luasnip.lsp_expand(args.body)
@@ -78,6 +86,14 @@ return {
 				--  completions whenever it has completion options available.
 				["<C-Space>"] = cmp.mapping.complete {},
 
+				-- Manually trigger documentation
+				["<C-g>"] = function()
+					if cmp.visible_docs() then
+						cmp.close_docs()
+					else
+						cmp.open_docs()
+					end
+				end,
 				-- Think of <c-l> as moving to the right of your snippet expansion.
 				--  So if you have a snippet that's like:
 				--  function $name($args)
