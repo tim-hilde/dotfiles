@@ -35,6 +35,16 @@ vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper win
 -- Toggle Neotree
 vim.keymap.set("n", "<C-n>", ":Neotree filesystem reveal left toggle<CR>")
 
+-- Toogle bufferline
+vim.keymap.set("n", "<leader>tb", function()
+	local showtabline = vim.o.showtabline
+	if showtabline == 2 then
+		vim.cmd "set showtabline=0"
+	else
+		vim.cmd "set showtabline=2"
+	end
+end, { desc = "[T]oggle [b]ufferline" })
+
 -- Cicle through buffer
 wk.add {
 	{ "<leader>1", '<cmd>lua require("bufferline").go_to(1, true)<CR>', noremap = true, silent = true, hidden = true },

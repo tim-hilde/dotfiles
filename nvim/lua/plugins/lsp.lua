@@ -1,4 +1,3 @@
--- LSP Plugins
 return {
 	{
 		-- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
@@ -193,6 +192,23 @@ return {
 						},
 					},
 				},
+				ruff = {},
+				pyright = {
+					settings = {
+						pyright = {
+							-- Using Ruff's import organizer
+							disableOrganizeImports = true,
+						},
+						python = {
+							analysis = {
+								-- Ignore all files for analysis to exclusively use Ruff for linting
+								ignore = { "*" },
+							},
+						},
+					},
+				},
+				bashls = {},
+				yamlls = {},
 			}
 
 			-- Ensure the servers and tools above are installed
@@ -208,6 +224,7 @@ return {
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, {
 				"stylua", -- Used to format Lua code
+				"ruff",
 			})
 			require("mason-tool-installer").setup { ensure_installed = ensure_installed }
 

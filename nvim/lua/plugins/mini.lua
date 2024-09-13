@@ -24,15 +24,13 @@ return {
 		-- set use_icons to true if you have a Nerd Font
 		statusline.setup { use_icons = vim.g.have_nerd_font }
 
-		-- You can configure sections in the statusline by overriding their
-		-- default behavior. For example, here we set the section for
-		-- cursor location to LINE:COLUMN
-		---@diagnostic disable-next-line: duplicate-set-field
-		statusline.section_location = function()
-			return "%2l:%-2v"
+		-- Show start up screen
+		require("mini.starter").setup()
+		local override_mappings = function(args)
+			vim.keymap.set("n", "<C-j>", "<Cmd>lua MiniStarter.update_current_item('next')<CR>", { buffer = args.buf })
+			vim.keymap.set("n", "<C-k>", "<Cmd>lua MiniStarter.update_current_item('previous')<CR>", { buffer = args.buf })
+			vim.keymap.set("n", "<C-n>", ":Neotree filesystem reveal left toggle<CR>", { buffer = args.buf })
 		end
-
-		-- ... and there is more!
-		--  Check out: https://github.com/echasnovski/mini.nvim
+		vim.api.nvim_create_autocmd("User", { pattern = "MiniStarterOpened", callback = override_mappings })
 	end,
 }

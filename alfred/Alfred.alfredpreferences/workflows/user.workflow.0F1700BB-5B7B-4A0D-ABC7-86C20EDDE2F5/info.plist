@@ -106,6 +106,33 @@ security add-generic-password -a "$service-otp" -p "$token" -s "$service"</strin
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>service=$1
+
+token="$(security find-generic-password -a "$service-otp" -w | tr -d '\n')"
+
+/opt/homebrew/bin/oathtool --totp --base32 $token 2&gt;/dev/null | tr -d '\n'</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>94B35AEC-7089-4AFF-AA3E-597BE8B78D6F</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
@@ -183,34 +210,6 @@ echo -n "${header}${body}${footer}"</string>
 			<key>version</key>
 			<integer>3</integer>
 		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>service=$1
-echo $service
-
-token="$(security find-generic-password -a "$service-otp" -w | tr -d '\n')"
-
-/opt/homebrew/bin/oathtool --totp --base32 $token 2&gt;/dev/null | tr -d '\n'</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>94B35AEC-7089-4AFF-AA3E-597BE8B78D6F</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
 	</array>
 	<key>readme</key>
 	<string>Alfred OTP:
@@ -228,39 +227,41 @@ Forked from https://github.com/caalberts/alfred-otp</string>
 		<key>48C93950-4BFB-4AF9-9DA5-CA4B3385D68B</key>
 		<dict>
 			<key>xpos</key>
-			<integer>645</integer>
+			<real>645</real>
 			<key>ypos</key>
-			<integer>205</integer>
+			<real>205</real>
 		</dict>
 		<key>94B35AEC-7089-4AFF-AA3E-597BE8B78D6F</key>
 		<dict>
 			<key>xpos</key>
-			<integer>400</integer>
+			<real>400</real>
 			<key>ypos</key>
-			<integer>205</integer>
+			<real>205</real>
 		</dict>
 		<key>9DD92436-340B-4CCA-AA1E-ACC20FA56CE5</key>
 		<dict>
 			<key>xpos</key>
-			<integer>170</integer>
+			<real>170</real>
 			<key>ypos</key>
-			<integer>205</integer>
+			<real>205</real>
 		</dict>
 		<key>B11B132B-4A61-4C05-8F4F-2111F454E6C6</key>
 		<dict>
 			<key>xpos</key>
-			<integer>170</integer>
+			<real>170</real>
 			<key>ypos</key>
-			<integer>70</integer>
+			<real>70</real>
 		</dict>
 		<key>FC36327A-DE98-44F5-8A29-C3725F3427D0</key>
 		<dict>
 			<key>xpos</key>
-			<integer>640</integer>
+			<real>640</real>
 			<key>ypos</key>
-			<integer>70</integer>
+			<real>70</real>
 		</dict>
 	</dict>
+	<key>userconfigurationconfig</key>
+	<array/>
 	<key>variablesdontexport</key>
 	<array/>
 	<key>version</key>

@@ -12,6 +12,20 @@ BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "${BASEDIR}"
 git submodule update --init --recursive "${DOTBOT_DIR}"
 
-for conf in ${DEFAULT_CONFIG_PREFIX} ${@}; do
-    "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${conf}${CONFIG_SUFFIX}"
+# Example input
+input_string="$*"
+
+# Use IFS to split the string based on '--'
+# Replace '--' with a special delimiter (newline or space)
+input_string="${input_string//--/|}"
+IFS='|' read -ra parts <<< "$input_string"
+
+# The first part (before '--') is stored in 'modules'
+modules="${parts[0]}"
+
+# The second part (after '--') is stored in 'args'
+args="--${parts[1]}"
+
+for conf in ${DEFAULT_CONFIG_PREFIX} ${modules}; do
+    "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${conf}${CONFIG_SUFFIX}" ${args}
 done

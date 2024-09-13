@@ -8,8 +8,11 @@
     $HOME/.ssh/config:
       path: config_ssh
       relative: true
+    $HOME/Library/Application Support/espanso:
+      path: espanso
+      relative: true
+      create: true
     $HOME/Library/Application Support/Code/User/settings.json:
-      if: '[ `uname` =~ Darwin ]'
       path: vscode/settings.json
       relative: true
       create: true
