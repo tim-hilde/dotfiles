@@ -33,7 +33,7 @@ return {
 		formatters_by_ft = {
 			lua = { "stylua" },
 			shell = { "beautysh" },
-			yaml = { "yamllint" },
+			yaml = { "yamlfmt" },
 			-- python = { "ruff" },
 			-- Conform can also run multiple formatters sequentially
 			-- python = { "isort", "black" },

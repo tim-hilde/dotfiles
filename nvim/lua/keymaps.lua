@@ -63,3 +63,11 @@ wk.add {
 wk.add {
 	{ "<leader>st", "<cmd>TodoTelescope<CR>", desc = "[S]earch [T]ODOS" },
 }
+
+-- Toggle terminal
+wk.add {
+	{ "<leader>tt", "<cmd>ToggleTerm<CR>", desc = "[T]oggle [t]erminal" },
+}
+
+-- YankBank
+vim.keymap.set("n", "<leader>y", "<cmd>YankBank<CR>", { noremap = true, desc = "[Y]ankBank" })

@@ -15,14 +15,18 @@ return {
 		-- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
 		-- - sd'   - [S]urround [D]elete [']quotes
 		-- - sr)'  - [S]urround [R]eplace [)] [']
-		require("mini.surround").setup()
-		-- Simple and easy statusline.
-		--  You could remove this setup call if you don't like it,
-		--  and try some other statusline plugin
-		-- TODO: Substitute for "lualine"
-		local statusline = require "mini.statusline"
-		-- set use_icons to true if you have a Nerd Font
-		statusline.setup { use_icons = vim.g.have_nerd_font }
+		require("mini.surround").setup {
+			-- Module mappings. Use `''` (empty string) to disable one.
+			mappings = {
+				add = "gsa", -- Add surrounding in Normal and Visual modes
+				delete = "gsd", -- Delete surrounding
+				find = "gsf", -- Find surrounding (to the right)
+				find_left = "gsF", -- Find surrounding (to the left)
+				highlight = "gsh", -- Highlight surrounding
+				replace = "gsr", -- Replace surrounding
+				update_n_lines = "gsn", -- Update `n_lines`
+			},
+		}
 
 		-- Show start up screen
 		require("mini.starter").setup()
