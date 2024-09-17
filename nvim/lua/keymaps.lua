@@ -71,3 +71,8 @@ wk.add {
 
 -- YankBank
 vim.keymap.set("n", "<leader>y", "<cmd>YankBank<CR>", { noremap = true, desc = "[Y]ankBank" })
+
+-- LSP Signature
+vim.keymap.set({ "n" }, "<leader>k", function()
+	require("lsp_signature").toggle_float_win()
+end, { silent = true, noremap = true, desc = "[t]oggle signature" })
