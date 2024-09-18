@@ -1,9 +1,11 @@
-# official docs at: https://espanso.org/docs/
-
+  # yaml-language-server: $schema=https://raw.githubusercontent.com/ajmarkow/espanso-schema-json/master/schemas/Espanso_Matches_File_Schema.json
+  # official docs at: https://espanso.org/docs/
+---
 matches:
   # Anrede
   - trigger: "!sehr"
     replace: "Sehr Geehrte,\n\n"
+
   # Print the current date in ISO Format
   - trigger: "!odate"
     replace: "{{odate}}"
@@ -12,3 +14,159 @@ matches:
         type: date
         params:
           format: "%F"
+
+  # Datum
+  - trigger: "!date"
+    replace: "{{date}}"
+    vars:
+      - name: date
+        type: date
+        params:
+          format: "%d.%m.%Y"
+
+  # autoreload
+  - trigger: "!autoreload"
+    replace: "%load_ext autoreload\n%autoreload 2"
+
+  # Tim Hildebrandt
+  - trigger: "!th"
+    replace: "Tim Hildebrandt"
+
+  # mail
+  - trigger: "!mail"
+    replace: tim.hildebrandt@me.com
+
+  # BIC
+  - trigger: "!bic"
+    replace: BUNQNL2A
+
+  # transdisziplinär
+  - trigger: "!trans"
+    replace: "transdisziplinär"
+
+  # Liebe Grüße
+  - trigger: "!lg "
+    replace: "Liebe Grüße"
+
+  # Datum mit Wochentag
+  - trigger: "!wodate"
+    replace: "{date:ccc, YYYY-MM-dd}"
+
+  # interdisziplinär
+  - trigger: "!inter"
+    replace: "interdisziplinär"
+
+  # Phänomenologie
+  - trigger: "!phän"
+    replace: "Phänomenologie"
+
+  # Research Journal
+  - trigger: "!researchjournal"
+    replace: |
+      ---
+      tags: research_journal
+      learning: {cursor}
+      ---
+
+  # iA Presentation
+  - trigger: "!presentation"
+    replace: |
+      ---
+      disabled rules: [ all ]
+      ---
+
+  # Andre
+  - trigger: Andre
+    replace: "André"
+
+  # Danke und tschüss
+  - trigger: "!vdlg"
+    replace: "Vielen Dank und liebe Grüße\nTim Hildebrandt"
+
+  # Transdisziplinarität
+  - trigger: "!Trans"
+    replace: "Transdisziplinarität"
+
+  # Postphänomenologie
+  - trigger: "!postphän"
+    replace: "Postphänomenologie"
+
+  # Thank you regards
+  - trigger: "!ty"
+    replace: "Thank you and best regards,\nTim"
+
+  # Convert Jupyter Notebook to Markdown
+  - trigger: "!convert notebook"
+    replace: "jupyter nbconvert --to markdown "
+
+  # Best regards
+  - trigger: "!best"
+    replace: "Best regards,\nTim Hildebrandt"
+
+  # LinkedIn
+  - trigger: "!linked"
+    replace: www.linkedin.com/in/tim-hildebrandt/
+
+  # White Space in Markdown
+  - trigger: "!whitespace"
+    replace: "&nbsp;"
+
+  # Liebe Grüße Tim
+  - trigger: "!lgtim"
+    replace: "Liebe Grüße\nTim"
+
+  # IBAN Allgemein
+  - trigger: "!iban"
+    replace: NL92BUNQ2040799257
+
+  # MFG
+  - trigger: "!mfg"
+    replace: "Mit freundlichen Grüßen\nTim Hildebrandt"
+
+  # TU mail
+  - trigger: "!tumail"
+    replace: tim.hildebrandt@tu-berlin.de
+
+  # Liebe Grüße TH
+  - trigger: "!lgth"
+    replace: "Liebe Grüße\nTim Hildebrandt"
+
+  # Interdisziplinarität
+  - trigger: "!Inter"
+    replace: "Interdisziplinarität"
+
+  # phone
+  - trigger: "!tel"
+    replace: "01756277887"
+
+  # Zoomlink
+  - trigger: "!zoom"
+    replace: https://tu-berlin.zoom.us/j/3724886149?pwd=ajBRQUZkYjVkdndmTGc0RzQzRU9vQT09
+
+  # Malplaquet
+  - trigger: "!malp"
+    replace: Malplaquet
+
+  # Mail Bianca
+  - trigger: "!biancamail"
+    replace: Bianca.othmann@gmail.com
+
+  # Charité
+  - trigger: Charite
+    replace: "Charité"
+
+  # Track docx changes
+  - trigger: "!track"
+    replace: " --track-changes=all --wrap=none -t markdown -o"
+
+  # Rückfragen
+  - trigger: "!fragen"
+    replace: "Für Rückfragen stehe ich Ihnen gerne zur Verfügung.\n"
+
+  # Transdisciplinarity
+  - trigger: "!eTrans"
+    replace: Transdisciplinarity
+
+  # transdisciplinary
+  - trigger: "!etrans"
+    replace: transdisciplinary

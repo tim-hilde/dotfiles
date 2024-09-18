@@ -1,0 +1,59 @@
+  # yaml-language-server: $schema=https://raw.githubusercontent.com/ajmarkow/espanso-schema-json/master/schemas/Espanso_Matches_File_Schema.json
+  # official docs at: https://espanso.org/docs/
+---
+matches:
+  # Comment
+    - trigger: "!comment"
+      replace: "%%{cursor}%%"
+
+  # Callout
+    - trigger: "!callout"
+      replace: |
+        > [!$|$]
+        > 
+
+  # Dataview
+    - trigger: "!dataview"
+      replace: |
+        ```dataview
+        {cursor}
+        ```
+
+  # Pagebreak
+    - trigger: "!pagebreak"
+      replace: \newpage
+
+  # python code block
+    - trigger: "!py"
+      replace: |
+          ```python
+          {cursor}
+          ```
+  # Fold
+    - trigger: "!fold"
+      replace: "%% fold %%"
+
+  # Yaml Lehre
+    - trigger: "!lv"
+      replace: |
+          ---
+          Titel: {cursor}
+          Modul: [[]]
+          Semester: 
+          tag: LV
+          ---
+
+
+  # Callout-TOC
+    - trigger: "!toc"
+      replace: |
+        > [!toc]-
+        > ```toc
+        > ```
+
+  # Comment
+    - trigger: "!%"
+      replace: "%%{{clipb}}%%"
+      vars:
+          - name: "clipb"
+            type: "clipboard"

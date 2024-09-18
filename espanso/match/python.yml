@@ -1,0 +1,41 @@
+  # yaml-language-server: $schema=https://raw.githubusercontent.com/ajmarkow/espanso-schema-json/master/schemas/Espanso_Matches_File_Schema.json
+  # official docs at: https://espanso.org/docs/
+---
+matches:
+  # pingouin
+    - trigger: "!pingo"
+      replace: pingouin
+
+  # Import pandas
+    - trigger: "!pd"
+      replace: |
+        import pandas as pd
+        pd.set_option(""mode.copy_on_write"", True)
+
+  # train_test_split
+    - trigger: "!train"
+      replace: "X_train, X_test, y_train, y_test = train_test_split({cursor})"
+
+  # __main__
+    - trigger: "!main"
+      replace: |
+        if __name__ == ""__main__"":
+        
+
+  # import seaborn
+    - trigger: "!sns"
+      replace: |
+        import seaborn as sns
+        %config InlineBackend.figure_format = ""retina"""
+
+  # import matplotlib
+    - trigger: "!plt"
+      replace: |
+        import matplotlib.pyplot as plt
+        %config InlineBackend.figure_format = ""retina""
+        %matplotlib inline
+        plt.style.use(""default"")
+
+  # Import numpy
+    - trigger: "!np"
+      replace: "import numpy as np"

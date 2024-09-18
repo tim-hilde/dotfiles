@@ -1,0 +1,15 @@
+  # yaml-language-server: $schema=https://raw.githubusercontent.com/ajmarkow/espanso-schema-json/master/schemas/Espanso_Matches_File_Schema.json
+  # official docs at: https://espanso.org/docs/
+---
+matches:
+  # update brew
+    - trigger: "!brew"
+      replace: "brew cu -a -y && brew upgrade"
+
+  # fzf bat
+    - trigger: "!fzf"
+      replace: 'fzf --preview ""bat --color=always {}"" --preview-window=right,60% --layout=reverse --height=80%'
+
+  # Cookiecutter
+    - trigger: "!cookie datascience"
+      replace: "cookiecutter ~/dotfiles/cookiecutter/DataScience -o ."
