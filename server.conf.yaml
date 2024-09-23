@@ -44,8 +44,14 @@
   #   command: curl -sSL https://install.python-poetry.org | python3 -
   #   quiet: true
   -
-    command: sudo apt-get install -y eza direnv fzf gh tree jq bat zoxide nvim
+    command: sudo apt-get install -y eza direnv fzf gh tree jq bat zoxide 
     description: Installing packages
+    quiet: true
+  -
+    command: curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage && \
+      chmod u+x nvim.appimage && \
+      ./nvim.appimage --appimage-extract && ./squashfs-root/AppRun --version
+    description: Installing nvim
     quiet: true
   -
     command: wget -O ~/.local/share/fonts/JetBrainsMono.tar.xz https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz && \
