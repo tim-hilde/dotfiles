@@ -49,16 +49,16 @@
     quiet: true
   -
     command: wget -O ~/.local/share/fonts/JetBrainsMono.tar.xz https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz && \
-    mkdir -p ~/.local/share/fonts/JetBrainsMono && \
-    tar -xf ~/.local/share/fonts/JetBrainsMono.tar.xz -C ~/.local/share/fonts/JetBrainsMono && \
-    rm ~/.local/share/fonts/JetBrainsMono.tar.xz
+      mkdir -p ~/.local/share/fonts/JetBrainsMono && \
+      tar -xf ~/.local/share/fonts/JetBrainsMono.tar.xz -C ~/.local/share/fonts/JetBrainsMono && \
+      rm ~/.local/share/fonts/JetBrainsMono.tar.xz
     description: Installing JetBrainsMono font
     quiet: true
   -
     command: wget https://github.com/espanso/espanso/releases/download/v2.2.1/espanso-debian-x11-amd64.deb && \
-    sudo apt install ./espanso-debian-x11-amd64.deb && \
-    rm ~/espanso-debian-x11-amd64.deb && \
-    espanso start
+      sudo apt install -y ./espanso-debian-x11-amd64.deb && \
+      rm ~/espanso-debian-x11-amd64.deb && \
+      espanso start
 
   -
     command: bat cache --build
