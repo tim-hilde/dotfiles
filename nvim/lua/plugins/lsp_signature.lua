@@ -7,6 +7,7 @@ return {
 			border = "rounded",
 		},
 		wrap = false,
+		hint_enable = false,
 	},
 	config = function(_, opts)
 		require("lsp_signature").setup(opts)

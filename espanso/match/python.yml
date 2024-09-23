@@ -10,7 +10,7 @@ matches:
     - trigger: "!pd"
       replace: |
         import pandas as pd
-        pd.set_option(""mode.copy_on_write"", True)
+        pd.set_option("mode.copy_on_write", True)
 
   # train_test_split
     - trigger: "!train"
@@ -19,8 +19,8 @@ matches:
   # __main__
     - trigger: "!main"
       replace: |
-        if __name__ == ""__main__"":
-        
+        if __name__ == "__main__":
+
 
   # import seaborn
     - trigger: "!sns"

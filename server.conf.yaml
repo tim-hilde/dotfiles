@@ -1,0 +1,65 @@
+- defaults:
+    link:
+      relink: true
+      create: true
+    force: true
+
+- shell:
+  -
+    command: sudo apt update
+    description: Updating apt
+    quiet: true
+  -
+    command: sudo apt install -y zsh
+    description: Installing zsh
+    quiet: true
+  -
+    command: sudo chsh -s $(which zsh) $USER && chsh -s $(which zsh)
+    description: Make zsh default shell
+    quiet: true
+  # -
+  #   command: if [[ ! -d "$HOME/.pyenv" ]]; then curl https://pyenv.run | bash; fi
+  #   description: Installing pyenv
+  #   quiet: true
+  # -
+  #   command: echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc && echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc && echo 'eval "$(pyenv init -)"' >> ~/.bashrc && exec bash
+  #   quiet: true
+  # -
+  #   command: git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
+  #   description: Installing pyenv-virtualenv
+  #   quiet: true
+  # -
+  #   command: sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev python3-dev
+  #   description: Installing python dependencies (apt)
+  #   quiet: true
+  # -
+  #   command: yes N | pyenv install 3.10.6 && pyenv global 3.10.6
+  #   description: Installing python 3.10.6
+  #   quiet: true
+  #   stderr: true
+  # -
+  #   command: pip install --upgrade pip
+  #   quiet: true
+  # -
+  #   command: curl -sSL https://install.python-poetry.org | python3 -
+  #   quiet: true
+  -
+    command: sudo apt-get install -y eza direnv fzf gh tree jq bat zoxide nvim
+    description: Installing packages
+    quiet: true
+  -
+    command: wget -O ~/.local/share/fonts/JetBrainsMono.tar.xz https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz && \
+    mkdir -p ~/.local/share/fonts/JetBrainsMono && \
+    tar -xf ~/.local/share/fonts/JetBrainsMono.tar.xz -C ~/.local/share/fonts/JetBrainsMono && \
+    rm ~/.local/share/fonts/JetBrainsMono.tar.xz
+    description: Installing JetBrainsMono font
+    quiet: true
+  -
+    command: wget https://github.com/espanso/espanso/releases/download/v2.2.1/espanso-debian-x11-amd64.deb && \
+    sudo apt install ./espanso-debian-x11-amd64.deb && \
+    rm ~/espanso-debian-x11-amd64.deb && \
+    espanso start
+
+  -
+    command: bat cache --build
+    quiet: true

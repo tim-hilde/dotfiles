@@ -35,9 +35,9 @@ function set_gcloud_env() {
   echo -n "DOCKER_REPO_NAME: "
   read input_var4
 
-  echo GCP_REGION="${input_var3:-$default_GCP_REGION}" > .env
-  echo GCP_PROJECT_ID="$input_var1" >> .env
-  echo DOCKER_IMAGE_NAME="${input_var2:-$default_docker_image_name}" >> .env
+  echo GCP_REGION="${input_var1:-$default_GCP_REGION}" >> .env
+  echo GCP_PROJECT_ID="$input_var2" >> .env
+  echo DOCKER_IMAGE_NAME="${input_var3:-$default_docker_image_name}" >> .env
   echo DOCKER_REPO_NAME="$input_var4" >> .env
 }
 

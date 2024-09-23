@@ -217,4 +217,8 @@
     "codesnap.backgroundColor": "",
     "codesnap.shutterAction": "copy",
     "python.defaultInterpreterPath": "/Users/tim/Library/Caches/pypoetry/virtualenvs/deep-live-cam-BmGjDei0-py3.10",
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
+    "editor.insertSpaces": false,
 }

@@ -209,6 +209,7 @@ return {
 				},
 				bashls = {},
 				yamlls = {},
+				dockerls = {},
 			}
 
 			-- Ensure the servers and tools above are installed
