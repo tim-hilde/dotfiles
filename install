@@ -20,11 +20,14 @@ input_string="$*"
 input_string="${input_string//--/|}"
 IFS='|' read -ra parts <<< "$input_string"
 
-# The first part (before '--') is stored in 'modules'
 modules="${parts[0]}"
 
-# The second part (after '--') is stored in 'args'
-args="--${parts[1]}"
+# If there's a second part, store it as 'args'; otherwise, 'args' is an empty string
+if [[ ${#parts[@]} -gt 1 ]]; then
+    args="--${parts[1]}"
+else
+    args=""
+fi
 
 for conf in ${DEFAULT_CONFIG_PREFIX} ${modules}; do
     "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${conf}${CONFIG_SUFFIX}" ${args}
