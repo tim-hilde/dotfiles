@@ -1,15 +1,17 @@
 return {
 	"ray-x/lsp_signature.nvim",
-	event = "InsertEnter",
-	opts = {
-		bind = true,
-		handler_opts = {
-			border = "rounded",
-		},
-		wrap = false,
-		hint_enable = false,
-	},
-	config = function(_, opts)
-		require("lsp_signature").setup(opts)
+	event = "LspAttach",
+	config = function()
+		require("lsp_signature").on_attach {
+			bind = true,
+			handler_opts = {
+				border = "rounded",
+			},
+			hint_enable = true,
+			floating_window = false,
+			hint_prefix = {
+				above = "↙ ", -- when the hint is on the line above the current line
+			},
+		}
 	end,
 }

@@ -32,6 +32,7 @@ yabai -m config mouse_action2 resize
 # when window is dropped in center of another window, swap them
 yabai -m config mouse_drop_action swap
 
+yabai -m rule --add app=".*" sub-layer=normal
 # DISABLED APPS
 yabai -m rule --add app="^System" manage=off
 yabai -m rule --add app="^Rechner$" manage=off

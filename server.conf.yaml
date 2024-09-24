@@ -44,13 +44,15 @@
   #   command: curl -sSL https://install.python-poetry.org | python3 -
   #   quiet: true
   -
-    command: sudo apt-get install -y eza direnv fzf gh tree jq bat zoxide 
+    command: sudo apt-get install -y eza direnv fzf gh tree jq bat zoxide
     description: Installing packages
     quiet: true
   -
     command: curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage && \
       chmod u+x nvim.appimage && \
-      ./nvim.appimage --appimage-extract && ./squashfs-root/AppRun --version
+      ./nvim.appimage --appimage-extract && \
+      mv squashfs-root / && \
+      ln -s /squashfs-root/AppRun /usr/bin/nvim
     description: Installing nvim
     quiet: true
   -
