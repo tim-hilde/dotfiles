@@ -15,8 +15,29 @@
         "command": "-editor.action.triggerParameterHints",
         "when": "editorHasSignatureHelpProvider && editorTextFocus"
     },
+	{
+		"key": "cmd+k cmd+b",
+		"command": "workbench.action.toggleStatusbarVisibility"
+	},
+	{
+		"key": "shift+cmd+space",
+		"command": "editor.action.triggerParameterHints"
+	},
+	{
+        "key": "ctrl+d",
+        "command": "vscode-neovim.send",
+        "when": "editorTextFocus && neovim.ctrlKeysNormal.e && neovim.init && neovim.mode != 'insert' && editorLangId not in 'neovim.editorLangIdExclusions'",
+        "args": "<C-d>"
+    },
     {
-        "key": "shift+cmd+space",
-        "command": "editor.action.showDefinitionPreviewHover"
-    }
+        "key": "ctrl+u",
+        "command": "vscode-neovim.send",
+        "when": "editorTextFocus && neovim.ctrlKeysNormal.d && neovim.init && neovim.mode != 'insert' && editorLangId not in 'neovim.editorLangIdExclusions'",
+        "args": "<C-u>"
+	},
+	{
+		"key": "cmd+k cmd+b",
+		"command": "-editor.action.setSelectionAnchor",
+		"when": "editorTextFocus"
+	},
 ]

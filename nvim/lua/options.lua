@@ -1,11 +1,7 @@
--- vim.cmd "set expandtab"
-vim.cmd "set tabstop=4"
--- vim.cmd "set softtabstop=4"
--- vim.cmd "set shiftwidth=4"
-
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
+vim.keymap.set("", "<Space>", "<Nop>")
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
@@ -19,12 +15,6 @@ vim.g.have_nerd_font = true
 -- Make line numbers default
 vim.opt.number = true
 vim.opt.relativenumber = true
-
--- Enable mouse mode, can be useful for resizing splits for example!
-vim.opt.mouse = "a"
-
--- Don't show the mode, since it's already in the status line
-vim.opt.showmode = false
 
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
@@ -54,21 +44,37 @@ vim.opt.updatetime = 250
 -- Displays which-key popup sooner
 vim.opt.timeoutlen = 300 -- decativated due to error with mini.surround
 
--- Configure how new splits should be opened
-vim.opt.splitright = true
-vim.opt.splitbelow = true
-
--- Sets how neovim will display certain whitespace characters in the editor.
---  See `:help 'list'`
---  and `:help 'listchars'`
-vim.opt.list = true
-vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
-
--- Preview substitutions live, as you type!
-vim.opt.inccommand = "split"
-
 -- Show which line your cursor is on
 vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 20
+
+if vim.g.vscode then
+	-- Don't show the mode, since it's already in the status line
+	vim.opt.showmode = true
+else
+	-- vim.cmd "set expandtab"
+	vim.cmd "set tabstop=4"
+	-- vim.cmd "set softtabstop=4"
+	-- vim.cmd "set shiftwidth=4"
+
+	-- Enable mouse mode, can be useful for resizing splits for example!
+	vim.opt.mouse = "a"
+
+	-- Don't show the mode, since it's already in the status line
+	vim.opt.showmode = false
+
+	-- Configure how new splits should be opened
+	vim.opt.splitright = true
+	vim.opt.splitbelow = true
+
+	-- Sets how neovim will display certain whitespace characters in the editor.
+	--  See `:help 'list'`
+	--  and `:help 'listchars'`
+	vim.opt.list = true
+	vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+
+	-- Preview substitutions live, as you type!
+	vim.opt.inccommand = "split"
+end

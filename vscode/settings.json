@@ -222,4 +222,14 @@
         "asvetliakov.vscode-neovim": 1
     },
 	"editor.insertSpaces": false,
+	"workbench.activityBar.location": "hidden",
+	"editor.lineNumbers": "relative",
+	"editor.scrollBeyondLastLine": true,
+	"errorLens.editorHoverPartsEnabled": {
+		"messageEnabled": true
+	},
+	"errorLens.gutterIconsEnabled": true,
+	"errorLens.messageBackgroundMode": "message",
+	"editor.cursorSurroundingLines": 20,
+	"breadcrumbs.enabled": false
 }
