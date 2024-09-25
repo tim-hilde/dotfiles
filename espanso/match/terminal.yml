@@ -13,3 +13,7 @@ matches:
   # Cookiecutter
     - trigger: "!cookie datascience"
       replace: "cookiecutter ~/dotfiles/cookiecutter/DataScience -o ."
+
+  # save brewfile
+    - trigger: "!savebrew"
+      replace: "brew bundle dump --force --file='~/dotfiles/brew/Brewfile'"
