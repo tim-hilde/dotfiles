@@ -231,5 +231,8 @@
 	"errorLens.gutterIconsEnabled": true,
 	"errorLens.messageBackgroundMode": "message",
 	"editor.cursorSurroundingLines": 20,
-	"breadcrumbs.enabled": false
+	"breadcrumbs.enabled": false,
+	"workbench.statusBar.visible": false,
+	"editor.cursorBlinking": "solid",
+	"editor.renderWhitespace": "trailing"
 }
