@@ -29,6 +29,10 @@ vim.api.nvim_set_keymap('n', '<Leader>k', '<Plug>(easymotion-k)', {})
 
 if vim.g.vscode then
 else
+	vim.keymap.set({ "n", "v" }, "<leader>f", function()
+		require("conform").format { async = true, lsp_format = "fallback" }
+	  end, { desc = "[F]ormat buffer" })
+
 	local wk = require "which-key"
 	-- Diagnostic keymaps
 	vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
