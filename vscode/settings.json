@@ -166,6 +166,7 @@
     "github.copilot.chat.welcomeMessage": "never",
     "github.copilot.advanced": {
 
+
     },
     "ruby.lint": {
         "rubocop": true
@@ -220,5 +221,5 @@
     "extensions.experimental.affinity": {
         "asvetliakov.vscode-neovim": 1
     },
-    "editor.insertSpaces": false,
+	"editor.insertSpaces": false,
 }
