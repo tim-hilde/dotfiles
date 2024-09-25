@@ -14,8 +14,8 @@ alias cd=z
 alias s="kitten ssh"
 
 # skhd / yabai
-alias skhdrc="nvim ~/dotfiles/skhd/skhdrc"
-alias yabairc="nvim ~/dotfiles/yabai/yabairc"
+alias skhdrc="code ~/dotfiles/skhd/skhdrc"
+alias yabairc="code ~/dotfiles/yabai/yabairc"
 
 # lazygit
 alias lg="lazygit --use-config-file=$HOME/dotfiles/lazygit/config.yml"
