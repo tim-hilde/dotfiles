@@ -234,5 +234,8 @@
 	"breadcrumbs.enabled": false,
 	"workbench.statusBar.visible": false,
 	"editor.cursorBlinking": "solid",
-	"editor.renderWhitespace": "trailing"
+	"editor.renderWhitespace": "trailing",
+	"Lua.diagnostics.globals": [
+		"vim"
+	]
 }

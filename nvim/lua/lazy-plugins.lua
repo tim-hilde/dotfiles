@@ -35,7 +35,7 @@ if (vim.g.vscode) then
 			-- require "plugins.autocompletion",
 			require "plugins.autoformat",
 			require "plugins.autopairs",
-			require "plugins.easy-motion",
+			-- require "plugins.easy-motion",
 			require "plugins.gitsigns",
 			-- require "plugins.linting",
 			-- require "plugins.lsp_signature",

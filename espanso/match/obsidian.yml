@@ -9,8 +9,8 @@ matches:
   # Callout
     - trigger: "!callout"
       replace: |
-        > [!$|$]
-        > 
+        > [!]
+        >
 
   # Dataview
     - trigger: "!dataview"
@@ -39,7 +39,7 @@ matches:
           ---
           Titel: {cursor}
           Modul: [[]]
-          Semester: 
+          Semester:
           tag: LV
           ---
 
