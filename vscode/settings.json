@@ -95,8 +95,7 @@
         "mocha": {
             "statusBar.foreground": "accent"
         }
-    },
-    "editor.inlineSuggest.showToolbar": "always",
+	},
     "jupyter.interactiveWindow.textEditor.executeSelection": true,
     "woke.enable": false,
     "todohighlight.isEnable": true,
@@ -201,7 +200,7 @@
     ],
     // "workbench.activityBar.location": "top",
     "jupyter.enableExtendedPythonKernelCompletions": true,
-    "workbench.iconTheme": "material-icon-theme",
+    "workbench.iconTheme": "vscode-icons",
     "autoDocstring.docstringFormat": "numpy",
     "files.associations": {
         "yabairc": "shellscript"
@@ -216,8 +215,8 @@
     "editor.formatOnSave": true,
     "codesnap.transparentBackground": true,
     "codesnap.backgroundColor": "",
-    "codesnap.shutterAction": "copy",
-    "python.defaultInterpreterPath": "/Users/tim/Library/Caches/pypoetry/virtualenvs/deep-live-cam-BmGjDei0-py3.10",
+	"codesnap.shutterAction": "copy",
+	"python.defaultInterpreterPath": "/Users/tim/Library/Caches/pypoetry/virtualenvs/deep-live-cam-BmGjDei0-py3.10",
     "extensions.experimental.affinity": {
         "asvetliakov.vscode-neovim": 1
     },
@@ -232,10 +231,12 @@
 	"errorLens.messageBackgroundMode": "message",
 	"editor.cursorSurroundingLines": 20,
 	"breadcrumbs.enabled": false,
-	"workbench.statusBar.visible": false,
 	"editor.cursorBlinking": "solid",
 	"editor.renderWhitespace": "trailing",
 	"Lua.diagnostics.globals": [
 		"vim"
-	]
+	],
+	"vscode-neovim.useWSL": true,
+	"vscode-neovim.neovimExecutablePaths.linux": "/home/linuxbrew/.linuxbrew/bin/nvim",
+	"vsicons.dontShowNewVersionMessage": true
 }
