@@ -1,0 +1,11 @@
+- defaults:
+    link:
+      relink: true
+      create: true
+    force: true
+
+- link:
+    "%HOMEPATH%\espanso":
+      path: espanso
+      relative: true
+      create: true
