@@ -54,7 +54,7 @@ if (yqNotInstalled) {
 
 	// validate
 	const lintStatus = app.doShellScript(`"/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli" --lint-complex-modifications "${karabinerJSON}"`).trim();
-	const msg = lintStatus === "ok" ? "✅ Build Success" : "🛑 Config Invalid";
+	const msg = lintStatus.endsWith("ok") ? "✅ Build Success" : "🛑 Config Invalid";
 
 	app.displayNotification("", { withTitle: msg, subtitle: "Karabiner Config" });
 }

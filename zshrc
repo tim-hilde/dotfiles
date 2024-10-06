@@ -12,6 +12,9 @@ ZSH=$HOME/.oh-my-zsh
 
 # You can change the theme with another one from https://github.com/robbyrussell/oh-my-zsh/wiki/themes
 ZSH_THEME="powerlevel10k/powerlevel10k" #"robbyrussell"
+# Set virtualenv delimiter
+typeset -g POWERLEVEL9K_VIRTUALENV_LEFT_DELIMITER="["
+typeset -g POWERLEVEL9K_VIRTUALENV_RIGHT_DELIMITER="]"
 
 export DIRENV_LOG_FORMAT=""
 

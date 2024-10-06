@@ -238,5 +238,6 @@
 	],
 	"vscode-neovim.useWSL": true,
 	"vscode-neovim.neovimExecutablePaths.linux": "/home/linuxbrew/.linuxbrew/bin/nvim",
-	"vsicons.dontShowNewVersionMessage": true
+	"vsicons.dontShowNewVersionMessage": true,
+	"editor.fontSize": 12
 }
