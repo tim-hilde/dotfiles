@@ -12,7 +12,7 @@ matches:
 
   # Cookiecutter
     - trigger: "!cookie datascience"
-      replace: "cookiecutter ~/dotfiles/cookiecutter/DataScience -o ."
+      replace: "cookiecutter https://github.com/tim-hilde/dotfiles/tree/main/cookiecutter/DataScience -o ."
 
   # save brewfile
     - trigger: "!savebrew"
