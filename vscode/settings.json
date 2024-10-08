@@ -200,7 +200,7 @@
     ],
     // "workbench.activityBar.location": "top",
     "jupyter.enableExtendedPythonKernelCompletions": true,
-    "workbench.iconTheme": "vscode-icons",
+    "workbench.iconTheme": "material-icon-theme",
     "autoDocstring.docstringFormat": "numpy",
     "files.associations": {
         "yabairc": "shellscript"
@@ -216,7 +216,6 @@
     "codesnap.transparentBackground": true,
     "codesnap.backgroundColor": "",
 	"codesnap.shutterAction": "copy",
-	"python.defaultInterpreterPath": "/Users/tim/Library/Caches/pypoetry/virtualenvs/deep-live-cam-BmGjDei0-py3.10",
     "extensions.experimental.affinity": {
         "asvetliakov.vscode-neovim": 1
     },
@@ -239,5 +238,6 @@
 	"vscode-neovim.useWSL": true,
 	"vscode-neovim.neovimExecutablePaths.linux": "/home/linuxbrew/.linuxbrew/bin/nvim",
 	"vsicons.dontShowNewVersionMessage": true,
-	"editor.fontSize": 12
+	"remote.downloadExtensionsLocally": true,
+	"errorLens.gutterIconSet": "squareRounded"
 }

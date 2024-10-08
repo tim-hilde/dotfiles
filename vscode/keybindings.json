@@ -40,4 +40,56 @@
 		"command": "-editor.action.setSelectionAnchor",
 		"when": "editorTextFocus"
 	},
+	{
+		"key": "cmd+k cmd+l",
+		"command": "-editor.toggleFold",
+		"when": "editorTextFocus && foldingEnabled"
+	},
+	{
+		"key": "cmd+k cmd+j",
+		"command": "-editor.unfoldAll",
+		"when": "editorTextFocus && foldingEnabled"
+	},
+	{
+		"key": "cmd+k cmd+k",
+		"command": "-editor.action.selectFromAnchorToCursor",
+		"when": "editorTextFocus && selectionAnchorSet"
+	},
+	{
+		"key": "cmd+k cmd+k",
+		"command": "-editor.action.defineKeybinding",
+		"when": "resource == 'vscode-userdata:/Users/tim/Library/Application%20Support/Code/User/keybindings.json'"
+	},
+	{
+		"key": "cmd+k cmd+l",
+		"command": "workbench.action.focusRightGroup"
+	},
+	{
+		"key": "cmd+k cmd+right",
+		"command": "-workbench.action.focusRightGroup"
+	},
+	{
+		"key": "cmd+k cmd+k",
+		"command": "workbench.action.focusAboveGroup"
+	},
+	{
+		"key": "cmd+k cmd+up",
+		"command": "-workbench.action.focusAboveGroup"
+	},
+	{
+		"key": "cmd+k cmd+j",
+		"command": "workbench.action.focusBelowGroup"
+	},
+	{
+		"key": "cmd+k cmd+down",
+		"command": "-workbench.action.focusBelowGroup"
+	},
+	{
+		"key": "cmd+k cmd+h",
+		"command": "workbench.action.focusLeftGroup"
+	},
+	{
+		"key": "cmd+k cmd+left",
+		"command": "-workbench.action.focusLeftGroup"
+	},
 ]

@@ -12,7 +12,8 @@ __pycache__
 *.pyc
 *.alfredworkflow
 *.dmg
-vscode/extensions/
+vscode/extensions/*
+!vscode/extensions/extensions.json
 
 
 # Microsoft Office temporary files
