@@ -220,12 +220,8 @@
         "asvetliakov.vscode-neovim": 1
     },
 	"editor.insertSpaces": false,
-	"workbench.activityBar.location": "hidden",
 	"editor.lineNumbers": "relative",
 	"editor.scrollBeyondLastLine": true,
-	"errorLens.editorHoverPartsEnabled": {
-		"messageEnabled": true
-	},
 	"errorLens.gutterIconsEnabled": true,
 	"errorLens.messageBackgroundMode": "message",
 	"editor.cursorSurroundingLines": 20,
@@ -239,5 +235,13 @@
 	"vscode-neovim.neovimExecutablePaths.linux": "/home/linuxbrew/.linuxbrew/bin/nvim",
 	"vsicons.dontShowNewVersionMessage": true,
 	"remote.downloadExtensionsLocally": true,
-	"errorLens.gutterIconSet": "squareRounded"
+	"errorLens.gutterIconSet": "squareRounded",
+	"todo-tree.highlights.useColourScheme": true,
+	"todo-tree.general.showIconsInsteadOfTagsInStatusBar": true,
+	"todo-tree.tree.showCountsInTree": true,
+	"workbench.activityBar.location": "hidden",
+	"errorLens.codeLensOnClick": "none",
+	"zenMode.hideLineNumbers": false,
+	"zenMode.centerLayout": false,
+	"github.copilot.editor.enableAutoCompletions": false,
 }

@@ -18,20 +18,21 @@ vim.g.EasyMotion_do_mapping = 0
 -- Jump to anywhere you want with minimal keystrokes, with just one key binding.
 -- `s{char}{char}{label}`
 -- Need one more keystroke, but on average, it may be more comfortable.
-vim.api.nvim_set_keymap('n', 's', '<Plug>(easymotion-overwin-f2)', {})
+vim.api.nvim_set_keymap("n", "s", "<Plug>(easymotion-overwin-f2)", {})
 
 -- Turn on case-insensitive feature
 vim.g.EasyMotion_smartcase = 1
 
 -- JK motions: Line motions
-vim.api.nvim_set_keymap('n', '<Leader>j', '<Plug>(easymotion-j)', {})
-vim.api.nvim_set_keymap('n', '<Leader>k', '<Plug>(easymotion-k)', {})
+vim.api.nvim_set_keymap("n", "<Leader>j", "<Plug>(easymotion-j)", {})
+vim.api.nvim_set_keymap("n", "<Leader>k", "<Plug>(easymotion-k)", {})
 
 if vim.g.vscode then
+	vim.keymap.set("n", "gr", ':call VSCodeNotify("editor.action.rename")<cr>')
 else
 	vim.keymap.set({ "n", "v" }, "<leader>f", function()
 		require("conform").format { async = true, lsp_format = "fallback" }
-	  end, { desc = "[F]ormat buffer" })
+	end, { desc = "[F]ormat buffer" })
 
 	local wk = require "which-key"
 	-- Diagnostic keymaps

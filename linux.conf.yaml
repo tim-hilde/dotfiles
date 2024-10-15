@@ -60,10 +60,13 @@
     description: Installing gnome-extensions-cli
     quiet: true
   -
-    command: if [[ $(less /etc/*release | grep "^ID=") =~ fedora ]]; then wget -O ~/.local/share/fonts/JetBrainsMono.tar.xz https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz && \
-    mkdir -p ~/.local/share/fonts/JetBrainsMono && \
-    tar -xf ~/.local/share/fonts/JetBrainsMono.tar.xz -C ~/.local/share/fonts/JetBrainsMono && \
-    rm ~/.local/share/fonts/JetBrainsMono.tar.xz; fi
+    command: |
+      if [[ $(less /etc/*release | grep "^ID=") =~ fedora ]]; then
+        wget -O ~/.local/share/fonts/JetBrainsMono.tar.xz https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz && \
+        mkdir -p ~/.local/share/fonts/JetBrainsMono && \
+        tar -xf ~/.local/share/fonts/JetBrainsMono.tar.xz -C ~/.local/share/fonts/JetBrainsMono && \
+        rm ~/.local/share/fonts/JetBrainsMono.tar.xz
+      fi
     description: Installing JetBrainsMono font
     quiet: true
   -

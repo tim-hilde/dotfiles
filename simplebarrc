@@ -36,7 +36,7 @@
     "displayOnlyIcon": false,
     "expandAllProcesses": false,
     "displaySkhdMode": false,
-    "displayStackIndex": true,
+    "displayStackIndex": false,
     "displayOnlyCurrentStack": false
   },
   "spacesDisplay": {
@@ -54,10 +54,10 @@
     "switchSpacesWithoutYabai": false
   },
   "widgets": {
-    "processWidget": false,
-    "weatherWidget": false,
+    "processWidget": true,
+    "weatherWidget": true,
     "netstatsWidget": false,
-    "cpuWidget": false,
+    "cpuWidget": true,
     "batteryWidget": false,
     "wifiWidget": false,
     "vpnWidget": false,
@@ -91,7 +91,7 @@
     "refreshFrequency": 2000,
     "showOnDisplay": "",
     "displayAsGraph": false,
-    "cpuMonitorApp": "Top"
+    "cpuMonitorApp": "Activity Monitor"
   },
   "batteryWidgetOptions": {
     "refreshFrequency": 10000,

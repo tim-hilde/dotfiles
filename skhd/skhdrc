@@ -17,6 +17,8 @@ meh - 4 : yabai -m space --focus 4
 meh - 5 : yabai -m space --focus 5
 meh - 6 : yabai -m space --focus 6
 meh - 7 : yabai -m space --focus 7
+meh - 8 : yabai -m space --focus 8
+meh - 9 : yabai -m space --focus 9
 
 # Focus previous space by mission-control index
 meh - q : yabai -m space --focus prev

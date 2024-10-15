@@ -195,7 +195,7 @@ echo -n "${header}${body}${footer}"</string>
 			<key>config</key>
 			<dict>
 				<key>autopaste</key>
-				<false/>
+				<true/>
 				<key>clipboardtext</key>
 				<string></string>
 				<key>ignoredynamicplaceholders</key>

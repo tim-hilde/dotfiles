@@ -29,26 +29,20 @@ local ui = {
 		lazy = "💤 ",
 	},
 }
-if (vim.g.vscode) then
-	require("lazy").setup(
-		{
-			-- require "plugins.autocompletion",
-			require "plugins.autoformat",
-			require "plugins.autopairs",
-			-- require "plugins.easy-motion",
-			require "plugins.gitsigns",
-			-- require "plugins.linting",
-			-- require "plugins.lsp_signature",
-			-- reqire "plugins.lsp",
-			require "plugins.mini",
-			require "plugins.puppeteer",
-			require "plugins.vim-sleuth"
-		},
-		ui
-	)
+if vim.g.vscode then
+	require("lazy").setup({
+		-- require "plugins.autocompletion",
+		require "plugins.autoformat",
+		require "plugins.autopairs",
+		-- require "plugins.easy-motion",
+		require "plugins.gitsigns",
+		-- require "plugins.linting",
+		-- require "plugins.lsp_signature",
+		-- reqire "plugins.lsp",
+		require "plugins.mini",
+		require "plugins.puppeteer",
+		require "plugins.vim-sleuth",
+	}, ui)
 else
-	require("lazy").setup(
-		"plugins",
-		ui
-	)
+	require("lazy").setup("plugins", ui)
 end

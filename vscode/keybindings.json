@@ -92,4 +92,22 @@
 		"key": "cmd+k cmd+left",
 		"command": "-workbench.action.focusLeftGroup"
 	},
+	// {
+	// 	"key": "g r",
+	// 	"command": "editor.action.rename",
+	// 	"when": "editorHasRenameProvider && editorTextFocus && !editorReadonly"
+	// },
+	{
+		"key": "f2",
+		"command": "-editor.action.rename",
+		"when": "editorHasRenameProvider && editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "cmd+s",
+		"command": "extension.multiCommand.execute",
+		"when": "editorTextFocus && neovim.init && neovim.mode == 'insert'",
+		"args": {
+		  "sequence": ["workbench.action.files.save", "vscode-neovim.escape"]
+		}
+	  }
 ]
