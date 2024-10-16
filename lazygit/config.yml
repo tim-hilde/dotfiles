@@ -24,3 +24,8 @@ gui:
     '*': '#b4befe'
 
   nerdFontsVersion: '2'
+customCommands:
+  - key: 'C'
+    context: 'global'
+    command: "oco"
+    subprocess: true
