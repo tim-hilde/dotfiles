@@ -244,4 +244,5 @@
 	"zenMode.hideLineNumbers": false,
 	"zenMode.centerLayout": false,
 	"github.copilot.editor.enableAutoCompletions": false,
+	"remote.SSH.localServerDownload": "off",
 }
