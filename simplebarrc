@@ -55,7 +55,7 @@
   },
   "widgets": {
     "processWidget": true,
-    "weatherWidget": true,
+    "weatherWidget": false,
     "netstatsWidget": false,
     "cpuWidget": true,
     "batteryWidget": false,
@@ -78,7 +78,7 @@
     "refreshFrequency": 1800000,
     "showOnDisplay": "",
     "unit": "C",
-    "hideLocation": true,
+    "hideLocation": false,
     "hideGradient": false,
     "customLocation": ""
   },

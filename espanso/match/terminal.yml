@@ -8,7 +8,7 @@ matches:
 
   # fzf bat
     - trigger: "!fzf"
-      replace: 'fzf --preview ""bat --color=always {}"" --preview-window=right,60% --layout=reverse --height=80%'
+      replace: fzf --preview "'bat --color=always {}'" --preview-window=right,60% --layout=reverse --height=80%
 
   # Cookiecutter
     - trigger: "!cookie datascience"

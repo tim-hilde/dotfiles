@@ -41,7 +41,7 @@
 			<key>text</key>
 			<string>Search Library Genesis for '{query}'</string>
 			<key>url</key>
-			<string>https://libgen.rs/search.php?req={query}</string>
+			<string>https://libgen.is/search.php?req={query}</string>
 		</dict>
 		<key>3BF88FDC-DFC0-4DFF-86BA-0B4F6F276EEF</key>
 		<dict>

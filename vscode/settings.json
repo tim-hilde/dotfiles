@@ -73,7 +73,6 @@
     "autopep8.showNotifications": "always",
     "jupyter.askForKernelRestart": false,
     "notebook.diff.ignoreMetadata": true,
-    "notebook.lineNumbers": "on",
     "explorer.confirmDragAndDrop": false,
    // "prettier.useTabs": true,
     "ruff.showNotifications": "onError",
@@ -178,8 +177,7 @@
     "window.restoreWindows": "none",
     "window.newWindowDimensions": "maximized",
     "workbench.editor.enablePreview": true,
-    "workbench.settings.useSplitJSON": true,
-    "editor.detectIndentation": false,
+	"workbench.settings.useSplitJSON": true,
     "workbench.panel.defaultLocation": "bottom",
     "editor.accessibilitySupport": "off",
     "indentRainbow.indicatorStyle": "light",
@@ -219,7 +217,6 @@
     "extensions.experimental.affinity": {
         "asvetliakov.vscode-neovim": 1
     },
-	"editor.insertSpaces": false,
 	"editor.lineNumbers": "relative",
 	"editor.scrollBeyondLastLine": true,
 	"errorLens.gutterIconsEnabled": true,
@@ -244,5 +241,5 @@
 	"zenMode.hideLineNumbers": false,
 	"zenMode.centerLayout": false,
 	"github.copilot.editor.enableAutoCompletions": false,
-	"remote.SSH.localServerDownload": "off",
+    "remote.SSH.localServerDownload": "off",
 }
