@@ -1,0 +1,12 @@
+[[manager.prepend_keymap]]
+# Max preview
+on   = "T"
+run  = "plugin --sync max-preview"
+desc = "Maximize or restore preview"
+
+[[manager.prepend_keymap]]
+# Vorschau
+on = "<C-p>"
+run = '''
+  shell 'qlmanage -p "$@"' --confirm
+'''

@@ -270,7 +270,7 @@ rules:
               value: false
           - set_notification_message:
               id: leader-notice
-      # S[u]blime
+      # O[u]tlook
       - type: basic
         from:
           key_code: u
@@ -279,7 +279,7 @@ rules:
             name: LEADER_ACTIVE
             value: true
         to:
-          - shell_command: open -a 'Sublime Text'
+          - shell_command: open -a 'Microsoft Outlook'
           - set_variable:
               name: LEADER_ACTIVE
               value: false
@@ -325,6 +325,21 @@ rules:
             value: true
         to:
           - shell_command: open -a 'ChatGPT'
+          - set_variable:
+              name: LEADER_ACTIVE
+              value: false
+          - set_notification_message:
+              id: leader-notice
+      # T[e]ams
+      - type: basic
+        from:
+          key_code: e
+        conditions:
+          - type: variable_if
+            name: LEADER_ACTIVE
+            value: true
+        to:
+          - shell_command: open -a 'Microsoft Teams'
           - set_variable:
               name: LEADER_ACTIVE
               value: false

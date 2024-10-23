@@ -11,11 +11,15 @@ alias tree="eza --tree"
 # zoxide
 alias cd=z
 
+# open karabiner
+alias karabiner="cd ~/dotfiles/karabiner/assets/complex_modifications/"
+
+# kitty ssh
 alias s="kitten ssh"
 
 # skhd / yabai
-alias skhdrc="code ~/dotfiles/skhd/skhdrc"
-alias yabairc="code ~/dotfiles/yabai/yabairc"
+alias skhdrc="nvim ~/dotfiles/skhd/skhdrc"
+alias yabairc="nvim ~/dotfiles/yabai/yabairc"
 
 # lazygit
 alias lg="lazygit --use-config-file=$HOME/dotfiles/lazygit/config.yml"

@@ -11,21 +11,8 @@ vim.keymap.set("n", "<right>", '<cmd>echo "Use l to move!!"<CR>')
 vim.keymap.set("n", "<up>", '<cmd>echo "Use k to move!!"<CR>')
 vim.keymap.set("n", "<down>", '<cmd>echo "Use j to move!!"<CR>')
 
--- Easy motion
--- Disable default mappings
-vim.g.EasyMotion_do_mapping = 0
-
--- Jump to anywhere you want with minimal keystrokes, with just one key binding.
--- `s{char}{char}{label}`
--- Need one more keystroke, but on average, it may be more comfortable.
-vim.api.nvim_set_keymap("n", "s", "<Plug>(easymotion-overwin-f2)", {})
-
--- Turn on case-insensitive feature
-vim.g.EasyMotion_smartcase = 1
-
--- JK motions: Line motions
-vim.api.nvim_set_keymap("n", "<Leader>j", "<Plug>(easymotion-j)", {})
-vim.api.nvim_set_keymap("n", "<Leader>k", "<Plug>(easymotion-k)", {})
+-- Leap
+vim.keymap.set("n", "<leader>j", "<Plug>(leap)", { desc = "Leap" })
 
 if vim.g.vscode then
 	vim.keymap.set("n", "gr", ':call VSCodeNotify("editor.action.rename")<cr>')
@@ -92,6 +79,23 @@ else
 		{ "<leader>tt", "<cmd>ToggleTerm<CR>", desc = "[T]oggle [t]erminal" },
 	}
 
+	local Terminal = require("toggleterm.terminal").Terminal
+	local lazygit = Terminal:new {
+		cmd = "lazygit --use-config-file=$HOME/dotfiles/lazygit/config.yml",
+		dir = "git_dir",
+		direction = "float",
+		float_opts = {
+			border = "double",
+		},
+		hidden = true,
+	}
+
+	function _lazygit_toggle()
+		lazygit:toggle()
+	end
+
+	vim.api.nvim_set_keymap("n", "<leader>tg", "<cmd>lua _lazygit_toggle()<CR>", { noremap = true, silent = true, desc = "[T]oggle lazy[g]it" })
+
 	-- YankBank
 	vim.keymap.set("n", "<leader>y", "<cmd>YankBank<CR>", { noremap = true, desc = "[Y]ankBank" })
 
@@ -99,4 +103,26 @@ else
 	vim.keymap.set({ "n" }, "<leader>k", function()
 		require("lsp_signature").toggle_float_win()
 	end, { silent = true, noremap = true, desc = "[t]oggle signature" })
+
+	-- BUILD SYSTEM
+	vim.keymap.set("n", "<leader>cb", function()
+		vim.cmd [[update!]]
+		local filename = vim.fn.expand "%:t"
+		local parentFolder = vim.fn.expand "%:p:h"
+		local ft = vim.bo.filetype
+
+		if ft == "yaml" and parentFolder:find "dotfiles/karabiner" then
+			os.execute [[osascript -l JavaScript "$HOME/dotfiles/karabiner/build-karabiner-config.js"]]
+		end
+	end, { desc = "[c]ode [b]uild" })
+
+	-- CodeCompanion
+	vim.api.nvim_set_keymap("n", "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
+	vim.api.nvim_set_keymap("v", "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
+	vim.api.nvim_set_keymap("n", "<LocalLeader>tc", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true, desc = "[T]oggle [C]hat" })
+	vim.api.nvim_set_keymap("v", "<LocalLeader>tc", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true, desc = "[T]oggle [C]hat" })
+	vim.api.nvim_set_keymap("v", "ga", "<cmd>CodeCompanionChat Add<cr>", { noremap = true, silent = true })
+
+	-- Expand 'cc' into 'CodeCompanion' in the command line
+	vim.cmd [[cab cc CodeCompanion]]
 end
