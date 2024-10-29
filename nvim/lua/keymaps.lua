@@ -11,17 +11,20 @@ vim.keymap.set("n", "<right>", '<cmd>echo "Use l to move!!"<CR>')
 vim.keymap.set("n", "<up>", '<cmd>echo "Use k to move!!"<CR>')
 vim.keymap.set("n", "<down>", '<cmd>echo "Use j to move!!"<CR>')
 
--- Leap
-vim.keymap.set("n", "<leader>j", "<Plug>(leap)", { desc = "Leap" })
-
 if vim.g.vscode then
 	vim.keymap.set("n", "gr", ':call VSCodeNotify("editor.action.rename")<cr>')
 else
+	local wk = require "which-key"
+
+	-- Leap
+	wk.add {
+		{ "<leader>j", "<Plug>(leap)", hidden = true },
+	}
+
 	vim.keymap.set({ "n", "v" }, "<leader>f", function()
 		require("conform").format { async = true, lsp_format = "fallback" }
 	end, { desc = "[F]ormat buffer" })
 
-	local wk = require "which-key"
 	-- Diagnostic keymaps
 	vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
@@ -45,29 +48,24 @@ else
 	-- Toggle Neotree
 	vim.keymap.set("n", "<C-n>", ":Neotree filesystem reveal left toggle<CR>")
 
-	-- Toogle bufferline
-	vim.keymap.set("n", "<leader>tb", function()
-		local showtabline = vim.o.showtabline
-		if showtabline == 2 then
-			vim.cmd "set showtabline=0"
-		else
-			vim.cmd "set showtabline=2"
-		end
-	end, { desc = "[T]oggle [b]ufferline" })
+	-- Tabby
 
-	-- Cicle through buffer
-	wk.add {
-		{ "<leader>1", '<cmd>lua require("bufferline").go_to(1, true)<CR>', noremap = true, silent = true, hidden = true },
-		{ "<leader>2", '<cmd>lua require("bufferline").go_to(2, true)<CR>', noremap = true, silent = true, hidden = true },
-		{ "<leader>3", '<cmd>lua require("bufferline").go_to(3, true)<CR>', noremap = true, silent = true, hidden = true },
-		{ "<leader>4", '<cmd>lua require("bufferline").go_to(4, true)<CR>', noremap = true, silent = true, hidden = true },
-		{ "<leader>5", '<cmd>lua require("bufferline").go_to(5, true)<CR>', noremap = true, silent = true, hidden = true },
-		{ "<leader>6", '<cmd>lua require("bufferline").go_to(6, true)<CR>', noremap = true, silent = true, hidden = true },
-		{ "<leader>7", '<cmd>lua require("bufferline").go_to(7, true)<CR>', noremap = true, silent = true, hidden = true },
-		{ "<leader>8", '<cmd>lua require("bufferline").go_to(8, true)<CR>', noremap = true, silent = true, hidden = true },
-		{ "<leader>9", '<cmd>lua require("bufferline").go_to(9, true)<CR>', noremap = true, silent = true, hidden = true },
-		{ "<leader>$", '<cmd>lua require("bufferline").go_to(-1, true)<CR>', noremap = true, silent = true, hidden = true },
-	}
+	vim.keymap.set("n", "<C-w>ta", ":$tabnew<CR>", { noremap = true, desc = "[A]dd" })
+	vim.keymap.set("n", "<C-w>tc", ":tabclose<CR>", { noremap = true, desc = "[C]lose" })
+	vim.keymap.set("n", "<C-w>to", ":tabonly<CR>", { noremap = true, desc = "[O]nly" })
+	-- move current tab to previous position
+	vim.keymap.set("n", "<C-w>tmp", ":-tabmove<CR>", { noremap = true, desc = "[P]revious" })
+	-- move current tab to next position
+	vim.keymap.set("n", "<C-w>tmn", ":+tabmove<CR>", { noremap = true, desc = "[N]ext" })
+	-- Tabby rename_tab <tabname>
+	vim.keymap.set("n", "<C-w>tr", function()
+		local name = vim.fn.input "New name: "
+		require("tabby").tab_rename(name)
+	end, { noremap = true, desc = "[R]ename" })
+	-- Tabby pick_window
+	vim.keymap.set("n", "<C-w>tp", ":Tabby pick_window<CR>", { noremap = true, desc = "[P]ick" })
+	-- Tabby jump_to_tab
+	vim.keymap.set("n", "<C-w>tj", ":Tabby jump_to_tab<CR>", { noremap = true, desc = "[J]ump" })
 
 	-- Search TODOs
 	wk.add {
@@ -100,7 +98,7 @@ else
 	vim.keymap.set("n", "<leader>y", "<cmd>YankBank<CR>", { noremap = true, desc = "[Y]ankBank" })
 
 	-- LSP Signature
-	vim.keymap.set({ "n" }, "<leader>k", function()
+	vim.keymap.set({ "n" }, "<leader>tk", function()
 		require("lsp_signature").toggle_float_win()
 	end, { silent = true, noremap = true, desc = "[t]oggle signature" })
 
@@ -125,4 +123,12 @@ else
 
 	-- Expand 'cc' into 'CodeCompanion' in the command line
 	vim.cmd [[cab cc CodeCompanion]]
+
+	-- Autosession
+	vim.keymap.set("n", "<leader>war", "<cmd>SessionSearch<CR>", { desc = "[W]orkplace [A]utosession Sea[r]ch" })
+	vim.keymap.set("n", "<leader>was", "<cmd>SessionSave<CR>", { desc = "[W]orkplace [S]ession [S]ave" })
+	vim.keymap.set("n", "<leader>ta", "<cmd>SessionToggleAutoSave<CR>", { desc = "[T]oggle session [a]utosave" })
+
+	-- IRON REPL
+	vim.keymap.set("n", "<leader>ti", ":IronRepl<CR>", { desc = "[T]oggle [I]ronRepl" })
 end

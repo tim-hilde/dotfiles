@@ -43,11 +43,12 @@ return { -- Fuzzy Finder (files, lsp, etc)
 			-- You can put your default mappings / updates / etc. in here
 			--  All the info you're looking for is in `:help telescope.setup()`
 			--
-			-- defaults = {
-			-- 	mappings = {
-			-- 		i = { ["<c-p>"] = "to_fuzzy_refine" },
-			-- 	},
-			-- },
+			defaults = {
+				mappings = {
+					-- i = { ["<c-p>"] = "to_fuzzy_refine" },
+					n = { ["dd"] = "delete_buffer" },
+				},
+			},
 			pickers = {
 				find_files = {
 					-- `hidden = true` will still show the inside of `.git/` as it's not `.gitignore`d.

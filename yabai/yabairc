@@ -1,7 +1,6 @@
 osascript -e 'tell application id "tracesOf.Uebersicht" to refresh'
-sudo yabai --load-sa
 yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
-yabai -m config debug_output on
+sudo yabai --load-sa
 
 # default layout
 yabai -m config layout bsp

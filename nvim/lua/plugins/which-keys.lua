@@ -47,8 +47,12 @@ return {
 			{ "<leader>r", group = "[R]ename" },
 			{ "<leader>s", group = "[S]earch" },
 			{ "<leader>w", group = "[W]orkspace" },
-			{ "<leader>t", group = "[T]oggle" },
+			{ "<leader>t", group = "[T]oggle", mode = { "n", "v" } },
 			{ "<leader>h", group = "Git [H]unk", mode = { "n", "v" } },
+			{ "<leader>i", group = "[I]ronRepl", mode = { "n", "v" } },
+			{ "<leader>wa", group = "[A]utosession" },
+			{ "<C-w>t", group = "[T]abs" },
+			{ "<C-w>tm", group = "[M]ove" },
 		},
 	},
 }

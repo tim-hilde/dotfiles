@@ -2,14 +2,23 @@
 -- - quickly create docstrings via `<leader>a`
 return {
 	"danymat/neogen",
-	opts = true,
+	opts = {
+		snippet_engine = "luasnip",
+		languages = {
+			python = {
+				template = {
+					annotation_convention = "numpydoc",
+				},
+			},
+		},
+	},
 	keys = {
 		{
-			"<leader>ca",
+			"<leader>cd",
 			function()
 				require("neogen").generate()
 			end,
-			desc = "Add Docstring",
+			desc = "Add [D]ocstring",
 		},
 	},
 }

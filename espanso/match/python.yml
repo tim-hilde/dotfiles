@@ -39,3 +39,7 @@ matches:
   # Import numpy
     - trigger: "!np"
       replace: "import numpy as np"
+
+  # Mypy
+    - trigger: "!mypy"
+      replace: "mypy . --ignore-missing-imports --install-types --non-interactive"

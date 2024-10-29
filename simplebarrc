@@ -67,7 +67,7 @@
     "dateWidget": false,
     "timeWidget": false,
     "keyboardWidget": false,
-    "spotifyWidget": false,
+    "spotifyWidget": true,
     "cryptoWidget": false,
     "stockWidget": false,
     "musicWidget": false,
@@ -167,7 +167,7 @@
   "spotifyWidgetOptions": {
     "refreshFrequency": 10000,
     "showOnDisplay": "",
-    "showSpecter": true
+    "showSpecter": false
   },
   "musicWidgetOptions": {
     "refreshFrequency": 10000,

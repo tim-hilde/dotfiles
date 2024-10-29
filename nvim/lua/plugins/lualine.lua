@@ -4,7 +4,7 @@ return {
 	opts = {
 		options = {
 			icons_enabled = true,
-			theme = "auto",
+			theme = "catppuccin",
 			component_separators = { left = "|", right = "|" },
 			section_separators = { left = "", right = "" },
 			disabled_filetypes = {},
@@ -12,9 +12,12 @@ return {
 		},
 		sections = {
 			lualine_c = {
+				function()
+					return require("auto-session.lib").current_session_name(true)
+				end,
 				{
 					"filename",
-					path = 3,
+					path = 0,
 					-- 0: Just the filename
 					-- 1: Relative path
 					-- 2: Absolute path

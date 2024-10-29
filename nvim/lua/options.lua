@@ -77,4 +77,7 @@ else
 
 	-- Preview substitutions live, as you type!
 	vim.opt.inccommand = "split"
+
+	-- save tab layout etc in session
+	vim.opt.sessionoptions = "curdir,folds,globals,help,tabpages,terminal,winsize"
 end

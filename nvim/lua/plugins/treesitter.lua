@@ -6,7 +6,7 @@ return {
 		main = "nvim-treesitter.configs", -- Sets main module to use for opts
 		-- [[ Configure Treesitter ]] See `:help nvim-treesitter`
 		opts = {
-			ensure_installed = { "bash", "c", "diff", "html", "lua", "luadoc", "markdown", "markdown_inline", "query", "vim", "vimdoc" },
+			ensure_installed = { "bash", "c", "diff", "html", "lua", "luadoc", "markdown", "markdown_inline", "query", "vim", "vimdoc", "python" },
 			-- Autoinstall languages that are not installed
 			auto_install = true,
 			highlight = {
@@ -43,45 +43,45 @@ return {
 					-- * query_string: eg '@function.inner'
 					-- * selection_mode: eg 'v'
 					-- and should return true or false
-					include_surrounding_whitespace = true,
+					include_surrounding_whitespace = false,
 				},
 			},
-			-- move = {
-			-- 	enable = true,
-			-- 	set_jumps = true, -- whether to set jumps in the jumplist
-			-- 	goto_next_start = {
-			-- 		["]m"] = "@function.outer",
-			-- 		["]]"] = { query = "@class.outer", desc = "Next class start" },
-			-- 		--
-			-- 		-- You can use regex matching (i.e. lua pattern) and/or pass a list in a "query" key to group multiple queires.
-			-- 		["]o"] = "@loop.*", -- that is, ["]o"] = { query = { "@loop.inner", "@loop.outer" } }
-			--
-			-- 		-- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
-			-- 		-- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
-			-- 		["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
-			-- 	},
-			-- 	goto_next_end = {
-			-- 		["]M"] = "@function.outer",
-			-- 		["]["] = "@class.outer",
-			-- 	},
-			-- 	goto_previous_start = {
-			-- 		["[m"] = "@function.outer",
-			-- 		["[["] = "@class.outer",
-			-- 	},
-			-- 	goto_previous_end = {
-			-- 		["[M"] = "@function.outer",
-			-- 		["[]"] = "@class.outer",
-			-- 	},
-			-- 	-- Below will go to either the start or the end, whichever is closer.
-			-- 	-- Use if you want more granular movements
-			-- 	-- Make it even more gradual by adding multiple queries and regex.
-			-- 	goto_next = {
-			-- 		["]d"] = "@conditional.outer",
-			-- 	},
-			-- 	goto_previous = {
-			-- 		["[d"] = "@conditional.outer",
-			-- 	},
-			-- },
+			move = {
+				enable = true,
+				set_jumps = true, -- whether to set jumps in the jumplist
+				goto_next_start = {
+					["]m"] = "@function.outer",
+					["]]"] = { query = "@class.outer", desc = "Next class start" },
+					--
+					-- You can use regex matching (i.e. lua pattern) and/or pass a list in a "query" key to group multiple queires.
+					["]o"] = "@loop.*", -- that is, ["]o"] = { query = { "@loop.inner", "@loop.outer" } }
+
+					-- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
+					-- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
+					["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
+				},
+				goto_next_end = {
+					["]M"] = "@function.outer",
+					["]["] = "@class.outer",
+				},
+				goto_previous_start = {
+					["[m"] = "@function.outer",
+					["[["] = "@class.outer",
+				},
+				goto_previous_end = {
+					["[M"] = "@function.outer",
+					["[]"] = "@class.outer",
+				},
+				-- Below will go to either the start or the end, whichever is closer.
+				-- Use if you want more granular movements
+				-- Make it even more gradual by adding multiple queries and regex.
+				goto_next = {
+					["]d"] = "@conditional.outer",
+				},
+				goto_previous = {
+					["[d"] = "@conditional.outer",
+				},
+			},
 		},
 		-- There are additional nvim-treesitter modules that you can use to interact
 		-- with nvim-treesitter. You should go explore a few and see what interests you:
@@ -90,5 +90,10 @@ return {
 		--    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
 		--    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 	},
-	{ "nvim-treesitter/nvim-treesitter-context" },
+	{
+		"nvim-treesitter/nvim-treesitter-context",
+		opts = {
+			multiline_threshold = 2,
+		},
+	},
 }
