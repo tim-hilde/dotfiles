@@ -28,5 +28,6 @@ customCommands:
   - key: 'C'
     context: 'global'
     command: "oco"
+    description: "OpenCommit"
     subprocess: true
     showOutput: true

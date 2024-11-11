@@ -43,13 +43,16 @@ else
 	--  Use CTRL+<hjkl> to switch between windows
 	--
 	--  See `:help wincmd` for a list of all window commands
-	vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
-	vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
-	vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
-	vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
+	vim.keymap.set("n", "<C-h>", "<CMD>TmuxNavigateLeft<CR>", { desc = "Move focus to the left window" })
+	vim.keymap.set("n", "<C-j>", "<CMD>TmuxNavigateUp<CR>", { desc = "Move focus to the upper window" })
+	vim.keymap.set("n", "<C-k>", "<CMD>TmuxNavigateDown<CR>", { desc = "Move focus to the lower window" })
+	vim.keymap.set("n", "<C-l>", "<CMD>TmuxNavigateRight<CR>", { desc = "Move focus to the right window" })
 
 	-- Toggle Neotree
 	vim.keymap.set("n", "<C-n>", ":Neotree filesystem reveal left toggle<CR>")
+
+	-- Toogle Oil
+	vim.keymap.set("n", "<leader>to", "<CMD>Oil --float<CR>", { desc = "[T]oggle [O]il" })
 
 	-- Tabby
 
@@ -70,6 +73,14 @@ else
 	-- Tabby jump_to_tab
 	vim.keymap.set("n", "<C-w>tj", ":Tabby jump_to_tab<CR>", { noremap = true, desc = "[J]ump" })
 
+	-- Zen mode
+	vim.keymap.set("n", "<leader>tz", function()
+		require("zen-mode").toggle {
+			window = {
+				width = 0.85, -- width will be 85% of the editor width
+			},
+		}
+	end, { desc = "[T]oggle [Z]enMode" })
 	-- Search TODOs
 	wk.add {
 		{ "<leader>st", "<cmd>TodoTelescope<CR>", desc = "[S]earch [T]ODOS" },

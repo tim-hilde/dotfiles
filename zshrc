@@ -6,7 +6,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-export TERM=xterm-256color
+export TERM="xterm-256color"
 
 ZSH=$HOME/.oh-my-zsh
 
@@ -34,7 +34,7 @@ plugins=(
     last-working-dir
     poetry
     poetry-env
-    pyenv
+    # pyenv
     python
     ssh-agent
     you-should-use
@@ -65,6 +65,8 @@ type -a pyenv > /dev/null && eval "$(pyenv init -)" && eval "$(pyenv virtualenv-
 
 # add and load poetry
 export PATH="$HOME/.local/bin:$PATH"
+
+autoload -U compinit; compinit
 
 # Actually load Oh-My-Zsh
 source "${ZSH}/oh-my-zsh.sh"
@@ -128,7 +130,6 @@ export GOOGLE_APPLICATION_CREDENTIALS=/Users/tim/code/gcp/gcloud_credentials.jso
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # zoxide
-autoload -U compinit; compinit
 eval "$(zoxide init zsh)"
 
 # fzf
@@ -145,3 +146,8 @@ export FZF_DEFAULT_OPTS=" \
 ZSH_THEME_TERM_TITLE_IDLE="%n@%m: %1~"
 ZSH_THEME_TERM_TAB_TITLE_IDLE="%n@%m: %1~"
 . "/Users/tim/.deno/env"
+
+timezsh() {
+  shell=${1-$SHELL}
+  for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
+}

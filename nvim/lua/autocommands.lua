@@ -28,3 +28,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 	desc = "LSP: Disable hover capability from Ruff",
 })
+
+-- set titlestring as dir name
+-- vim.api.nvim_create_autocmd("SessionLoadPost", {
+-- 	pattern = "*",
+-- 	command = 'lua vim.opt.titlestring = require("auto-session-library").current_session_name()',
+-- })

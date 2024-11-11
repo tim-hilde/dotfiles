@@ -1,5 +1,3 @@
 - marks
 - harpoon
-- basedpyright
-- zen mode
-- oil
+- debugger

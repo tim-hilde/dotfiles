@@ -57,7 +57,7 @@ return {
 			--    That is to say, every time a new file is opened that is associated with
 			--    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
 			--    function will be executed to configure the current buffer
-			if not(vim.g.vscode) then
+			if not vim.g.vscode then
 				vim.api.nvim_create_autocmd("LspAttach", {
 					group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
 					callback = function(event)
@@ -70,6 +70,10 @@ return {
 							mode = mode or "n"
 							vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 						end
+
+						-- Set the border style for the hover and signature help windows
+						vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+						vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
 
 						-- Jump to the definition of the word under your cursor.
 						--  This is where a variable was first declared, or where a function is defined, etc.
@@ -196,20 +200,30 @@ return {
 					},
 				},
 				ruff = {},
-				pyright = {
+				basedpyright = {
 					settings = {
-						pyright = {
-							-- Using Ruff's import organizer
+						basedpyright = {
 							disableOrganizeImports = true,
-						},
-						python = {
 							analysis = {
-								-- Ignore all files for analysis to exclusively use Ruff for linting
 								ignore = { "*" },
 							},
 						},
 					},
 				},
+				-- pyright = {
+				-- 	settings = {
+				-- 		pyright = {
+				-- 			-- Using Ruff's import organizer
+				-- 			disableOrganizeImports = true,
+				-- 		},
+				-- 		python = {
+				-- 			analysis = {
+				-- 				-- Ignore all files for analysis to exclusively use Ruff for linting
+				-- 				ignore = { "*" },
+				-- 			},
+				-- 		},
+				-- 	},
+				-- },
 				bashls = {},
 				yamlls = {},
 				dockerls = {},

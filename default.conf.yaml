@@ -33,6 +33,10 @@
       path: nvim
       relative: true
       create: true
+    $HOME/.config/tmux:
+      path: tmux
+      relative: true
+      create: true
 
 - shell:
   -
