@@ -79,5 +79,5 @@ else
 	vim.opt.inccommand = "split"
 
 	-- save tab layout etc in session
-	vim.opt.sessionoptions = "curdir,folds,globals,help,tabpages,terminal,winsize"
+	vim.opt.sessionoptions = "blank,buffers,curdir,folds,globals,help,tabpages,terminal,winsize,winpos,localoptions"
 end

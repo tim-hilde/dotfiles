@@ -40,6 +40,7 @@ yabai -m rule --add app="^Karabiner-Elements$" manage=off
 yabai -m rule --add app="^Karabiner-EventViewer$" manage=off
 yabai -m rule --add app="^Alfred Preferences$" manage=off
 yabai -m rule --add app="^ChatGPT$" manage=off
+yabai -m rule --add app="^Claude$" manage=off
 yabai -m rule --add app="^Shottr$" manage=off
 yabai -m rule --add app="^BetterTouch" manage=off
 yabai -m rule --add app="^Finder" manage=off
