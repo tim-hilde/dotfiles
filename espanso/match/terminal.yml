@@ -2,18 +2,22 @@
   # official docs at: https://espanso.org/docs/
 ---
 matches:
-  # update brew
+    # update brew
     - trigger: "!brew"
       replace: "brew cu -a -y && brew upgrade"
 
-  # fzf bat
+    # fzf bat
     - trigger: "!fzf"
       replace: fzf --preview "'bat --color=always {}'" --preview-window=right,60% --layout=reverse --height=80%
 
-  # Cookiecutter
+    # Cookiecutter data science
     - trigger: "!cookie datascience"
-      replace: "cookiecutter https://github.com/tim-hilde/dotfiles/tree/main/cookiecutter/DataScience -o ."
+      replace: "cookiecutter ~/dotfiles/cookiecutter/DataScience -o ."
 
-  # save brewfile
+    # Cookiecutter minimal
+    - trigger: "!cookie minimal"
+      replace: "cookiecutter ~/dotfiles/cookiecutter/python_minimal -o ."
+
+    # save brewfile
     - trigger: "!savebrew"
       replace: "brew bundle dump --force --file='~/dotfiles/brew/Brewfile'"

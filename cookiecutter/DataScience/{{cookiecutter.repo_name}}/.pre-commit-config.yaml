@@ -3,8 +3,20 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1
     hooks:
-      - id: check-ast # Testing valid python code
+      # Testing valid python code
+      - id: check-ast
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.11.0  # Use the latest version available
     hooks:
-      - id: mypy # Testing valid python static types code
+      # Testing valid python static types code
+      - id: mypy
+        args: [--ignore-missing-imports, --install-types, --non-interactive]
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    # Ruff version.
+    rev: v0.6.9
+    hooks:
+      # run the linter
+      - id: ruff
+        args: [--fix]
+      # Run the formatter.
+      - id: ruff-format

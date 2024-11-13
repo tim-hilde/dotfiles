@@ -57,24 +57,3 @@ def get_processed_path(*lower_paths):
 def get_output_path(*lower_paths):
 	path = get_project_path(DATA_DIR, OUTPUT_DIR, *lower_paths)
 	return path
-
-
-if __name__ == "__main__":
-	# Examples assuming path to project is: `/path/to/repo/tim-tam-repo`
-	print(get_root_path())
-	# `/path/to/repo/tim-tam-repo`
-
-	print(get_static_path("test.txt"))
-	# `/path/to/repo/tim-tam-repo/static/test.txt`
-
-	print(get_raw_path("test.txt"))
-	# `/path/to/repo/tim-tam-repo/raw/test.txt`
-
-	print(get_processed_path("test.txt"))
-	# `/path/to/repo/tim-tam-repo/processed/test.txt`
-
-	print(get_output_path("test.txt"))
-	# `/path/to/repo/tim-tam-repo/output/test.txt`
-
-	print(get_output_path("folder1", "folder2", "test.txt"))
-	# `/path/to/repo/tim-tam-repo/output/folder1/folder2/test.txt`

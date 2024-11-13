@@ -240,21 +240,6 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>escaping</key>
-				<integer>0</integer>
-				<key>script</key>
-				<string>yt-dlp -S "res:1080" -f "bestvideo+bestaudio" --remux-video "mp4" "{query}"</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.terminalcommand</string>
-			<key>uid</key>
-			<string>CE7CCDBC-A43D-404F-9A64-448A693EACB5</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>acceptsfiles</key>
 				<false/>
 				<key>acceptsmulti</key>
@@ -270,6 +255,21 @@
 			<string>alfred.workflow.trigger.universalaction</string>
 			<key>uid</key>
 			<string>0F166346-87DF-47D0-954D-2C58A4FFC0FA</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>script</key>
+				<string>-n yt-dlp -S "res:1080" -f "bestvideo+bestaudio" --remux-video "mp4" "{query}"</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.terminalcommand</string>
+			<key>uid</key>
+			<string>CE7CCDBC-A43D-404F-9A64-448A693EACB5</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -380,9 +380,9 @@
 		<key>CE7CCDBC-A43D-404F-9A64-448A693EACB5</key>
 		<dict>
 			<key>xpos</key>
-			<real>285</real>
+			<real>325</real>
 			<key>ypos</key>
-			<real>605</real>
+			<real>620</real>
 		</dict>
 		<key>E2D67ABA-6908-476E-9651-5D20816EBA71</key>
 		<dict>
