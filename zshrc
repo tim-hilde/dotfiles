@@ -145,7 +145,10 @@ export FZF_DEFAULT_OPTS=" \
 
 ZSH_THEME_TERM_TITLE_IDLE="%n@%m: %1~"
 ZSH_THEME_TERM_TAB_TITLE_IDLE="%n@%m: %1~"
-. "/Users/tim/.deno/env"
+# deno
+if [[ "$(uname)" == "Darwin" ]]; then
+  . "/Users/tim/.deno/env"
+fi
 
 timezsh() {
   shell=${1-$SHELL}
