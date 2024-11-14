@@ -264,7 +264,7 @@
 				<key>escaping</key>
 				<integer>0</integer>
 				<key>script</key>
-				<string>-n yt-dlp -S "res:1080" -f "bestvideo+bestaudio" --remux-video "mp4" "{query}"</string>
+				<string>yt-dlp -S "res:1080" -f "bestvideo+bestaudio" --remux-video "mp4" "{query}"</string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.action.terminalcommand</string>

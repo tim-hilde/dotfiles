@@ -31,3 +31,6 @@ vscode/extensions/*
 # alfred settings with secrets
 alfred/Alfred.alfredpreferences/workflows/user.workflow.9EC67259-0811-4749-9385-1E79E03FA358/prefs.plist
 alfred/Alfred.alfredpreferences/workflows/user.workflow.9F1A82EF-EA61-4C1C-91BE-3266FF7404A7/prefs.plist
+
+# tmux plugins
+tmux/plugins
