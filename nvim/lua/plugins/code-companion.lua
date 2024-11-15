@@ -1,6 +1,5 @@
 return {
 	"olimorris/codecompanion.nvim",
-	-- dir = "~/code/codecompanion.nvim/",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		"nvim-treesitter/nvim-treesitter",
@@ -20,6 +19,17 @@ return {
 				agent = {
 					adapter = "copilot",
 				},
+			},
+			adapters = {
+				copilot = function()
+					return require("codecompanion.adapters").extend("copilot", {
+						schema = {
+							model = {
+								default = "claude-3.5-sonnet",
+							},
+						},
+					})
+				end,
 			},
 			prompt_library = {
 				["Docstring"] = {
@@ -49,6 +59,7 @@ return {
 								return text
 							end,
 							opts = {
+								visible = false,
 								placement = "add",
 								contains_code = true,
 							},

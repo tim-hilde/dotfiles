@@ -12,9 +12,9 @@ return {
 		},
 		sections = {
 			lualine_c = {
-				function()
-					return require("auto-session.lib").current_session_name(true)
-				end,
+				-- function()
+				-- 	return require("auto-session.lib").current_session_name(true)
+				-- end,
 				{
 					"filename",
 					path = 0,

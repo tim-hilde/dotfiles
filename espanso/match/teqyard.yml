@@ -3,5 +3,5 @@
 ---
 matches:
   # mail
-  - trigger: "!teqmail"
+  - trigger: "!teq"
     replace: "tim.hildebrandt@teqyard.de"
