@@ -27,6 +27,7 @@ return {
 			},
 		},
 		"saadparwaiz1/cmp_luasnip",
+		"onsails/lspkind.nvim",
 
 		-- Adds other completion capabilities.
 		--  nvim-cmp does not ship with all sources by default. They are split
@@ -38,6 +39,7 @@ return {
 	config = function()
 		-- See `:help cmp`
 		local cmp = require "cmp"
+		local lspkind = require "lspkind"
 		local luasnip = require "luasnip"
 		luasnip.config.setup {}
 
@@ -47,16 +49,29 @@ return {
 			-- 		auto_open = false,
 			-- 	},
 			-- },
-			performance = {
-				max_view_entries = 20,
+			-- performance = {
+			-- 	max_view_entries = 20,
+			-- },
+			formatting = {
+				format = lspkind.cmp_format {
+					mode = "symbol_text",
+					menu = {
+						buffer = "[Buffer]",
+						nvim_lsp = "[LSP]",
+						luasnip = "[LuaSnip]",
+						nvim_lua = "[Lua]",
+						latex_symbols = "[Latex]",
+					},
+				},
 			},
 			snippet = {
 				expand = function(args)
 					luasnip.lsp_expand(args.body)
 				end,
 			},
+
 			window = {
-				completion = cmp.config.window.bordered(),
+				completion = cmp.config.window.bordered { max_height = 30 },
 				documentation = cmp.config.window.bordered(),
 			},
 			completion = { completeopt = "menu,menuone,noinsert" },
