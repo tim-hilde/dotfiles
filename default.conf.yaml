@@ -37,6 +37,11 @@
       path: tmux
       relative: true
       create: true
+    $HOME/.config/silicon:
+      path: silicon
+      relative: true
+      create: true
+
 
 - shell:
   -
