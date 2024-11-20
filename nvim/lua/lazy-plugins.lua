@@ -31,6 +31,8 @@ local ui = {
 }
 if vim.g.vscode then
 	require("lazy").setup({
+		change_detection = { notify = false },
+
 		-- require "plugins.autocompletion",
 		require "plugins.autoformat",
 		require "plugins.autopairs",
