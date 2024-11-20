@@ -55,13 +55,6 @@ return {
 			formatting = {
 				format = lspkind.cmp_format {
 					mode = "symbol_text",
-					menu = {
-						buffer = "[Buffer]",
-						nvim_lsp = "[LSP]",
-						luasnip = "[LuaSnip]",
-						nvim_lua = "[Lua]",
-						latex_symbols = "[Latex]",
-					},
 				},
 			},
 			snippet = {
@@ -71,7 +64,7 @@ return {
 			},
 
 			window = {
-				completion = cmp.config.window.bordered { max_height = 30 },
+				completion = cmp.config.window.bordered(),
 				documentation = cmp.config.window.bordered(),
 			},
 			completion = { completeopt = "menu,menuone,noinsert" },
