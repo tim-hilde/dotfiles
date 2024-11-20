@@ -4,21 +4,51 @@
 
 # Getting started
 
-## Prerequisites
-The following are prerequisites to run this codebase:
- - Python
- - Poetry
+## Installation
 
+### 1 Install Pyenv
 
- ## Installation
-1. Install the poetry environment
-	```sh
-	poetry install
-	```
+```shel
+curl https://pyenv.run | bash
+```
+
+### 2 Install Python 3.10.6
+
+```shel
+pyenv install 3.10.6 && pyenv local 3.10.6
+```
+
+### 3. Install Poetry
+
+```sh
+curl -sSL https://install.python-poetry.org | python3 -
+```
+
+### 4. Install the poetry environment
+
+```sh
+cd {{cookiecutter.repo_name}}
+poetry install
+```
+
+### 5. Activate poetry environment
+
+On linux/mac:
+
+```sh
+source $(poetry env info --path)/bin/activate
+```
+
+On windows:
+
+```powershell
+& ((poetry env info --path) + "\Scripts\activate.ps1")
+```
 
 # General documentation
 
 ## `data` vs `static` directories
+
 The `data` directory is for storing raw data, processed data (produced by this code but not final) and output data.
 The contents of these folders should not be tracked by git,
 because they may contain sensitive information and may be large in size.
