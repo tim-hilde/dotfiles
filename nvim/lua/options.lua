@@ -54,7 +54,7 @@ if vim.g.vscode then
 	-- Don't show the mode, since it's already in the status line
 	vim.opt.showmode = true
 else
-	-- vim.cmd "set expandtab"
+	vim.cmd "set noexpandtab"
 	vim.cmd "set tabstop=4"
 	-- vim.cmd "set softtabstop=4"
 	-- vim.cmd "set shiftwidth=4"

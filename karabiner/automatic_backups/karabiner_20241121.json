@@ -887,7 +887,17 @@
                         "is_keyboard": true,
                         "product_id": 545,
                         "vendor_id": 13364
-                    }
+                    },
+                    "simple_modifications": [
+                        {
+                            "from": { "key_code": "grave_accent_and_tilde" },
+                            "to": [{ "key_code": "non_us_backslash" }]
+                        },
+                        {
+                            "from": { "key_code": "non_us_backslash" },
+                            "to": [{ "key_code": "grave_accent_and_tilde" }]
+                        }
+                    ]
                 },
                 {
                     "identifiers": {
