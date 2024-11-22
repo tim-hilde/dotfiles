@@ -10,6 +10,10 @@
     description: Updating apt
     quiet: true
   -
+    command: if [[ ! $(less /etc/*release | grep "^ID=") =~ fedora ]]; then $ sudo apt install -y build-essential; fi
+    description: Installing build essentials
+    quiet: true
+  -
     command: if [[ ! $(less /etc/*release | grep "^ID=") =~ fedora ]]; then sudo apt install -y zsh; else yes | sudo dnf install kitty; fi
     description: Installing zsh
     quiet: true
