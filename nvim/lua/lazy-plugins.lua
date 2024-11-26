@@ -31,7 +31,6 @@ local ui = {
 }
 if vim.g.vscode then
 	require("lazy").setup({
-		change_detection = { notify = false },
 
 		-- require "plugins.autocompletion",
 		require "plugins.autoformat",
@@ -46,5 +45,11 @@ if vim.g.vscode then
 	}, ui)
 else
 	vim.g.puppeteer_disable_filetypes = { "", "neo-tree" }
-	require("lazy").setup("plugins", ui)
+	require("lazy").setup {
+		spec = {
+			{ import = "plugins" },
+		},
+		icons = true,
+		change_detection = { notify = false },
+	}
 end

@@ -229,6 +229,14 @@ return {
 				bashls = {},
 				yamlls = {},
 				dockerls = {},
+				ltex = {
+					settings = {
+						ltex = {
+							enabled = { "markdown", "python" },
+							language = "en-US",
+						},
+					},
+				},
 			}
 
 			-- Ensure the servers and tools above are installed

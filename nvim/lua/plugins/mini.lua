@@ -27,14 +27,19 @@ return {
 				update_n_lines = "sn", -- Update `n_lines`
 			},
 		}
+		require("mini.operators").setup {
+			replace = {
+				prefix = "",
+			},
+		}
 
 		-- Show start up screen
-		require("mini.starter").setup()
-		local override_mappings = function(args)
-			vim.keymap.set("n", "<C-j>", "<Cmd>lua MiniStarter.update_current_item('next')<CR>", { buffer = args.buf })
-			vim.keymap.set("n", "<C-k>", "<Cmd>lua MiniStarter.update_current_item('previous')<CR>", { buffer = args.buf })
-			vim.keymap.set("n", "<C-n>", ":Neotree filesystem reveal left toggle<CR>", { buffer = args.buf })
-		end
-		vim.api.nvim_create_autocmd("User", { pattern = "MiniStarterOpened", callback = override_mappings })
+		-- require("mini.starter").setup()
+		-- local override_mappings = function(args)
+		-- 	vim.keymap.set("n", "<C-j>", "<Cmd>lua MiniStarter.update_current_item('next')<CR>", { buffer = args.buf })
+		-- 	vim.keymap.set("n", "<C-k>", "<Cmd>lua MiniStarter.update_current_item('previous')<CR>", { buffer = args.buf })
+		-- 	vim.keymap.set("n", "<C-n>", ":Neotree filesystem reveal left toggle<CR>", { buffer = args.buf })
+		-- end
+		-- vim.api.nvim_create_autocmd("User", { pattern = "MiniStarterOpened", callback = override_mappings })
 	end,
 }

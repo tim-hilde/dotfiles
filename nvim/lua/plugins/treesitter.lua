@@ -72,15 +72,17 @@ return {
 					goto_next_end = {
 						["]F"] = { query = "@function.outer", desc = "Next function end" },
 						["]C"] = { query = "@class.outer", desc = "Next class end" },
+						["]A"] = { query = "@parameter.outer", desc = "Next parameter end" },
 					},
 					goto_previous_start = {
 						["[f"] = { query = "@function.outer", desc = "Previous function start" },
 						["[c"] = { query = "@class.outer", desc = "Previous class start" },
-						["[a"] = { query = "@parameter.inner", desc = "Previous parameter start" },
+						["[a"] = { query = "@parameter.outer", desc = "Previous parameter start" },
 					},
 					goto_previous_end = {
 						["[F"] = { query = "@function.outer", desc = "Previous function end" },
 						["[C"] = { query = "@class.outer", desc = "Previous class end" },
+						["[A"] = { query = "@parameter.outer", desc = "Previous parameter end" },
 					},
 					-- Below will go to either the start or the end, whichever is closer.
 					-- Use if you want more granular movements
