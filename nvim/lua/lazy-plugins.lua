@@ -45,11 +45,5 @@ if vim.g.vscode then
 	}, ui)
 else
 	vim.g.puppeteer_disable_filetypes = { "", "neo-tree" }
-	require("lazy").setup {
-		spec = {
-			{ import = "plugins" },
-		},
-		icons = true,
-		change_detection = { notify = false },
-	}
+	require("lazy").setup("plugins", ui)
 end

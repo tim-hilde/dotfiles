@@ -29,7 +29,7 @@ return {
 		}
 		require("mini.operators").setup {
 			replace = {
-				prefix = "",
+				prefix = "cr",
 			},
 		}
 
