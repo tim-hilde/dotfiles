@@ -1,6 +1,6 @@
 return {
 	"preservim/vim-markdown",
-	ft = "markdown",
+	ft = { "markdown", "codecompanion" },
 	init = function()
 		vim.cmd [[set foldlevelstart=6]]
 		vim.cmd [[set conceallevel=2]]

@@ -230,6 +230,9 @@ return {
 				yamlls = {},
 				dockerls = {},
 				ltex = {
+					on_attach = function(client, bufnr)
+						require("ltex_extra").setup { path = vim.fn.stdpath "config" .. "/tex" }
+					end,
 					settings = {
 						ltex = {
 							enabled = { "markdown", "python" },
