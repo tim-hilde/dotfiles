@@ -35,7 +35,7 @@ return {
 			require("dap-python").setup(python_path)
 		end,
 	},
-	-- {
+	--
 	-- 	"rcarriga/nvim-dap-ui",
 	-- 	dependencies = {
 	-- 		"mfussenegger/nvim-dap",
