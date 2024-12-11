@@ -36,8 +36,8 @@ return {
 						["ac"] = { query = "@class.outer", desc = "Outer class" },
 						["ic"] = { query = "@class.inner", desc = "Inner class" },
 
-						["al"] = { query = "@loop.outer", desc = "Outer loop" },
-						["il"] = { query = "@loop.inner", desc = "Inner loop" },
+						-- ["al"] = { query = "@loop.outer", desc = "Outer loop" },
+						-- ["il"] = { query = "@loop.inner", desc = "Inner loop" },
 
 						["ir"] = { query = "@assignment.rhs", desc = "Right side assignment" },
 					},
@@ -63,7 +63,7 @@ return {
 						["]r"] = { query = "@assignment.rhs", desc = "Next right side assignment start" },
 
 						-- You can use regex matching (i.e. lua pattern) and/or pass a list in a "query" key to group multiple queires.
-						["]l"] = { query = "@loop.*", desc = "Next loop start" }, -- that is, ["]o"] = { query = { "@loop.inner", "@loop.outer" } }
+						-- ["]l"] = { query = "@loop.*", desc = "Next loop start" }, -- that is, ["]o"] = { query = { "@loop.inner", "@loop.outer" } }
 
 						-- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
 						-- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.

@@ -29,7 +29,7 @@
               "type": "device_unless",
               "identifiers": [
                 {
-                  "product_id": 641,
+                  "is_built_in_keyboard": true,
                   "is_keyboard": true
                 }
               ]
@@ -74,7 +74,7 @@
               "type": "device_if",
               "identifiers": [
                 {
-                  "product_id": 641,
+                  "is_built_in_keyboard": true,
                   "is_keyboard": true
                 }
               ]

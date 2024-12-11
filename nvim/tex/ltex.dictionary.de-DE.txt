@@ -18,3 +18,4 @@ Modules
 RAG-Systeme
 RAG-Systems
 Generate
+RAGAS

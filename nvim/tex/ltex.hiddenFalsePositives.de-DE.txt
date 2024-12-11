@@ -5,3 +5,4 @@
 {"rule":"DE_CASE","sentence":"^\\QSiehe RAGAS Dokumentation\nSemantische Ähnlichkeit: Ob die vorhergesagte Antwort der Referenzantwort semantisch ähnlich ist (erfordert labels).\\E$"}
 {"rule":"F_ANSTATT_PH","sentence":"^\\QZunächst wird ein Wissensgraph aus den Quelldokumenten erstellt, bei dem Dokumente als Knoten hinzugefügt und durch verschiedene Transformationen angereichert werden.\\E$"}
 {"rule":"F_ANSTATT_PH","sentence":"^\\QIn der zweiten Phase nutzt RAGAS den angereicherten Wissensgraphen, um verschiedene Abfragetypen zu generieren - von einzelnen, spezifischen Abfragen bis hin zu komplexen, mehrschrittigen abstrakten Abfragen.\\E$"}
+{"rule":"KOMMA_INFINITIVGRUPPEN","sentence":"^\\QVerwendet LLM, um die Antworten zu bewerten\nviele aktuelle Evaluierungen benötigen keine \"ground-truth labels\".\\E$"}
