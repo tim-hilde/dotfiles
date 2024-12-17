@@ -36,6 +36,10 @@
     $HOME/.simplebarrc:
       path: simplebarrc
       relative: true
+    $HOME/.hammerspoon:
+      path: hammerspoon
+      relative: true
+      create: true
 
 - shell:
   -

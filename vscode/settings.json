@@ -232,7 +232,7 @@
 	"vscode-neovim.neovimExecutablePaths.linux": "/home/linuxbrew/.linuxbrew/bin/nvim",
 	"vsicons.dontShowNewVersionMessage": true,
 	"remote.downloadExtensionsLocally": true,
-	"errorLens.gutterIconSet": "squareRounded",
+    "errorLens.gutterIconSet": "squareRounded",
 	"todo-tree.highlights.useColourScheme": true,
 	"todo-tree.general.showIconsInsteadOfTagsInStatusBar": true,
 	"todo-tree.tree.showCountsInTree": true,
