@@ -33,6 +33,18 @@ return {
 		config = function(_, opts)
 			local python_path = vim.fn.system("which python"):gsub("\n", "")
 			require("dap-python").setup(python_path)
+			require("dap-python").test_runner = "pytest"
+			table.insert(require("dap").configurations.python, {
+				name = "Run pytest",
+				type = "python",
+				request = "launch",
+				module = "pytest",
+				args = {
+					".",
+					"-v",
+				},
+				console = "integratedTerminal",
+			})
 		end,
 	},
 }
