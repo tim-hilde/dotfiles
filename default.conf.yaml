@@ -41,7 +41,10 @@
       path: silicon
       relative: true
       create: true
-
+    $HOME/.config/ghostty:
+      path: ghostty
+      relative: true
+      create: true
 
 - shell:
   -
