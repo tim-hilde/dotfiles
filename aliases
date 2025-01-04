@@ -2,8 +2,12 @@
 alias myip="curl https://ipinfo.io/ip" # or /ip for plain-text ip
 alias speedtest="curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -"
 
+# nvim
+alias nv=nvim
+
 # eza
-alias ls=eza
+alias ls="eza --color always --icons"
+alias ll="eza --color always --icons -1labh -s name --group-directories-first"
 
 ## tree
 alias tree="eza --tree"
