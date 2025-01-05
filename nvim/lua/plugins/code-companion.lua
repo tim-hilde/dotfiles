@@ -9,6 +9,19 @@ return {
 	},
 	config = function()
 		require("codecompanion").setup {
+			adapters = {
+				copilot = function()
+					return require("codecompanion.adapters").extend("copilot", {
+						schema = {
+							model = {
+								default = "o1-2024-12-17",
+							},
+						},
+					})
+				end,
+			},
+		}
+		require("codecompanion").setup {
 			strategies = {
 				chat = {
 					adapter = "copilot",
@@ -20,17 +33,6 @@ return {
 					adapter = "copilot",
 				},
 			},
-			-- adapters = {
-			-- 	copilot = function()
-			-- 		return require("codecompanion.adapters").extend("copilot", {
-			-- 			schema = {
-			-- 				model = {
-			-- 					default = "claude-3.5-sonnet",
-			-- 				},
-			-- 			},
-			-- 		})
-			-- 	end,
-			-- },
 			prompt_library = {
 				["Docstring"] = {
 					strategy = "inline",
