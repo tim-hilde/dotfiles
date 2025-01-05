@@ -20,8 +20,6 @@ return {
 					})
 				end,
 			},
-		}
-		require("codecompanion").setup {
 			strategies = {
 				chat = {
 					adapter = "copilot",
