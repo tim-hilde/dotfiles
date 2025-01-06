@@ -156,4 +156,7 @@ else
 
 	-- TODO comments
 	vim.keymap.set("n", "<leader>tl", ":TodoQuickFix<CR>", { desc = "[T]oggle todo [l]ist" })
+
+	-- OPEN links
+	vim.keymap.set("n", "gx", "<esc>:URLOpenUnderCursor<cr>", { desc = "[G]o to link" })
 end
