@@ -31,6 +31,9 @@ return {
 			replace = {
 				prefix = "cr",
 			},
+			exchange = {
+				prefix = "",
+			},
 		}
 
 		-- Show start up screen

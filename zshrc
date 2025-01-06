@@ -176,3 +176,4 @@ zle     -N             sesh-sessions
 bindkey -M emacs '^S' sesh-sessions
 bindkey -M vicmd '^S' sesh-sessions
 bindkey -M viins '^S' sesh-sessions
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
