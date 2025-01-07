@@ -6,3 +6,6 @@
 {"rule":"F_ANSTATT_PH","sentence":"^\\QZunächst wird ein Wissensgraph aus den Quelldokumenten erstellt, bei dem Dokumente als Knoten hinzugefügt und durch verschiedene Transformationen angereichert werden.\\E$"}
 {"rule":"F_ANSTATT_PH","sentence":"^\\QIn der zweiten Phase nutzt RAGAS den angereicherten Wissensgraphen, um verschiedene Abfragetypen zu generieren - von einzelnen, spezifischen Abfragen bis hin zu komplexen, mehrschrittigen abstrakten Abfragen.\\E$"}
 {"rule":"KOMMA_INFINITIVGRUPPEN","sentence":"^\\QVerwendet LLM, um die Antworten zu bewerten\nviele aktuelle Evaluierungen benötigen keine \"ground-truth labels\".\\E$"}
+{"rule":"KOMMA_INFINITIVGRUPPEN","sentence":"^\\QVerwendet LLM, um die Antworten zu bewerten\nviele aktuelle Evaluierungen benötigen keine \"ground-truth labels\".\\E$"}
+{"rule":"DE_CASE","sentence":"^\\QRessourcen\nDiese Survey listet ein paar Evaluationsaspekte und -metriken auf (VI B-D)\nCAG: https://arxiv.org/pdf/2412.15605\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qanhand eines Datensatzes mit Fragen und echten Rankings können Retriever anhand von Ranking-Metriken wie dem mean-reciprocal rank (MRR), hit-rate, precision, und mehr bewertet werden\nMetriken\nRelevanz des Kontexts: Ob der gefundene Kontext für die Anfrage relevant ist.\\E$"}

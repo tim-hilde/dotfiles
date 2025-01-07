@@ -19,3 +19,5 @@ RAG-Systeme
 RAG-Systems
 Generate
 RAGAS
+RAG
+CAG
