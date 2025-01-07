@@ -76,6 +76,12 @@ hyper - 8 : yabai -m window --space 8;
 hyper - 9 : yabai -m window --space 9;
 hyper - 0 : yabai -m window --space 10;
 
+# move window to left display
+hyper - pageup : yabai -m display --focus next
+
+# move window to right display
+hyper - pagedown :yabai -m display --focus prev
+
 # move space left
 hyper - q : yabai -m window --space prev
 # move space right
