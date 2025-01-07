@@ -6,13 +6,13 @@
 
 ## Installation
 
-### 1 Install Pyenv
+### 1. Install Pyenv
 
 ```shel
 curl https://pyenv.run | bash
 ```
 
-### 2 Install Python 3.10.6
+### 2. Install Python 3.10.6
 
 ```shel
 pyenv install 3.10.6 && pyenv local 3.10.6
