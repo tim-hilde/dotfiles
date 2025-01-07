@@ -14,7 +14,7 @@ return {
 					return require("codecompanion.adapters").extend("copilot", {
 						schema = {
 							model = {
-								default = "o1-2024-12-17",
+								default = "claude-3.5-sonnet",
 							},
 						},
 					})
