@@ -8,6 +8,7 @@
     "sideDecoration": false,
     "inlineSpacesOptions": false,
     "disableNotifications": false,
+    "enableMissives": false,
     "compactMode": true,
     "widgetMaxWidth": "160px",
     "spacesBackgroundColorAsForeground": false,
@@ -15,13 +16,16 @@
     "font": "JetBrainsMono Nerd Font",
     "fontSize": "11px",
     "yabaiPath": "/opt/homebrew/bin/yabai",
+    "aerospacePath": "/opt/homebrew/bin/aerospace",
+    "windowManager": "yabai",
     "shell": "sh",
     "terminal": "iTerm2",
     "slidingAnimationPace": "4",
     "externalConfigFile": true,
     "enableServer": false,
     "serverSocketPort": 7776,
-    "yabaiServerRefresh": false
+    "yabaiServerRefresh": false,
+    "aerospaceServerRefresh": false
   },
   "themes": {
     "lightTheme": "CatppuccinLatte",
@@ -47,7 +51,7 @@
     "exclusionsAsRegex": false,
     "displayAllSpacesOnAllScreens": true,
     "hideDuplicateAppsInSpaces": true,
-    "displayStickyWindowsSeparately": false,
+    "displayStickyWindowsSeparately": true,
     "hideCreateSpaceButton": true,
     "hideEmptySpaces": false,
     "showOptionsOnHover": true,
@@ -57,7 +61,8 @@
     "processWidget": true,
     "weatherWidget": false,
     "netstatsWidget": false,
-    "cpuWidget": true,
+    "cpuWidget": false,
+    "memoryWidget": false,
     "batteryWidget": false,
     "wifiWidget": false,
     "vpnWidget": false,
@@ -67,9 +72,10 @@
     "dateWidget": false,
     "timeWidget": false,
     "keyboardWidget": false,
-    "spotifyWidget": true,
+    "spotifyWidget": false,
     "cryptoWidget": false,
     "stockWidget": false,
+    "youtubeMusicWidget": false,
     "musicWidget": false,
     "mpdWidget": false,
     "browserTrackWidget": false
@@ -92,6 +98,11 @@
     "showOnDisplay": "",
     "displayAsGraph": false,
     "cpuMonitorApp": "Activity Monitor"
+  },
+  "memoryWidgetOptions": {
+    "refreshFrequency": 4000,
+    "showOnDisplay": "",
+    "memoryMonitorApp": "Activity Monitor"
   },
   "batteryWidgetOptions": {
     "refreshFrequency": 10000,
@@ -169,6 +180,12 @@
     "showOnDisplay": "",
     "showSpecter": false
   },
+  "youtubeMusicWidgetOptions": {
+    "refreshFrequency": 10000,
+    "showOnDisplay": "",
+    "showSpecter": true,
+    "youtubeMusicPort": 26538
+  },
   "musicWidgetOptions": {
     "refreshFrequency": 10000,
     "showOnDisplay": "",
@@ -178,6 +195,7 @@
     "refreshFrequency": 10000,
     "showOnDisplay": "",
     "showSpecter": true,
+    "mpdBinaryPath": "/opt/homebrew/bin/mpc",
     "mpdPort": "6600",
     "mpdHost": "127.0.0.1",
     "mpdFormatString": "%title%[ - %artist%]|[%file%]"
