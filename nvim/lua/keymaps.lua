@@ -28,6 +28,9 @@ else
 	-- Diagnostic keymaps
 	vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
+	-- Hover Documentation
+	vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Show documentation" })
+
 	-- Debugger
 	vim.keymap.set("n", "<leader>td", function()
 		require("dap").continue()
