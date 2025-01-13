@@ -21,3 +21,12 @@ Generate
 RAGAS
 RAG
 CAG
+Swagger
+OpenAPI
+swagger
+Mobilithek
+mobilithek
+crawler
+example
+data
+schemas
