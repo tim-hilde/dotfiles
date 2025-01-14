@@ -32,7 +32,7 @@ return {
 				prefix = "cr",
 			},
 			exchange = {
-				prefix = "",
+				prefix = "cx",
 			},
 		}
 
