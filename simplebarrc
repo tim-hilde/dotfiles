@@ -29,7 +29,7 @@
   },
   "themes": {
     "lightTheme": "CatppuccinLatte",
-    "darkTheme": "CatppuccinFrappe"
+    "darkTheme": "CatppuccinMocha"
   },
   "process": {
     "showOnDisplay": "",
@@ -61,8 +61,8 @@
     "processWidget": true,
     "weatherWidget": false,
     "netstatsWidget": false,
-    "cpuWidget": false,
-    "memoryWidget": false,
+    "cpuWidget": true,
+    "memoryWidget": true,
     "batteryWidget": false,
     "wifiWidget": false,
     "vpnWidget": false,
@@ -76,7 +76,7 @@
     "cryptoWidget": false,
     "stockWidget": false,
     "youtubeMusicWidget": false,
-    "musicWidget": false,
+    "musicWidget": true,
     "mpdWidget": false,
     "browserTrackWidget": false
   },
@@ -91,12 +91,12 @@
   "netstatsWidgetOptions": {
     "refreshFrequency": 2000,
     "showOnDisplay": "",
-    "displayAsGraph": false
+    "displayAsGraph": true
   },
   "cpuWidgetOptions": {
     "refreshFrequency": 2000,
     "showOnDisplay": "",
-    "displayAsGraph": false,
+    "displayAsGraph": true,
     "cpuMonitorApp": "Activity Monitor"
   },
   "memoryWidgetOptions": {
@@ -189,7 +189,7 @@
   "musicWidgetOptions": {
     "refreshFrequency": 10000,
     "showOnDisplay": "",
-    "showSpecter": true
+    "showSpecter": false
   },
   "mpdWidgetOptions": {
     "refreshFrequency": 10000,
