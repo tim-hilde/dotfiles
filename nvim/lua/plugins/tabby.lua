@@ -9,18 +9,19 @@ return {
 				nerdfont = true,
 			},
 			line = function(line)
+				local ll_theme = select(2, pcall(require, string.format("lualine.themes.%s", opt.lualine_theme)))
 				local theme = {
-					fill = "TabLineFill",
-					head = { fg = "#8aadf4", bg = "#24273a" },
-					current_tab = { fg = "#1e2030", bg = "#8aadf4" },
-					tab = { fg = "#8aadf4", bg = "#24273a" },
-					win = { fg = "#1e2030", bg = "#8aadf4" },
-					tail = { fg = "#8aadf4", bg = "#24273a" },
+					fill = ll_theme.normal.c,
+					head = ll_theme.visual.a,
+					current_tab = ll_theme.normal.a,
+					tab = ll_theme.normal.b,
+					win = ll_theme.normal.b,
+					tail = ll_theme.normal.b,
 				}
 				return {
 					{
 						{ "  ", hl = theme.head },
-						line.sep(" ", theme.head, theme.fill), -- 
+						line.sep("", theme.head, theme.fill), -- 
 					},
 					line.tabs().foreach(function(tab)
 						local hl = tab.is_current() and theme.current_tab or theme.tab
