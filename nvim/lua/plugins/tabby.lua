@@ -4,8 +4,10 @@ return {
 	config = function()
 		require("tabby").setup {
 			preset = "tab_only",
-			lualine_theme = "catppuccin",
-			nerdfont = true,
+			option = {
+				lualine_theme = "catppuccin",
+				nerdfont = true,
+			},
 		}
 	end,
 }
