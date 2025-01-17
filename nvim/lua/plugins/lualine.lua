@@ -17,7 +17,7 @@ return {
 				-- end,
 				{
 					"filename",
-					path = 0,
+					path = 4,
 					-- 0: Just the filename
 					-- 1: Relative path
 					-- 2: Absolute path

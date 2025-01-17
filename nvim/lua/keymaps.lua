@@ -11,6 +11,14 @@ vim.keymap.set("n", "<right>", '<cmd>echo "Use l to move!!"<CR>')
 vim.keymap.set("n", "<up>", '<cmd>echo "Use k to move!!"<CR>')
 vim.keymap.set("n", "<down>", '<cmd>echo "Use j to move!!"<CR>')
 
+-- HJKL as amplified versions of hjkl
+vim.keymap.set("n", "J", "6j")
+vim.keymap.set("n", "K", "6k")
+vim.keymap.set("n", "H", "0^")
+vim.keymap.set("n", "L", "$")
+
+vim.keymap.set("n", "M", "J") -- mnemonic: [M]erge
+
 if vim.g.vscode then
 	vim.keymap.set("n", "gr", ':call VSCodeNotify("editor.action.rename")<cr>')
 else
@@ -29,7 +37,7 @@ else
 	vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
 	-- Hover Documentation
-	vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Show documentation" })
+	vim.keymap.set("n", "<leader>h", vim.lsp.buf.hover, { desc = "[H]over documentation" })
 
 	-- Debugger
 	vim.keymap.set("n", "<leader>td", function()
