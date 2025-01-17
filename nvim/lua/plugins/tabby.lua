@@ -9,7 +9,7 @@ return {
 				nerdfont = true,
 			},
 			line = function(line)
-				local ll_theme = select(2, pcall(require, string.format("lualine.themes.%s", opt.lualine_theme)))
+				local ll_theme = select(2, pcall(require, string.format("lualine.themes.%s", "catppuccin")))
 				local theme = {
 					fill = ll_theme.normal.c,
 					head = ll_theme.visual.a,
