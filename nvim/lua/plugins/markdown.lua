@@ -1,12 +1,20 @@
 return {
 	"OXY2DEV/markview.nvim",
-	lazy = false, -- Recommended
+	lazy = true, -- Recommended
 	ft = { "markdown", "codecompanion" }, -- If you decide to lazy-load anyway
 
 	dependencies = {
 		"nvim-treesitter/nvim-treesitter",
 		"nvim-tree/nvim-web-devicons",
-	}, -- "preservim/vim-markdown",
+	},
+	config = function()
+		require("markview").setup {
+			list_items = {
+				shift_width = 2,
+			},
+		}
+	end,
+	-- "preservim/vim-markdown",
 	-- ft = { "markdown", "codecompanion" },
 	-- init = function()
 	-- 	vim.cmd [[set foldlevelstart=6]]

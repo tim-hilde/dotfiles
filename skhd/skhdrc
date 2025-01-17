@@ -41,7 +41,7 @@ hyper - x : yabai -m space --mirror x-axis
 hyper - t : yabai -m window --toggle float --grid 10:16:2:1:12:8
 
 # maximize a window
-hyper - m : yabai -m window --toggle zoom-fullscreen
+hyper - z : yabai -m window --toggle zoom-fullscreen
 
 # balance out tree of windows (resize to occupy same area)
 hyper - e : yabai -m space --balance
