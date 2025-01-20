@@ -2,22 +2,17 @@
 ObjC.import("stdlib");
 const app = Application.currentApplication();
 app.includeStandardAdditions = true;
-
-let rerunSecs = Number.parseFloat($.getenv("rerun_s_bluetooth")) || 2.5;
-if (rerunSecs < 0.1) rerunSecs = 0.1;
-else if (rerunSecs > 5) rerunSecs = 5;
-
-const excludedDevices = ($.getenv("excluded_devices") || "").split(",").map((t) => t.trim());
-
 //──────────────────────────────────────────────────────────────────────────────
+
 // TODO assess whether `ObjC.import("IOBluetooth")` is useful
 // https://github.com/bosha/alfred-blueman-workflow/blob/master/src/bt_manager.jxa
-
-//──────────────────────────────────────────────────────────────────────────────
 
 /** @type {AlfredRun} */
 // biome-ignore lint/correctness/noUnusedVariables: Alfred run
 function run() {
+	const rerunSecs = Number.parseFloat($.getenv("rerun_s_bluetooth"));
+	const excludedDevices = $.getenv("excluded_devices").split(/ *, */);
+
 	let deviceArr = [];
 	const allDevices = JSON.parse(app.doShellScript("system_profiler -json SPBluetoothDataType"))
 		.SPBluetoothDataType[0];
@@ -57,6 +52,7 @@ function run() {
 
 	// INFO `ioreg` only includes Apple keyboards, mice, and trackpads, but does
 	// have battery data for them which is missing from the `system_profiler` output.
+	/** @type {Record<string, any>} */
 	const applePeriphery = {};
 	let applePeriData = app.doShellScript(
 		"ioreg -rak BatteryPercent | sed 's/data>/string>/' | plutil -convert json - -o - || true",
@@ -82,30 +78,41 @@ function run() {
 		const batteryLow = batteryLevel < 20 ? "⚠️" : "";
 		const battery = batteryLevel > -1 ? `${batteryLow}${batteryLevel}%` : "";
 		const connected = device.connected ? "🟢 " : "🔴 ";
-		const distance = device.device_rssi ? ` rssi: ${device.device_rssi}` : "";
+		const rssi = device.device_rssi ? ` rssi: ${device.device_rssi}` : "";
 		const name = device.device_name;
 		if (excludedDevices.includes(name)) return {};
 		const type = device.device_minorType;
 
 		// icon
 		let category = "";
+		/** @type {Record<string, string>} */
 		const typeIcons = {
 			keyboard: "⌨️",
+			applekeyboard: "⌨️",
+			"magic keyboard": "⌨️",
 			mouse: "🖱️",
-			appletrackpad: "🖲️",
+			applemouse: "🖱️",
+			"magic mouse": "🖱️",
+			trackpad: "🖱️",
+			appletrackpad: "🖱️",
+			"magic trackpad": "🖱️",
 			gamepad: "🎮",
 			headphones: "🎧",
 			headset: "🎧",
 		};
 		if (type) category = typeIcons[type.toLowerCase()];
-		else if (name.toLowerCase().includes("phone")) category = "📱";
+		else if (name.match(/tablet|ipad|phone/i)) category = "📱";
+		if (!category) category = ""; // no icon available
 
 		return {
 			title: `${name} ${category}`,
-			subtitle: connected + battery + distance,
+			subtitle: connected + battery + rssi,
 			arg: device.device_address,
 		};
 	});
 
-	return JSON.stringify({ items: deviceArr });
+	return JSON.stringify({
+		rerun: rerunSecs,
+		items: deviceArr,
+	});
 }

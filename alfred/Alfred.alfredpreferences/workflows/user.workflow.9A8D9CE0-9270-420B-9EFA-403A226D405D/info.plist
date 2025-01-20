@@ -23,19 +23,6 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>60531D62-E68F-44C1-862F-43E1689EEEEF</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
-		<key>60531D62-E68F-44C1-862F-43E1689EEEEF</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
 				<string>EAAAFDA5-DA25-4F5C-A7EC-5D9FBAE44974</string>
 				<key>modifiers</key>
 				<integer>0</integer>
@@ -258,16 +245,19 @@ What would you like to do next?</string>
 			<key>config</key>
 			<dict>
 				<key>argument</key>
-				<string>{var:theText}</string>
+				<string></string>
 				<key>passthroughargument</key>
-				<false/>
+				<true/>
 				<key>variables</key>
-				<dict/>
+				<dict>
+					<key>theText</key>
+					<string>{query}</string>
+				</dict>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.utility.argument</string>
 			<key>uid</key>
-			<string>60531D62-E68F-44C1-862F-43E1689EEEEF</string>
+			<string>8AD069FD-6249-4FF1-8384-83024BD91710</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -295,7 +285,7 @@ What would you like to do next?</string>
 			<key>config</key>
 			<dict>
 				<key>argument</key>
-				<string></string>
+				<string>{var:theText}</string>
 				<key>passthroughargument</key>
 				<false/>
 				<key>variables</key>
@@ -308,26 +298,6 @@ What would you like to do next?</string>
 			<string>alfred.workflow.utility.argument</string>
 			<key>uid</key>
 			<string>13A14BD1-5863-4BA2-AE25-6A7772D16F39</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argument</key>
-				<string></string>
-				<key>passthroughargument</key>
-				<true/>
-				<key>variables</key>
-				<dict>
-					<key>theText</key>
-					<string>{query}</string>
-				</dict>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.utility.argument</string>
-			<key>uid</key>
-			<string>8AD069FD-6249-4FF1-8384-83024BD91710</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -346,7 +316,8 @@ There is an option to copy the result to the clipboard.
 ---
 **Note:** If you have not previously used `Automation Tasks` in any Alfred workflow you may need to double click on an `Automation Task` in this workflow and then `Options` at the bottom of the left hand pane followed by `Reinstall Tasks` to ensure tasks are up to date.
 ---
-**Version 2.0** 18/05/2023: substantial revision to show *both* word and character counts (rather than offering them as alternatives).</string>
+**Version 2.0** 18/05/2023: substantial revision to show *both* word and character counts (rather than offering them as alternatives).  
+**Version 2.1** 08/04/2024: deleted unnecessary additional Arg and Vars utility before character count Automation Task.</string>
 	<key>uidata</key>
 	<dict>
 		<key>01F211DC-11F2-4747-ABA3-45D43090E83C</key>
@@ -354,18 +325,18 @@ There is an option to copy the result to the clipboard.
 			<key>note</key>
 			<string>…and confirm it's done so</string>
 			<key>xpos</key>
-			<real>1295</real>
+			<real>1235</real>
 			<key>ypos</key>
-			<real>30</real>
+			<real>155</real>
 		</dict>
 		<key>09972F6A-AE40-4B4C-8880-B632478A7CAC</key>
 		<dict>
 			<key>note</key>
 			<string>Save character count as variable</string>
 			<key>xpos</key>
-			<real>875</real>
+			<real>795</real>
 			<key>ypos</key>
-			<real>45</real>
+			<real>170</real>
 		</dict>
 		<key>13A14BD1-5863-4BA2-AE25-6A7772D16F39</key>
 		<dict>
@@ -374,25 +345,16 @@ There is an option to copy the result to the clipboard.
 			<key>xpos</key>
 			<real>485</real>
 			<key>ypos</key>
-			<real>45</real>
-		</dict>
-		<key>60531D62-E68F-44C1-862F-43E1689EEEEF</key>
-		<dict>
-			<key>note</key>
-			<string>Feed the text (1)</string>
-			<key>xpos</key>
-			<real>605</real>
-			<key>ypos</key>
-			<real>45</real>
+			<real>170</real>
 		</dict>
 		<key>645F6DE3-586C-4C79-99FC-FE9FB8819591</key>
 		<dict>
 			<key>note</key>
 			<string>Quit or copy to clipboard</string>
 			<key>xpos</key>
-			<real>970</real>
+			<real>910</real>
 			<key>ypos</key>
-			<real>35</real>
+			<real>160</real>
 		</dict>
 		<key>8AD069FD-6249-4FF1-8384-83024BD91710</key>
 		<dict>
@@ -401,16 +363,16 @@ There is an option to copy the result to the clipboard.
 			<key>xpos</key>
 			<real>210</real>
 			<key>ypos</key>
-			<real>45</real>
+			<real>170</real>
 		</dict>
 		<key>CF0AFB89-59D4-4303-8D76-B1E08055A855</key>
 		<dict>
 			<key>note</key>
 			<string>Copy count to clipboard…</string>
 			<key>xpos</key>
-			<real>1130</real>
+			<real>1070</real>
 			<key>ypos</key>
-			<real>30</real>
+			<real>155</real>
 		</dict>
 		<key>D214F710-337A-4880-99AD-BB804C800E58</key>
 		<dict>
@@ -419,7 +381,7 @@ There is an option to copy the result to the clipboard.
 			<key>xpos</key>
 			<real>305</real>
 			<key>ypos</key>
-			<real>15</real>
+			<real>140</real>
 		</dict>
 		<key>E5D7021E-2777-45A5-87F0-E89E08AA218B</key>
 		<dict>
@@ -428,16 +390,16 @@ There is an option to copy the result to the clipboard.
 			<key>xpos</key>
 			<real>30</real>
 			<key>ypos</key>
-			<real>15</real>
+			<real>140</real>
 		</dict>
 		<key>EAAAFDA5-DA25-4F5C-A7EC-5D9FBAE44974</key>
 		<dict>
 			<key>note</key>
 			<string>Automation Task to get character count</string>
 			<key>xpos</key>
-			<real>700</real>
+			<real>600</real>
 			<key>ypos</key>
-			<real>15</real>
+			<real>140</real>
 		</dict>
 	</dict>
 	<key>userconfigurationconfig</key>
@@ -445,7 +407,7 @@ There is an option to copy the result to the clipboard.
 	<key>variablesdontexport</key>
 	<array/>
 	<key>version</key>
-	<string>2.0</string>
+	<string>2.1</string>
 	<key>webaddress</key>
 	<string></string>
 </dict>

@@ -1,2 +1,0 @@
-### Changelog
-- **chore**: add logging for attachment file (#49)

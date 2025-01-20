@@ -2,4 +2,4 @@
 deps = [{ use = "yazi-rs/plugins:max-preview", rev = "4f1d0ae" }]
 
 [flavor]
-deps = []
+deps = [{ use = "yazi-rs/flavors:catppuccin-mocha", rev = "78d1d19" }]

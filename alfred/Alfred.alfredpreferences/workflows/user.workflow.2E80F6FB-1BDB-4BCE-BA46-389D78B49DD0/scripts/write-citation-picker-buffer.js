@@ -174,12 +174,12 @@ function bibtexParse(rawBibtexStr) {
 			const properties = propertyStr.trim().split(/,(?=\s*[\w-]+\s*=)/);
 
 			for (const line of properties) {
-				// GUARD erroneous BibTeX formatting, empty lines, etc.
-				if (!line.includes("=")) continue;
+				const equalSignPos = line.indexOf("=");
+				if (equalSignPos === -1) continue; // GUARD erroneous BibTeX formatting, empty lines, etc.
 
-				const field = line.split("=")[0].trim().toLowerCase();
+				const field = line.slice(0, equalSignPos).trim().toLowerCase();
 				const value = line
-					.split("=")[1]
+					.slice(equalSignPos + 1)
 					.replace(/{|}|,$/g, "") // remove TeX escaping
 					.trim();
 
@@ -250,8 +250,22 @@ function run() {
 
 	const litNoteFolder = $.getenv("literature_note_folder");
 	const pdfFolder = $.getenv("pdf_folder");
-	const litNoteFolderCorrect = fileExists(litNoteFolder);
-	const pdfFolderCorrect = fileExists(pdfFolder);
+	const litNoteFolderExists = fileExists(litNoteFolder);
+	const pdfFolderExists = fileExists(pdfFolder);
+
+	// GUARD
+	if (pdfFolder && !pdfFolderExists) {
+		return JSON.stringify({
+			items: [{ title: "PDF folder does not exist.", subtitle: pdfFolder, valid: false }],
+		});
+	}
+	if (litNoteFolder && !litNoteFolderExists) {
+		return JSON.stringify({
+			items: [
+				{ title: "Literature folder does not exist.", subtitle: litNoteFolder, valid: false },
+			],
+		});
+	}
 
 	//──────────────────────────────────────────────────────────────────────────────
 
@@ -260,7 +274,7 @@ function run() {
 	/** @type {string[]} */
 	let pdfArray = [];
 
-	if (litNoteFolderCorrect) {
+	if (litNoteFolderExists) {
 		litNoteArray = app
 			.doShellScript(`find "${litNoteFolder}" -type f -name "*.md"`)
 			.split("\r")
@@ -271,13 +285,13 @@ function run() {
 			});
 	}
 
-	if (pdfFolderCorrect) {
+	if (pdfFolderExists) {
 		pdfArray = app
 			.doShellScript(`find "${pdfFolder}" -type f -name "*.pdf"`)
 			.split("\r")
 			.map((/** @type {string} */ filepath) => {
 				return filepath
-					.replace(/.*\/(.*)\.pdf/, "$1") // only basename w/o ext
+					.replace(/.*\/(.*)\.pdf$/, "$1") // only basename w/o ext
 					.replace(/(_[^_]*$)/, ""); // INFO part before underscore, this method does not work for citkeys which contain an underscore though...
 			});
 	}
@@ -311,14 +325,14 @@ function run() {
 		let extraMatcher = "";
 
 		// Literature Notes
-		const hasLitNote = litNoteFolderCorrect && litNoteArray.includes(citekey);
+		const hasLitNote = litNoteFolderExists && litNoteArray.includes(citekey);
 		if (hasLitNote) {
 			emojis.push(litNoteEmoji);
 			extraMatcher += litNoteFilterStr;
 		}
 
 		// PDFs
-		const hasPdf = pdfFolderCorrect && pdfArray.includes(citekey);
+		const hasPdf = pdfFolderExists && pdfArray.includes(citekey);
 		if (hasPdf) {
 			emojis.push(pdfEmoji);
 			extraMatcher += pdfFilterStr;
@@ -326,7 +340,7 @@ function run() {
 
 		// Emojis
 		if (abstract) emojis.push(abstractEmoji);
-		if (keywords.length) emojis.push(tagEmoji + " " + keywords.length.toString());
+		if (keywords.length > 0) emojis.push(tagEmoji + " " + keywords.length.toString());
 		if (attachment) emojis.push(attachmentEmoji);
 
 		// Icon selection
@@ -344,7 +358,7 @@ function run() {
 
 		// display editor and add "Ed." when no authors
 		let namesToDisplay = primaryNamesEtAlString + " ";
-		if (!author.length && editor.length) {
+		if (author.length === 0 && editor.length > 0) {
 			if (editor.length > 1) namesToDisplay += "(Eds.) ";
 			else namesToDisplay += "(Ed.) ";
 		}
@@ -352,7 +366,8 @@ function run() {
 		// Matching behavior
 		/** @type {string[]} */
 		let keywordMatches = [];
-		if (keywords.length) keywordMatches = keywords.map((/** @type {string} */ tag) => "#" + tag);
+		if (keywords.length > 0)
+			keywordMatches = keywords.map((/** @type {string} */ tag) => "#" + tag);
 		let authorMatches = [...author, ...editor];
 		if (!matchAuthorsInEtAl) authorMatches = [...author.slice(0, 1), ...editor.slice(0, 1)]; // only match first two names
 		const yearMatches = [];
@@ -375,7 +390,7 @@ function run() {
 		// Alfred: Large Type
 		let largeTypeInfo = `${title} \n(citekey: ${citekey})`;
 		if (abstract) largeTypeInfo += "\n\n" + abstract;
-		if (keywords.length) largeTypeInfo += "\n\nkeywords: " + keywords.join(", ");
+		if (keywords.length > 0) largeTypeInfo += "\n\nkeywords: " + keywords.join(", ");
 
 		// // Indicate 2nd library (this set via .map thisAry)
 		const libraryIndicator = isFirstLibrary ? "" : secondLibraryIcon;
@@ -414,7 +429,9 @@ function run() {
 				},
 				"ctrl+alt+cmd": {
 					valid: Boolean(attachment),
-					subtitle: attachment ? "⌃⌥⌘: Open Attachment File" : "⛔: Entry has no attachment file.",
+					subtitle: attachment
+						? "⌃⌥⌘: Open Attachment File"
+						: "⛔: Entry has no attachment file.",
 					arg: attachment,
 				},
 			},

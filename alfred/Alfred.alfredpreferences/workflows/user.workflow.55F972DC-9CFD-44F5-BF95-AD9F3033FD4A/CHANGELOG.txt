@@ -1,3 +1,0 @@
-### Changelog
-- **chore**: typo in filename
-- **fix**: filesizes in volume search

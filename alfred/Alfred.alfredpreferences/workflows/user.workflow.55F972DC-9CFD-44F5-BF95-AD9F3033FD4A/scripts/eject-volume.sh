@@ -1,11 +1,11 @@
 #!/usr/bin/env zsh
 volume="$*"
-msg=$(diskutil eject "$volume" 2>&1)
+# if unejectable, `unmount` says which process is blocking
+msg=$(diskutil eject "$volume" || diskutil unmount "$volume" 2>&1)
+success=$?
 
-# notification via Alfred
-# shellcheck disable=2181
-if [[ $? -eq 0 ]]; then
-	echo "✅ $volume ejected"
+if [[ $success -eq 0 ]]; then
+	echo "✅ $(basename "$volume") ejected"
 else
 	echo "❌ $msg"
 fi

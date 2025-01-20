@@ -295,6 +295,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>C533F8F1-AF72-46AD-9250-9C20FF7E7F6C</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>A09D544F-ECA6-4D74-B8B0-AC69E572977B</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>CBFBCA76-39CE-4D22-A556-EDF1A996849C</key>
 		<array>
 			<dict>
@@ -313,7 +326,7 @@
 				<key>modifiers</key>
 				<integer>1048576</integer>
 				<key>modifiersubtext</key>
-				<string>⌘: Force Kill</string>
+				<string>⌘: Force-kill</string>
 				<key>vitoclose</key>
 				<false/>
 			</dict>
@@ -324,6 +337,16 @@
 				<integer>262144</integer>
 				<key>modifiersubtext</key>
 				<string>⌃: Kill all with same name</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>C533F8F1-AF72-46AD-9250-9C20FF7E7F6C</string>
+				<key>modifiers</key>
+				<integer>1310720</integer>
+				<key>modifiersubtext</key>
+				<string>⌘⌃: Force-kill all with same name</string>
 				<key>vitoclose</key>
 				<false/>
 			</dict>
@@ -552,7 +575,7 @@
 			<key>type</key>
 			<string>alfred.workflow.utility.junction</string>
 			<key>uid</key>
-			<string>B758EFA5-2C8C-4C45-8A3E-B44E09A18464</string>
+			<string>C533F8F1-AF72-46AD-9250-9C20FF7E7F6C</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -583,81 +606,19 @@
 			<key>type</key>
 			<string>alfred.workflow.utility.junction</string>
 			<key>uid</key>
-			<string>BBE384FE-3246-4A73-873A-4B3F4FBF8E54</string>
+			<string>B758EFA5-2C8C-4C45-8A3E-B44E09A18464</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
-			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>0</integer>
-				<key>script</key>
-				<string></string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string>scripts/bluetooth-connect.sh</string>
-				<key>type</key>
-				<integer>8</integer>
-			</dict>
+			<dict/>
 			<key>type</key>
-			<string>alfred.workflow.action.script</string>
+			<string>alfred.workflow.utility.junction</string>
 			<key>uid</key>
-			<string>24F3B28F-0642-43F2-AEA3-202F2E62F3B4</string>
+			<string>BBE384FE-3246-4A73-873A-4B3F4FBF8E54</string>
 			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>alfredfiltersresults</key>
-				<true/>
-				<key>alfredfiltersresultsmatchmode</key>
-				<integer>2</integer>
-				<key>argumenttreatemptyqueryasnil</key>
-				<true/>
-				<key>argumenttrimmode</key>
-				<integer>0</integer>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>escaping</key>
-				<integer>0</integer>
-				<key>keyword</key>
-				<string>{var:bluetooth_keyword}</string>
-				<key>queuedelaycustom</key>
-				<integer>3</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<true/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
-				<key>runningsubtext</key>
-				<string>loading…</string>
-				<key>script</key>
-				<string></string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string>scripts/bluetooth-devices.js</string>
-				<key>subtext</key>
-				<string></string>
-				<key>title</key>
-				<string>Bluetooth Devices</string>
-				<key>type</key>
-				<integer>8</integer>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>1765993C-E2F9-4224-A487-1B3FF0F4B90B</string>
-			<key>version</key>
-			<integer>3</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -778,6 +739,129 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>script</key>
+				<string></string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string>scripts/bluetooth-connect.sh</string>
+				<key>type</key>
+				<integer>8</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>24F3B28F-0642-43F2-AEA3-202F2E62F3B4</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>fixedorder</key>
+				<false/>
+				<key>items</key>
+				<string>[{"imagefile":"78ce0450fe203f6d692a5d576d1da6cc1fe8cdcf.png","title":"Processes","arg":"processes","subtitle":"CPU, Memory, Parent Processes  –  kill processes &amp; restart apps"},{"imagefile":"56f60ed4890c3aadf8b17042498f550f2f86f1b1.png","title":"Network","arg":"network","subtitle":"download, upload"},{"imagefile":"5f6447eb3c6eb47e26123ff2a4f4ee74c71fc9b6.png","title":"Bluetooth","arg":"bluetooth","subtitle":"Battery, RSSI, Connection Status – connect &amp; disconnect"},{"imagefile":"9509d3e0105844ea2f6358086d0f275bf0e8555a.png","title":"Removable Volumes","arg":"volumes","subtitle":"Disk Space Usage – eject &amp; browse"},{"imagefile":"f08290a14dddd7ae985e18ea4f069829fbec0622.png","title":"Uptime","arg":"uptime","subtitle":"uptime, last 10 reboots"},{"imagefile":"9e5889c6e9214cf16318b4870dac435013f6f2bc.png","title":"Speedtest","arg":"speedtest","subtitle":"Speed of Internet Connection"},{"imagefile":"19492839cda7d8f0453b3aecf147594fa806a0f1.png","title":"DNS","arg":"dns","subtitle":"See &amp; Change DNS Server"}]</string>
+				<key>keyword</key>
+				<string>atop</string>
+				<key>matchmode</key>
+				<integer>0</integer>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>subtext</key>
+				<string>loading…</string>
+				<key>title</key>
+				<string>{const:alfred_workflow_name}</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.listfilter</string>
+			<key>uid</key>
+			<string>A8E4530E-F583-424A-9F8E-6DFEBEBF6288</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<true/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>2</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>{var:bluetooth_keyword}</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>loading…</string>
+				<key>script</key>
+				<string></string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string>scripts/bluetooth-devices.js</string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string>Bluetooth Devices</string>
+				<key>type</key>
+				<integer>8</integer>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>1765993C-E2F9-4224-A487-1B3FF0F4B90B</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string></string>
+				<key>passthroughargument</key>
+				<false/>
+				<key>variables</key>
+				<dict>
+					<key>mode</key>
+					<string>{query}</string>
+				</dict>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.argument</string>
+			<key>uid</key>
+			<string>10CA15B1-4D0A-4969-A5CB-710B56613A61</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>autopaste</key>
 				<false/>
 				<key>clipboardtext</key>
@@ -812,57 +896,6 @@
 			<string>alfred.workflow.output.notification</string>
 			<key>uid</key>
 			<string>BC1E0F42-E6F6-4F15-BFB4-AF6BA697A13D</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttrimmode</key>
-				<integer>0</integer>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>fixedorder</key>
-				<false/>
-				<key>items</key>
-				<string>[{"imagefile":"78ce0450fe203f6d692a5d576d1da6cc1fe8cdcf.png","title":"Processes","arg":"processes","subtitle":"CPU, Memory, Parent Processes {var:separator} kill processes &amp; restart apps"},{"imagefile":"56f60ed4890c3aadf8b17042498f550f2f86f1b1.png","title":"Network","arg":"network","subtitle":"download, upload"},{"imagefile":"5f6447eb3c6eb47e26123ff2a4f4ee74c71fc9b6.png","title":"Bluetooth","arg":"bluetooth","subtitle":"Battery, RSSI, Connection Status {var:separator} connect &amp; disconnect"},{"imagefile":"9509d3e0105844ea2f6358086d0f275bf0e8555a.png","title":"Removable Volumes","arg":"volumes","subtitle":"Disk Space Usage {var:separator} eject &amp; browse"},{"imagefile":"f08290a14dddd7ae985e18ea4f069829fbec0622.png","title":"Uptime","arg":"uptime","subtitle":"uptime, last 10 reboots"},{"imagefile":"9e5889c6e9214cf16318b4870dac435013f6f2bc.png","title":"Speedtest","arg":"speedtest","subtitle":"Speed of Internet Connection"},{"imagefile":"19492839cda7d8f0453b3aecf147594fa806a0f1.png","title":"DNS","arg":"dns","subtitle":"See &amp; Change DNS Server"}]</string>
-				<key>keyword</key>
-				<string>atop</string>
-				<key>matchmode</key>
-				<integer>0</integer>
-				<key>runningsubtext</key>
-				<string></string>
-				<key>subtext</key>
-				<string>loading…</string>
-				<key>title</key>
-				<string>{const:alfred_workflow_name}</string>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.listfilter</string>
-			<key>uid</key>
-			<string>A8E4530E-F583-424A-9F8E-6DFEBEBF6288</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argument</key>
-				<string></string>
-				<key>passthroughargument</key>
-				<false/>
-				<key>variables</key>
-				<dict>
-					<key>mode</key>
-					<string>{query}</string>
-				</dict>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.utility.argument</string>
-			<key>uid</key>
-			<string>10CA15B1-4D0A-4969-A5CB-710B56613A61</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -953,7 +986,7 @@
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
-				<string>scripts/speedtext.sh</string>
+				<string>scripts/speedtest.sh</string>
 				<key>type</key>
 				<integer>8</integer>
 			</dict>
@@ -1302,29 +1335,32 @@ JSON.stringify({ 'items': volume_array });
 	<string># atop
 List all available tools via `atop` and select one. Alternatively, you can also directly access the more frequently used tools via a configurable keyword.
 
-
 ### Process Management
-Display processes directly via `top`. Append "parent" to the query to display only processes that have child processes.
-- &lt;kbd&gt;⏎&lt;/kbd&gt;: Kill the process.  
-- &lt;kbd&gt;⌘&lt;/kbd&gt;&lt;kbd&gt;⏎&lt;/kbd&gt;: Force kill the process.  
-- &lt;kbd&gt;⌃&lt;/kbd&gt;&lt;kbd&gt;⏎&lt;/kbd&gt;: Kill all processes with the same name.  
-- &lt;kbd&gt;⇧&lt;/kbd&gt;&lt;kbd&gt;⏎&lt;/kbd&gt;: If the process belongs to a regular app, restart the app.  
-- &lt;kbd&gt;⌥&lt;/kbd&gt;&lt;kbd&gt;⏎&lt;/kbd&gt;: Copy the PID.  
+Display processes directly via `top`. Append "parent" to the query to display
+only processes that have child processes.
+- &lt;kbd&gt;⏎&lt;/kbd&gt;: Kill the process.
+- &lt;kbd&gt;⌘&lt;/kbd&gt;&lt;kbd&gt;⏎&lt;/kbd&gt;: Force-kill the process.
+- &lt;kbd&gt;⌃&lt;/kbd&gt;&lt;kbd&gt;⏎&lt;/kbd&gt;: Kill all processes with the same name.
+- &lt;kbd&gt;⌘&lt;/kbd&gt;&lt;kbd&gt;⌃&lt;/kbd&gt;&lt;kbd&gt;⏎&lt;/kbd&gt;: Force-kill all processes with the same
+  name.
+- &lt;kbd&gt;⇧&lt;/kbd&gt;&lt;kbd&gt;⏎&lt;/kbd&gt;: If the process belongs to a regular app, restart the
+  app.
+- &lt;kbd&gt;⌥&lt;/kbd&gt;&lt;kbd&gt;⏎&lt;/kbd&gt;: Copy the Process Identifier (PID).
 
-**Meaning of the icons**  
+**Meaning of the icons**
 - `⭕`: process is owned by root.
 - `n⇣`: process is a parent of `n` child processes.
 - `↖ foobar`: process is a child of `foobar`.
 
 ### Bluetooth Devices
-Display paired Bluetooth devices directly via `blue`.  
-- &lt;kbd&gt;⏎&lt;/kbd&gt;: If `blueutil` is installed, toggle the connection state. Otherwise, open the bluetooth preferences.  
-- &lt;kbd&gt;⌥&lt;/kbd&gt;&lt;kbd&gt;⏎&lt;/kbd&gt;: Copy the device address.  
+Display paired Bluetooth devices directly via `blue`.
+- &lt;kbd&gt;⏎&lt;/kbd&gt;: If `blueutil` is installed, toggle the connection state. Otherwise, open the bluetooth preferences.
+- &lt;kbd&gt;⌥&lt;/kbd&gt;&lt;kbd&gt;⏎&lt;/kbd&gt;: Copy the device address.
 
 ### Removable Volumes
-Display mounted volumes directly via `vol`.  
-- &lt;kbd&gt;⏎&lt;/kbd&gt;: Open the Volume in Finder.  
-- &lt;kbd&gt;⌘&lt;/kbd&gt;&lt;kbd&gt;⏎&lt;/kbd&gt;: Browse the Volume in the Terminal, [using the Terminal app you have configured in your Alfred preferences](https://www.alfredapp.com/help/features/terminal/).  
+Display mounted volumes directly via `vol`.
+- &lt;kbd&gt;⏎&lt;/kbd&gt;: Open the Volume in Finder.
+- &lt;kbd&gt;⌘&lt;/kbd&gt;&lt;kbd&gt;⏎&lt;/kbd&gt;: Browse the Volume in the Terminal, [using the Terminal app you have configured in your Alfred preferences](https://www.alfredapp.com/help/features/terminal/).
 - &lt;kbd&gt;⌃&lt;/kbd&gt;&lt;kbd&gt;⏎&lt;/kbd&gt;: Eject the Volume.
 
 
@@ -1354,7 +1390,7 @@ Display mounted volumes directly via `vol`.
 			<key>xpos</key>
 			<real>390</real>
 			<key>ypos</key>
-			<real>440</real>
+			<real>555</real>
 		</dict>
 		<key>24F3B28F-0642-43F2-AEA3-202F2E62F3B4</key>
 		<dict>
@@ -1365,7 +1401,7 @@ Display mounted volumes directly via `vol`.
 			<key>xpos</key>
 			<real>595</real>
 			<key>ypos</key>
-			<real>380</real>
+			<real>495</real>
 		</dict>
 		<key>2759BEDD-4BDD-45E5-8864-D2705A801FC5</key>
 		<dict>
@@ -1383,7 +1419,7 @@ Display mounted volumes directly via `vol`.
 			<key>xpos</key>
 			<real>595</real>
 			<key>ypos</key>
-			<real>1360</real>
+			<real>1475</real>
 		</dict>
 		<key>388BC499-DDF4-4188-B4F3-48EA712AAC8D</key>
 		<dict>
@@ -1392,7 +1428,7 @@ Display mounted volumes directly via `vol`.
 			<key>xpos</key>
 			<real>930</real>
 			<key>ypos</key>
-			<real>695</real>
+			<real>810</real>
 		</dict>
 		<key>40C6D3F7-B5AB-4C45-A3ED-7926B186E25F</key>
 		<dict>
@@ -1403,7 +1439,7 @@ Display mounted volumes directly via `vol`.
 			<key>xpos</key>
 			<real>390</real>
 			<key>ypos</key>
-			<real>990</real>
+			<real>1105</real>
 		</dict>
 		<key>54580785-C343-4A69-8525-5BF78553961A</key>
 		<dict>
@@ -1412,7 +1448,7 @@ Display mounted volumes directly via `vol`.
 			<key>xpos</key>
 			<real>595</real>
 			<key>ypos</key>
-			<real>1225</real>
+			<real>1340</real>
 		</dict>
 		<key>57B5FE5A-E05E-4ACB-8E19-F11900D15215</key>
 		<dict>
@@ -1421,7 +1457,7 @@ Display mounted volumes directly via `vol`.
 			<key>xpos</key>
 			<real>390</real>
 			<key>ypos</key>
-			<real>1360</real>
+			<real>1475</real>
 		</dict>
 		<key>63C34A52-70A0-4CA0-AC29-0B8B16E654C8</key>
 		<dict>
@@ -1441,7 +1477,7 @@ Display mounted volumes directly via `vol`.
 			<key>xpos</key>
 			<real>495</real>
 			<key>ypos</key>
-			<real>815</real>
+			<real>930</real>
 		</dict>
 		<key>681490F8-D3BB-4024-AFE0-DCEE69201856</key>
 		<dict>
@@ -1450,7 +1486,7 @@ Display mounted volumes directly via `vol`.
 			<key>xpos</key>
 			<real>595</real>
 			<key>ypos</key>
-			<real>970</real>
+			<real>1085</real>
 		</dict>
 		<key>80995D89-9285-4E5C-8728-25576BF43113</key>
 		<dict>
@@ -1461,7 +1497,7 @@ Display mounted volumes directly via `vol`.
 			<key>xpos</key>
 			<real>595</real>
 			<key>ypos</key>
-			<real>1090</real>
+			<real>1205</real>
 		</dict>
 		<key>8C2E586B-5404-426B-A71C-D71AC8BF3A14</key>
 		<dict>
@@ -1470,14 +1506,14 @@ Display mounted volumes directly via `vol`.
 			<key>xpos</key>
 			<real>760</real>
 			<key>ypos</key>
-			<real>1360</real>
+			<real>1475</real>
 		</dict>
 		<key>91CC8BC3-40C4-4D4B-8B44-919B6865C4A0</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>7</integer>
 			<key>note</key>
-			<string>killall with name</string>
+			<string>killall</string>
 			<key>xpos</key>
 			<real>635</real>
 			<key>ypos</key>
@@ -1506,7 +1542,7 @@ Display mounted volumes directly via `vol`.
 			<key>xpos</key>
 			<real>595</real>
 			<key>ypos</key>
-			<real>735</real>
+			<real>850</real>
 		</dict>
 		<key>B758EFA5-2C8C-4C45-8A3E-B44E09A18464</key>
 		<dict>
@@ -1517,7 +1553,7 @@ Display mounted volumes directly via `vol`.
 			<key>xpos</key>
 			<real>635</real>
 			<key>ypos</key>
-			<real>230</real>
+			<real>300</real>
 		</dict>
 		<key>BBE384FE-3246-4A73-873A-4B3F4FBF8E54</key>
 		<dict>
@@ -1528,7 +1564,7 @@ Display mounted volumes directly via `vol`.
 			<key>xpos</key>
 			<real>635</real>
 			<key>ypos</key>
-			<real>300</real>
+			<real>370</real>
 		</dict>
 		<key>BC1E0F42-E6F6-4F15-BFB4-AF6BA697A13D</key>
 		<dict>
@@ -1537,7 +1573,7 @@ Display mounted volumes directly via `vol`.
 			<key>xpos</key>
 			<real>770</real>
 			<key>ypos</key>
-			<real>505</real>
+			<real>620</real>
 		</dict>
 		<key>BF21A407-7022-4593-A143-0BBA5B02294A</key>
 		<dict>
@@ -1546,7 +1582,18 @@ Display mounted volumes directly via `vol`.
 			<key>xpos</key>
 			<real>755</real>
 			<key>ypos</key>
-			<real>1090</real>
+			<real>1205</real>
+		</dict>
+		<key>C533F8F1-AF72-46AD-9250-9C20FF7E7F6C</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>7</integer>
+			<key>note</key>
+			<string>force killall</string>
+			<key>xpos</key>
+			<real>635</real>
+			<key>ypos</key>
+			<real>230</real>
 		</dict>
 		<key>CBFBCA76-39CE-4D22-A556-EDF1A996849C</key>
 		<dict>
@@ -1564,7 +1611,7 @@ Display mounted volumes directly via `vol`.
 			<key>xpos</key>
 			<real>770</real>
 			<key>ypos</key>
-			<real>695</real>
+			<real>810</real>
 		</dict>
 		<key>E01978CB-6F00-4781-8079-075BE323C5FB</key>
 		<dict>
@@ -1573,7 +1620,7 @@ Display mounted volumes directly via `vol`.
 			<key>xpos</key>
 			<real>595</real>
 			<key>ypos</key>
-			<real>850</real>
+			<real>965</real>
 		</dict>
 		<key>F1539426-E456-4953-8215-D809DF4B120B</key>
 		<dict>
@@ -1593,7 +1640,7 @@ Display mounted volumes directly via `vol`.
 			<key>xpos</key>
 			<real>595</real>
 			<key>ypos</key>
-			<real>620</real>
+			<real>735</real>
 		</dict>
 		<key>F91AA471-17A8-42F7-ADC3-FEDAFA645CCF</key>
 		<dict>
@@ -1602,7 +1649,7 @@ Display mounted volumes directly via `vol`.
 			<key>xpos</key>
 			<real>595</real>
 			<key>ypos</key>
-			<real>505</real>
+			<real>620</real>
 		</dict>
 		<key>FA333A60-CF01-4178-857C-9EE58B2C2E42</key>
 		<dict>
@@ -1613,7 +1660,7 @@ Display mounted volumes directly via `vol`.
 			<key>xpos</key>
 			<real>390</real>
 			<key>ypos</key>
-			<real>1185</real>
+			<real>1300</real>
 		</dict>
 	</dict>
 	<key>userconfigurationconfig</key>
@@ -1668,21 +1715,25 @@ Display mounted volumes directly via `vol`.
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>default</key>
-				<string>2.5</string>
-				<key>placeholder</key>
-				<string>2.5</string>
-				<key>required</key>
-				<false/>
-				<key>trim</key>
+				<key>defaultvalue</key>
+				<integer>2</integer>
+				<key>markercount</key>
+				<integer>5</integer>
+				<key>maxvalue</key>
+				<integer>5</integer>
+				<key>minvalue</key>
+				<integer>1</integer>
+				<key>onlystoponmarkers</key>
+				<true/>
+				<key>showmarkers</key>
 				<true/>
 			</dict>
 			<key>description</key>
-			<string>refresh rate in seconds (between 0.1 – 5.0)</string>
+			<string>refresh rate in seconds</string>
 			<key>label</key>
 			<string></string>
 			<key>type</key>
-			<string>textfield</string>
+			<string>slider</string>
 			<key>variable</key>
 			<string>rerun_s_processes</string>
 		</dict>
@@ -1752,21 +1803,25 @@ Display mounted volumes directly via `vol`.
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>default</key>
-				<string>4</string>
-				<key>placeholder</key>
-				<string>4</string>
-				<key>required</key>
+				<key>defaultvalue</key>
+				<integer>4</integer>
+				<key>markercount</key>
+				<integer>5</integer>
+				<key>maxvalue</key>
+				<integer>5</integer>
+				<key>minvalue</key>
+				<integer>1</integer>
+				<key>onlystoponmarkers</key>
 				<true/>
-				<key>trim</key>
+				<key>showmarkers</key>
 				<true/>
 			</dict>
 			<key>description</key>
-			<string>refresh rate in seconds (between 0.1 – 5.0)</string>
+			<string>refresh rate in seconds</string>
 			<key>label</key>
 			<string></string>
 			<key>type</key>
-			<string>textfield</string>
+			<string>slider</string>
 			<key>variable</key>
 			<string>rerun_s_bluetooth</string>
 		</dict>
@@ -1783,7 +1838,7 @@ Display mounted volumes directly via `vol`.
 				<true/>
 			</dict>
 			<key>description</key>
-			<string>comma-separated list of full device names to excluded</string>
+			<string>comma-separated list of device names to be excluded</string>
 			<key>label</key>
 			<string></string>
 			<key>type</key>
@@ -1815,21 +1870,25 @@ Display mounted volumes directly via `vol`.
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>default</key>
-				<string>2.5</string>
-				<key>placeholder</key>
-				<string>2.5</string>
-				<key>required</key>
-				<false/>
-				<key>trim</key>
+				<key>defaultvalue</key>
+				<integer>3</integer>
+				<key>markercount</key>
+				<integer>5</integer>
+				<key>maxvalue</key>
+				<integer>5</integer>
+				<key>minvalue</key>
+				<integer>1</integer>
+				<key>onlystoponmarkers</key>
+				<true/>
+				<key>showmarkers</key>
 				<true/>
 			</dict>
 			<key>description</key>
-			<string>refresh rate in seconds (between 0.1 – 5.0)</string>
+			<string>refresh rate in seconds</string>
 			<key>label</key>
 			<string></string>
 			<key>type</key>
-			<string>textfield</string>
+			<string>slider</string>
 			<key>variable</key>
 			<string>rerun_s_network</string>
 		</dict>
@@ -1855,13 +1914,8 @@ Display mounted volumes directly via `vol`.
 			<string>volume_keyword</string>
 		</dict>
 	</array>
-	<key>variables</key>
-	<dict>
-		<key>separator</key>
-		<string> ⟡ </string>
-	</dict>
 	<key>version</key>
-	<string>1.3.1</string>
+	<string>1.4.5</string>
 	<key>webaddress</key>
 	<string>https://chris-grieser.de/</string>
 </dict>
