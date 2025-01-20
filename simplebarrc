@@ -1,4 +1,5 @@
 {
+  "$schema": "https://raw.githubusercontent.com/Jean-Tinland/simple-bar/refs/heads/master/lib/schemas/config.json",
   "global": {
     "theme": "dark",
     "floatingBar": false,
@@ -21,11 +22,11 @@
     "shell": "sh",
     "terminal": "iTerm2",
     "slidingAnimationPace": "4",
-    "externalConfigFile": true,
     "enableServer": false,
     "serverSocketPort": 7776,
     "yabaiServerRefresh": false,
-    "aerospaceServerRefresh": false
+    "aerospaceServerRefresh": false,
+    "externalConfigFile": true
   },
   "themes": {
     "lightTheme": "CatppuccinLatte",
@@ -62,6 +63,7 @@
     "weatherWidget": false,
     "netstatsWidget": false,
     "cpuWidget": true,
+    "gpuWidget": true,
     "memoryWidget": true,
     "batteryWidget": false,
     "wifiWidget": false,
@@ -98,6 +100,12 @@
     "showOnDisplay": "",
     "displayAsGraph": true,
     "cpuMonitorApp": "Activity Monitor"
+  },
+  "gpuWidgetOptions": {
+    "refreshFrequency": 3000,
+    "showOnDisplay": "",
+    "displayAsGraph": true,
+    "gpuMacmonBinaryPath": "/opt/homebrew/bin/macmon"
   },
   "memoryWidgetOptions": {
     "refreshFrequency": 4000,
