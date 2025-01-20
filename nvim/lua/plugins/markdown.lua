@@ -12,26 +12,6 @@ return {
 			list_items = {
 				shift_width = 2,
 			},
-			headings = {
-				heading_1 = {
-					style = "glow",
-				},
-				heading_2 = {
-					style = "glow",
-				},
-				heading_3 = {
-					style = "glow",
-				},
-				heading_4 = {
-					style = "glow",
-				},
-				heading_5 = {
-					style = "glow",
-				},
-				heading_6 = {
-					style = "glow",
-				},
-			},
 		}
 	end,
 	-- "preservim/vim-markdown",
