@@ -55,7 +55,7 @@
     "displayStickyWindowsSeparately": true,
     "hideCreateSpaceButton": true,
     "hideEmptySpaces": false,
-    "showOptionsOnHover": true,
+    "showOptionsOnHover": false,
     "switchSpacesWithoutYabai": false
   },
   "widgets": {
