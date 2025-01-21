@@ -1,7 +1,7 @@
 [[manager.prepend_keymap]]
 # Max preview
 on   = "T"
-run  = "plugin --sync max-preview"
+run  = "plugin max-preview"
 desc = "Maximize or restore preview"
 
 [[manager.prepend_keymap]]
