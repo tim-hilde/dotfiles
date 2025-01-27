@@ -10,25 +10,34 @@ return {
 	config = function()
 		require("codecompanion").setup {
 			adapters = {
-				copilot = function()
-					return require("codecompanion.adapters").extend("copilot", {
+				ollama = function()
+					return require("codecompanion.adapters").extend("ollama", {
 						schema = {
 							model = {
-								default = "claude-3.5-sonnet",
+								default = "deepseek-r1:32b",
 							},
 						},
 					})
 				end,
+				-- copilot = function()
+				-- 	return require("codecompanion.adapters").extend("copilot", {
+				-- 		schema = {
+				-- 			model = {
+				-- 				default = "claude-3.5-sonnet",
+				-- 			},
+				-- 		},
+				-- 	})
+				-- end,
 			},
 			strategies = {
 				chat = {
-					adapter = "copilot",
+					adapter = "ollama",
 				},
 				inline = {
-					adapter = "copilot",
+					adapter = "ollama",
 				},
 				agent = {
-					adapter = "copilot",
+					adapter = "ollama",
 				},
 			},
 			prompt_library = {
