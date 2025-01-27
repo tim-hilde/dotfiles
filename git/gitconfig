@@ -55,7 +55,7 @@
   mergeoptions = --no-edit
 
 [pull]
-  rebase = false
+	rebase = true
 
 [init]
   defaultBranch = main
@@ -67,3 +67,5 @@
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
+[fetch]
+	prune = true
