@@ -42,7 +42,7 @@ vim.opt.updatetime = 250
 
 -- Decrease mapped sequence wait time
 -- Displays which-key popup sooner
--- vim.opt.timeoutlen = 300 -- decativated due to error with mini.surround
+vim.opt.timeoutlen = 300 -- decativated due to error with mini.surround
 
 -- Show which line your cursor is on
 vim.opt.cursorline = true

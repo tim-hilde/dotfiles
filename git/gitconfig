@@ -69,3 +69,4 @@
 	process = git-lfs filter-process
 [fetch]
 	prune = true
+
