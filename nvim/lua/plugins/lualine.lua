@@ -9,14 +9,12 @@ return {
 			section_separators = { left = "", right = "" },
 			disabled_filetypes = {},
 			always_divide_middle = true,
+			globalstatus = true,
 		},
 		sections = {
 			lualine_a = { "mode" },
 			lualine_b = { "branch", "diff", "diagnostics" },
 			lualine_c = {
-				-- function()
-				-- 	return require("auto-session.lib").current_session_name(true)
-				-- end,
 				{
 					"filename",
 					path = 4,
