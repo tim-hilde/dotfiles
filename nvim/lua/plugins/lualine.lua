@@ -11,6 +11,8 @@ return {
 			always_divide_middle = true,
 		},
 		sections = {
+			lualine_a = { "mode" },
+			lualine_b = { "branch", "diff", "diagnostics" },
 			lualine_c = {
 				-- function()
 				-- 	return require("auto-session.lib").current_session_name(true)
@@ -25,6 +27,9 @@ return {
 					-- 4: Filename and parent dir, with tilde as the home directory
 				},
 			},
+			lualine_x = { "encoding", "fileformat", "filetype" },
+			lualine_y = { "progress" },
+			lualine_z = { "location" },
 		},
 	},
 }
