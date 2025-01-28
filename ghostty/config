@@ -1,5 +1,30 @@
 theme = catppuccin-mocha
 font-family = "JetBrainsMono Nerd Font Mono"
 font-size = 12
+
+window-decoration = false
+window-padding = 4
+background-opacity = 1.0
+
 shell-integration-features = no-cursor
 cursor-style = block
+
+# Disable audio bell
+bell = false
+
+# Clipboard settings
+clipboard-read = "allow"
+clipboard-write = "allow"
+
+# Set the terminal environment
+term = "xterm"
+
+# Key bindings
+keybind = "super+c=copy"
+keybind = "super+v=paste"
+
+# Navigation keybindings
+keybind = "alt+left=send-text:\x1b\x62"   # jump to beginning of word
+keybind = "alt+right=send-text:\x1b\x66"  # jump to end of word
+keybind = "super+left=send-text:\x01"     # jump to beginning of line
+keybind = "super+right=send-text:\x05"    # jump to end of line
