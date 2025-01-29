@@ -50,34 +50,35 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 20
 
-if vim.g.vscode then
-	-- Don't show the mode, since it's already in the status line
-	vim.opt.showmode = true
-else
-	vim.cmd "set noexpandtab"
-	vim.cmd "set tabstop=4"
-	-- vim.cmd "set softtabstop=4"
-	-- vim.cmd "set shiftwidth=4"
+vim.cmd "set noexpandtab"
+vim.cmd "set tabstop=4"
+-- vim.cmd "set softtabstop=4"
+-- vim.cmd "set shiftwidth=4"
 
-	-- Enable mouse mode, can be useful for resizing splits for example!
-	vim.opt.mouse = "a"
+-- Enable mouse mode, can be useful for resizing splits for example!
+vim.opt.mouse = "a"
 
-	-- Don't show the mode, since it's already in the status line
-	vim.opt.showmode = false
+-- Don't show the mode, since it's already in the status line
+vim.opt.showmode = false
 
-	-- Configure how new splits should be opened
-	vim.opt.splitright = true
-	vim.opt.splitbelow = true
+-- Configure how new splits should be opened
+vim.opt.splitright = true
+vim.opt.splitbelow = true
 
-	-- Sets how neovim will display certain whitespace characters in the editor.
-	--  See `:help 'list'`
-	--  and `:help 'listchars'`
-	vim.opt.list = true
-	vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+-- Sets how neovim will display certain whitespace characters in the editor.
+--  See `:help 'list'`
+--  and `:help 'listchars'`
+vim.opt.list = true
+vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
-	-- Preview substitutions live, as you type!
-	vim.opt.inccommand = "split"
+-- Preview substitutions live, as you type!
+vim.opt.inccommand = "split"
 
-	-- save tab layout etc in session
-	vim.opt.sessionoptions = "blank,buffers,curdir,folds,globals,help,tabpages,terminal,winsize,winpos,localoptions"
-end
+-- save tab layout etc in session
+vim.opt.sessionoptions = "blank,buffers,curdir,folds,globals,help,tabpages,terminal,winsize,winpos,localoptions"
+
+vim.o.foldcolumn = "1" -- '0' is not bad
+vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+vim.o.foldlevelstart = 99
+vim.o.foldenable = true
+-- vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
