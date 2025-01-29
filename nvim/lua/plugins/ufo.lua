@@ -59,18 +59,10 @@ return {
 		vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 		vim.keymap.set("n", "zR", require("ufo").openAllFolds)
 		vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
-
-		local capabilities = vim.lsp.protocol.make_client_capabilities()
-		capabilities.textDocument.foldingRange = {
-			dynamicRegistration = false,
-			lineFoldingOnly = true,
-		}
-		local active_clients = vim.lsp.get_clients()
-		for _, client in ipairs(active_clients) do
-			require("lspconfig")[client.name].setup {
-				capabilities = capabilities,
-				-- other settings here
-			}
-		end
 	end,
+	opts = {
+		provider_selector = function()
+			return { "treesitter", "indent" }
+		end,
+	},
 }
