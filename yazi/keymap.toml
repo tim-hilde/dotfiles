@@ -8,5 +8,5 @@ desc = "Maximize or restore preview"
 # Vorschau
 on = "<C-p>"
 run = '''
-  shell 'qlmanage -p "$@"' --confirm
+  shell 'qlmanage -p "$@"'
 '''
