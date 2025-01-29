@@ -2,3 +2,8 @@
 linemode = "size_and_mtime"
 show_hidden = false
 show_symlink = true
+
+[preview]
+# Change them to your desired values
+max_width  = 2000
+max_height = 2000
