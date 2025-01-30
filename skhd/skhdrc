@@ -10,15 +10,15 @@ lalt - k : yabai -m window --focus north
 lalt - l : yabai -m window --focus east
 
 # change focus to space
-cmd - 1 : yabai -m space --focus 1
-cmd - 2 : yabai -m space --focus 2
-cmd - 3 : yabai -m space --focus 3
-cmd - 4 : yabai -m space --focus 4
-cmd - 5 : yabai -m space --focus 5
-cmd - 6 : yabai -m space --focus 6
-cmd - 7 : yabai -m space --focus 7
-cmd - 8 : yabai -m space --focus 8
-cmd - 9 : yabai -m space --focus 9
+meh - 1 : yabai -m space --focus 1
+meh - 2 : yabai -m space --focus 2
+meh - 3 : yabai -m space --focus 3
+meh - 4 : yabai -m space --focus 4
+meh - 5 : yabai -m space --focus 5
+meh - 6 : yabai -m space --focus 6
+meh - 7 : yabai -m space --focus 7
+meh - 8 : yabai -m space --focus 8
+meh - 9 : yabai -m space --focus 9
 
 # Focus previous space by mission-control index
 meh - q : yabai -m space --focus prev
@@ -65,16 +65,16 @@ hyper - k : yabai -m window --swap north
 hyper - l : yabai -m window --swap east
 
 # move window to space #
-cmd + lshift - 1 : yabai -m window --space 1;
-cmd + lshift - 2 : yabai -m window --space 2;
-cmd + lshift - 3 : yabai -m window --space 3;
-cmd + lshift - 4 : yabai -m window --space 4;
-cmd + lshift - 5 : yabai -m window --space 5;
-cmd + lshift - 6 : yabai -m window --space 6;
-cmd + lshift - 7 : yabai -m window --space 7;
-cmd + lshift - 8 : yabai -m window --space 8;
-cmd + lshift - 9 : yabai -m window --space 9;
-cmd + lshift - 0 : yabai -m window --space 10;
+hyper - 1 : yabai -m window --space 1;
+hyper - 2 : yabai -m window --space 2;
+hyper - 3 : yabai -m window --space 3;
+hyper - 4 : yabai -m window --space 4;
+hyper - 5 : yabai -m window --space 5;
+hyper - 6 : yabai -m window --space 6;
+hyper - 7 : yabai -m window --space 7;
+hyper - 8 : yabai -m window --space 8;
+hyper - 9 : yabai -m window --space 9;
+hyper - 0 : yabai -m window --space 10;
 
 # move window to left display
 hyper - pageup : yabai -m display --focus next
