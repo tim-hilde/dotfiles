@@ -9,8 +9,10 @@ return {
 	},
 	config = function()
 		require("markview").setup {
-			list_items = {
-				shift_width = 2,
+			markdown = {
+				list_items = {
+					shift_width = 2,
+				},
 			},
 		}
 	end,
