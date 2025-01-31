@@ -7,15 +7,13 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		"nvim-tree/nvim-web-devicons",
 	},
-	config = function()
-		require("markview").setup {
-			markdown = {
-				list_items = {
-					shift_width = 2,
-				},
+	opts = {
+		markdown = {
+			list_items = {
+				shift_width = 2,
 			},
-		}
-	end,
+		},
+	},
 	-- "preservim/vim-markdown",
 	-- ft = { "markdown", "codecompanion" },
 	-- init = function()
