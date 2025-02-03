@@ -3,12 +3,12 @@ return {
 	version = "*",
 	opts = {
 		default_mappings = {
-			ours = "o",
-			theirs = "t",
-			none = "0",
-			both = "b",
-			next = "n",
-			prev = "p",
+			ours = "co",
+			theirs = "ct",
+			none = "c0",
+			both = "cb",
+			next = "cn",
+			prev = "cp",
 		},
 	},
 }
