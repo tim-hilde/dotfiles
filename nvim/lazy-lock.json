@@ -16,6 +16,7 @@
   "iron.nvim": { "branch": "master", "commit": "e2021d242088bc98f7df75bee487a0ae1bfafc5f" },
   "lazy.nvim": { "branch": "main", "commit": "7527af40ddd4a93a02911be570b32609b9d4ea53" },
   "lazydev.nvim": { "branch": "main", "commit": "a1b78b2ac6f978c72e76ea90ae92a94edf380cfc" },
+  "linediff.vim": { "branch": "main", "commit": "ddae71ef5f94775d101c1c70032ebe8799f32745" },
   "lsp_signature.nvim": { "branch": "master", "commit": "5b64964ed02098c85613ee3d20f96bed1dfb64cc" },
   "lspkind.nvim": { "branch": "master", "commit": "d79a1c3299ad0ef94e255d045bed9fa26025dab6" },
   "ltex-extra.nvim": { "branch": "master", "commit": "e451d22abf664ae17037f0e0857b1c9c46716320" },
