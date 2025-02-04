@@ -11,7 +11,7 @@ run = '''
   shell 'qlmanage -p "$@"'
 '''
 
-[[manager.prepend_keymap]
+[[manager.prepend_keymap]]
 on   = "!"
 run  = 'shell "$SHELL" --block'
 desc = "Open shell here"
