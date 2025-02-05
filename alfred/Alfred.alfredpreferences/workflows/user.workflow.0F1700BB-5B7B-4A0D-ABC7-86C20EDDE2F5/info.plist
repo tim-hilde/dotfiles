@@ -19,6 +19,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>97224712-AB59-42DF-8A7C-EAA572267309</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>5BABE36B-D549-49A7-B2F9-4FD6DDE21C8D</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>9DD92436-340B-4CCA-AA1E-ACC20FA56CE5</key>
 		<array>
 			<dict>
@@ -102,6 +115,25 @@ security add-generic-password -a "$service-otp" -p "$token" -s "$service"</strin
 			<string>B11B132B-4A61-4C05-8F4F-2111F454E6C6</string>
 			<key>version</key>
 			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<true/>
+				<key>clipboardtext</key>
+				<string></string>
+				<key>ignoredynamicplaceholders</key>
+				<false/>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>48C93950-4BFB-4AF9-9DA5-CA4B3385D68B</string>
+			<key>version</key>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -194,21 +226,48 @@ echo -n "${header}${body}${footer}"</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>autopaste</key>
-				<true/>
-				<key>clipboardtext</key>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>service=$(echo $1 | cut -f1 -d' ')
+
+security delete-generic-password -a "$service-otp"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
 				<string></string>
-				<key>ignoredynamicplaceholders</key>
-				<false/>
-				<key>transient</key>
-				<false/>
+				<key>type</key>
+				<integer>0</integer>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.output.clipboard</string>
+			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
-			<string>48C93950-4BFB-4AF9-9DA5-CA4B3385D68B</string>
+			<string>5BABE36B-D549-49A7-B2F9-4FD6DDE21C8D</string>
 			<key>version</key>
-			<integer>3</integer>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>otp-</string>
+				<key>subtext</key>
+				<string>otp- google</string>
+				<key>text</key>
+				<string>Delete OTP</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>97224712-AB59-42DF-8A7C-EAA572267309</string>
+			<key>version</key>
+			<integer>1</integer>
 		</dict>
 	</array>
 	<key>readme</key>
@@ -231,12 +290,26 @@ Forked from https://github.com/caalberts/alfred-otp</string>
 			<key>ypos</key>
 			<real>205</real>
 		</dict>
+		<key>5BABE36B-D549-49A7-B2F9-4FD6DDE21C8D</key>
+		<dict>
+			<key>xpos</key>
+			<real>620</real>
+			<key>ypos</key>
+			<real>340</real>
+		</dict>
 		<key>94B35AEC-7089-4AFF-AA3E-597BE8B78D6F</key>
 		<dict>
 			<key>xpos</key>
 			<real>400</real>
 			<key>ypos</key>
 			<real>205</real>
+		</dict>
+		<key>97224712-AB59-42DF-8A7C-EAA572267309</key>
+		<dict>
+			<key>xpos</key>
+			<real>165</real>
+			<key>ypos</key>
+			<real>340</real>
 		</dict>
 		<key>9DD92436-340B-4CCA-AA1E-ACC20FA56CE5</key>
 		<dict>
