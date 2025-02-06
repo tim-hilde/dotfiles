@@ -24,7 +24,7 @@ return {
 			lua = { "stylua" },
 			shell = { "beautysh" },
 			markdown = { "markdownlint" },
-			python = { "ruff" },
+			-- python = { "ruff" },
 			-- Conform can also run multiple formatters sequentially
 			-- python = { "isort", "black" },
 			--
