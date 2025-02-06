@@ -7,7 +7,6 @@
 - link:
     $HOME/.aliases:
       relative: true
-    $HOME/.yt-dlp:
     $HOME/.config/bat:
       path: bat
       relative: true
@@ -19,30 +18,8 @@
     $HOME/.gitconfig:
       path: git/gitconfig
       relative: true
-    $HOME/.p10k.zsh:
-    $HOME/.config/kitty:
-      path: kitty
-      relative: true
-      create: true
-      force: true
-    $HOME/.config/yazi:
-      path: yazi
-      relative: true
-      create: true
-    $HOME/.config/nvim:
-      path: nvim
-      relative: true
-      create: true
     $HOME/.config/tmux:
       path: tmux
-      relative: true
-      create: true
-    $HOME/.config/silicon:
-      path: silicon
-      relative: true
-      create: true
-    $HOME/.config/ghostty:
-      path: ghostty
       relative: true
       create: true
 

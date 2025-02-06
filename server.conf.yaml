@@ -1,8 +1,8 @@
 - defaults:
     link:
       relink: true
-      create: true
-    force: true
+      create: false
+    force: false
 
 - shell:
   -
@@ -55,12 +55,6 @@
       rm ~/.local/share/fonts/JetBrainsMono.tar.xz
     description: Installing JetBrainsMono font
     quiet: true
-  -
-    command: wget https://github.com/espanso/espanso/releases/download/v2.2.1/espanso-debian-x11-amd64.deb && \
-      sudo apt install -y ./espanso-debian-x11-amd64.deb && \
-      rm ~/espanso-debian-x11-amd64.deb && \
-      espanso start
-
   -
     command: bat cache --build
     quiet: true
