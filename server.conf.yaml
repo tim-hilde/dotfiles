@@ -49,8 +49,8 @@
     description: Installing packages
     quiet: true
   -
-    command: wget -O ~/.local/share/fonts/JetBrainsMono.tar.xz https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz && \
-      mkdir -p ~/.local/share/fonts/JetBrainsMono && \
+    command: mkdir -p ~/.local/share/fonts/JetBrainsMono && \
+      wget -O ~/.local/share/fonts/JetBrainsMono.tar.xz https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz && \
       tar -xf ~/.local/share/fonts/JetBrainsMono.tar.xz -C ~/.local/share/fonts/JetBrainsMono && \
       rm ~/.local/share/fonts/JetBrainsMono.tar.xz
     description: Installing JetBrainsMono font
