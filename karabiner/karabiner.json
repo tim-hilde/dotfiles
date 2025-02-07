@@ -830,7 +830,8 @@
                         "product_id": 545,
                         "vendor_id": 13364
                     },
-                    "ignore": false
+                    "ignore": false,
+                    "manipulate_caps_lock_led": false
                 },
                 {
                     "fn_function_keys": [
@@ -887,7 +888,8 @@
                         "is_keyboard": true,
                         "product_id": 545,
                         "vendor_id": 13364
-                    }
+                    },
+                    "manipulate_caps_lock_led": false
                 },
                 {
                     "identifiers": {
