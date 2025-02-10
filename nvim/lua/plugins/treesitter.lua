@@ -105,4 +105,8 @@ return {
 			multiline_threshold = 1,
 		},
 	},
+	{
+		-- Colored paranthesis
+		"HiPhish/rainbow-delimiters.nvim",
+	},
 }
