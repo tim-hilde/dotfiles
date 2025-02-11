@@ -2,17 +2,18 @@
   "$schema": "https://raw.githubusercontent.com/Jean-Tinland/simple-bar/refs/heads/master/lib/schemas/config.json",
   "global": {
     "theme": "dark",
-    "compactMode": true,
     "floatingBar": false,
     "noBarBg": false,
     "noColorInData": true,
     "bottomBar": true,
     "sideDecoration": false,
     "inlineSpacesOptions": false,
+    "disableNotifications": false,
+    "enableMissives": false,
+    "compactMode": true,
+    "widgetMaxWidth": "160px",
     "spacesBackgroundColorAsForeground": false,
     "widgetsBackgroundColorAsForeground": false,
-    "widgetMaxWidth": "160px",
-    "slidingAnimationPace": "4",
     "font": "JetBrainsMono Nerd Font",
     "fontSize": "11px",
     "yabaiPath": "/opt/homebrew/bin/yabai",
@@ -20,31 +21,16 @@
     "windowManager": "yabai",
     "shell": "sh",
     "terminal": "iTerm2",
-    "disableNotifications": false,
-    "enableMissives": false,
+    "slidingAnimationPace": "4",
     "enableServer": false,
     "serverSocketPort": 7776,
     "yabaiServerRefresh": false,
-    "aerospaceServerRefresh": false
+    "aerospaceServerRefresh": false,
+    "externalConfigFile": true
   },
   "themes": {
     "lightTheme": "CatppuccinLatte",
-    "darkTheme": "CatppuccinMocha",
-    "colorMain": "",
-    "colorMainAlt": "",
-    "colorMinor": "",
-    "colorAccent": "",
-    "colorRed": "",
-    "colorGreen": "",
-    "colorYellow": "",
-    "colorOrange": "",
-    "colorBlue": "",
-    "colorMagenta": "",
-    "colorCyan": "",
-    "colorBlack": "",
-    "colorWhite": "",
-    "colorForeground": "",
-    "colorBackground": ""
+    "darkTheme": "CatppuccinMocha"
   },
   "process": {
     "showOnDisplay": "",
@@ -69,7 +55,7 @@
     "displayStickyWindowsSeparately": true,
     "hideCreateSpaceButton": true,
     "hideEmptySpaces": false,
-    "showOptionsOnHover": false,
+    "showOptionsOnHover": true,
     "switchSpacesWithoutYabai": false
   },
   "widgets": {
@@ -107,7 +93,7 @@
   "netstatsWidgetOptions": {
     "refreshFrequency": 2000,
     "showOnDisplay": "",
-    "displayAsGraph": true
+    "displayAsGraph": false
   },
   "cpuWidgetOptions": {
     "refreshFrequency": 2000,
@@ -211,7 +197,7 @@
   "musicWidgetOptions": {
     "refreshFrequency": 10000,
     "showOnDisplay": "",
-    "showSpecter": false
+    "showSpecter": true
   },
   "mpdWidgetOptions": {
     "refreshFrequency": 10000,
