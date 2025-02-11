@@ -78,7 +78,7 @@
     "cryptoWidget": false,
     "stockWidget": false,
     "youtubeMusicWidget": false,
-    "musicWidget": true,
+    "musicWidget": false,
     "mpdWidget": false,
     "browserTrackWidget": false
   },
