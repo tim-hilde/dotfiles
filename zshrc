@@ -177,3 +177,11 @@ bindkey -M emacs '^S' sesh-sessions
 bindkey -M vicmd '^S' sesh-sessions
 bindkey -M viins '^S' sesh-sessions
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+
+# pnpm
+export PNPM_HOME="/Users/tim/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
