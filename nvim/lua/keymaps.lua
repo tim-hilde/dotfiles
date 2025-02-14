@@ -34,7 +34,13 @@ end, { desc = "[F]ormat buffer" })
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
 -- Hover Documentation
-vim.keymap.set("n", "<leader>h", vim.lsp.buf.hover, { desc = "[H]over documentation" })
+vim.keymap.set(
+	"n",
+	"<leader>h",
+	vim.lsp.buf.hover,
+	-- function() require("pretty_hover").hover() end,
+	{ desc = "[H]over documentation" }
+)
 
 -- Debugger
 vim.keymap.set("n", "<leader>td", function()

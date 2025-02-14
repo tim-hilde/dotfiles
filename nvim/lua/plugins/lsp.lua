@@ -72,7 +72,6 @@ return {
 							mode = mode or "n"
 							vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 						end
-
 						-- Custom hover function to remove weird strings
 						local hover = function(_, result, ctx, config)
 							if not (result and result.contents) then
@@ -90,6 +89,7 @@ return {
 								return vim.lsp.handlers.hover(_, result, ctx, config)
 							end
 						end
+
 						-- Set the border style for the hover and signature help windows
 						vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(hover, { border = "rounded" })
 						vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
@@ -292,8 +292,9 @@ return {
 		end,
 	},
 	-- {
-	-- 	"JASONews/glow-hover",
-	-- 	opts = {},
+	-- 	"Fildo7525/pretty_hover",
+	-- 	event = "LspAttach",
+	-- 	opts = { border = "rounded" },
 	-- },
 }
 -- vim: ts=2 sts=2 sw=2 et
