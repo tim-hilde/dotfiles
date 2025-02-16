@@ -1,5 +1,5 @@
 font-family = "JetBrainsMono Nerd Font Mono"
-font-style = Medium
+font-style = Halbfett
 font-size = 12
 
 theme = catppuccin-mocha
@@ -9,12 +9,10 @@ cursor-style = block
 link-url = true
 
 title = ""
-
-window-padding-x = 4
-window-padding-y = 4
+window-padding-x = 6
+window-padding-y = 6
 
 window-decoration = auto
-macos-titlebar-style = transparent
 
 clipboard-read = allow
 clipboard-write = allow
@@ -22,10 +20,16 @@ clipboard-write = allow
 shell-integration = detect
 shell-integration-features = no-cursor, sudo, title
 
-# Clipboard settings
-clipboard-read = "allow"
-clipboard-write = "allow"
-
+# macos
+macos-titlebar-style = hidden
+macos-option-as-alt = left
+macos-auto-secure-input = true
+macos-secure-input-indication = true
 
 # keybindings
+## change to previos dir
+keybind = alt+cmd+left=text:dirhistory_back
+keybind = alt+cmd+right=text:dirhistory_forward
 
+## history search
+keybind = "ctrl+r=text:h | fzf --preview="echo {}" --preview-window=down,3,wrap --height=60%\r"
