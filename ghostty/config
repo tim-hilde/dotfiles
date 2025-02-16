@@ -1,8 +1,9 @@
 font-family = "JetBrainsMono Nerd Font Mono"
-font-style = Halbfett
+font-style = Medium
 font-size = 12
 
 theme = catppuccin-mocha
+alpha-blending = linear
 
 cursor-style = block
 
@@ -32,4 +33,5 @@ keybind = alt+cmd+left=text:dirhistory_back
 keybind = alt+cmd+right=text:dirhistory_forward
 
 ## history search
-keybind = "ctrl+r=text:h | fzf --preview="echo {}" --preview-window=down,3,wrap --height=60%\r"
+# keybind = "ctrl+r=text:h | fzf --preview="echo {}" --preview-window=down,3,wrap --height=60%\r"
+# keybind = cmd+f=action:write_scrollback_file
