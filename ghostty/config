@@ -1,16 +1,31 @@
-theme = catppuccin-mocha
 font-family = "JetBrainsMono Nerd Font Mono"
+font-style = Medium
 font-size = 12
 
-window-decoration = false
-background-opacity = 1.0
+theme = catppuccin-mocha
 
-shell-integration-features = no-cursor
 cursor-style = block
+
+link-url = true
+
+title = ""
+
+window-padding-x = 4
+window-padding-y = 4
+
+window-decoration = auto
+macos-titlebar-style = transparent
+
+clipboard-read = allow
+clipboard-write = allow
+
+shell-integration = detect
+shell-integration-features = no-cursor, sudo, title
 
 # Clipboard settings
 clipboard-read = "allow"
 clipboard-write = "allow"
 
-# Set the terminal environment
+
+# keybindings
 
