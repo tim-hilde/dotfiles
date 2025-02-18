@@ -28,7 +28,7 @@ return {
 						return {
 							line.sep("", hl, theme.fill), -- 
 							tab.is_current() and "" or "",
-							tab.number(),
+							tab.in_jump_mode() and tab.jump_key() or tab.number(),
 							tab.name(),
 							-- tab.close_btn(''), -- show a close button
 							line.sep("", hl, theme.fill), -- 
