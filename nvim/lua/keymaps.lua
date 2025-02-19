@@ -130,8 +130,8 @@ end
 
 vim.api.nvim_set_keymap("n", "<leader>tg", "<cmd>lua _lazygit_toggle()<CR>", { noremap = true, silent = true, desc = "[T]oggle lazy[g]it" })
 
--- YankBank
-vim.keymap.set("n", "<leader>y", "<cmd>YankBank<CR>", { noremap = true, desc = "[Y]ankBank" })
+-- Clipboard
+vim.keymap.set("n", "<leader>tn", "<cmd>Telescope neoclip<CR>", { noremap = true, desc = "[T]oggle [n]eoclip" })
 
 -- LSP Signature
 vim.keymap.set({ "n" }, "<leader>tk", function()
