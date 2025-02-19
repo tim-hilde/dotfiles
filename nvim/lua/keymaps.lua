@@ -21,11 +21,6 @@ vim.keymap.set("n", "M", "J") -- mnemonic: [M]erge
 
 local wk = require "which-key"
 
--- Leap
-wk.add {
-	{ "<leader>j", "<Plug>(leap)", hidden = true },
-}
-
 vim.keymap.set({ "n", "v" }, "<leader>f", function()
 	require("conform").format { async = true, lsp_format = "fallback" }
 end, { desc = "[F]ormat buffer" })
