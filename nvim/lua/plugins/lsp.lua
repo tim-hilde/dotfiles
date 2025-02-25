@@ -201,63 +201,27 @@ return {
 						},
 					},
 				},
-				jedi_language_server = {
+				-- jedi_language_server = {
+				-- 	settings = {
+				-- 		jedi_language_server = {
+				-- 			diagnostics = {
+				-- 				enable = false,
+				-- 			},
+				-- 			markupKindPreferred = "markdown",
+				-- 		},
+				-- 	},
+				-- },
+				ruff = {},
+				basedpyright = {
 					settings = {
-						jedi_language_server = {
-							diagnostics = {
-								enable = false,
+						basedpyright = {
+							disableOrganizeImports = true,
+							analysis = {
+								ignore = { "*" },
 							},
 						},
 					},
 				},
-				ruff = {},
-				-- basedpyright = {
-				-- 	settings = {
-				-- 		basedpyright = {
-				-- 			disableOrganizeImports = true,
-				-- 			analysis = {
-				-- 				ignore = { "*" },
-				-- 			},
-				-- 		},
-				-- 	},
-				-- },
-				-- pylsp = {
-				-- 	settings = {
-				-- 		pylsp = {
-				-- 			plugins = {
-				-- 				pycodestyle = {
-				-- 					enabled = false,
-				-- 				},
-				-- 				pyflakes = {
-				-- 					enabled = false,
-				-- 				},
-				-- 				mccabe = {
-				-- 					enabled = false,
-				-- 				},
-				-- 				autopep8 = {
-				-- 					enabled = false,
-				-- 				},
-				-- 				yapf = {
-				-- 					enabled = false,
-				-- 				},
-				-- 			},
-				-- 		},
-				-- 	},
-				-- },
-				-- pyright = {
-				-- 	settings = {
-				-- 		pyright = {
-				-- 			-- Using Ruff's import organizer
-				-- 			disableOrganizeImports = true,
-				-- 		},
-				-- 		python = {
-				-- 			analysis = {
-				-- 				-- Ignore all files for analysis to exclusively use Ruff for linting
-				-- 				ignore = { "*" },
-				-- 			},
-				-- 		},
-				-- 	},
-				-- },
 				bashls = {},
 				yamlls = {},
 				dockerls = {},
