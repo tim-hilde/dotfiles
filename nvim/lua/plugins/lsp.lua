@@ -218,16 +218,16 @@ return {
 						},
 					},
 				},
-				ruff = {},
+				-- ruff = {},
 				basedpyright = {
-					settings = {
-						basedpyright = {
-							disableOrganizeImports = true,
-							analysis = {
-								ignore = { "*" },
-							},
-						},
-					},
+					-- 	settings = {
+					-- 		basedpyright = {
+					-- 			disableOrganizeImports = true,
+					-- 			analysis = {
+					-- 				ignore = { "*" },
+					-- 			},
+					-- 		},
+					-- 	},
 				},
 				-- pyright = {
 				-- 	settings = {
