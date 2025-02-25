@@ -217,7 +217,14 @@ return {
 						basedpyright = {
 							disableOrganizeImports = true,
 							analysis = {
-								ignore = { "*" },
+								-- ignore = { "*" },
+								typeCheckingMode = "basic",
+								inlayHints = {
+									variableTypes = true,
+									callArgumentNames = true,
+									functionReturnTypes = true,
+									genericTypes = true,
+								},
 							},
 						},
 					},
