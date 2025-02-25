@@ -201,27 +201,27 @@ return {
 						},
 					},
 				},
-				jedi_language_server = {
-					settings = {
-						jedi_language_server = {
-							diagnostics = {
-								enable = false,
-							},
-							markupKindPreferred = "markdown",
-						},
-					},
-				},
-				ruff = {},
-				-- basedpyright = {
+				-- jedi_language_server = {
 				-- 	settings = {
-				-- 		basedpyright = {
-				-- 			disableOrganizeImports = true,
-				-- 			analysis = {
-				-- 				ignore = { "*" },
+				-- 		jedi_language_server = {
+				-- 			diagnostics = {
+				-- 				enable = false,
 				-- 			},
+				-- 			markupKindPreferred = "markdown",
 				-- 		},
 				-- 	},
 				-- },
+				ruff = {},
+				basedpyright = {
+					settings = {
+						basedpyright = {
+							disableOrganizeImports = true,
+							analysis = {
+								ignore = { "*" },
+							},
+						},
+					},
+				},
 				bashls = {},
 				yamlls = {},
 				dockerls = {},
