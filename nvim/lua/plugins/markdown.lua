@@ -2,7 +2,7 @@ return {
 	{
 		"OXY2DEV/markview.nvim",
 		lazy = true, -- Recommended
-		ft = { "markdown", "codecompanion", "lsp-hover" }, -- If you decide to lazy-load anyway
+		ft = { "markdown", "codecompanion" }, -- If you decide to lazy-load anyway
 
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
