@@ -73,8 +73,26 @@ return {
 							vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 						end
 
+						-- Custom hover function to remove weird strings
+						local hover = function(_, result, ctx, config)
+							if not (result and result.contents) then
+								return vim.lsp.handlers.hover(_, result, ctx, config)
+							end
+							if type(result.contents) == "string" then
+								local s = string.gsub(result.contents or "", "&nbsp;", " ")
+								s = string.gsub(s, [[\\\n]], [[\n]])
+								result.contents = s
+								return vim.lsp.handlers.hover(_, result, ctx, config)
+							else
+								local s = string.gsub((result.contents or {}).value or "", "&nbsp;", " ")
+								s = string.gsub(s, "\\\n", "\n")
+								result.contents.value = s
+								return vim.lsp.handlers.hover(_, result, ctx, config)
+							end
+						end
+
 						-- Set the border style for the hover and signature help windows
-						vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+						vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(hover, { border = "rounded" })
 						vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
 
 						-- Jump to the definition of the word under your cursor.
