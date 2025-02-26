@@ -90,9 +90,94 @@ return {
 								return vim.lsp.handlers.hover(_, result, ctx, config)
 							end
 						end
+						local util = require "vim.lsp.util"
 
+						local function split_lines(value)
+							-- handle all the stuff that can be done globally here.
+							value = string.gsub(value, "&gt;", ">")
+							value = string.gsub(value, "&lt;", "<")
+							value = string.gsub(value, "\\_", "_")
+
+							-- then split on newline
+							local split = vim.split(value, "\n", { plain = true, trimempty = true })
+
+							-- now fix the indent levels.
+							local indent_level = 0
+
+							for line_no, line in pairs(split) do
+								line, count = string.gsub(line, "&nbsp;", " ")
+
+								-- if blank line then reset indent because we are on next param.
+								if line == "" then
+									indent_level = 0
+								end
+
+								-- if there should be indent and there was no subbing of `&nbsp;` then indent.
+								-- note the and is needed because otherwise it will indnet the `&nbsp;` and that is already done.
+								if indent_level > 0 and count == 0 then
+									for _ = 1, indent_level, 1 do
+										line = " " .. line
+									end
+								end
+
+								-- update the indent_level to the number of `&nbsp;` chars found.
+								if count > 0 then
+									indent_level = count
+								end
+
+								-- finally update the line in the split which is a table of all the lines split by `\n`
+								split[line_no] = line
+							end
+
+							return split
+						end
+
+						local function convert_input_to_markdown_lines(input, contents)
+							contents = contents or {}
+							assert(type(input) == "table", "Expected a table for LSP input")
+							if input.kind then
+								local value = input.value or ""
+								vim.list_extend(contents, split_lines(value))
+							end
+							if (contents[1] == "" or contents[1] == nil) and #contents == 1 then
+								return {}
+							end
+							return contents
+						end
+
+						-- The overwritten hover function for pyright fucking around.
+						local function hover(_, result, ctx, config)
+							config = config or {}
+							config.focus_id = ctx.method
+							if vim.api.nvim_get_current_buf() ~= ctx.bufnr then
+								-- Ignore result since buffer changed. This happens for slow language servers.
+								return
+							end
+
+							-- return nothing and print no info if no content
+							if not (result and result.contents) then
+								if config.silent ~= true then
+									vim.notify "No information available"
+								end
+								return
+							end
+
+							local contents ---@type string[]
+							contents = convert_input_to_markdown_lines(result.contents)
+
+							-- return nothing and print no info if no content
+							if vim.tbl_isempty(contents) then
+								if config.silent ~= true then
+									vim.notify "No information available"
+								end
+								return
+							end
+
+							-- finally oprn the floating hover window and display the new contents just formatted in markdown format.
+							return util.open_floating_preview(contents, "markdown", config)
+						end
 						-- Set the border style for the hover and signature help windows
-						vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded", ft = "markdown" })
+						vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(hover, { border = "rounded" })
 						vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
 
 						-- Jump to the definition of the word under your cursor.
