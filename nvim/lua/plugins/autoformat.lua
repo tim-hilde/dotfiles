@@ -25,7 +25,7 @@ return {
 			shell = { "beautysh" },
 			markdown = { "markdownlint" },
 			python = { "ruff_format", "ruff_organize_imports" },
-			yaml = { "yamlfmt" },
+			-- yaml = { "yamlfmt" },
 			-- Conform can also run multiple formatters sequentially
 			-- python = { "isort", "black" },
 			--
