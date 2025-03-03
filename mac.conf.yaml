@@ -53,7 +53,7 @@
       path: hammerspoon
       relative: true
       create: true
-    $HOME/television:
+    $HOME/.config/television:
       path: television
       relative: true
       create: true
