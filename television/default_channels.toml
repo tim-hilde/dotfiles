@@ -41,6 +41,8 @@ preview_command = ":files:"
 [[cable_channel]]
 name = "zsh-history"
 source_command = "sed '1!G;h;$!d' ${HISTFILE:-${HOME}/.zsh_history} | cut -d\";\" -f 2-"
+# source_command = "history | cut -c8- "
+# preview_command = '--color=always {0}'
 
 [[cable_channel]]
 name = "bash-history"
