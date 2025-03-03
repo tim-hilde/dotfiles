@@ -3,7 +3,6 @@
       relink: true
       create: true
     force: true
-
 - link:
     $HOME/.yt-dlp:
     $HOME/.ssh/config:
@@ -54,42 +53,35 @@
       path: hammerspoon
       relative: true
       create: true
-
+    $HOME/television:
+      path: television
+      relative: true
+      create: true
 - shell:
-  -
-    command: sudo chsh -s $(which zsh) $USER
-    description: Make zsh default shell
-    quiet: true
-  -
-    command: ssh-add --apple-use-keychain $HOME/.ssh/id_ed25519
-    quiet: true
-  -
-    command: if [[ ! -d "$HOME/.pyenv" ]]; then curl https://pyenv.run | bash; fi
-    description: Installing pyenv
-    quiet: true
-  -
-    command: yes N | pyenv install 3.10.6 && pyenv global 3.10.6
-    description: Installing python 3.10.6
-    quiet: true
-    stderr: true
-  -
-    command: pip install --upgrade pip
-    quiet: true
-  -
-    command: curl -sSL https://install.python-poetry.org | python3 -
-    quiet: true
-  -
-    command: NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    description: Installing homebrew
-    quiet: true
-  -
-    command: brew bundle --file=brew/Brewfile
-    description: Installing from brewfile
-    stdout: true
-    quiet: true
-  -
-    command: if [[ ! -d "$HOME/Library/Application\ Support/Übersicht/widgets/simple-bar" ]]; then git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar; fi
-    quiet: true
-  -
-    command: bat cache --build
-    quiet: true
+    - command: sudo chsh -s $(which zsh) $USER
+      description: Make zsh default shell
+      quiet: true
+    - command: ssh-add --apple-use-keychain $HOME/.ssh/id_ed25519
+      quiet: true
+    - command: if [[ ! -d "$HOME/.pyenv" ]]; then curl https://pyenv.run | bash; fi
+      description: Installing pyenv
+      quiet: true
+    - command: yes N | pyenv install 3.10.6 && pyenv global 3.10.6
+      description: Installing python 3.10.6
+      quiet: true
+      stderr: true
+    - command: pip install --upgrade pip
+      quiet: true
+    - command: curl -sSL https://install.python-poetry.org | python3 -
+      quiet: true
+    - command: NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      description: Installing homebrew
+      quiet: true
+    - command: brew bundle --file=brew/Brewfile
+      description: Installing from brewfile
+      stdout: true
+      quiet: true
+    - command: if [[ ! -d "$HOME/Library/Application\ Support/Übersicht/widgets/simple-bar" ]]; then git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar; fi
+      quiet: true
+    - command: bat cache --build
+      quiet: true
