@@ -41,7 +41,7 @@ preview_command = ":files:"
 [[cable_channel]]
 name = "zsh-history"
 # source_command = "sed '1!G;h;$!d' ${HISTFILE:-${HOME}/.zsh_history} | cut -d\";\" -f 2-"
-source_command = "tail -r $HOME/.zsh_history | cut -d\";\" -f 2-"
+source_command = "history"
 # source_command = "builtin fc $stamp -l 1 '@'"
 # preview_command = '--color=always {0}'
 
