@@ -9,7 +9,4 @@ max_width = 2000
 max_height = 2000
 
 [opener]
-play = [
-  { run = 'mpv "$@"', orphan = true, for = "unix" },
-  { run = 'iina "$@"', desc = "iina", orphan = true },
-]
+play = [{ run = 'open -a iina "$@"', desc = "iina", orphan = true }]
