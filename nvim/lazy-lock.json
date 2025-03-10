@@ -47,7 +47,7 @@
   "nvim-regexplainer": { "branch": "main", "commit": "2ec38892e7ce36f0c58b478f3570936fa5bd11f1" },
   "nvim-rip-substitute": { "branch": "main", "commit": "ede145f6fc318dc0e15ed9a40d2a60112eaf0b5f" },
   "nvim-silicon": { "branch": "main", "commit": "7f66bda8f60c97a5bf4b37e5b8acb0e829ae3c32" },
-  "nvim-treesitter": { "branch": "master", "commit": "feab1f19f889fd6da9f80ced4717ae60d56f6519" },
+  "nvim-treesitter": { "branch": "master", "commit": "38959800c2439c890e3238af559f0dc3be45e393" },
   "nvim-treesitter-context": { "branch": "master", "commit": "198720b4016af04c9590f375d714d5bf8afecc1a" },
   "nvim-treesitter-textobjects": { "branch": "master", "commit": "143856b1cee509a190cc8c17ddb0638002171235" },
   "nvim-web-devicons": { "branch": "master", "commit": "ab4cfee554e501f497bce0856788d43cf2eb93d7" },

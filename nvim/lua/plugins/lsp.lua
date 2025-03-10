@@ -335,7 +335,7 @@ return {
 				bashls = {},
 				yamlls = {},
 				dockerls = {},
-				ltex = {
+				ltex_plus = {
 					on_attach = function(client, bufnr)
 						require("ltex_extra").setup { path = vim.fn.stdpath "config" .. "/tex" }
 					end,
@@ -354,7 +354,12 @@ return {
 			--    :Mason
 			--
 			--  You can press `g?` for help in this menu.
-			require("mason").setup()
+			require("mason").setup {
+				registries = {
+					"github:mason-org/mason-registry",
+					"github:visimp/mason-registry",
+				},
+			}
 
 			-- You can add other tools here that you want Mason to install
 			-- for you, so that they are available from within Neovim.
