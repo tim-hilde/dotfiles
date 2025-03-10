@@ -23,7 +23,8 @@ source ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh
 
 #oh-my-zsh plugins
 plugins=(
-    common-aliases
+    # pyenv
+    # zsh-autosuggestions
     copypath
     direnv
     dirhistory
@@ -34,14 +35,14 @@ plugins=(
     last-working-dir
     poetry
     poetry-env
-    # pyenv
     python
     ssh-agent
-    you-should-use
     virtualenv
-    # zsh-autosuggestions
+    you-should-use
     zsh-bat
     zsh-syntax-highlighting
+    azure
+    common-aliases
 )
 
 # (macOS-only) Prevent Homebrew from reporting - https://github.com/Homebrew/brew/blob/master/docs/Analytics.md
