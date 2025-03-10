@@ -17,8 +17,8 @@ vim.keymap.set("n", "K", "6k")
 vim.keymap.set("n", "H", "0^")
 vim.keymap.set("n", "L", "$")
 
-vim.keymap.set("n", "M", "J", { desc = "[M]erge lines" }) -- mnemonic: [M]erge
-vim.keymap.set("n", "J", ":TSJToggle<CR>", { desc = "[J]oin lines" })
+vim.keymap.set("n", "<leader>M", "J", { desc = "[M]erge lines" }) -- mnemonic: [M]erge
+vim.keymap.set("n", "<leader>J", ":TSJToggle<CR>", { desc = "[J]oin lines" })
 
 local wk = require "which-key"
 
