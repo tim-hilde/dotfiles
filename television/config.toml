@@ -92,7 +92,7 @@ confirm_selection = "enter"
 # Copy the selected entry to the clipboard
 copy_entry_to_clipboard = "ctrl-y"
 # Toggle the remote control mode
-toggle_remote_control = "ctrl-r"
+# toggle_remote_control = "ctrl-r"
 # Toggle the send to channel mode
 toggle_send_to_channel = "ctrl-v"
 # Toggle the help bar
@@ -114,7 +114,7 @@ select_prev_page = "pageup"
 # Select an entry
 select_entry = "enter"
 # Toggle the remote control mode
-toggle_remote_control = "ctrl-r"
+# toggle_remote_control = "ctrl-r"
 # Toggle the help bar
 toggle_help = "ctrl-g"
 # Toggle the preview panel
@@ -202,7 +202,7 @@ toggle_preview = "ctrl-o"
   "git push",
 ]
 "docker-images" = ["docker run"]
-"git-repos" = [ "code", "hx", "git clone"]
+"git-repos" = ["code", "hx", "git clone"]
 
 
 [shell_integration.keybindings]
@@ -211,4 +211,4 @@ toggle_preview = "ctrl-o"
 "smart_autocomplete" = "ctrl-t"
 # controls which keybinding should trigger tv
 # for command history
-"command_history" = "ctrl-r"
+# "command_history" = "ctrl-r"
