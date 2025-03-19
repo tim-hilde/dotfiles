@@ -49,7 +49,7 @@ return {
 								return "I want you to act as a senior "
 									.. context.filetype
 									.. " developer."
-									.. "I will send you a function and I want you to generate the docstrings for the function using the numpy format."
+									.. "I will send you a function and I want you to generate the docstrings for the function using the google format."
 									.. "Generate only the docstrings and nothing more. Put the generated docstring at the correct position in the code depending on the programming language."
 									.. "Use tabs instead of spaces"
 							end,
