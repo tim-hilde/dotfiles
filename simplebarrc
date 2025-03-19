@@ -25,7 +25,8 @@
     "enableServer": false,
     "serverSocketPort": 7776,
     "yabaiServerRefresh": false,
-    "aerospaceServerRefresh": false
+    "aerospaceServerRefresh": false,
+    "flashspaceServerRefresh": false
   },
   "themes": {
     "lightTheme": "CatppuccinLatte",
@@ -70,15 +71,17 @@
     "hideCreateSpaceButton": true,
     "hideEmptySpaces": false,
     "showOptionsOnHover": false,
-    "switchSpacesWithoutYabai": false
+    "switchSpacesWithoutYabai": false,
+    "showOnlyFlashspaceSpaceIndex": false,
+    "hideFlashspaceAppIcons": false
   },
   "widgets": {
     "processWidget": true,
     "weatherWidget": false,
     "netstatsWidget": false,
-    "cpuWidget": true,
-    "gpuWidget": true,
-    "memoryWidget": true,
+    "cpuWidget": false,
+    "gpuWidget": false,
+    "memoryWidget": false,
     "batteryWidget": false,
     "wifiWidget": false,
     "vpnWidget": false,
