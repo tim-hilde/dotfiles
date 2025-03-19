@@ -6,7 +6,6 @@
       "manipulators": [
         {
           "type": "basic",
-          "description": "Ctrl escape to hat",
           "from": {
             "key_code": "escape",
             "modifiers": {
@@ -17,6 +16,25 @@
             {
               "key_code": "grave_accent_and_tilde",
               "modifiers": "left_control"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "ctrl backspace to del",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "delete_or_backspace",
+            "modifiers": {
+              "mandatory": "left_control"
+            }
+          },
+          "to": [
+            {
+              "key_code": "delete_forward"
             }
           ]
         }
