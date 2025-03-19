@@ -1,0 +1,14 @@
+title: V4 Mods
+rules:
+  - description: 'Ctrl escape to hat'
+    manipulators:
+      - type: basic
+        description: Ctrl escape to hat
+        from:
+          key_code: escape
+          modifiers:
+            mandatory: left_control
+        to:
+          - key_code: grave_accent_and_tilde
+            modifiers:
+              mandatory: left_control
