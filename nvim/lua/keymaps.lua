@@ -14,7 +14,7 @@ vim.keymap.set("n", "<down>", '<cmd>echo "Use j to move!!"<CR>')
 -- HJKL as amplified versions of hjkl
 vim.keymap.set("n", "J", "6j")
 vim.keymap.set("n", "K", "6k")
-vim.keymap.set("n", "H", "0^")
+vim.keymap.set("n", "H", "^")
 vim.keymap.set("n", "L", "$")
 
 vim.keymap.set("n", "<leader>M", "J", { desc = "[M]erge lines" }) -- mnemonic: [M]erge
