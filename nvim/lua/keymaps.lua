@@ -198,3 +198,6 @@ end, { desc = "Previous harpoon" })
 vim.keymap.set("n", "<leader>pn", function()
 	require("harpoon"):list():next()
 end, { desc = "Next harpoon" })
+
+-- Toggle call hierachy
+vim.keymap.set("n", "<leader>ch", vim.lsp.buf.outgoing_calls, { desc = "[C]ode [H]ierarchy" })
