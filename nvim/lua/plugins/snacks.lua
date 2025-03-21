@@ -11,5 +11,6 @@ return {
 				{ section = "startup" },
 			},
 		},
+		bigfile = { enabled = true },
 	},
 }
