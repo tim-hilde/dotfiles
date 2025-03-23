@@ -38,14 +38,6 @@ vim.keymap.set(
 	{ desc = "[H]over documentation" }
 )
 
--- Debugger
-vim.keymap.set("n", "<leader>td", function()
-	require("dap").continue()
-end, { desc = "[T]oggle [D]AP UI" })
-
-vim.keymap.set("n", "<leader>tb", function()
-	require("dap").toggle_breakpoint()
-end, { desc = "[T]oggle [b]reakpoint" })
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.

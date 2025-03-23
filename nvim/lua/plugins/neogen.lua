@@ -12,13 +12,4 @@ return {
 			},
 		},
 	},
-	keys = {
-		{
-			"<leader>cd",
-			function()
-				require("neogen").generate()
-			end,
-			desc = "Add [D]ocstring",
-		},
-	},
 }
