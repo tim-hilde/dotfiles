@@ -70,7 +70,7 @@
     "displayStickyWindowsSeparately": true,
     "hideCreateSpaceButton": true,
     "hideEmptySpaces": false,
-    "showOptionsOnHover": false,
+    "showOptionsOnHover": true,
     "switchSpacesWithoutYabai": false,
     "showOnlyFlashspaceSpaceIndex": false,
     "hideFlashspaceAppIcons": false
@@ -110,7 +110,7 @@
   "netstatsWidgetOptions": {
     "refreshFrequency": 2000,
     "showOnDisplay": "",
-    "displayAsGraph": true
+    "displayAsGraph": false
   },
   "cpuWidgetOptions": {
     "refreshFrequency": 2000,
@@ -214,7 +214,7 @@
   "musicWidgetOptions": {
     "refreshFrequency": 10000,
     "showOnDisplay": "",
-    "showSpecter": false
+    "showSpecter": true
   },
   "mpdWidgetOptions": {
     "refreshFrequency": 10000,
