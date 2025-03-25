@@ -5,7 +5,7 @@
     "model_name": "nomic-embed-text"
   },
   "hnsw": {
-    "hnsw:M": 64,
+    "hnsw:M": 30,
     "hnsw:construction_ef": 100
   }
 }
