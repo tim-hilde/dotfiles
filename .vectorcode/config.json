@@ -1,7 +1,11 @@
 {
-"embedding_function":"OllamaEmbeddingFunction",
-"embedding_params":{
-  "url": "http://127.0.0.1:11434/api/embeddings",
-  "model_name": "nomic-embed-text"
-}
+  "embedding_function": "OllamaEmbeddingFunction",
+  "embedding_params": {
+    "url": "http://127.0.0.1:11434/api/embeddings",
+    "model_name": "nomic-embed-text"
+  },
+  "hnsw": {
+    "hnsw:M": 64,
+    "hnsw:construction_ef": 100
+  }
 }
