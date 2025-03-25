@@ -57,6 +57,10 @@
       path: television
       relative: true
       create: true
+    $HOME/.config/vectorcode:
+      path: vectorcode
+      relative: true
+      create: true
 - shell:
     - command: sudo chsh -s $(which zsh) $USER
       description: Make zsh default shell
