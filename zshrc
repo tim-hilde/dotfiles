@@ -12,6 +12,10 @@ ZSH=$HOME/.oh-my-zsh
 
 # You can change the theme with another one from https://github.com/robbyrussell/oh-my-zsh/wiki/themes
 ZSH_THEME="powerlevel10k/powerlevel10k" #"robbyrussell"
+
+# To customize prompt, run `p10k configure` or edit ~/dotfiles/p10k.zsh.
+[[ ! -f ~/dotfiles/p10k.zsh ]] || source ~/dotfiles/p10k.zsh
+
 # Set virtualenv delimiter
 typeset -g POWERLEVEL9K_VIRTUALENV_LEFT_DELIMITER="["
 typeset -g POWERLEVEL9K_VIRTUALENV_RIGHT_DELIMITER="]"
@@ -36,8 +40,8 @@ plugins=(
     # poetry-env
     python
     ssh-agent
-    # virtualenv
-    # pyenv
+    virtualenv
+    pyenv
     virtualenv-autodetect
     you-should-use
     zsh-bat
@@ -66,6 +70,8 @@ export PATH="${HOME}/.rbenv/bin:${PATH}" # Needed for Linux/WSL
 type -a rbenv > /dev/null && eval "$(rbenv init -)"
 
 # Load pyenv (to manage your Python versions)
+export ZSH_THEME_PYENV_NO_SYSTEM=true
+export ZSH_PYENV_VIRTUALENV=true
 export PYENV_VIRTUALENV_DISABLE_PROMPT=0
 type -a pyenv > /dev/null && eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init - 2> /dev/null)"
 
@@ -189,5 +195,3 @@ esac
 # pnpm end
 eval "$(tv init zsh)"
 
-# To customize prompt, run `p10k configure` or edit ~/dotfiles/p10k.zsh.
-[[ ! -f ~/dotfiles/p10k.zsh ]] || source ~/dotfiles/p10k.zsh
