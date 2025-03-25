@@ -1,70 +1,55 @@
-local progress = require "fidget.progress"
-
 local M = {}
 
-function M:init()
-	local group = vim.api.nvim_create_augroup("CodeCompanionFidgetHooks", {})
+function M.start_fidget()
+	local has_fidget, fidget = pcall(require, "fidget")
+	if not has_fidget then
+		return
+	end
 
-	vim.api.nvim_create_autocmd({ "User" }, {
-		pattern = "CodeCompanionRequestStarted",
-		group = group,
-		callback = function(request)
-			local handle = M:create_progress_handle(request)
-			M:store_progress_handle(request.data.id, handle)
-		end,
-	})
+	if M.fidget_progress_handle then
+		M.fidget_progress_handle.message = "Abort."
+		M.fidget_progress_handle:cancel()
+		M.fidget_progress_handle = nil
+	end
 
-	vim.api.nvim_create_autocmd({ "User" }, {
-		pattern = "CodeCompanionRequestFinished",
-		group = group,
-		callback = function(request)
-			local handle = M:pop_progress_handle(request.data.id)
-			if handle then
-				M:report_exit_status(handle, request)
-				handle:finish()
-			end
-		end,
-	})
-end
-
-M.handles = {}
-
-function M:store_progress_handle(id, handle)
-	M.handles[id] = handle
-end
-
-function M:pop_progress_handle(id)
-	local handle = M.handles[id]
-	M.handles[id] = nil
-	return handle
-end
-
-function M:create_progress_handle(request)
-	return progress.handle.create {
-		title = " Requesting assistance (" .. request.data.strategy .. ")",
-		message = "In progress...",
-		lsp_client = {
-			name = M:llm_role_title(request.data.adapter),
-		},
+	M.fidget_progress_handle = fidget.progress.handle.create {
+		title = "",
+		message = "Thinking...",
+		lsp_client = { name = "CodeCompanion" },
 	}
 end
 
-function M:llm_role_title(adapter)
-	local parts = {}
-	table.insert(parts, adapter.formatted_name)
-	if adapter.model and adapter.model ~= "" then
-		table.insert(parts, "(" .. adapter.model .. ")")
+function M.stop_fidget()
+	local has_fidget, _ = pcall(require, "fidget")
+	if not has_fidget then
+		return
 	end
-	return table.concat(parts, " ")
+
+	if M.fidget_progress_handle then
+		M.fidget_progress_handle.message = "Done."
+		M.fidget_progress_handle:finish()
+		M.fidget_progress_handle = nil
+	end
 end
 
-function M:report_exit_status(handle, request)
-	if request.data.status == "success" then
-		handle.message = "Completed"
-	elseif request.data.status == "error" then
-		handle.message = " Error"
-	else
-		handle.message = "󰜺 Cancelled"
+function M.setup_fidget()
+	local has_fidget, _ = pcall(require, "fidget")
+	if has_fidget then
+		-- New AU group:
+		local group = vim.api.nvim_create_augroup("CodeCompanionHooks", {})
+
+		-- Attach:
+		vim.api.nvim_create_autocmd({ "User" }, {
+			pattern = "CodeCompanionRequest*",
+			group = group,
+			callback = function(request)
+				if request.match == "CodeCompanionRequestStarted" then
+					M.start_req_fidget()
+				elseif request.match == "CodeCompanionRequestFinished" then
+					M.stop_req_fidget()
+				end
+			end,
+		})
 	end
 end
 

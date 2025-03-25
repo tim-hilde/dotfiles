@@ -4,11 +4,11 @@ return {
 	event = "VimEnter", -- Sets the loading event to 'VimEnter'
 	opts = {
 		preset = "modern",
-		icons = {
+		icon = {
 			-- set icon mappings to true if you have a Nerd Font
 			mappings = vim.g.have_nerd_font,
-			-- If you are using a Nerd Font: set icons.keys to an empty table which will use the
-			-- default whick-key.nvim defined Nerd Font icons, otherwise define a string table
+			-- If you are using a Nerd Font: set icon.keys to an empty table which will use the
+			-- default whick-key.nvim defined Nerd Font icon, otherwise define a string table
 			keys = vim.g.have_nerd_font and {} or {
 				Up = "<Up> ",
 				Down = "<Down> ",
@@ -43,12 +43,12 @@ return {
 
 		-- Document existing key chains
 		spec = {
-			{ "<leader>c", group = "[C]ode", mode = { "n", "x" }, icons = { name = "nf-cod-code" } },
-			{ "<leader>b", group = "De[B]ug", mode = { "n", "v" }, icons = { name = "nf-cod-bug" } },
-			{ "<leader>d", group = "[D]ocument", icons = { name = "nf-md-file_document" } },
-			{ "<leader>r", group = "[R]ename", icons = { name = "nf-cod-replace" } },
-			{ "<leader>s", group = "[S]earch", icons = { name = "nf-cod-search" } },
-			{ "<leader>w", group = "[W]orkspace", icons = { name = "nf-md-desktop_mac" } },
+			{ "<leader>c", group = "[C]ode", mode = { "n", "x" }, icon = { name = "nf-cod-code" } },
+			{ "<leader>b", group = "De[b]ug", mode = { "n", "v" }, icon = { name = "nf-cod-bug" } },
+			{ "<leader>d", group = "[D]ocument", icon = { name = "nf-md-file_document" } },
+			{ "<leader>r", group = "[R]ename", icon = { name = "nf-cod-replace" } },
+			{ "<leader>s", group = "[S]earch", icon = { name = "nf-cod-search" } },
+			{ "<leader>w", group = "[W]orkspace", icon = { name = "nf-md-desktop_mac" } },
 			{ "<leader>t", group = "[T]oggle", mode = { "n", "v" } },
 			{ "<leader>i", group = "[I]ronRepl", mode = { "n", "v" } },
 			{ "<leader>wa", group = "[A]utosession" },
