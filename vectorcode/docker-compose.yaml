@@ -1,0 +1,17 @@
+---
+networks:
+  net:
+    driver: bridge
+services:
+  chromadb:
+    image: chromadb/chroma:0.6.3
+    volumes:
+      - ~/.local/share/vectorcode/chromadb:/chroma/chroma
+    environment:
+      - IS_PERSISTENT=TRUE
+      - PERSIST_DIRECTORY=/chroma/chroma # this is the default path, change it as needed
+      - ANONYMIZED_TELEMETRY=FALSE
+    ports:
+      - 8000:8000
+    networks:
+      - net
