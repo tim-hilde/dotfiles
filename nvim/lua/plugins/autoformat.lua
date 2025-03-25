@@ -26,6 +26,7 @@ return {
 			markdown = { "markdownlint" },
 			python = { "ruff_format", "ruff_organize_imports" },
 			json = { "fixjson" },
+			toml = { "taplo" },
 			-- yaml = { "yamlfmt" },
 			-- Conform can also run multiple formatters sequentially
 			-- python = { "isort", "black" },
