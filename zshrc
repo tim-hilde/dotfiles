@@ -23,7 +23,6 @@ source ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh
 
 #oh-my-zsh plugins
 plugins=(
-    # pyenv
     # zsh-autosuggestions
     copypath
     direnv
@@ -34,10 +33,12 @@ plugins=(
     jsontools
     last-working-dir
     poetry
-    poetry-env
+    # poetry-env
     python
     ssh-agent
-    virtualenv
+    # virtualenv
+    # pyenv
+    virtualenv-autodetect
     you-should-use
     zsh-bat
     zsh-syntax-highlighting
