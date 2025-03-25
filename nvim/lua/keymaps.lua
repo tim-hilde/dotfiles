@@ -28,6 +28,9 @@ end, { desc = "[F]ormat buffer" })
 
 -- Diagnostic keymaps
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
+vim.keymap.set("n", "<leader>l", function()
+	require("quicker").toggle { loclist = false }
+end, { desc = "Open qlist" })
 
 -- Hover Documentation
 vim.keymap.set(

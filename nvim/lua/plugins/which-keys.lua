@@ -43,12 +43,12 @@ return {
 
 		-- Document existing key chains
 		spec = {
-			{ "<leader>c", group = "[C]ode", mode = { "n", "x" }, icon = { name = "nf-cod-code" } },
-			{ "<leader>b", group = "De[b]ug", mode = { "n", "v" }, icon = { name = "nf-cod-bug" } },
-			{ "<leader>d", group = "[D]ocument", icon = { name = "nf-md-file_document" } },
-			{ "<leader>r", group = "[R]ename", icon = { name = "nf-cod-replace" } },
-			{ "<leader>s", group = "[S]earch", icon = { name = "nf-cod-search" } },
-			{ "<leader>w", group = "[W]orkspace", icon = { name = "nf-md-desktop_mac" } },
+			{ "<leader>c", group = "[C]ode", mode = { "n", "x" }, icon = "" },
+			{ "<leader>b", group = "De[b]ug", mode = { "n", "v" }, icon = "" },
+			{ "<leader>d", group = "[D]ocument", icon = "󰈙" },
+			{ "<leader>r", group = "[R]ename", icon = "" },
+			{ "<leader>s", group = "[S]earch", icon = "" },
+			{ "<leader>w", group = "[W]orkspace", icon = "󰇄" },
 			{ "<leader>t", group = "[T]oggle", mode = { "n", "v" } },
 			{ "<leader>i", group = "[I]ronRepl", mode = { "n", "v" } },
 			{ "<leader>wa", group = "[A]utosession" },
