@@ -43,14 +43,13 @@ return {
 
 		-- Document existing key chains
 		spec = {
-			{ "<leader>c", group = "[C]ode", mode = { "n", "x" } },
-			{ "<leader>cd", group = "[D]AP", mode = { "n", "v" } },
-			{ "<leader>d", group = "[D]ocument" },
-			{ "<leader>r", group = "[R]ename" },
-			{ "<leader>s", group = "[S]earch" },
-			{ "<leader>w", group = "[W]orkspace" },
+			{ "<leader>c", group = "[C]ode", mode = { "n", "x" }, icons = { name = "nf-cod-code" } },
+			{ "<leader>b", group = "De[B]ug", mode = { "n", "v" }, icons = { name = "nf-cod-bug" } },
+			{ "<leader>d", group = "[D]ocument", icons = { name = "nf-md-file_document" } },
+			{ "<leader>r", group = "[R]ename", icons = { name = "nf-cod-replace" } },
+			{ "<leader>s", group = "[S]earch", icons = { name = "nf-cod-search" } },
+			{ "<leader>w", group = "[W]orkspace", icons = { name = "nf-md-desktop_mac" } },
 			{ "<leader>t", group = "[T]oggle", mode = { "n", "v" } },
-			{ "<leader>h", group = "Git [H]unk", mode = { "n", "v" } },
 			{ "<leader>i", group = "[I]ronRepl", mode = { "n", "v" } },
 			{ "<leader>wa", group = "[A]utosession" },
 			{ "<C-w>t", group = "[T]abs" },
