@@ -17,7 +17,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k" #"robbyrussell"
 [[ ! -f ~/dotfiles/p10k.zsh ]] || source ~/dotfiles/p10k.zsh
 
 # Set virtualenv delimiter
-typeset -g POWERLEVEL9K_VIRTUALENV_LEFT_DELIMITER="["
+typeset -g POWERLEVEL9K_VIRTUALENV_LEFT_DELIMITER="[🐍 "
 typeset -g POWERLEVEL9K_VIRTUALENV_RIGHT_DELIMITER="]"
 
 export DIRENV_LOG_FORMAT=""
@@ -40,9 +40,9 @@ plugins=(
     # poetry-env
     python
     ssh-agent
-    virtualenv
-    pyenv
-    virtualenv-autodetect
+    # virtualenv
+    # pyenv
+    autoswitch_virtualenv
     you-should-use
     zsh-bat
     zsh-syntax-highlighting
@@ -70,8 +70,7 @@ export PATH="${HOME}/.rbenv/bin:${PATH}" # Needed for Linux/WSL
 type -a rbenv > /dev/null && eval "$(rbenv init -)"
 
 # Load pyenv (to manage your Python versions)
-export ZSH_THEME_PYENV_NO_SYSTEM=true
-export ZSH_PYENV_VIRTUALENV=true
+export AUTOSWITCH_SILENT=1
 export PYENV_VIRTUALENV_DISABLE_PROMPT=0
 type -a pyenv > /dev/null && eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init - 2> /dev/null)"
 
