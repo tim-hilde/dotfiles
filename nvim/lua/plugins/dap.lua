@@ -7,14 +7,14 @@ return {
 		},
 		keys = {
 			{
-				"<leader>cdu",
+				"<leader>bu",
 				function()
 					require("dapui").toggle {}
 				end,
 				desc = "Dap UI",
 			},
 			{
-				"<leader>cde",
+				"<leader>be",
 				function()
 					require("dapui").eval()
 				end,
