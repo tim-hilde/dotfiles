@@ -17,7 +17,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k" #"robbyrussell"
 [[ ! -f ~/dotfiles/p10k.zsh ]] || source ~/dotfiles/p10k.zsh
 
 # Set virtualenv delimiter
-typeset -g POWERLEVEL9K_VIRTUALENV_LEFT_DELIMITER="[🐍 "
+typeset -g POWERLEVEL9K_VIRTUALENV_LEFT_DELIMITER="["
 typeset -g POWERLEVEL9K_VIRTUALENV_RIGHT_DELIMITER="]"
 
 export DIRENV_LOG_FORMAT=""
