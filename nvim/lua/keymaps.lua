@@ -196,3 +196,8 @@ end, { desc = "Next harpoon" })
 
 -- Toggle call hierachy
 vim.keymap.set("n", "<leader>ch", vim.lsp.buf.outgoing_calls, { desc = "[C]ode [H]ierarchy" })
+
+vim.keymap.del("n", "grr")
+vim.keymap.del("n", "grn")
+vim.keymap.del("n", "gri")
+vim.keymap.del("n", "gra")

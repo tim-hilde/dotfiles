@@ -83,5 +83,3 @@ vim.opt.sessionoptions = "blank,buffers,curdir,folds,globals,help,tabpages,termi
 vim.diagnostic.config {
 	virtual_text = true,
 }
-vim.opt.foldmethod = "expr"
--- vim.opt.foldexpr = "vim.lsp.foldexpr"

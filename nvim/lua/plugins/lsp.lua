@@ -70,7 +70,7 @@ return {
 						-- for LSP related items. It sets the mode, buffer and description for us each time.
 						local map = function(keys, func, desc, mode)
 							mode = mode or "n"
-							vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc, noremap = true })
+							vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 						end
 
 						-- Custom hover function to remove weird strings
@@ -158,7 +158,6 @@ return {
 								return
 							end
 
-							vim.opt.winborder = "rounded"
 							-- finally oprn the floating hover window and display the new contents just formatted in markdown format.
 							return util.open_floating_preview(contents, "markdown", config)
 						end
@@ -171,12 +170,14 @@ return {
 						--  To jump back, press <C-t>.
 						map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
 						map("g<c-d>", function()
-							vim.cmd "vsplit"
-							require("telescope.builtin").lsp_definitions()
+							-- vim.cmd "vsplit"
+							require("telescope.builtin").lsp_definitions { jump_type = "vsplit" }
 						end, "[G]oto [D]efinition (split)")
 
 						-- Find references for the word under your cursor.
-						map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
+						map("gr", function()
+							require("telescope.builtin").lsp_references { trim_text = true }
+						end, "[G]oto [R]eferences")
 
 						-- Jump to the implementation of the word under your cursor.
 						--  Useful when your language has ways of declaring types without an actual implementation.
