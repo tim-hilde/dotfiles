@@ -70,26 +70,10 @@ return {
 						-- for LSP related items. It sets the mode, buffer and description for us each time.
 						local map = function(keys, func, desc, mode)
 							mode = mode or "n"
-							vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
+							vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc, noremap = true })
 						end
 
 						-- Custom hover function to remove weird strings
-						local hover = function(_, result, ctx, config)
-							if not (result and result.contents) then
-								return vim.lsp.handlers.hover(_, result, ctx, config)
-							end
-							if type(result.contents) == "string" then
-								local s = string.gsub(result.contents or "", "&nbsp;", " ")
-								s = string.gsub(s, [[\\\n]], [[\n]])
-								result.contents = s
-								return vim.lsp.handlers.hover(_, result, ctx, config)
-							else
-								local s = string.gsub((result.contents or {}).value or "", "&nbsp;", " ")
-								s = string.gsub(s, "\\\n", "\n")
-								result.contents.value = s
-								return vim.lsp.handlers.hover(_, result, ctx, config)
-							end
-						end
 						local util = require "vim.lsp.util"
 
 						local function split_lines(value)
@@ -148,6 +132,7 @@ return {
 						-- The overwritten hover function for pyright fucking around.
 						local function hover(_, result, ctx, config)
 							config = config or {}
+							config.border = "rounded"
 							config.focus_id = ctx.method
 							if vim.api.nvim_get_current_buf() ~= ctx.bufnr then
 								-- Ignore result since buffer changed. This happens for slow language servers.
@@ -178,7 +163,7 @@ return {
 						end
 						-- Set the border style for the hover and signature help windows
 						vim.lsp.handlers["textDocument/hover"] = hover
-						vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.handlers.signature_help
+						vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.buf.signature_help
 
 						-- Jump to the definition of the word under your cursor.
 						--  This is where a variable was first declared, or where a function is defined, etc.
