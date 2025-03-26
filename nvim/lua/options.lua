@@ -76,3 +76,13 @@ vim.opt.inccommand = "split"
 
 -- save tab layout etc in session
 vim.opt.sessionoptions = "blank,buffers,curdir,folds,globals,help,tabpages,terminal,winsize,winpos,localoptions"
+
+-- make borders of pop ups round
+vim.o.winborder = "rounded"
+
+vim.diagnostic.config {
+	virtual_text = true,
+	virtual_lines = {
+		current_line = true,
+	},
+}

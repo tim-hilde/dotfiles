@@ -177,8 +177,8 @@ return {
 							return util.open_floating_preview(contents, "markdown", config)
 						end
 						-- Set the border style for the hover and signature help windows
-						vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(hover, { border = "rounded" })
-						vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
+						vim.lsp.handlers["textDocument/hover"] = hover
+						vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.handlers.signature_help
 
 						-- Jump to the definition of the word under your cursor.
 						--  This is where a variable was first declared, or where a function is defined, etc.
