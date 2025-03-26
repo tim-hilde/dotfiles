@@ -158,6 +158,7 @@ return {
 								return
 							end
 
+							vim.opt.winborder = "rounded"
 							-- finally oprn the floating hover window and display the new contents just formatted in markdown format.
 							return util.open_floating_preview(contents, "markdown", config)
 						end
