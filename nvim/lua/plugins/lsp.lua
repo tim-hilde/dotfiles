@@ -158,12 +158,24 @@ return {
 								return
 							end
 
-							print "asd"
 							-- finally oprn the floating hover window and display the new contents just formatted in markdown format.
 							return util.open_floating_preview(contents, "markdown", config)
 						end
+						local hover = vim.lsp.buf.hover
+						vim.lsp.buf.hover = function()
+							hover { border = "rounded" }
+						end
+
+						vim.keymap.set(
+							"n",
+							"<leader>h",
+							vim.lsp.buf.hover,
+							-- function() require("pretty_hover").hover() end,
+							{ desc = "[H]over documentation" }
+						)
+
 						-- Set the border style for the hover and signature help windows
-						vim.lsp.handlers["textDocument/hover"] = hover
+						-- vim.lsp.handlers["textDocument/hover"] = vim.lsp.buf.hover
 						vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.buf.signature_help
 
 						-- Jump to the definition of the word under your cursor.
