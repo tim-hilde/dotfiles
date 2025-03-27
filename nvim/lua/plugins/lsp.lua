@@ -130,7 +130,38 @@ return {
 						end
 
 						-- The overwritten hover function for pyright fucking around.
-						local function hover(_, result, ctx, config) end
+						local function hover(_, result, ctx, config)
+							config = config or {}
+							config.border = "rounded"
+							config.focus_id = ctx.method
+							if vim.api.nvim_get_current_buf() ~= ctx.bufnr then
+								-- Ignore result since buffer changed. This happens for slow language servers.
+								return
+							end
+
+							-- return nothing and print no info if no content
+							if not (result and result.contents) then
+								if config.silent ~= true then
+									vim.notify "No information available"
+								end
+								return
+							end
+
+							local contents ---@type string[]
+							contents = convert_input_to_markdown_lines(result.contents)
+
+							-- return nothing and print no info if no content
+							if vim.tbl_isempty(contents) then
+								if config.silent ~= true then
+									vim.notify "No information available"
+								end
+								return
+							end
+
+							print "asd"
+							-- finally oprn the floating hover window and display the new contents just formatted in markdown format.
+							return util.open_floating_preview(contents, "markdown", config)
+						end
 						-- Set the border style for the hover and signature help windows
 						vim.lsp.handlers["textDocument/hover"] = hover
 						vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.buf.signature_help
