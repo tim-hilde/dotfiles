@@ -65,6 +65,11 @@ return {
 		end
 
 		require("codecompanion").setup {
+			display = {
+				chat = {
+					start_in_insert_mode = true,
+				},
+			},
 			adapters = {
 				copilot = function()
 					return require("codecompanion.adapters").extend("copilot", {
