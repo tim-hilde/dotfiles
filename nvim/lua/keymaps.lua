@@ -129,6 +129,13 @@ vim.keymap.set({ "n" }, "<leader>tk", function()
 	require("lsp_signature").toggle_float_win()
 end, { silent = true, noremap = true, desc = "[t]oggle signature" })
 
+vim.keymap.set("", "<leader>tü", function()
+	vim.diagnostic.config {
+		virtual_lines = not vim.diagnostic.config().virtual_lines,
+		virtual_text = not vim.diagnostic.config().virtual_text,
+	}
+end, { desc = "Toggle diagnostic [l]ines" })
+
 -- BUILD SYSTEM
 vim.keymap.set("n", "<leader>cb", function()
 	vim.cmd [[update!]]
