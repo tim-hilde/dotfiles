@@ -161,7 +161,6 @@ return {
 							-- finally oprn the floating hover window and display the new contents just formatted in markdown format.
 							return util.open_floating_preview(contents, "markdown", config)
 						end
-						local hover = vim.lsp.buf.hover
 						vim.lsp.buf.hover = function()
 							hover { border = "rounded" }
 						end
