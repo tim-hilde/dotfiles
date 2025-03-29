@@ -125,16 +125,16 @@ vim.api.nvim_set_keymap("n", "<leader>tg", "<cmd>lua _lazygit_toggle()<CR>", { n
 vim.keymap.set("n", "<leader>tn", "<cmd>Telescope neoclip<CR>", { noremap = true, desc = "[T]oggle [n]eoclip" })
 
 -- LSP Signature
-vim.keymap.set({ "n" }, "<leader>tk", function()
+vim.keymap.set({ "n" }, "<leader>tl", function()
 	require("lsp_signature").toggle_float_win()
 end, { silent = true, noremap = true, desc = "[t]oggle signature" })
 
-vim.keymap.set("", "<leader>tü", function()
+vim.keymap.set("", "<leader>tl", function()
 	vim.diagnostic.config {
 		virtual_lines = not vim.diagnostic.config().virtual_lines,
 		virtual_text = not vim.diagnostic.config().virtual_text,
 	}
-end, { desc = "Toggle diagnostic [l]ines" })
+end, { desc = "[T]oggle diagnostic [l]ines" })
 
 -- BUILD SYSTEM
 vim.keymap.set("n", "<leader>cb", function()
@@ -165,9 +165,6 @@ vim.keymap.set("n", "<leader>ta", "<cmd>SessionToggleAutoSave<CR>", { desc = "[T
 
 -- IRON REPL
 vim.keymap.set("n", "<leader>ti", ":IronRepl<CR>", { desc = "[T]oggle [I]ronRepl" })
-
--- TODO comments
-vim.keymap.set("n", "<leader>tl", ":TodoQuickFix<CR>", { desc = "[T]oggle todo [l]ist" })
 
 -- OPEN links
 vim.keymap.set("n", "gx", "<esc>:URLOpenUnderCursor<cr>", { desc = "Go to link" })
