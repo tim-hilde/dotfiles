@@ -48,6 +48,7 @@
   "nvim-lspconfig": { "branch": "master", "commit": "85e0dd26b710e834a105d679200d01e326a3d2b0" },
   "nvim-neoclip.lua": { "branch": "main", "commit": "831a97c7697736411a05ff8b91e8798ea4c2d6fb" },
   "nvim-nio": { "branch": "master", "commit": "21f5324bfac14e22ba26553caf69ec76ae8a7662" },
+  "nvim-origami": { "branch": "main", "commit": "d7876eda1a89feaaffd216ebb485a9788e9126a9" },
   "nvim-puppeteer": { "branch": "main", "commit": "80cc06c65a5eea478f130839553044a197bf0dc4" },
   "nvim-regexplainer": { "branch": "main", "commit": "2ec38892e7ce36f0c58b478f3570936fa5bd11f1" },
   "nvim-rip-substitute": { "branch": "main", "commit": "1b5d78f3d69fcdf8e734114c665994ffe1672fde" },

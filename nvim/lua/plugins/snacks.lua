@@ -12,5 +12,6 @@ return {
 			},
 		},
 		bigfile = { enabled = true },
+		statuscolumn = { enabled = true },
 	},
 }
