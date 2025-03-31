@@ -125,7 +125,7 @@ vim.api.nvim_set_keymap("n", "<leader>tg", "<cmd>lua _lazygit_toggle()<CR>", { n
 vim.keymap.set("n", "<leader>tn", "<cmd>Telescope neoclip<CR>", { noremap = true, desc = "[T]oggle [n]eoclip" })
 
 -- LSP Signature
-vim.keymap.set({ "n" }, "<leader>tl", function()
+vim.keymap.set({ "n" }, "<leader>tk", function()
 	require("lsp_signature").toggle_float_win()
 end, { silent = true, noremap = true, desc = "[t]oggle signature" })
 

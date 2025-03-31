@@ -164,7 +164,7 @@ return {
 						end
 
 						vim.lsp.buf.hover = function()
-							hover { border = "rounded" }
+							vim.lsp.buf.hover { border = "rounded" }
 						end
 
 						vim.keymap.set(
