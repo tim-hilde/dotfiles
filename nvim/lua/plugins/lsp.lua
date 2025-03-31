@@ -26,9 +26,6 @@ return {
 
 			-- Allows extra capabilities provided by nvim-cmp
 			"hrsh7th/cmp-nvim-lsp",
-
-			-- Virtual type hits
-			"jubnzv/virtual-types.nvim",
 		},
 		config = function()
 			-- Brief aside: **What is LSP?**
@@ -75,8 +72,6 @@ return {
 							mode = mode or "n"
 							vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 						end
-
-						require("virtualtypes").on_attach()
 
 						-- Custom hover function to remove weird strings
 						local util = require "vim.lsp.util"
@@ -136,9 +131,10 @@ return {
 
 						-- The overwritten hover function for pyright fucking around.
 						local function hover(_, result, ctx, config)
+							local ms = require("vim.lsp.protocol").Methods
 							config = config or {}
 							config.border = "rounded"
-							config.focus_id = ctx.method
+							config.focus_id = ms.textDocument_hover
 							if vim.api.nvim_get_current_buf() ~= ctx.bufnr then
 								-- Ignore result since buffer changed. This happens for slow language servers.
 								return
@@ -268,6 +264,7 @@ return {
 				})
 			end
 
+			-- LSP servers and clients are able to communicate to each other what features they support.
 			-- LSP servers and clients are able to communicate to each other what features they support.
 			--  By default, Neovim doesn't support everything that is in the LSP specification.
 			--  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
