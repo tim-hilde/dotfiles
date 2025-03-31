@@ -60,9 +60,7 @@ return {
 			},
 			keymap = {
 				builtin = {
-					true,
-					["<M-?>"] = "toggle-help",
-
+					["<F1>"] = "toggle-help",
 					["<C-d>"] = "preview-page-down",
 					["<C-u>"] = "preview-page-up",
 				},
@@ -80,6 +78,8 @@ return {
 					["ctrl-v"] = actions.file_vsplit,
 					["ctrl-t"] = actions.file_tabedit,
 					["alt-q"] = actions.file_sel_to_qf,
+					["alt-i"] = actions.toggle_ignore,
+					["alt-."] = actions.toggle_hidden,
 				},
 			},
 			buffers = {
