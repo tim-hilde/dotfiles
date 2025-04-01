@@ -23,10 +23,10 @@ return {
 		"chrisgrieser/nvim-origami",
 		event = "VeryLazy",
 		opts = {
-			keepFoldsAcrossSessions = true,
+			keepFoldsAcrossSessions = false,
 			pauseFoldsOnSearch = true,
 			foldtextWithLineCount = {
-				enabled = false,
+				enabled = true,
 				template = "   %s lines", -- `%s` gets the number of folded lines
 			},
 			foldKeymaps = {
