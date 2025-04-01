@@ -163,14 +163,12 @@ return {
 							return util.open_floating_preview(contents, "markdown", config)
 						end
 
-						vim.lsp.buf.hover = function()
-							vim.lsp.buf.hover { border = "rounded" }
-						end
-
 						vim.keymap.set(
 							"n",
 							"<leader>h",
-							vim.lsp.buf.hover,
+							function()
+								vim.lsp.buf.hover { border = "rounded" }
+							end,
 							-- function() require("pretty_hover").hover() end,
 							{ desc = "[H]over documentation" }
 						)
