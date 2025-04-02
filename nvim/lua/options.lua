@@ -48,7 +48,7 @@ vim.opt.timeoutlen = 300 -- decativated due to error with mini.surround
 vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 30
+vim.opt.scrolloff = 20
 
 vim.cmd "set noexpandtab"
 vim.cmd "set tabstop=4"
