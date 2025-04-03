@@ -86,12 +86,12 @@ return {
 				vim.fn.sign_define("Dap" .. name, { text = sign[1], texthl = sign[2] or "DiagnosticInfo", linehl = sign[3], numhl = sign[3] })
 			end
 
-			-- setup dap config by VsCode launch.json file
-			local vscode = require "dap.ext.vscode"
-			local json = require "plenary.json"
-			vscode.json_decode = function(str)
-				return vim.json.decode(json.json_strip_comments(str))
-			end
+			-- -- setup dap config by VsCode launch.json file
+			-- local vscode = require "dap.ext.vscode"
+			-- local json = require "plenary.json"
+			-- vscode.json_decode = function(str)
+			-- 	return vim.json.decode(json.json_strip_comments(str))
+			-- end
 		end,
 	},
 	{
@@ -102,10 +102,11 @@ return {
 			"rcarriga/nvim-dap-ui",
 		},
 		config = function(_, opts)
+			require("dap").set_exception_breakpoints { "raised", "uncaught" }
 			local python_path = vim.fn.system("which python"):gsub("\n", "")
 			require("dap-python").setup(python_path)
 			require("dap-python").test_runner = "pytest"
-			require("dap").configurations.python = {
+			table.insert(require("dap").configurations.python, {
 				name = "Run pytest",
 				type = "python",
 				request = "launch",
@@ -116,7 +117,7 @@ return {
 				},
 				console = "integratedTerminal",
 				justMyCode = false,
-			}
+			})
 		end,
 	},
 }
