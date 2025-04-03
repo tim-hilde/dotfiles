@@ -105,6 +105,8 @@ return {
 			require("dap").set_exception_breakpoints { "raised", "uncaught" }
 			local python_path = vim.fn.system("which python"):gsub("\n", "")
 			require("dap-python").setup(python_path)
+
+			require("dap").configurations.python[1].justMyCode = false
 			require("dap-python").test_runner = "pytest"
 			table.insert(require("dap").configurations.python, {
 				name = "Run pytest",
