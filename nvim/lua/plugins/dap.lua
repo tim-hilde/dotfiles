@@ -106,7 +106,7 @@ return {
 			require("dap-python").setup(python_path)
 
 			require("dap").set_exception_breakpoints { "raised", "uncaught" }
-			require("dap").configurations.python[1].justMyCode = false
+			require("dap").configurations.python[1].justMyCode = true
 			require("dap-python").test_runner = "pytest"
 			table.insert(require("dap").configurations.python, {
 				name = "Run pytest",
