@@ -53,7 +53,7 @@ return {
 			},
 		},
 		snippets = {
-			preset = "default | luasnip",
+			preset = "default",
 		},
 		sources = {
 			default = { "lsp", "path", "snippets", "buffer", "git" },
