@@ -5,6 +5,7 @@ return {
 		"rafamadriz/friendly-snippets",
 		"Kaiser-Yang/blink-cmp-git",
 		"L3MON4D3/LuaSnip",
+		"catpucchin/nvim",
 	},
 
 	version = "*",
@@ -20,11 +21,12 @@ return {
 
 		appearance = {
 			nerd_font_variant = "mono",
+			use_nvim_cmp_as_default = false,
 		},
 
 		completion = {
 			menu = {
-				border = "rounded",
+				-- border = "rounded",
 				draw = {
 					columns = {
 						{
@@ -41,15 +43,15 @@ return {
 				},
 			},
 			documentation = {
-				auto_show = false,
+				auto_show = true,
 				window = {
-					border = "rounded",
+					-- border = "rounded",
 				},
 			},
 		},
 		signature = {
 			window = {
-				border = "rounded",
+				-- border = "rounded",
 			},
 		},
 		snippets = {
