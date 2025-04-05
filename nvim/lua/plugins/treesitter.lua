@@ -109,4 +109,8 @@ return {
 		-- Colored paranthesis
 		"HiPhish/rainbow-delimiters.nvim",
 	},
+	{
+		"fladson/vim-kitty",
+		ft = "kitty",
+	},
 }
