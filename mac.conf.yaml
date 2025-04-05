@@ -61,6 +61,11 @@
       path: vectorcode
       relative: true
       create: true
+    $HOME/.config/sesh:
+      path: sesh
+      relative: true
+      create: true
+
 - shell:
     - command: sudo chsh -s $(which zsh) $USER
       description: Make zsh default shell

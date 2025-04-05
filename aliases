@@ -5,9 +5,6 @@ alias speedtest="curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/m
 # nvim
 alias nv=nvim
 
-# tmux
-alias "tmux new-session"="tmux new-session \; send-keys 'nvim' C-m \; neww \; neww -n 'lazygit' \; selectw -t 1"
-
 # eza
 alias ls="eza --color always --icons"
 alias ll="eza --color always --icons -1labh -s name --group-directories-first"
