@@ -32,6 +32,8 @@ vim.keymap.set("n", "<leader>l", function()
 	require("quicker").toggle { loclist = false }
 end, { desc = "Open qlist" })
 
+vim.keymap.set("n", "<C-T-j>", ":cnext<CR>", { desc = "Next quickfix item" })
+vim.keymap.set("n", "<C-T-k>", ":cprevious<CR>", { desc = "Previous quickfix item" })
 -- Hover Documentation
 vim.keymap.set(
 	"n",
