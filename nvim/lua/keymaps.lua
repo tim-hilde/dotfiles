@@ -104,13 +104,14 @@ wk.add {
 	{ "<leader>tt", "<cmd>ToggleTerm<CR>", desc = "[T]oggle [t]erminal" },
 }
 
+-- Lazygit
 local Terminal = require("toggleterm.terminal").Terminal
 local lazygit = Terminal:new {
 	cmd = "lazygit --use-config-file=$HOME/dotfiles/lazygit/config.yml",
 	dir = "git_dir",
 	direction = "float",
 	float_opts = {
-		border = "double",
+		border = "rounded",
 	},
 	hidden = true,
 }
@@ -120,6 +121,22 @@ function _lazygit_toggle()
 end
 
 vim.api.nvim_set_keymap("n", "<leader>tg", "<cmd>lua _lazygit_toggle()<CR>", { noremap = true, silent = true, desc = "[T]oggle lazy[g]it" })
+
+-- Lazydocker
+local lazydocker = Terminal:new {
+	cmd = "lazydocker",
+	direction = "float",
+	float_opts = {
+		border = "rounded",
+	},
+	hidden = true,
+}
+
+function _lazydocker_toggle()
+	lazydocker:toggle()
+end
+
+vim.api.nvim_set_keymap("n", "<leader>td", "<cmd>lua _lazydocker_toggle()<CR>", { noremap = true, silent = true, desc = "[T]oggle lazy[d]ocker" })
 
 -- Clipboard
 vim.keymap.set("n", "<leader>tn", "<cmd>Telescope neoclip<CR>", { noremap = true, desc = "[T]oggle [n]eoclip" })
