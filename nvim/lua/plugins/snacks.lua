@@ -13,5 +13,8 @@ return {
 		},
 		bigfile = { enabled = true },
 		statuscolumn = { enabled = true },
+		picker = {
+			enabled = true,
+		},
 	},
 }
