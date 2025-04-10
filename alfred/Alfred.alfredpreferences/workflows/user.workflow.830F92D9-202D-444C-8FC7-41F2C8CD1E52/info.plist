@@ -5471,6 +5471,11 @@ echo -n "$csl_name"</string>
 			<integer>1</integer>
 		</dict>
 		<dict>
+			<key>config</key>
+			<dict>
+				<key>unstackview</key>
+				<false/>
+			</dict>
 			<key>type</key>
 			<string>alfred.workflow.utility.hidealfred</string>
 			<key>uid</key>
@@ -7197,6 +7202,11 @@ man -t pandoc | open -f -a Preview</string>
 			<integer>2</integer>
 		</dict>
 		<dict>
+			<key>config</key>
+			<dict>
+				<key>unstackview</key>
+				<false/>
+			</dict>
 			<key>type</key>
 			<string>alfred.workflow.utility.hidealfred</string>
 			<key>uid</key>
@@ -8751,7 +8761,7 @@ Anticipatory Word Count</string>
 		<key>reader_extensions</key>
 		<string>+hard_line_breaks+lists_without_preceding_blankline+mark</string>
 		<key>reference_docx_path</key>
-		<string>/Users/tim/Documents/Wissensmanagement/Pandoc/template_rmd-minion.docx</string>
+		<string></string>
 		<key>reference_odt_path</key>
 		<string></string>
 		<key>reference_pptx_path</key>
