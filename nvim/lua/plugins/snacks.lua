@@ -20,11 +20,13 @@ return {
 				input = {
 					keys = {
 						["<c-h>"] = { "toggle_hidden", mode = { "i", "n" } },
+						["<c-i>"] = "toggle_ignored",
 					},
 				},
 				list = {
 					keys = {
 						["<c-h>"] = { "toggle_hidden", mode = { "i", "n" } },
+						["<c-i>"] = "toggle_ignored",
 					},
 				},
 			},
