@@ -15,18 +15,18 @@ return {
 		statuscolumn = { enabled = true },
 		picker = {
 			enabled = true,
-			layout = { preset = "telescope" },
+			-- layout = { preset = "telescope" },
 			win = {
 				input = {
 					keys = {
 						["<c-h>"] = { "toggle_hidden", mode = { "i", "n" } },
-						["<c-i>"] = "toggle_ignored",
+						["<c-o>"] = { "toggle_ignored", mode = { "i", "n" } },
 					},
 				},
 				list = {
 					keys = {
 						["<c-h>"] = { "toggle_hidden", mode = { "i", "n" } },
-						["<c-i>"] = "toggle_ignored",
+						["<c-o>"] = { "toggle_ignored", mode = { "i", "n" } },
 					},
 				},
 			},
