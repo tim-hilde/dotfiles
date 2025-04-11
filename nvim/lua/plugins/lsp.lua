@@ -181,7 +181,10 @@ return {
 						-- Jump to the definition of the word under your cursor.
 						--  This is where a variable was first declared, or where a function is defined, etc.
 						--  To jump back, press <C-t>.
-						map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
+						map("gd", function()
+							Snacks.picker.lsp_definitions()
+						end, "[G]oto [D]efinition")
+
 						map("g<c-d>", function()
 							vim.cmd "vsplit"
 							require("telescope.builtin").lsp_definitions()
@@ -189,25 +192,33 @@ return {
 
 						-- Find references for the word under your cursor.
 						map("gr", function()
-							require("telescope.builtin").lsp_references { trim_text = true }
+							Snacks.picker.lsp_references()
 						end, "[G]oto [R]eferences")
 
 						-- Jump to the implementation of the word under your cursor.
 						--  Useful when your language has ways of declaring types without an actual implementation.
-						map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
+						map("gI", function()
+							Snacks.picker.lsp_implementations()
+						end, "[G]oto [I]mplementation")
 
 						-- Jump to the type of the word under your cursor.
 						--  Useful when you're not sure what type a variable is and you want to see
 						--  the definition of its *type*, not where it was *defined*.
-						map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
+						map("<leader>D", function()
+							Snacks.picker.lsp_type_definitions()
+						end, "Type [D]efinition")
 
 						-- Fuzzy find all the symbols in your current document.
 						--  Symbols are things like variables, functions, types, etc.
-						map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
+						map("<leader>ds", function()
+							Snacks.picker.lsp_symbols()
+						end, "[D]ocument [S]ymbols")
 
 						-- Fuzzy find all the symbols in your current workspace.
 						--  Similar to document symbols, except searches over your entire project.
-						map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
+						map("<leader>ws", function()
+							Snacks.picker.lsp_workspace_symbols()
+						end, "[W]orkspace [S]ymbols")
 
 						-- Rename the variable under your cursor.
 						--  Most Language Servers support renaming across files, etc.
@@ -219,7 +230,9 @@ return {
 
 						-- WARN: This is not Goto Definition, this is Goto Declaration.
 						--  For example, in C this would take you to the header.
-						map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+						map("gD", function()
+							Snacks.picker.lsp_declarations()
+						end, "[G]oto [D]eclaration")
 
 						-- The following two autocommands are used to highlight references of the
 						-- word under your cursor when your cursor rests there for a little while.
@@ -392,6 +405,9 @@ return {
 	{
 		-- preview code actions
 		"aznhe21/actions-preview.nvim",
+		opts = {
+			backend = "snacks",
+		},
 	},
 	{
 		-- Call tree hierarchy

@@ -110,41 +110,5 @@ return {
 			end,
 			desc = "[S]earch [N]eovim files",
 		},
-		{
-			"gd",
-			function()
-				Snacks.picker.lsp_definitions()
-			end,
-			desc = "[G]oto [D]efinition",
-		},
-		{
-			"gD",
-			function()
-				Snacks.picker.lsp_declarations()
-			end,
-			desc = "[G]oto [D]eclaration",
-		},
-		{
-			"gr",
-			function()
-				Snacks.picker.lsp_references()
-			end,
-			nowait = true,
-			desc = "[G]oto [R]eferences",
-		},
-		{
-			"gI",
-			function()
-				Snacks.picker.lsp_implementations()
-			end,
-			desc = "[G]oto [I]mplementation",
-		},
-		{
-			"<leader>D",
-			function()
-				Snacks.picker.lsp_type_definitions()
-			end,
-			desc = "Type [D]efinition",
-		},
 	},
 }
