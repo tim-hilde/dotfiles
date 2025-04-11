@@ -187,7 +187,7 @@ return {
 
 						map("g<c-d>", function()
 							vim.cmd "vsplit"
-							require("telescope.builtin").lsp_definitions()
+							Snacks.picker.lsp_definitions()
 						end, "[G]oto [D]efinition (split)")
 
 						-- Find references for the word under your cursor.

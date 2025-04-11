@@ -16,6 +16,18 @@ return {
 		picker = {
 			enabled = true,
 			layout = { preset = "telescope" },
+			win = {
+				input = {
+					keys = {
+						["<c-h>"] = { "toggle_hidden", mode = { "i", "n" } },
+					},
+				},
+				list = {
+					keys = {
+						["<c-h>"] = { "toggle_hidden", mode = { "i", "n" } },
+					},
+				},
+			},
 		},
 	},
 	keys = {
@@ -109,6 +121,13 @@ return {
 				Snacks.picker.files { cwd = vim.fn.stdpath "config" }
 			end,
 			desc = "[S]earch [N]eovim files",
+		},
+		{
+			"<leader>sy",
+			function()
+				require("yaml-companion").open_ui_select()
+			end,
+			desc = "[S]earch [y]aml schemas",
 		},
 	},
 }

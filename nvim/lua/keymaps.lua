@@ -97,9 +97,16 @@ vim.keymap.set("n", "<leader>tz", function()
 		},
 	}
 end, { desc = "[T]oggle [Z]enMode" })
+
 -- Search TODOs
 wk.add {
-	{ "<leader>st", "<cmd>TodoTelescope<CR>", desc = "[S]earch [T]ODOS" },
+	{
+		"<leader>st",
+		function()
+			Snacks.picker.todo_comments { keywords = { "TODO", "FIX", "FIXME" } }
+		end,
+		desc = "[S]earch [T]ODOS",
+	},
 }
 
 -- Toggle terminal
