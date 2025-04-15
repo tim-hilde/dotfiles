@@ -1,35 +1,35 @@
 # Get External IP / Internet Speed
-alias myip="curl https://ipinfo.io/ip" # or /ip for plain-text ip
-alias speedtest="curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -"
+myip() curl https://ipinfo.io/ip # or /ip for plain-text ip
+speedtest() curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -
 
 # nvim
-alias nv=nvim
+nv() nvim
 
 # eza
-alias ls="eza --color always --icons"
-alias ll="eza --color always --icons -1labh -s name --group-directories-first"
+ls() eza --color always --icons
+ll() eza --color always --icons -1labh -s name --group-directories-first
 
 ## tree
-alias tree="eza --tree"
+tree() eza --tree
 
 # zoxide
-alias cd=z
+cd() z
 
 # open karabiner
-alias karabiner="cd ~/dotfiles/karabiner/assets/complex_modifications/"
+karabiner() cd ~/dotfiles/karabiner/assets/complex_modifications/
 
 # kitty ssh
-alias s="kitten ssh"
+s() kitten ssh
 
 # skhd / yabai
-alias skhdrc="nvim ~/dotfiles/skhd/skhdrc"
-alias yabairc="nvim ~/dotfiles/yabai/yabairc"
+skhdrc() nvim ~/dotfiles/skhd/skhdrc
+yabairc() nvim ~/dotfiles/yabai/yabairc
 
 # lazygit
-alias lg="lazygit --use-config-file=$HOME/dotfiles/lazygit/config.yml"
+lg() lazygit --use-config-file=$HOME/dotfiles/lazygit/config.yml
 
 # lazydocker
-alias lzd="lazydocker"
+lzd() lazydocker
 
 # set env variables for docker/gcloud
 function set_gcloud_env() {
