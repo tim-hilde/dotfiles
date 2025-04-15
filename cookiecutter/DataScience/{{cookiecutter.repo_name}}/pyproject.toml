@@ -32,6 +32,7 @@ dev = [
 
 [tool.uv]
 default-groups = "all"
+package = true
 
 [tool.ruff]
 extend-include = ["*.ipynb"]
@@ -59,3 +60,7 @@ ignore = []
 
 [tool.ruff.format]
 indent-style = "tab"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
