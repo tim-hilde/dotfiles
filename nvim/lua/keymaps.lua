@@ -197,33 +197,25 @@ vim.keymap.set("n", "<leader>ti", ":IronRepl<CR>", { desc = "[T]oggle [I]ronRepl
 vim.keymap.set("n", "gx", "<esc>:URLOpenUnderCursor<cr>", { desc = "Go to link" })
 
 -- Harpoon
-vim.keymap.set("n", "<leader>px", function()
+vim.keymap.set("n", "<leader><c-h>", function()
 	require("harpoon"):list():add()
 end, { desc = "Add to harpoon" })
-vim.keymap.set("n", "<leader>pm", function()
+vim.keymap.set("n", "<leader>H", function()
 	require("harpoon").ui:toggle_quick_menu(require("harpoon"):list())
-end, { desc = "Harpoon marks" })
+end, { desc = "Harpoon quick menu" })
 
-vim.keymap.set("n", "<leader>ph", function()
+vim.keymap.set("n", "<leader>1", function()
 	require("harpoon"):list():select(1)
 end, { desc = "Harpoon 1" })
-vim.keymap.set("n", "<leader>pj", function()
+vim.keymap.set("n", "<leader>2", function()
 	require("harpoon"):list():select(2)
 end, { desc = "Harpoon 2" })
-vim.keymap.set("n", "<leader>pk", function()
+vim.keymap.set("n", "<leader>3", function()
 	require("harpoon"):list():select(3)
 end, { desc = "Harpoon 3" })
-vim.keymap.set("n", "<leader>pl", function()
+vim.keymap.set("n", "<leader>4", function()
 	require("harpoon"):list():select(4)
 end, { desc = "Harpoon 4" })
-
--- Toggle previous & next buffers stored within Harpoon list
-vim.keymap.set("n", "<leader>pp", function()
-	require("harpoon"):list():prev()
-end, { desc = "Previous harpoon" })
-vim.keymap.set("n", "<leader>pn", function()
-	require("harpoon"):list():next()
-end, { desc = "Next harpoon" })
 
 -- Toggle call hierachy
 vim.keymap.set("n", "<leader>ch", vim.lsp.buf.outgoing_calls, { desc = "[C]ode [H]ierarchy" })
