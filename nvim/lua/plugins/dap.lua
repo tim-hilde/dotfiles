@@ -118,7 +118,7 @@ return {
 					"-v",
 				},
 				console = "integratedTerminal",
-				justMyCode = true,
+				justMyCode = false,
 			})
 		end,
 	},
