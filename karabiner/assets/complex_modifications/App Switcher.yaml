@@ -134,7 +134,7 @@ rules:
               value: false
           - set_notification_message:
               id: leader-notice
-      # [P]DF Expert
+      # Activity Monitor
       - type: basic
         from:
           key_code: p
@@ -143,7 +143,7 @@ rules:
             name: LEADER_ACTIVE
             value: true
         to:
-          - shell_command: open -a 'PDF Expert'
+          - shell_command: open -a 'Activity Monitor'
           - set_variable:
               name: LEADER_ACTIVE
               value: false
