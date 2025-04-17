@@ -4,5 +4,11 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		"MunifTanjim/nui.nvim",
 	},
-	opts = {},
+	opts = {
+		popup = {
+			border = {
+				style = "rounded",
+			},
+		},
+	},
 }
