@@ -2,7 +2,13 @@
 name = "{{cookiecutter.repo_name}}"
 version = "0.1.0"
 description = "{{cookiecutter.description}}"
-authors = ["{{cookiecutter.authors}} <{{cookiecutter.mail}}>"]
+authors = [
+  {% for author, details in cookiecutter.authors|dictsort %}
+    {
+      name= "{{details.name}}",
+      email= "<{{details.email}}>"
+    }
+  {% endfor %}
 readme = "readme.md"
 
 requires-python = ">=3.10"

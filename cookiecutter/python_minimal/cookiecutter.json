@@ -1,8 +1,11 @@
 {
-	"repo_name": "new_project",
+    "repo_name": "new_project",
     "package_name": "{{cookiecutter.repo_name}}",
-    "authors": "Tim Hildebrandt",
-    "mail": "44113468+tim-hilde@users.noreply.github.com",
+    "authors": {
+        "author": {
+            "name": "Tim Hildebrandt",
+            "email": "44113468+tim-hilde@users.noreply.github.com"
+        }
+    },
     "description": ""
-
 }
