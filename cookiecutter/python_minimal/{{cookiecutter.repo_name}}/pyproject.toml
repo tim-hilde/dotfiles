@@ -2,7 +2,11 @@
 name = "{{cookiecutter.repo_name}}"
 version = "0.1.0"
 description = "{{cookiecutter.description}}"
-authors = ["{{cookiecutter.authors}} <{{cookiecutter.mail}}>"]
+authors = [
+{% for i in range(1, cookiecutter.author_count|int + 1) %}
+  {name="{{ cookiecutter['author' ~ i ~ '_name'] }}", email="{{ cookiecutter['author' ~ i ~ '_email'] }}"}{% if not loop.last %},{% endif %}
+{% endfor %}
+]
 readme = "readme.md"
 
 requires-python = ">=3.10"
