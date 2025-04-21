@@ -1,15 +1,22 @@
 {
-    "repo_name": "new_project",
-    "package_name": "{{cookiecutter.repo_name}}",
-    "author_count": 1,
-    "_copy_without_render": [
-        "*.toml"
-    ],
-    "_extensions": [
-        "cookiecutter.extensions.JsonifyExtension"
-    ],
-    "author1_name": "Tim Hildebrandt",
-    "author1_email": "44113468+tim-hilde@users.noreply.github.com",
-    "_author_loop": "{% for i in range(2, cookiecutter.author_count|int + 1) %}\"author{{ i }}_name\": \"Author {{ i }} Name\",\n\"author{{ i }}_email\": \"author{{ i }}@example.com\",\n{% endfor %}",
-    "description": ""
+  "repo_name": "new_project",
+  "package_name": "{{cookiecutter.repo_name}}",
+  "description": "",
+  "authors": [
+    {
+      "name": "Tim Hildebrandt",
+      "email": "44113468+tim-hilde@users.noreply.github.com"
+    }
+  ],
+  "_copy_without_render": [
+    "*.html",
+    "docs/*.md"
+  ],
+  "_extensions": [
+    "cookiecutter.extensions.UUIDExtension"
+  ],
+  "add_another_author": [
+    "yes",
+    "no"
+  ]
 }
