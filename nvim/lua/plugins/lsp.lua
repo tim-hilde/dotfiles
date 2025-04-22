@@ -406,7 +406,8 @@ return {
 		-- preview code actions
 		"aznhe21/actions-preview.nvim",
 		opts = {
-			backend = "snacks",
+			backend = { "snacks" },
+			---@type snacks.picker.Config
 			snacks = {
 				layout = { preset = "dropdown" },
 			},
