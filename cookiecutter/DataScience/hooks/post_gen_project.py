@@ -1,3 +1,0 @@
-#!/bin/zsh
-
-uv sync

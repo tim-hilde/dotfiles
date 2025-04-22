@@ -3,9 +3,7 @@ name = "{{cookiecutter.repo_name}}"
 version = "0.1.0"
 description = "{{cookiecutter.description}}"
 authors = [
-{% for author in cookiecutter.authors %}
-  {name = "{{ author.name }}", email = "{{ author.email }}"}{% if not loop.last %},{% endif %}
-{% endfor %}
+  { name = "Tim Hildebrandt", email = "44113468+tim-hilde@users.noreply.github.com" },
 ]
 readme = "readme.md"
 
