@@ -93,6 +93,12 @@ return {
 							description = "Run VectorCode to retrieve the project context.",
 							callback = require("vectorcode.integrations").codecompanion.chat.make_tool(),
 						},
+						mcp = {
+							callback = function()
+								return require "mcphub.extensions.codecompanion"
+							end,
+							description = "Call tools and resources from the MCP Servers",
+						},
 					},
 				},
 				inline = {
