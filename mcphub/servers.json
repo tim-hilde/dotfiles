@@ -1,19 +1,16 @@
 {
   "nativeMCPServers": {
     "neovim": {
-      "disabled_prompts": [
-        "parrot"
-      ],
       "disabled_tools": [
         "delete_item",
         "execute_command",
         "execute_lua",
-        "list_directory",
         "move_item",
-        "read_file",
         "replace_in_file",
-        "write_file",
-        "find_files"
+        "write_file"
+      ],
+      "disabled_prompts": [
+        "parrot"
       ]
     }
   },
