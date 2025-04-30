@@ -3,7 +3,7 @@ return {
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 	},
-	cmd = "MCPHub",
+	-- cmd = "MCPHub",
 	build = "npm install -g mcp-hub@latest",
 	opts = {
 		auto_approve = true,
