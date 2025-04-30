@@ -1,4 +1,7 @@
 {
+  "mcpServers": [
+    
+  ],
   "nativeMCPServers": {
     "neovim": {
       "disabled_tools": [
@@ -12,7 +15,11 @@
       "disabled_prompts": [
         "parrot"
       ]
+    },
+    "mcphub": {
+      "disabled_tools": [
+        "toggle_mcp_server"
+      ]
     }
-  },
-  "mcpServers": []
+  }
 }
