@@ -1,7 +1,4 @@
 {
-  "mcpServers": [
-    
-  ],
   "nativeMCPServers": {
     "neovim": {
       "disabled_tools": [
@@ -20,6 +17,15 @@
       "disabled_tools": [
         "toggle_mcp_server"
       ]
+    }
+  },
+  "mcpServers": {
+    "vectorcode-mcp-server": {
+      "command": "vectorcode-mcp-server",
+      "args": [
+        
+      ],
+      "disabled": false
     }
   }
 }
