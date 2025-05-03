@@ -5,9 +5,18 @@ repo_name:
 
 package_name:
   type: str
-  help: What is your Python module name?
+  help: What is the name of the python module?
   placeholder: "{{repo_name}}"
 
 description:
   type: str
   help: How would you describe your project?
+
+project_authors:
+  multiline: true
+  type: yaml
+  help: Enter the email and name of all project authors.
+  default:
+    Tim:
+      full_name: Tim Hildebrandt
+      email: 44113468+tim-hilde@users.noreply.github.com

@@ -3,7 +3,9 @@ name = "{{repo_name}}"
 version = "0.1.0"
 description = "{{description}}"
 authors = [
-  { name = "Tim Hildebrandt", email = "44113468+tim-hilde@users.noreply.github.com" },
+ {% for author in project_authors -%}
+  { name = "{{author.full_name}}", email = "{{author.email}}"},
+  {%- endfor %}
 ]
 readme = "readme.md"
 
