@@ -18,5 +18,9 @@ project_authors:
   help: Enter the email and name of all project authors.
   default:
     Tim:
-      full_name: Tim Hildebrandt
+      name: Tim Hildebrandt
       email: 44113468+tim-hilde@users.noreply.github.com
+
+_tasks:
+  - command: "git init"
+    working_directory: "{{repo_name}}"

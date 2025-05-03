@@ -3,8 +3,8 @@ name = "{{repo_name}}"
 version = "0.1.0"
 description = "{{description}}"
 authors = [
- {% for author in project_authors -%}
-  { name = "{{author.full_name}}", email = "{{author.email}}"},
+ {%- for _, author in project_authors.items() %}
+  { name = "{{author.name}}", email = "{{author.email}}"},
   {%- endfor %}
 ]
 readme = "readme.md"
