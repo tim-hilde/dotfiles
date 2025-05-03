@@ -1,5 +1,0 @@
-{
-  "repo_name": "new_project",
-  "package_name": "{{cookiecutter.repo_name}}",
-  "description": "",
-}
