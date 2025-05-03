@@ -1,5 +1,13 @@
 # Create new project
 
+[Documentation](https://copier.readthedocs.io/en/stable/)
+
 ```sh
-copier copy gh:tim_hilde/dotfiles/cookiecutter/DataScience . --trust
+copier copy gh:tim_hilde/dotfiles/copier/python . --trust
+```
+
+# Update project
+
+```sh
+copier update gh:tim_hilde/dotfiles/copier/python . --trust
 ```

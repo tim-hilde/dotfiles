@@ -10,9 +10,9 @@ matches:
     - trigger: "!fzf"
       replace: fzf --preview "'bat --color=always {}'" --preview-window=right,60% --layout=reverse --height=80%
 
-    # Cookiecutter data science
-    - trigger: "!copier datascience"
-      replace: "copier copy ~/dotfiles/cookiecutter/DataScience . --trust"
+    # Copier python
+    - trigger: "!copier python"
+      replace: "copier copy ~/dotfiles/copier/python . --trust"
 
     # Cookiecutter minimal
     # - trigger: "!cookie minimal"

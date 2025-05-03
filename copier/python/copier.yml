@@ -6,7 +6,7 @@ repo_name:
 package_name:
   type: str
   help: What is the name of the python module?
-  placeholder: "{{repo_name}}"
+  default: "{{repo_name}}"
 
 description:
   type: str
