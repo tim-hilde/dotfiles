@@ -12,7 +12,7 @@ matches:
 
     # Cookiecutter data science
     - trigger: "!copier datascience"
-      replace: "copier copy ~/dotfiles/cookiecutter/DataScience ."
+      replace: "copier copy ~/dotfiles/cookiecutter/DataScience . --trust"
 
     # Cookiecutter minimal
     # - trigger: "!cookie minimal"
