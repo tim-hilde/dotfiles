@@ -22,14 +22,17 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+  "debugpy~=1.8.8",
   "ipdb~=0.13.13",
   "ipykernel~=6.29.5",
   "jupyter~=1.0.0",
+  "mypy>=1.15.0",
   "notebook~=7.2.1",
+  "pre-commit>=4.2.0",
   "pylint~=3.2.5",
   "pytest~=7.4.2",
-  "ruff~=0.5.0",
-  "debugpy~=1.8.8",
+  "ruff~=0.11.0",
+  "mkdocs-material~=9.0.0",
 ]
 
 [tool.uv]
@@ -58,7 +61,10 @@ select = [
   "SIM",
   "W",
 ]
-ignore = []
+ignore = ["D104", "D100", "E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "PLR2004"]
 
 [tool.ruff.format]
 indent-style = "tab"

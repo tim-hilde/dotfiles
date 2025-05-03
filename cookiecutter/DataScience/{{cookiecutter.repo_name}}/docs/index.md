@@ -1,14 +1,16 @@
-# About this project
+# {{cookiecutter.package_name}} Docs
+
+## About this project
 
 [![Copier](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/copier-org/copier/master/img/badge/badge-black.json)](https://github.com/copier-org/copier)
 
 {{cookiecutter.description}}
 
-# Getting started
+## Getting started
 
-## Installation
+### Installation
 
-### 1. Install uv
+#### 1. Install uv
 
 ```sh
 pipx install uv
@@ -16,15 +18,17 @@ pipx install uv
 pip install uv
 ```
 
-### 2. Install package
+#### 2. Install package
 
 ```sh
 uv sync
 ```
 
-# General documentation
+### Setup local documentation
 
-## `data` vs `static` directories
+## General documentation
+
+### `data` vs `static` directories
 
 The `data` directory is for storing raw data, processed data (produced by this code but not final) and output data.
 The contents of these folders should not be tracked by git,

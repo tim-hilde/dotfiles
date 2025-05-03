@@ -1,0 +1,19 @@
+---
+site_name: {{cookiecutter.package_name}}
+site_description: '{{cookiecutter.package_name}} Documentation'
+copyright: ''
+
+nav:
+- 'Home': 'index.md'
+
+theme:
+  name: 'material'
+  language: en
+  features:
+   - navigation.top
+   - navigation.tabs
+   - navigation.sections
+   - navigation.expand
+   - navigation.footer
+   - navigation.tertiary
+   - page.toc
