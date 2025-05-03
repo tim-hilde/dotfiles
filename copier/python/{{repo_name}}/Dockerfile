@@ -23,7 +23,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 	--mount=type=bind,source=pyproject.toml,target=pyproject.toml \
 	uv sync --frozen --no-install-project --no-dev
 
-COPY ./{{cookiecutter.package_name}} /app/{{cookiecutter.package_name}}/
+COPY ./{{package_name}} /app/{{package_name}}/
 COPY ./static /app/static/
 
 RUN --mount=type=cache,target=/root/.cache/uv \

@@ -1,6 +1,6 @@
 ---
-site_name: {{cookiecutter.package_name}}
-site_description: '{{cookiecutter.package_name}} Documentation'
+site_name: {{repo_name}}
+site_description: '{{repo_name}} Documentation'
 copyright: ''
 
 nav:

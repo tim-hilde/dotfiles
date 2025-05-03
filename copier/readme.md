@@ -9,5 +9,5 @@ copier copy gh:tim_hilde/dotfiles/copier/python . --trust
 # Update project
 
 ```sh
-copier update gh:tim_hilde/dotfiles/copier/python . --trust
+copier update --trust
 ```
