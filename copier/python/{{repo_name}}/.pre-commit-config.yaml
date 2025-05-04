@@ -1,21 +1,19 @@
+---
 # .pre-commit-config.yaml
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
+    # Testing valid python code
     rev: v4.0.1
     hooks:
-      - id: check-ast # Testing valid python code
+      - id: check-ast
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.11.0  # Use the latest version available
+    rev: v1.11.0
     hooks:
-      - id: mypy # Testing valid python static types code
+      # Testing valid python static types code
+      - id: mypy
         args: [--ignore-missing-imports, --install-types, --non-interactive]
-  # - repo: https://github.com/python-poetry/poetry
-  #   rev: '2.0.1'
-  #   hooks:
-  #     - id: poetry-check
-  #     - id: poetry-lock
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: '0.6.9'
+    rev: '0.7.2'
     hooks:
       - id: uv-lock
   - repo: https://github.com/astral-sh/ruff-pre-commit
@@ -24,6 +22,6 @@ repos:
     hooks:
       # run the linter
       - id: ruff
-        args: [--extend-select, I, --fix ]
+        args: [--extend-select, I, --fix]
       # Run the formatter.
       - id: ruff-format

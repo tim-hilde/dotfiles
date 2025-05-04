@@ -1,5 +1,5 @@
 ---
-name: basic CI
+name: Build and Check MkDocs Documentation
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
       - [main, dev]
 
 jobs:
-  build-and-run-pytest:
+  build-docs:
     runs-on: ubuntu-latest
     # INFO: When using self-hosted runners, mind the cache issue of uv
     # https://docs.astral.sh/uv/guides/integration/github/#caching
@@ -15,8 +15,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - uses: pre-commit/action@v3.0.1
 
       - name: Install uv
         uses: astral-sh/setup-uv@v5
@@ -33,5 +31,12 @@ jobs:
       - name: Install packages
         run: uv sync --frozen
 
-      - name: Run tests
-        run: uv run pytest -v .
+      - name: Build documentation
+        run: uv run mkdocs build
+
+      - name: Verify documentation build
+        run: |
+          if [ ! -d "site" ]; then
+            echo "Documentation build failed"
+            exit 1
+          fi
