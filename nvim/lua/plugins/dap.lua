@@ -22,11 +22,38 @@ return {
 				mode = { "n", "v" },
 			},
 		},
-		opts = {},
 		config = function(_, opts)
 			local dap = require "dap"
 			local dapui = require "dapui"
-			dapui.setup(opts)
+			dapui.setup {
+				layouts = {
+					{
+						elements = {
+							{
+								id = "scopes",
+								size = 0.6,
+							},
+							{
+								id = "breakpoints",
+								size = 0.4,
+							},
+						},
+						position = "left",
+						size = 40,
+					},
+					{
+						elements = { {
+							id = "repl",
+							size = 0.5,
+						}, {
+							id = "console",
+							size = 0.5,
+						} },
+						position = "bottom",
+						size = 10,
+					},
+				},
+			}
 			dap.listeners.after.event_initialized["dapui_config"] = function()
 				dapui.open {}
 			end
@@ -49,26 +76,127 @@ return {
 			},
 		},
 
-  -- stylua: ignore
-  keys = {
-    { "<leader>bB", function() require("dap").set_breakpoint(vim.fn.input('Breakpoint condition: ')) end, desc = "Breakpoint Condition" },
-    { "<leader>bb", function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint" },
-    { "<leader>bc", function() require("dap").continue() end, desc = "Run/Continue" },
-    { "<leader>ba", function() require("dap").continue({ before = get_args }) end, desc = "Run with Args" },
-    { "<leader>bC", function() require("dap").run_to_cursor() end, desc = "Run to Cursor" },
-    { "<leader>bg", function() require("dap").goto_() end, desc = "Go to Line (No Execute)" },
-    { "<leader>bi", function() require("dap").step_into() end, desc = "Step Into" },
-    { "<leader>bj", function() require("dap").down() end, desc = "Down" },
-    { "<leader>bk", function() require("dap").up() end, desc = "Up" },
-    { "<leader>bl", function() require("dap").run_last() end, desc = "Run Last" },
-    { "<leader>bo", function() require("dap").step_out() end, desc = "Step Out" },
-    { "<leader>bO", function() require("dap").step_over() end, desc = "Step Over" },
-    { "<leader>bP", function() require("dap").pause() end, desc = "Pause" },
-    { "<leader>br", function() require("dap").repl.toggle() end, desc = "Toggle REPL" },
-    { "<leader>bs", function() require("dap").session() end, desc = "Session" },
-    { "<leader>bt", function() require("dap").terminate() end, desc = "Terminate" },
-    { "<leader>bw", function() require("dap.ui.widgets").hover() end, desc = "Widgets" },
-  },
+		keys = {
+			{
+				"<leader>bB",
+				function()
+					require("dap").set_breakpoint(vim.fn.input "Breakpoint condition: ")
+				end,
+				desc = "Breakpoint Condition",
+			},
+			{
+				"<leader>bb",
+				function()
+					require("dap").toggle_breakpoint()
+				end,
+				desc = "Toggle Breakpoint",
+			},
+			{
+				"<leader>bc",
+				function()
+					require("dap").continue()
+				end,
+				desc = "Run/Continue",
+			},
+			{
+				"<leader>ba",
+				function()
+					require("dap").continue { before = get_args }
+				end,
+				desc = "Run with Args",
+			},
+			{
+				"<leader>bC",
+				function()
+					require("dap").run_to_cursor()
+				end,
+				desc = "Run to Cursor",
+			},
+			{
+				"<leader>bg",
+				function()
+					require("dap").goto_()
+				end,
+				desc = "Go to Line (No Execute)",
+			},
+			{
+				"<leader>bi",
+				function()
+					require("dap").step_into()
+				end,
+				desc = "Step Into",
+			},
+			{
+				"<leader>bj",
+				function()
+					require("dap").down()
+				end,
+				desc = "Down",
+			},
+			{
+				"<leader>bk",
+				function()
+					require("dap").up()
+				end,
+				desc = "Up",
+			},
+			{
+				"<leader>bl",
+				function()
+					require("dap").run_last()
+				end,
+				desc = "Run Last",
+			},
+			{
+				"<leader>bo",
+				function()
+					require("dap").step_out()
+				end,
+				desc = "Step Out",
+			},
+			{
+				"<leader>bO",
+				function()
+					require("dap").step_over()
+				end,
+				desc = "Step Over",
+			},
+			{
+				"<leader>bP",
+				function()
+					require("dap").pause()
+				end,
+				desc = "Pause",
+			},
+			{
+				"<leader>br",
+				function()
+					require("dap").repl.toggle()
+				end,
+				desc = "Toggle REPL",
+			},
+			{
+				"<leader>bs",
+				function()
+					require("dap").session()
+				end,
+				desc = "Session",
+			},
+			{
+				"<leader>bt",
+				function()
+					require("dap").terminate()
+				end,
+				desc = "Terminate",
+			},
+			{
+				"<leader>bw",
+				function()
+					require("dap.ui.widgets").hover()
+				end,
+				desc = "Widgets",
+			},
+		},
 
 		config = function()
 			vim.api.nvim_set_hl(0, "DapStoppedLine", { default = true, link = "Visual" })

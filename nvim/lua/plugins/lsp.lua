@@ -317,9 +317,13 @@ return {
 								callSnippet = "Replace",
 							},
 							-- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-							-- diagnostics = { disable = { 'missing-fields' } },
+							diagnostics = { disable = { "missing-fields" } },
 						},
 					},
+				},
+				stylua = {
+					indent_style = "Spaces",
+					indent_width = 2,
 				},
 				-- jedi_language_server = {
 				-- 	settings = {
@@ -447,4 +451,3 @@ return {
 	-- 	opts = { border = "rounded" },
 	-- },
 }
--- vim: ts=2 sts=2 sw=2 et
