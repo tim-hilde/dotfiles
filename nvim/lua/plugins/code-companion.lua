@@ -76,6 +76,10 @@ return {
 				action_palette = {
 					provider = "default",
 				},
+				diff = {
+					enabled = true,
+					provider = "default",
+				},
 			},
 			adapters = {
 				copilot = function()
@@ -135,7 +139,7 @@ return {
 								return "I want you to act as a senior "
 									.. context.filetype
 									.. " developer."
-									.. "I will send you a function and I want you to generate the docstrings for the function using the google format."
+									.. "I will send you a function or class and I want you to generate the docstrings using the google format."
 									.. "Generate only the docstrings and nothing more. Put the generated docstring at the correct position in the code depending on the programming language."
 									.. "Use tabs instead of spaces"
 							end,
