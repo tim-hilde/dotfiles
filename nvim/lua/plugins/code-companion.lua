@@ -73,6 +73,9 @@ return {
 				chat = {
 					start_in_insert_mode = true,
 				},
+				action_palette = {
+					provider = "snacks",
+				},
 			},
 			adapters = {
 				copilot = function()
