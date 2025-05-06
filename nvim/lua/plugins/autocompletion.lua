@@ -10,6 +10,7 @@ return {
 			"rafamadriz/friendly-snippets",
 			"Kaiser-Yang/blink-cmp-git",
 			"L3MON4D3/LuaSnip",
+			"mikavilpas/blink-ripgrep.nvim",
 		},
 
 		version = "*",
@@ -63,7 +64,7 @@ return {
 				preset = "default",
 			},
 			sources = {
-				default = { "lsp", "path", "snippets", "buffer", "git" },
+				default = { "lsp", "path", "snippets", "buffer", "git", "ripgrep" },
 				per_filetype = {
 					codecompanion = { "codecompanion" },
 				},
@@ -72,6 +73,10 @@ return {
 						module = "blink-cmp-git",
 						name = "Git",
 						opts = {},
+					},
+					ripgrep = {
+						module = "blink-ripgrep",
+						name = "Ripgrep",
 					},
 				},
 			},
