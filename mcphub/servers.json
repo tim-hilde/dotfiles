@@ -1,5 +1,10 @@
 {
   "nativeMCPServers": {
+    "mcphub": {
+      "disabled_tools": [
+        "toggle_mcp_server"
+      ]
+    },
     "neovim": {
       "disabled_tools": [
         "delete_item",
@@ -12,11 +17,6 @@
       "disabled_prompts": [
         "parrot"
       ]
-    },
-    "mcphub": {
-      "disabled_tools": [
-        "toggle_mcp_server"
-      ]
     }
   },
   "mcpServers": {
@@ -25,7 +25,7 @@
       "args": [
         
       ],
-      "disabled": false
+      "disabled": true
     }
   }
 }
