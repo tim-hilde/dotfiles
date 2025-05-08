@@ -24,3 +24,7 @@ project_authors:
 _tasks:
   - command: "git init"
     working_directory: "{{repo_name}}"
+  - command: "uv sync"
+    working_directory: "{{repo_name}}"
+  - command: "uv run pre-commit install"
+    working_directory: "{{repo_name}}"
