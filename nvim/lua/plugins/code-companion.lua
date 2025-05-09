@@ -68,7 +68,7 @@ return {
 		require("codecompanion").setup {
 			display = {
 				chat = {
-					start_in_insert_mode = true,
+					start_in_insert_mode = false,
 				},
 				action_palette = {
 					provider = "default",
