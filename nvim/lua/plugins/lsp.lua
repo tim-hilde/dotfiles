@@ -35,252 +35,126 @@ return {
 			"saghen/blink.cmp",
 		},
 		config = function()
-			-- Brief aside: **What is LSP?**
-			--
-			-- LSP is an initialism you've probably heard, but might not understand what it is.
-			--
-			-- LSP stands for Language Server Protocol. It's a protocol that helps editors
-			-- and language tooling communicate in a standardized fashion.
-			--
-			-- In general, you have a "server" which is some tool built to understand a particular
-			-- language (such as `gopls`, `lua_ls`, `rust_analyzer`, etc.). These Language Servers
-			-- (sometimes called LSP servers, but that's kind of like ATM Machine) are standalone
-			-- processes that communicate with some "client" - in this case, Neovim!
-			--
-			-- LSP provides Neovim with features like:
-			--  - Go to definition
-			--  - Find references
-			--  - Autocompletion
-			--  - Symbol Search
-			--  - and more!
-			--
-			-- Thus, Language Servers are external tools that must be installed separately from
-			-- Neovim. This is where `mason` and related plugins come into play.
-			--
-			-- If you're wondering about lsp vs treesitter, you can check out the wonderfully
-			-- and elegantly composed help section, `:help lsp-vs-treesitter`
+			vim.opt.pumheight = 20
 
-			--  This function gets run when an LSP attaches to a particular buffer.
-			--    That is to say, every time a new file is opened that is associated with
-			--    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
-			--    function will be executed to configure the current buffer
-			if not vim.g.vscode then
-				vim.opt.pumheight = 20
+			vim.api.nvim_create_autocmd("LspAttach", {
+				group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
+				callback = function(event)
+					local map = function(keys, func, desc, mode)
+						mode = mode or "n"
+						vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
+					end
 
-				vim.api.nvim_create_autocmd("LspAttach", {
-					group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
-					callback = function(event)
-						-- NOTE: Remember that Lua is a real programming language, and as such it is possible
-						-- to define small helper and utility functions so you don't have to repeat yourself.
-						--
-						-- In this case, we create a function that lets us more easily define mappings specific
-						-- for LSP related items. It sets the mode, buffer and description for us each time.
-						local map = function(keys, func, desc, mode)
-							mode = mode or "n"
-							vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
-						end
+					vim.keymap.set(
+						"n",
+						"<leader>h",
+						function()
+							vim.lsp.buf.hover { border = "rounded" }
+						end,
+						-- function() require("pretty_hover").hover() end,
+						{ desc = "[H]over documentation" }
+					)
 
-						-- Custom hover function to remove weird strings
-						local util = require "vim.lsp.util"
+					-- Set the border style for the hover and signature help windows
+					-- vim.lsp.handlers["textDocument/hover"] = vim.lsp.buf.hover
+					vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.buf.signature_help
 
-						local function split_lines(value)
-							-- handle all the stuff that can be done globally here.
-							value = string.gsub(value, "&gt;", ">")
-							value = string.gsub(value, "&lt;", "<")
-							value = string.gsub(value, "\\_", "_")
+					-- Jump to the definition of the word under your cursor.
+					--  This is where a variable was first declared, or where a function is defined, etc.
+					--  To jump back, press <C-t>.
+					map("gd", function()
+						Snacks.picker.lsp_definitions()
+					end, "[G]oto [D]efinition")
 
-							-- then split on newline
-							local split = vim.split(value, "\n", { plain = true, trimempty = true })
+					map("g<c-d>", function()
+						vim.cmd "vsplit"
+						Snacks.picker.lsp_definitions()
+					end, "[G]oto [D]efinition (split)")
 
-							-- now fix the indent levels.
-							local indent_level = 0
+					-- Find references for the word under your cursor.
+					map("gr", function()
+						Snacks.picker.lsp_references()
+					end, "[G]oto [R]eferences")
 
-							for line_no, line in pairs(split) do
-								line, count = string.gsub(line, "&nbsp;", " ")
+					-- Jump to the implementation of the word under your cursor.
+					--  Useful when your language has ways of declaring types without an actual implementation.
+					map("gI", function()
+						Snacks.picker.lsp_implementations()
+					end, "[G]oto [I]mplementation")
 
-								-- if blank line then reset indent because we are on next param.
-								if line == "" then
-									indent_level = 0
-								end
+					-- Jump to the type of the word under your cursor.
+					--  Useful when you're not sure what type a variable is and you want to see
+					--  the definition of its *type*, not where it was *defined*.
+					map("<leader>D", function()
+						Snacks.picker.lsp_type_definitions()
+					end, "Type [D]efinition")
 
-								-- if there should be indent and there was no subbing of `&nbsp;` then indent.
-								-- note the and is needed because otherwise it will indnet the `&nbsp;` and that is already done.
-								if indent_level > 0 and count == 0 then
-									for _ = 1, indent_level, 1 do
-										line = " " .. line
-									end
-								end
+					-- Fuzzy find all the symbols in your current document.
+					--  Symbols are things like variables, functions, types, etc.
+					map("<leader>ds", function()
+						Snacks.picker.lsp_symbols()
+					end, "[D]ocument [S]ymbols")
 
-								-- update the indent_level to the number of `&nbsp;` chars found.
-								if count > 0 then
-									indent_level = count
-								end
+					-- Fuzzy find all the symbols in your current workspace.
+					--  Similar to document symbols, except searches over your entire project.
+					map("<leader>ws", function()
+						Snacks.picker.lsp_workspace_symbols()
+					end, "[W]orkspace [S]ymbols")
 
-								-- finally update the line in the split which is a table of all the lines split by `\n`
-								split[line_no] = line
-							end
+					-- Rename the variable under your cursor.
+					--  Most Language Servers support renaming across files, etc.
+					map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
 
-							return split
-						end
+					-- Execute a code action, usually your cursor needs to be on top of an error
+					-- or a suggestion from your LSP for this to activate.
+					map("<leader>ca", require("actions-preview").code_actions, "[C]ode [A]ction", { "n", "x" })
 
-						local function convert_input_to_markdown_lines(input, contents)
-							contents = contents or {}
-							assert(type(input) == "table", "Expected a table for LSP input")
-							if input.kind then
-								local value = input.value or ""
-								vim.list_extend(contents, split_lines(value))
-							end
-							if (contents[1] == "" or contents[1] == nil) and #contents == 1 then
-								return {}
-							end
-							return contents
-						end
+					-- WARN: This is not Goto Definition, this is Goto Declaration.
+					--  For example, in C this would take you to the header.
+					map("gD", function()
+						Snacks.picker.lsp_declarations()
+					end, "[G]oto [D]eclaration")
 
-						-- The overwritten hover function for pyright fucking around.
-						local function hover(_, result, ctx, config)
-							local ms = require("vim.lsp.protocol").Methods
-							config = config or {}
-							config.border = "rounded"
-							config.focus_id = ms.textDocument_hover
-							if vim.api.nvim_get_current_buf() ~= ctx.bufnr then
-								-- Ignore result since buffer changed. This happens for slow language servers.
-								return
-							end
+					-- The following two autocommands are used to highlight references of the
+					-- word under your cursor when your cursor rests there for a little while.
+					--    See `:help CursorHold` for information about when this is executed
+					--
+					-- When you move your cursor, the highlights will be cleared (the second autocommand).
+					local client = vim.lsp.get_client_by_id(event.data.client_id)
+					if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+						local highlight_augroup = vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
+						vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+							buffer = event.buf,
+							group = highlight_augroup,
+							callback = vim.lsp.buf.document_highlight,
+						})
 
-							-- return nothing and print no info if no content
-							if not (result and result.contents) then
-								if config.silent ~= true then
-									vim.notify "No information available"
-								end
-								return
-							end
+						vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+							buffer = event.buf,
+							group = highlight_augroup,
+							callback = vim.lsp.buf.clear_references,
+						})
 
-							local contents ---@type string[]
-							contents = convert_input_to_markdown_lines(result.contents)
-
-							-- return nothing and print no info if no content
-							if vim.tbl_isempty(contents) then
-								if config.silent ~= true then
-									vim.notify "No information available"
-								end
-								return
-							end
-
-							-- finally oprn the floating hover window and display the new contents just formatted in markdown format.
-							return util.open_floating_preview(contents, "markdown", config)
-						end
-
-						vim.keymap.set(
-							"n",
-							"<leader>h",
-							function()
-								vim.lsp.buf.hover { border = "rounded" }
+						vim.api.nvim_create_autocmd("LspDetach", {
+							group = vim.api.nvim_create_augroup("kickstart-lsp-detach", { clear = true }),
+							callback = function(event2)
+								vim.lsp.buf.clear_references()
+								vim.api.nvim_clear_autocmds { group = "kickstart-lsp-highlight", buffer = event2.buf }
 							end,
-							-- function() require("pretty_hover").hover() end,
-							{ desc = "[H]over documentation" }
-						)
+						})
+					end
 
-						-- Set the border style for the hover and signature help windows
-						-- vim.lsp.handlers["textDocument/hover"] = vim.lsp.buf.hover
-						vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.buf.signature_help
-
-						-- Jump to the definition of the word under your cursor.
-						--  This is where a variable was first declared, or where a function is defined, etc.
-						--  To jump back, press <C-t>.
-						map("gd", function()
-							Snacks.picker.lsp_definitions()
-						end, "[G]oto [D]efinition")
-
-						map("g<c-d>", function()
-							vim.cmd "vsplit"
-							Snacks.picker.lsp_definitions()
-						end, "[G]oto [D]efinition (split)")
-
-						-- Find references for the word under your cursor.
-						map("gr", function()
-							Snacks.picker.lsp_references()
-						end, "[G]oto [R]eferences")
-
-						-- Jump to the implementation of the word under your cursor.
-						--  Useful when your language has ways of declaring types without an actual implementation.
-						map("gI", function()
-							Snacks.picker.lsp_implementations()
-						end, "[G]oto [I]mplementation")
-
-						-- Jump to the type of the word under your cursor.
-						--  Useful when you're not sure what type a variable is and you want to see
-						--  the definition of its *type*, not where it was *defined*.
-						map("<leader>D", function()
-							Snacks.picker.lsp_type_definitions()
-						end, "Type [D]efinition")
-
-						-- Fuzzy find all the symbols in your current document.
-						--  Symbols are things like variables, functions, types, etc.
-						map("<leader>ds", function()
-							Snacks.picker.lsp_symbols()
-						end, "[D]ocument [S]ymbols")
-
-						-- Fuzzy find all the symbols in your current workspace.
-						--  Similar to document symbols, except searches over your entire project.
-						map("<leader>ws", function()
-							Snacks.picker.lsp_workspace_symbols()
-						end, "[W]orkspace [S]ymbols")
-
-						-- Rename the variable under your cursor.
-						--  Most Language Servers support renaming across files, etc.
-						map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
-
-						-- Execute a code action, usually your cursor needs to be on top of an error
-						-- or a suggestion from your LSP for this to activate.
-						map("<leader>ca", require("actions-preview").code_actions, "[C]ode [A]ction", { "n", "x" })
-
-						-- WARN: This is not Goto Definition, this is Goto Declaration.
-						--  For example, in C this would take you to the header.
-						map("gD", function()
-							Snacks.picker.lsp_declarations()
-						end, "[G]oto [D]eclaration")
-
-						-- The following two autocommands are used to highlight references of the
-						-- word under your cursor when your cursor rests there for a little while.
-						--    See `:help CursorHold` for information about when this is executed
-						--
-						-- When you move your cursor, the highlights will be cleared (the second autocommand).
-						local client = vim.lsp.get_client_by_id(event.data.client_id)
-						if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
-							local highlight_augroup = vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
-							vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-								buffer = event.buf,
-								group = highlight_augroup,
-								callback = vim.lsp.buf.document_highlight,
-							})
-
-							vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-								buffer = event.buf,
-								group = highlight_augroup,
-								callback = vim.lsp.buf.clear_references,
-							})
-
-							vim.api.nvim_create_autocmd("LspDetach", {
-								group = vim.api.nvim_create_augroup("kickstart-lsp-detach", { clear = true }),
-								callback = function(event2)
-									vim.lsp.buf.clear_references()
-									vim.api.nvim_clear_autocmds { group = "kickstart-lsp-highlight", buffer = event2.buf }
-								end,
-							})
-						end
-
-						-- The following code creates a keymap to toggle inlay hints in your
-						-- code, if the language server you are using supports them
-						--
-						-- This may be unwanted, since they displace some of your code
-						if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
-							map("<leader>th", function()
-								vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
-							end, "[T]oggle Inlay [H]ints")
-						end
-					end,
-				})
-			end
+					-- The following code creates a keymap to toggle inlay hints in your
+					-- code, if the language server you are using supports them
+					--
+					-- This may be unwanted, since they displace some of your code
+					if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+						map("<leader>th", function()
+							vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
+						end, "[T]oggle Inlay [H]ints")
+					end
+				end,
+			})
 
 			-- LSP servers and clients are able to communicate to each other what features they support.
 			-- LSP servers and clients are able to communicate to each other what features they support.
@@ -396,19 +270,25 @@ return {
 				"ruff",
 				"bashls",
 			})
-			require("mason-tool-installer").setup { ensure_installed = ensure_installed }
 
+			for server_name, server_config in pairs(servers) do
+				require("lspconfig")[server_name].setup(server_config)
+			end
+
+			-- require("mason-lspconfig").setup {
+			-- handlers = {
+			-- 	function(server_name)
+			-- 		local server = servers[server_name] or {}
+			-- 		-- This handles overriding only values explicitly passed
+			-- 		-- by the server configuration above. Useful when disabling
+			-- 		-- certain features of an LSP (for example, turning off formatting for tsserver)
+			-- 		server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+			-- 		require("lspconfig")[server_name].setup(server)
+			-- 	end,
+			-- },
+			-- }
 			require("mason-lspconfig").setup {
-				handlers = {
-					function(server_name)
-						local server = servers[server_name] or {}
-						-- This handles overriding only values explicitly passed
-						-- by the server configuration above. Useful when disabling
-						-- certain features of an LSP (for example, turning off formatting for tsserver)
-						server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-						require("lspconfig")[server_name].setup(server)
-					end,
-				},
+				ensure_installed = ensure_installed,
 			}
 		end,
 	},
