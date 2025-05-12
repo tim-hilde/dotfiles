@@ -28,7 +28,7 @@
   "ltex-extra.nvim": { "branch": "master", "commit": "67dc3465af8d8caa49a00aaff066289a94eb753e" },
   "lualine.nvim": { "branch": "master", "commit": "15884cee63a8c205334ab13ab1c891cd4d27101a" },
   "luvit-meta": { "branch": "main", "commit": "1df30b60b1b4aecfebc785aa98943db6c6989716" },
-  "markview.nvim": { "branch": "main", "commit": "165121d0ec0ba8d3b68576eedb97c1dbc4f2301a" },
+  "markview.nvim": { "branch": "main", "commit": "3fd645600961781966adcfc1c77a6af8730042d7" },
   "mason-lspconfig.nvim": { "branch": "main", "commit": "d39a75bbce4b8aad5d627191ea915179c77c100f" },
   "mason-tool-installer.nvim": { "branch": "main", "commit": "62f821a14e20f3f2ee358cd44d0b3d299a508e72" },
   "mason.nvim": { "branch": "main", "commit": "7c7318e8bae7e3536ef6b9e86b9e38e74f2e125e" },
