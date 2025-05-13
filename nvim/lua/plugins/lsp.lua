@@ -202,8 +202,12 @@ return {
 					},
 				},
 				stylua = {
-					indent_style = "Spaces",
-					indent_width = 2,
+					settings = {
+						stylua = {
+							indent_style = "Spaces",
+							indent_width = 2,
+						},
+					},
 				},
 				-- jedi_language_server = {
 				-- 	settings = {
@@ -256,20 +260,20 @@ return {
 			--
 			--  You can press `g?` for help in this menu.
 			require("mason").setup {
-				registries = {
-					"github:mason-org/mason-registry",
-					"github:visimp/mason-registry",
-				},
+				-- registries = {
+				-- 	"github:mason-org/mason-registry",
+				-- 	-- "github:visimp/mason-registry",
+				-- },
 			}
 
 			-- You can add other tools here that you want Mason to install
 			-- for you, so that they are available from within Neovim.
-			local ensure_installed = vim.tbl_keys(servers or {})
-			vim.list_extend(ensure_installed, {
-				"stylua", -- Used to format Lua code
-				"ruff",
-				"bashls",
-			})
+			-- local ensure_installed = vim.tbl_keys(servers or {})
+			-- vim.list_extend(ensure_installed, {
+			-- 	"stylua", -- Used to format Lua code
+			-- 	"ruff",
+			-- 	"bashls",
+			-- })
 
 			for server_name, server_config in pairs(servers) do
 				require("lspconfig")[server_name].setup(server_config)
@@ -287,9 +291,9 @@ return {
 			-- 	end,
 			-- },
 			-- }
-			require("mason-lspconfig").setup {
-				ensure_installed = ensure_installed,
-			}
+			-- require("mason-lspconfig").setup {
+			-- 	ensure_installed = ensure_installed,
+			-- }
 		end,
 	},
 	{
