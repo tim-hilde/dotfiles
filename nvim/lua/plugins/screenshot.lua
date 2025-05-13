@@ -7,6 +7,7 @@ return {
 		opts = {
 			font = "JetBrainsMono Nerd Font Mono=50",
 			theme = "Catppuccin Mocha",
+			background = nil,
 			to_clipboard = true,
 			line_pad = 16,
 			-- here a function is used to return the actual source code line number
