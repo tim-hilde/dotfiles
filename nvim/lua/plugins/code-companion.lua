@@ -125,7 +125,7 @@ return {
 			prompt_library = {
 				["Docstring"] = {
 					strategy = "inline",
-					description = "Generate docstring for this function",
+					description = "Generate docstrings.",
 					opts = {
 						modes = { "v" },
 						short_name = "docstring",
