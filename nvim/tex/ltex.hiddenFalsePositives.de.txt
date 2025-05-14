@@ -1,0 +1,1 @@
+{"rule":"EMPFOHLENE_ZUSAMMENSCHREIBUNG","sentence":"^\\QMit Hilfe einer Evaluation wurde die Erkennung auf die uns verfügbaren Dokumente angepasst.\\E$"}
