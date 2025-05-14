@@ -27,12 +27,12 @@ return {
 			python = { "ruff_format", "ruff_organize_imports" },
 			json = { "fixjson" },
 			toml = { "taplo" },
-			-- yaml = { "yamlfmt" },
-			-- Conform can also run multiple formatters sequentially
-			-- python = { "isort", "black" },
-			--
-			-- You can use 'stop_after_first' to run the first available formatter from the list
-			-- javascript = { "prettierd", "prettier", stop_after_first = true },
+		},
+		formatters = {
+			stylua = {
+				indent_style = "Spaces",
+				indent_width = 2,
+			},
 		},
 	},
 }
