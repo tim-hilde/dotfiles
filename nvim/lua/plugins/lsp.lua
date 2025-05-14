@@ -211,7 +211,7 @@ return {
 				-- 		},
 				-- 	},
 				-- },
-				-- ruff = {},
+				ruff = {},
 				basedpyright = {
 					settings = {
 						basedpyright = {

@@ -28,11 +28,11 @@ return {
 			json = { "fixjson" },
 			toml = { "taplo" },
 		},
-		formatters = {
-			stylua = {
-				indent_style = "Spaces",
-				indent_width = 2,
-			},
-		},
+		-- formatters = {
+		-- 	stylua = {
+		-- 		indent_style = "Spaces",
+		-- 		indent_width = 2,
+		-- 	},
+		-- },
 	},
 }
