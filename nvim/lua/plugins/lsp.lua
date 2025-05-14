@@ -18,11 +18,11 @@ return {
 		dependencies = {
 			-- Automatically install LSPs and related tools to stdpath for Neovim
 			{
-				"williamboman/mason.nvim",
+				"mason-org/mason.nvim",
 				config = true,
 			},
 			{
-				"williamboman/mason-lspconfig.nvim",
+				"mason-org/mason-lspconfig.nvim",
 			},
 
 			{ "WhoIsSethDaniel/mason-tool-installer.nvim" },
@@ -243,13 +243,6 @@ return {
 						},
 					},
 				},
-			}
-
-			require("mason").setup {
-				-- registries = {
-				-- 	"github:mason-org/mason-registry",
-				-- 	-- "github:visimp/mason-registry",
-				-- },
 			}
 
 			local ensure_installed = vim.tbl_keys(servers or {})
