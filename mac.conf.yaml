@@ -69,6 +69,10 @@
       path: mcphub
       relative: true
       create: true
+    $HOME/.config/direnv:
+      path: direnv
+      relative: true
+      create: true
 
 - shell:
     - command: sudo chsh -s $(which zsh) $USER
