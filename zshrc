@@ -29,7 +29,7 @@ source ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh
 plugins=(
     # zsh-autosuggestions
     copypath
-    # direnv
+    direnv
     dirhistory
     git
     gitfast
