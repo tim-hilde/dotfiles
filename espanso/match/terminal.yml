@@ -12,7 +12,7 @@ matches:
 
     # Copier python
     - trigger: "!copier python"
-      replace: "copier copy gh:tim_hilde/dotfiles/copier/python . --trust"
+      replace: "copier copy ~/dotfiles/copier/python . --trust"
 
     # Cookiecutter minimal
     # - trigger: "!cookie minimal"

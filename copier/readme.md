@@ -3,7 +3,7 @@
 [Documentation](https://copier.readthedocs.io/en/stable/)
 
 ```sh
-copier copy gh:tim_hilde/dotfiles/copier/python . --trust
+copier copy ~/dotfiles/copier/python . --trust
 ```
 
 # Update project

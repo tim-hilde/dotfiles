@@ -4,9 +4,17 @@ return {
 		"mfussenegger/nvim-lint",
 		event = { "BufReadPre", "BufNewFile" },
 		config = function()
+			vim.filetype.add {
+				pattern = {
+					[".*/.github/workflows/.*%.yml"] = "yaml.ghaction",
+					[".*/.github/workflows/.*%.yaml"] = "yaml.ghaction",
+				},
+			}
 			local lint = require "lint"
 			lint.linters_by_ft = {
-				yaml = { "yamllint", "actionlint" },
+				yaml = { "yamllint" },
+				-- github action
+				ghaction = { "actionlint" },
 				shell = { "shellcheck" },
 			}
 
