@@ -250,6 +250,7 @@ return {
 				"stylua",
 				"ruff",
 				"bashls",
+				"actionlint",
 			})
 
 			for server_name, server_config in pairs(servers) do
