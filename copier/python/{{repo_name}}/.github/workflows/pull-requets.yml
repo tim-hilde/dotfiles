@@ -4,7 +4,8 @@ name: CI/CD
 on:
   pull_request:
     branches:
-      - [main, dev]
+      - main
+      - dev
 
 jobs:
   CI:
@@ -14,7 +15,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - uses: pre-commit/action@v3.0.1
 
@@ -45,3 +46,20 @@ jobs:
             echo "Documentation build failed"
             exit 1
           fi
+  CD:
+    # Only run this job if the "ci" job passes
+    needs: ci
+
+    # Only run this job if new work is pushed to the "main" branch
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Use Python Semantic Release to prepare release
+        id: release
+        uses: python-semantic-release/python-semantic-release@v8.3.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
