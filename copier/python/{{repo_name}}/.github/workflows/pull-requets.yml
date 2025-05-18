@@ -1,5 +1,5 @@
 ---
-name: basic CI
+name: CI/CD
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
       - [main, dev]
 
 jobs:
-  build-and-run-pytest:
+  CI:
     runs-on: ubuntu-latest
     # INFO: When using self-hosted runners, mind the cache issue of uv
     # https://docs.astral.sh/uv/guides/integration/github/#caching
@@ -35,3 +35,13 @@ jobs:
 
       - name: Run tests
         run: uv run pytest -v .
+
+      - name: Build documentation
+        run: uv run mkdocs build
+
+      - name: Verify documentation build
+        run: |
+          if [ ! -d "site" ]; then
+            echo "Documentation build failed"
+            exit 1
+          fi

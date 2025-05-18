@@ -1,5 +1,4 @@
 ---
-# .pre-commit-config.yaml
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     # Testing valid python code
@@ -25,3 +24,8 @@ repos:
         args: [--extend-select, I, --fix]
       # Run the formatter.
       - id: ruff-format
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
+        args: []
