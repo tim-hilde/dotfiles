@@ -11,8 +11,6 @@
       ],
       "disabled_tools": [
         "delete_item",
-        "execute_command",
-        "execute_lua",
         "move_item",
         "replace_in_file",
         "write_file"
