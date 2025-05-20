@@ -1,0 +1,1 @@
+{"rule":"ADJECTIVE_IN_ATTRIBUTE","sentence":"^\\QThe contents of these folders should not be tracked by git, because they may contain sensitive information and may be large in size.\\E$"}

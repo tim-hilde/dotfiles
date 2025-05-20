@@ -5,3 +5,5 @@ MLFlow
 mkdocs
 Pseudonymizer
 SoVD
+pseudonymizing
+uv
