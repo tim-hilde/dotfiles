@@ -32,6 +32,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>35250579-616D-4017-A0E8-4C991421C56C</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>EACAE753-9AAA-4B46-8058-AE37D6D371D8</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>A4125F74-562A-4A00-A377-83F3CD27735E</key>
 		<array>
 			<dict>
@@ -249,7 +262,7 @@
 				<key>acceptsurls</key>
 				<true/>
 				<key>name</key>
-				<string>Download Youtube</string>
+				<string>Download Youtube (video)</string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.trigger.universalaction</string>
@@ -270,6 +283,42 @@
 			<string>alfred.workflow.action.terminalcommand</string>
 			<key>uid</key>
 			<string>CE7CCDBC-A43D-404F-9A64-448A693EACB5</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>acceptsfiles</key>
+				<false/>
+				<key>acceptsmulti</key>
+				<integer>0</integer>
+				<key>acceptstext</key>
+				<false/>
+				<key>acceptsurls</key>
+				<true/>
+				<key>name</key>
+				<string>Download Youtube (Audio)</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.universalaction</string>
+			<key>uid</key>
+			<string>35250579-616D-4017-A0E8-4C991421C56C</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>script</key>
+				<string>yt-dlp -f bestaudio --extract-audio --audio-format mp3 "{query}"</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.terminalcommand</string>
+			<key>uid</key>
+			<string>EACAE753-9AAA-4B46-8058-AE37D6D371D8</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -335,6 +384,13 @@
 			<key>ypos</key>
 			<real>610</real>
 		</dict>
+		<key>35250579-616D-4017-A0E8-4C991421C56C</key>
+		<dict>
+			<key>xpos</key>
+			<real>30</real>
+			<key>ypos</key>
+			<real>765</real>
+		</dict>
 		<key>81D189FF-D03F-47FE-A9BE-57C03FAC5B9B</key>
 		<dict>
 			<key>xpos</key>
@@ -390,6 +446,13 @@
 			<real>380</real>
 			<key>ypos</key>
 			<real>1015</real>
+		</dict>
+		<key>EACAE753-9AAA-4B46-8058-AE37D6D371D8</key>
+		<dict>
+			<key>xpos</key>
+			<real>300</real>
+			<key>ypos</key>
+			<real>775</real>
 		</dict>
 	</dict>
 	<key>userconfigurationconfig</key>
