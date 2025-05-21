@@ -6,15 +6,16 @@
       ]
     },
     "neovim": {
+      "disabled_prompts": [
+        "parrot"
+      ],
       "disabled_tools": [
         "delete_item",
         "move_item",
         "replace_in_file",
         "write_file"
       ],
-      "disabled_prompts": [
-        "parrot"
-      ]
+      "disabled": false
     }
   },
   "mcpServers": {
