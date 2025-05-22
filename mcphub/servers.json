@@ -32,7 +32,6 @@
     "vectorcode-mcp-server": {
       "disabled": true,
       "args": [
-        
       ],
       "command": "vectorcode-mcp-server"
     }
