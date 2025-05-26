@@ -6,34 +6,37 @@
       ]
     },
     "neovim": {
-      "disabled_prompts": [
-        "parrot"
-      ],
       "disabled_tools": [
         "delete_item",
         "move_item",
         "replace_in_file",
-        "write_file"
+        "write_file",
+        "execute_command",
+        "execute_lua"
+      ],
+      "disabled_prompts": [
+        "parrot"
       ],
       "disabled": false
     }
   },
   "mcpServers": {
+    "vectorcode-mcp-server": {
+      "command": "vectorcode-mcp-server",
+      "args": [
+        
+      ],
+      "disabled": true
+    },
     "sequentialthinking": {
-      "disabled": false,
+      "command": "docker",
       "args": [
         "run",
         "--rm",
         "-i",
         "mcp/sequentialthinking"
       ],
-      "command": "docker"
-    },
-    "vectorcode-mcp-server": {
-      "disabled": true,
-      "args": [
-      ],
-      "command": "vectorcode-mcp-server"
+      "disabled": false
     }
   }
 }
