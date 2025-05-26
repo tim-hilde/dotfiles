@@ -1,4 +1,23 @@
 {
+  "mcpServers": {
+    "sequentialthinking": {
+      "command": "docker",
+      "disabled": false,
+      "args": [
+        "run",
+        "--rm",
+        "-i",
+        "mcp/sequentialthinking"
+      ]
+    },
+    "vectorcode-mcp-server": {
+      "command": "vectorcode-mcp-server",
+      "disabled": true,
+      "args": [
+        
+      ]
+    }
+  },
   "nativeMCPServers": {
     "mcphub": {
       "disabled_tools": [
@@ -6,6 +25,7 @@
       ]
     },
     "neovim": {
+      "disabled": false,
       "disabled_tools": [
         "delete_item",
         "move_item",
@@ -16,27 +36,7 @@
       ],
       "disabled_prompts": [
         "parrot"
-      ],
-      "disabled": false
-    }
-  },
-  "mcpServers": {
-    "vectorcode-mcp-server": {
-      "command": "vectorcode-mcp-server",
-      "args": [
-        
-      ],
-      "disabled": true
-    },
-    "sequentialthinking": {
-      "command": "docker",
-      "args": [
-        "run",
-        "--rm",
-        "-i",
-        "mcp/sequentialthinking"
-      ],
-      "disabled": false
+      ]
     }
   }
 }
