@@ -240,7 +240,7 @@
           ],
           "to": [
             {
-              "shell_command": "if [ -d \"/Applications/Vivaldi.app\" ]; then\n  open -a 'Vivaldi'\nelse\n  open -a 'Safari'\nfi"
+              "shell_command": "open -a 'Safari'"
             },
             {
               "set_variable": {
