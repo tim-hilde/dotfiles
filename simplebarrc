@@ -9,6 +9,7 @@
     "bottomBar": true,
     "sideDecoration": false,
     "inlineSpacesOptions": false,
+    "disableAnimations": false,
     "spacesBackgroundColorAsForeground": false,
     "widgetsBackgroundColorAsForeground": false,
     "widgetMaxWidth": "160px",
@@ -74,7 +75,8 @@
     "showOptionsOnHover": true,
     "switchSpacesWithoutYabai": false,
     "showOnlyFlashspaceSpaceIndex": false,
-    "hideFlashspaceAppIcons": false
+    "hideFlashspaceAppIcons": false,
+    "customAeroSpaceDisplayIndexes": {}
   },
   "widgets": {
     "processWidget": true,
