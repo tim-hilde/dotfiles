@@ -1,23 +1,4 @@
 {
-  "mcpServers": {
-    "sequentialthinking": {
-      "command": "docker",
-      "disabled": false,
-      "args": [
-        "run",
-        "--rm",
-        "-i",
-        "mcp/sequentialthinking"
-      ]
-    },
-    "vectorcode-mcp-server": {
-      "command": "vectorcode-mcp-server",
-      "disabled": true,
-      "args": [
-        
-      ]
-    }
-  },
   "nativeMCPServers": {
     "mcphub": {
       "disabled_tools": [
@@ -37,6 +18,25 @@
       "disabled_prompts": [
         "parrot"
       ]
+    }
+  },
+  "mcpServers": {
+    "vectorcode-mcp-server": {
+      "args": [
+        
+      ],
+      "disabled": true,
+      "command": "vectorcode-mcp-server"
+    },
+    "sequentialthinking": {
+      "args": [
+        "run",
+        "--rm",
+        "-i",
+        "mcp/sequentialthinking"
+      ],
+      "disabled": false,
+      "command": "docker"
     }
   }
 }
