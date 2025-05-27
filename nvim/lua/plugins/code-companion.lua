@@ -73,6 +73,11 @@ return {
 				action_palette = {
 					provider = "default",
 				},
+				slash_commands = {
+					opts = {
+						provider = "snacks",
+					},
+				},
 				diff = {
 					enabled = true,
 					provider = "default",
