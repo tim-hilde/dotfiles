@@ -97,9 +97,6 @@ return {
 			strategies = {
 				chat = {
 					adapter = "copilot",
-					slash_commands = {
-						codebase = require("vectorcode.integrations").codecompanion.chat.make_slash_command(),
-					},
 					tools = {
 						opts = {
 							auto_submit_errors = true, -- Send any errors to the LLM automatically?
