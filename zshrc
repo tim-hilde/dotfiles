@@ -43,7 +43,7 @@ plugins=(
     # virtualenv
     # pyenv
     autoswitch_virtualenv
-    you-should-use
+    # you-should-use
     zsh-bat
     zsh-syntax-highlighting
     azure
