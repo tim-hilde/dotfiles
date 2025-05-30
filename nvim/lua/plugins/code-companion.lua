@@ -103,6 +103,23 @@ return {
 							auto_submit_success = true, -- Send any successful output to the LLM automatically?
 						},
 					},
+					slash_commands = {
+						["file"] = {
+							opts = {
+								provider = "snacks",
+							},
+						},
+						["buffer"] = {
+							opts = {
+								provider = "snacks",
+							},
+						},
+						["symbols"] = {
+							opts = {
+								provider = "snacks",
+							},
+						},
+					},
 				},
 				inline = {
 					adapter = "copilot",
