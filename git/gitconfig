@@ -70,3 +70,5 @@
 [fetch]
 	prune = true
 
+[diff]
+	tool = nvimdiff
