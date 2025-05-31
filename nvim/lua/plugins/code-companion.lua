@@ -69,6 +69,7 @@ return {
 			display = {
 				chat = {
 					start_in_insert_mode = false,
+					show_settings = false,
 				},
 				action_palette = {
 					provider = "default",
@@ -88,7 +89,7 @@ return {
 					return require("codecompanion.adapters").extend("copilot", {
 						schema = {
 							model = {
-								default = "claude-sonnet-4",
+								default = "gpt-4.1",
 							},
 						},
 					})
@@ -117,6 +118,14 @@ return {
 						["symbols"] = {
 							opts = {
 								provider = "snacks",
+							},
+						},
+					},
+					keymaps = {
+						send = {
+							modes = {
+								n = { "<CR>", "<C-i>" },
+								i = "<C-i>",
 							},
 						},
 					},
