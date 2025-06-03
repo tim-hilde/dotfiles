@@ -1,4 +1,4 @@
-[mgr]
+[manager]
 linemode = "size_and_mtime"
 show_hidden = false
 show_symlink = true
