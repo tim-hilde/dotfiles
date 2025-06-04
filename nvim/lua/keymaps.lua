@@ -224,3 +224,8 @@ vim.keymap.del("n", "grr")
 vim.keymap.del("n", "grn")
 vim.keymap.del("n", "gri")
 vim.keymap.del("n", "gra")
+
+-- Refactoring
+vim.keymap.set({ "n", "x" }, "<leader>cr", function()
+	require("refactoring").select_refactor()
+end, { desc = "[C]ode [R]efactor" })
