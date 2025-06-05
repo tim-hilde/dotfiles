@@ -186,7 +186,7 @@ vim.api.nvim_set_keymap("v", "ga", "<cmd>CodeCompanionChat Add<cr>", { noremap =
 vim.cmd [[cab cc CodeCompanion]]
 
 -- Autosession
-vim.keymap.set("n", "<leader>war", "<cmd>SessionSearch<CR>", { desc = "[W]orkplace [A]utosession Sea[r]ch" })
+vim.keymap.set("n", "<leader>sa", "<cmd>SessionSearch<CR>", { desc = "[S]earch [A]utosessions" })
 vim.keymap.set("n", "<leader>was", "<cmd>SessionSave<CR>", { desc = "[W]orkplace [S]ession [S]ave" })
 vim.keymap.set("n", "<leader>ta", "<cmd>SessionToggleAutoSave<CR>", { desc = "[T]oggle session [a]utosave" })
 
