@@ -1,7 +1,8 @@
 # stop/start/restart yabai
 meh - s : yabai --start-service
 meh - d : yabai --stop-service
-meh - r : skhd --restart-service; yabai --restart-service
+# meh - r : skhd --restart-service; yabai --restart-service
+meh - r : skhd --restart-service
 
 # change window focus within space
 # lalt - h : yabai -m window --focus west
@@ -60,7 +61,7 @@ hyper - y : aerospace layout accordion horizontal vertical
 # toggle window float
 # The grid format is <rows>:<cols>:<start-x>:<start-y>:<width>:<height>
 # hyper - t : yabai -m window --toggle float --grid 10:16:2:1:12:8
-hyper - t : arospace layout floating tiling
+hyper - t : aerospace layout floating tiling
 
 # maximize a window
 # hyper - z : yabai -m window --toggle zoom-fullscreen

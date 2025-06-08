@@ -71,7 +71,7 @@
     "hideDuplicateAppsInSpaces": true,
     "displayStickyWindowsSeparately": true,
     "hideCreateSpaceButton": true,
-    "hideEmptySpaces": true,
+    "hideEmptySpaces": false,
     "showOptionsOnHover": true,
     "switchSpacesWithoutYabai": false,
     "showOnlyFlashspaceSpaceIndex": false,
