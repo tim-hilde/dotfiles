@@ -15,7 +15,6 @@ return {
 		statuscolumn = { enabled = true },
 		picker = {
 			enabled = true,
-			-- layout = { preset = "telescope" },
 			win = {
 				input = {
 					keys = {
@@ -27,6 +26,7 @@ return {
 					keys = {
 						["<c-h>"] = { "toggle_hidden", mode = { "i", "n" } },
 						["<c-o>"] = { "toggle_ignored", mode = { "i", "n" } },
+						["s"] = { "edit_split", mode = { "n" } },
 					},
 				},
 			},
