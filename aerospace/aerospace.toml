@@ -127,8 +127,7 @@ t = [
   'layout floating tiling',
   'mode main',
 ] # Toggle between floating and tiling layout
-z = ['layout accordion horizontal vertical', 'mode main']
-# layout tiles horizontal vertical
+
 # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
 #s = ['layout sticky tiling', 'mode main']
 
