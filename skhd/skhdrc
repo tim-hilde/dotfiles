@@ -71,6 +71,9 @@ hyper - z : aerospace fullscreen
 # hyper - e : yabai -m space --balance
 
 # RESIZE WINDOWS
+hyper - up : aerospace resize smart +50
+hyper - down : aerospace resize smart -50
+
 # increase to the right
 # hyper - right : yabai -m window --resize right:50:0 || yabai -m window --resize left:50:0
 # increase to the left
