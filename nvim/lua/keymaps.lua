@@ -194,7 +194,7 @@ vim.keymap.set("n", "<leader>ta", "<cmd>SessionToggleAutoSave<CR>", { desc = "[T
 vim.keymap.set("n", "<leader>ti", ":IronRepl<CR>", { desc = "[T]oggle [I]ronRepl" })
 
 -- OPEN links
--- vim.keymap.set("n", "gx", "<esc>:URLOpenUnderCursor<cr>", { desc = "Go to link" })
+vim.keymap.set("n", "gx", "<esc>:URLOpenUnderCursor<cr>", { desc = "Go to link" })
 
 -- Harpoon
 vim.keymap.set("n", "<leader><c-h>", function()
