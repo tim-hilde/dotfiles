@@ -17,7 +17,7 @@
     "fontSize": "11px",
     "yabaiPath": "/opt/homebrew/bin/yabai",
     "aerospacePath": "/opt/homebrew/bin/aerospace",
-    "windowManager": "yabai",
+    "windowManager": "aerospace",
     "shell": "sh",
     "terminal": "iTerm2",
     "disableNotifications": false,

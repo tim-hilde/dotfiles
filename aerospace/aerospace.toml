@@ -9,7 +9,7 @@ after-login-command = []
 after-startup-command = []
 
 # Start AeroSpace at login
-start-at-login = false
+start-at-login = true
 
 # Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
 enable-normalization-flatten-containers = true
@@ -34,6 +34,17 @@ default-root-container-orientation = 'auto'
 # See https://nikitabobko.github.io/AeroSpace/commands#move-mouse
 # Fallback value (if you omit the key): on-focused-monitor-changed = []
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+# sketchybar
+on-focus-changed = [
+  "exec-and-forget osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-index-jsx\"'",
+]
+
+exec-on-workspace-change = [
+  '/bin/zsh',
+  '-c',
+  '/usr/bin/osascript -e "tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-index-jsx\""',
+]
 
 # You can effectively turn off macOS "Hide application" (cmd-h) feature by toggling this flag
 # Useful if you don't use this macOS feature, but accidentally hit cmd-h or cmd-alt-h key
@@ -139,3 +150,140 @@ alt-shift-l = ['join-with right', 'mode main']
 # down = 'volume down'
 # up = 'volume up'
 # shift-down = ['volume set 0', 'mode main']
+# AeroSpace config to float specific applications using app-id and/or title
+
+
+# Workspace assignments
+[[on-window-detected]]
+if.app-id = 'com.vivaldi.Vivaldi'
+run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+if.app-id = 'net.kovidgoyal.kitty'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'com.microsoft.teams2'
+run = 'move-node-to-workspace 5'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.mail'
+run = 'move-node-to-workspace 6'
+
+[[on-window-detected]]
+if.app-id = 'com.microsoft.Outlook'
+run = 'move-node-to-workspace 6'
+
+[[on-window-detected]]
+if.app-id = 'com.todoist.mac.Todoist'
+run = 'move-node-to-workspace 9'
+
+[[on-window-detected]]
+if.app-id = 'md.obsidian'
+run = 'move-node-to-workspace 4'
+
+# Floats
+[[on-window-detected]]
+if.app-id = 'com.apple.systempreferences'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.calculator'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'org.pqrs.Karabiner-Elements.Settings'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Karabiner-EventViewer'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Alfred Preferences'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'ChatGPT'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Claude'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Shottr'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'BetterTouch'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.AppStore'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.iCal'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.FaceTime'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'python'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'DeepL'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Ice'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.MobileSMS'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'us.zoom.xos'
+if.window-title-regex-substring = 'Zoom Workplace'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.mail'
+if.window-title-regex-substring = 'Neue E-Mail|Re:'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.mail'
+if.window-title-regex-substring = 'Allgemein|Accounts|Spam|Schrift & Farbe|Darstellung|Verfassen|Signaturen|Regeln|Erweiterungen|Datenschutz'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'The Unarchiver'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'org.zotero.Zotero'
+if.window-title-regex-substring = 'Plugins Manager'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Pearcleaner'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.Safari'
+if.window-title-regex-substring = 'Allgemein|Tabs|Automatisch ausfüllen|Passwörter|Suchen|Sicherheit|Datenschutz|Websites|Profile|Erweiterungen|Erweitert|Entwickler|Feature Flags'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Logi Options\\+'
+run = 'layout floating'
