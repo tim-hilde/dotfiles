@@ -60,6 +60,7 @@ yabai -m rule --add label="^Plugins Manager$" app="^Zotero$" manage=off
 yabai -m rule --add app="^Pearcleaner$" manage=off
 yabai -m rule --add label="Safari" app="^Safari$" title="^(Allgemein|Tabs|Automatisch ausfüllen|Passwörter|Suchen|Sicherheit|Datenschutz|Websites|Profile|Erweiterungen|Erweitert|Entwickler|Feature Flags)$" manage=off
 yabai -m rule --add app="^Logi Options\+$" manage=off
+yabai -m rule --add app="^Raycast$" manage=off
 
 # actually apply rules
 yabai -m rule --apply
