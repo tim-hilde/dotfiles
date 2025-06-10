@@ -9,6 +9,7 @@
     "bottomBar": true,
     "sideDecoration": false,
     "inlineSpacesOptions": false,
+    "disableAnimations": false,
     "spacesBackgroundColorAsForeground": false,
     "widgetsBackgroundColorAsForeground": false,
     "widgetMaxWidth": "160px",
@@ -17,6 +18,7 @@
     "fontSize": "11px",
     "yabaiPath": "/opt/homebrew/bin/yabai",
     "aerospacePath": "/opt/homebrew/bin/aerospace",
+    "flashspacePath": "/usr/local/bin/flashspace",
     "windowManager": "yabai",
     "shell": "sh",
     "terminal": "iTerm2",
@@ -26,9 +28,7 @@
     "serverSocketPort": 7776,
     "yabaiServerRefresh": false,
     "aerospaceServerRefresh": false,
-    "flashspaceServerRefresh": false,
-    "disableAnimations": false,
-    "flashspacePath": "/usr/local/bin/flashspace"
+    "flashspaceServerRefresh": false
   },
   "themes": {
     "lightTheme": "CatppuccinLatte",
