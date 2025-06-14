@@ -196,3 +196,7 @@ esac
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/tim/.lmstudio/bin"
 export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
+
+. "$HOME/.atuin/bin/env"
+
+eval "$(atuin init zsh)"
