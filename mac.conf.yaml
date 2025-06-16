@@ -81,6 +81,7 @@
       path: atuin
       relative: true
       create: true
+      force: true
 
 
 - shell:
