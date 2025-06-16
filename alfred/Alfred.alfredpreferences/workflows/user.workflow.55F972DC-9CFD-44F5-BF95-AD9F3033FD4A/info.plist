@@ -548,7 +548,7 @@
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
-				<string>scripts/kill-action.sh</string>
+				<string>scripts/process-action.sh</string>
 				<key>type</key>
 				<integer>8</integer>
 			</dict>
@@ -585,7 +585,7 @@
 				<key>lastpathcomponent</key>
 				<false/>
 				<key>onlyshowifquerypopulated</key>
-				<true/>
+				<false/>
 				<key>removeextension</key>
 				<false/>
 				<key>text</key>
@@ -619,6 +619,78 @@
 			<string>BBE384FE-3246-4A73-873A-4B3F4FBF8E54</string>
 			<key>version</key>
 			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<true/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>2</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>{var:bluetooth_keyword}</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>loading…</string>
+				<key>script</key>
+				<string></string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string>scripts/bluetooth-devices.js</string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string>Bluetooth Devices</string>
+				<key>type</key>
+				<integer>8</integer>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>1765993C-E2F9-4224-A487-1B3FF0F4B90B</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>script</key>
+				<string></string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string>scripts/bluetooth-connect.sh</string>
+				<key>type</key>
+				<integer>8</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>24F3B28F-0642-43F2-AEA3-202F2E62F3B4</string>
+			<key>version</key>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -739,29 +811,6 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>0</integer>
-				<key>script</key>
-				<string></string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string>scripts/bluetooth-connect.sh</string>
-				<key>type</key>
-				<integer>8</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>24F3B28F-0642-43F2-AEA3-202F2E62F3B4</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -789,55 +838,6 @@
 			<string>A8E4530E-F583-424A-9F8E-6DFEBEBF6288</string>
 			<key>version</key>
 			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>alfredfiltersresults</key>
-				<true/>
-				<key>alfredfiltersresultsmatchmode</key>
-				<integer>2</integer>
-				<key>argumenttreatemptyqueryasnil</key>
-				<true/>
-				<key>argumenttrimmode</key>
-				<integer>0</integer>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>escaping</key>
-				<integer>0</integer>
-				<key>keyword</key>
-				<string>{var:bluetooth_keyword}</string>
-				<key>queuedelaycustom</key>
-				<integer>3</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<true/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
-				<key>runningsubtext</key>
-				<string>loading…</string>
-				<key>script</key>
-				<string></string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string>scripts/bluetooth-devices.js</string>
-				<key>subtext</key>
-				<string></string>
-				<key>title</key>
-				<string>Bluetooth Devices</string>
-				<key>type</key>
-				<integer>8</integer>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>1765993C-E2F9-4224-A487-1B3FF0F4B90B</string>
-			<key>version</key>
-			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -1339,13 +1339,14 @@ List all available tools via `atop` and select one. Alternatively, you can also 
 Display processes directly via `top`. Append "parent" to the query to display
 only processes that have child processes.
 - &lt;kbd&gt;⏎&lt;/kbd&gt;: Kill the process.
-- &lt;kbd&gt;⌘&lt;/kbd&gt;&lt;kbd&gt;⏎&lt;/kbd&gt;: Force-kill the process.
-- &lt;kbd&gt;⌃&lt;/kbd&gt;&lt;kbd&gt;⏎&lt;/kbd&gt;: Kill all processes with the same name.
-- &lt;kbd&gt;⌘&lt;/kbd&gt;&lt;kbd&gt;⌃&lt;/kbd&gt;&lt;kbd&gt;⏎&lt;/kbd&gt;: Force-kill all processes with the same
+- &lt;kbd&gt;⌘⏎&lt;/kbd&gt;: Force-kill the process.
+- &lt;kbd&gt;⌃⏎&lt;/kbd&gt;: Kill all processes with the same name.
+- &lt;kbd&gt;⌘⌃⏎&lt;/kbd&gt;: Force-kill all processes with the same
   name.
-- &lt;kbd&gt;⇧&lt;/kbd&gt;&lt;kbd&gt;⏎&lt;/kbd&gt;: If the process belongs to a regular app, restart the
+- &lt;kbd&gt;⇧⏎&lt;/kbd&gt;: If the process belongs to a regular app, restart the
   app.
-- &lt;kbd&gt;⌥&lt;/kbd&gt;&lt;kbd&gt;⏎&lt;/kbd&gt;: Copy the Process Identifier (PID).
+- &lt;kbd&gt;⌘C&lt;/kbd&gt;: Copy the process identifier (PID).
+- &lt;kbd&gt;⌥⏎&lt;/kbd&gt;: Copy the process path.
 
 **Meaning of the icons**
 - `⭕`: process is owned by root.
@@ -1388,9 +1389,9 @@ Display mounted volumes directly via `vol`.
 			<key>colorindex</key>
 			<integer>8</integer>
 			<key>xpos</key>
-			<real>390</real>
+			<real>395</real>
 			<key>ypos</key>
-			<real>555</real>
+			<real>470</real>
 		</dict>
 		<key>24F3B28F-0642-43F2-AEA3-202F2E62F3B4</key>
 		<dict>
@@ -1401,7 +1402,7 @@ Display mounted volumes directly via `vol`.
 			<key>xpos</key>
 			<real>595</real>
 			<key>ypos</key>
-			<real>495</real>
+			<real>470</real>
 		</dict>
 		<key>2759BEDD-4BDD-45E5-8864-D2705A801FC5</key>
 		<dict>
@@ -1560,7 +1561,7 @@ Display mounted volumes directly via `vol`.
 			<key>colorindex</key>
 			<integer>7</integer>
 			<key>note</key>
-			<string>copy pid</string>
+			<string>copy process path</string>
 			<key>xpos</key>
 			<real>635</real>
 			<key>ypos</key>
@@ -1573,7 +1574,7 @@ Display mounted volumes directly via `vol`.
 			<key>xpos</key>
 			<real>770</real>
 			<key>ypos</key>
-			<real>620</real>
+			<real>605</real>
 		</dict>
 		<key>BF21A407-7022-4593-A143-0BBA5B02294A</key>
 		<dict>
@@ -1649,7 +1650,7 @@ Display mounted volumes directly via `vol`.
 			<key>xpos</key>
 			<real>595</real>
 			<key>ypos</key>
-			<real>620</real>
+			<real>605</real>
 		</dict>
 		<key>FA333A60-CF01-4178-857C-9EE58B2C2E42</key>
 		<dict>
@@ -1750,7 +1751,7 @@ Display mounted volumes directly via `vol`.
 				<true/>
 			</dict>
 			<key>description</key>
-			<string>CPU threshold, percentage below which CPU is not displayed</string>
+			<string>minimum CPU threshold in % for displaying usage</string>
 			<key>label</key>
 			<string></string>
 			<key>type</key>
@@ -1771,13 +1772,32 @@ Display mounted volumes directly via `vol`.
 				<true/>
 			</dict>
 			<key>description</key>
-			<string>memory threshold, Mb below which memory usage is not displayed</string>
+			<string>minimum memory threshold in MB for displaying usage</string>
 			<key>label</key>
 			<string></string>
 			<key>type</key>
 			<string>textfield</string>
 			<key>variable</key>
 			<string>memory_threshold_mb</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<false/>
+				<key>required</key>
+				<false/>
+				<key>text</key>
+				<string>show PID</string>
+			</dict>
+			<key>description</key>
+			<string></string>
+			<key>label</key>
+			<string></string>
+			<key>type</key>
+			<string>checkbox</string>
+			<key>variable</key>
+			<string>show_pid</string>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -1915,7 +1935,7 @@ Display mounted volumes directly via `vol`.
 		</dict>
 	</array>
 	<key>version</key>
-	<string>1.4.5</string>
+	<string>1.5.3</string>
 	<key>webaddress</key>
 	<string>https://chris-grieser.de/</string>
 </dict>
