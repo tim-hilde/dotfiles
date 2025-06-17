@@ -22,6 +22,17 @@ return {
 				replace = true,
 			},
 		},
+		routes = {
+			{ filter = { event = "msg_show", find = "written" } },
+			{ filter = { event = "msg_show", find = "yanked" } },
+			{ filter = { event = "msg_show", find = "%d+L, %d+B" } },
+			{ filter = { event = "msg_show", find = "; after #%d+" } },
+			{ filter = { event = "msg_show", find = "; before #%d+" } },
+			{ filter = { event = "msg_show", find = "%d fewer lines" } },
+			{ filter = { event = "msg_show", find = "%d more lines" } },
+			{ filter = { event = "msg_show", find = "<ed" } },
+			{ filter = { event = "msg_show", find = ">ed" } },
+		},
 	},
 	dependencies = {
 		"MunifTanjim/nui.nvim",
