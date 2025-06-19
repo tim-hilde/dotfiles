@@ -3,6 +3,7 @@ return {
 	event = "VeryLazy",
 	cmd = "URLOpenUnderCursor",
 	config = function()
-		require "url-open"
+		local status_ok, url_open = pcall(require, "url-open")
+		url_open.setup {}
 	end,
 }
