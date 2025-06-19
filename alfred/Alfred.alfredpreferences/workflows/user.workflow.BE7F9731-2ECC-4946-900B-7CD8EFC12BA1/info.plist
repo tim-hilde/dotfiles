@@ -32,11 +32,37 @@
 				<false/>
 			</dict>
 		</array>
+		<key>137D836B-DAD0-45FC-AA31-8026C68AB7AD</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>4C71F133-A8A9-4124-990F-6B46E607F16F</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>35250579-616D-4017-A0E8-4C991421C56C</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
 				<string>EACAE753-9AAA-4B46-8058-AE37D6D371D8</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>4C71F133-A8A9-4124-990F-6B46E607F16F</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>E140BE00-C110-4C12-B890-B1FA678545EC</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -294,6 +320,74 @@
 				<key>acceptsmulti</key>
 				<integer>0</integer>
 				<key>acceptstext</key>
+				<true/>
+				<key>acceptsurls</key>
+				<false/>
+				<key>name</key>
+				<string>Conventional commit message</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.universalaction</string>
+			<key>uid</key>
+			<string>137D836B-DAD0-45FC-AA31-8026C68AB7AD</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>ignoredynamicplaceholders</key>
+				<false/>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>E140BE00-C110-4C12-B890-B1FA678545EC</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>query=$1
+
+ curl -X POST \
+  -H "Content-Type: text/plain; charset=utf-8" \
+  --data $query \
+  http://localhost:5678/webhook/fe128f50-bdfc-4048-947a-7cfa0f3d4211</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>11</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>4C71F133-A8A9-4124-990F-6B46E607F16F</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>acceptsfiles</key>
+				<false/>
+				<key>acceptsmulti</key>
+				<integer>0</integer>
+				<key>acceptstext</key>
 				<false/>
 				<key>acceptsurls</key>
 				<true/>
@@ -384,12 +478,26 @@
 			<key>ypos</key>
 			<real>610</real>
 		</dict>
+		<key>137D836B-DAD0-45FC-AA31-8026C68AB7AD</key>
+		<dict>
+			<key>xpos</key>
+			<real>605</real>
+			<key>ypos</key>
+			<real>720</real>
+		</dict>
 		<key>35250579-616D-4017-A0E8-4C991421C56C</key>
 		<dict>
 			<key>xpos</key>
 			<real>30</real>
 			<key>ypos</key>
 			<real>765</real>
+		</dict>
+		<key>4C71F133-A8A9-4124-990F-6B46E607F16F</key>
+		<dict>
+			<key>xpos</key>
+			<real>785</real>
+			<key>ypos</key>
+			<real>720</real>
 		</dict>
 		<key>81D189FF-D03F-47FE-A9BE-57C03FAC5B9B</key>
 		<dict>
@@ -439,6 +547,13 @@
 			<real>325</real>
 			<key>ypos</key>
 			<real>620</real>
+		</dict>
+		<key>E140BE00-C110-4C12-B890-B1FA678545EC</key>
+		<dict>
+			<key>xpos</key>
+			<real>975</real>
+			<key>ypos</key>
+			<real>720</real>
 		</dict>
 		<key>E2D67ABA-6908-476E-9651-5D20816EBA71</key>
 		<dict>
