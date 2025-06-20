@@ -251,6 +251,7 @@ return {
 				"ruff",
 				"bashls",
 				"actionlint",
+				"fixjson",
 			})
 
 			for server_name, server_config in pairs(servers) do
