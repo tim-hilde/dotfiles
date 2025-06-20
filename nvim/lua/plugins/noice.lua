@@ -25,6 +25,7 @@ return {
 			},
 			routes = {
 				{ filter = { event = "msg_show", find = "written" } },
+				{ filter = { event = "msg_show", find = "indented" } },
 				{ filter = { event = "msg_show", find = "yanked" } },
 				{ filter = { event = "msg_show", find = "%d+L, %d+B" } },
 				{ filter = { event = "msg_show", find = "; after #%d+" } },
