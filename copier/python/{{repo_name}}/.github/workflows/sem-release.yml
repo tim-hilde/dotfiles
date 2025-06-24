@@ -1,0 +1,52 @@
+name: semantic-release
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+
+concurrency:
+  group: semantic-release
+  cancel-in-progress: true
+
+jobs:
+  release:
+    outputs:
+      version: ${{ steps.release.outputs.version }}
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "0.6.9"
+      - name: Setup | Install Python & Project dependencies
+        run: uv sync --extra build
+      - name: Build
+        id: version
+        env:
+          GH_TOKEN: "none"
+        run: uv run semantic-release -v version --no-commit --no-tag
+      - name: Stage Lock File for Version Commit
+        run: git add uv.lock
+      - name: Release
+        id: release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: uv run semantic-release -v version --skip-build
+      - name: Sync with dev
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config --global user.name  "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git switch dev || git checkout -b dev origin/dev
+          git merge --ff-only main
+          git push origin dev
