@@ -16,6 +16,8 @@ return {
 				list_items = {
 					shift_width = 2,
 				},
+			}, experimental = {
+				check_rtp_message = false,
 			} }
 		end,
 	},
