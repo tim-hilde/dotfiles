@@ -1,19 +1,18 @@
 {
   "mcpServers": {
     "sequentialthinking": {
+      "disabled": false,
       "command": "docker",
       "args": [
         "run",
         "--rm",
         "-i",
         "mcp/sequentialthinking"
-      ],
-      "disabled": false
+      ]
     }
   },
   "nativeMCPServers": {
     "neovim": {
-      "disabled": false,
       "disabled_prompts": [
         "parrot"
       ],
@@ -24,7 +23,8 @@
         "write_file",
         "execute_command",
         "execute_lua"
-      ]
+      ],
+      "disabled": false
     },
     "mcphub": {
       "disabled_tools": [
