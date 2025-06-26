@@ -102,9 +102,6 @@ return {
 						opts = {
 							auto_submit_errors = true, -- Send any errors to the LLM automatically?
 							auto_submit_success = true, -- Send any successful output to the LLM automatically?
-							default_tools = {
-								"mcp",
-							},
 						},
 					},
 					slash_commands = {
