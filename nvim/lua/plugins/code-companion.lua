@@ -94,6 +94,19 @@ return {
 						},
 					})
 				end,
+				azure_openai = function()
+					return require("codecompanion.adapters").extend("azure_openai", {
+						env = {
+							api_key = "CC_AZURE_API_KEY",
+							endpoint = "CC_AZURE_ENDPOINT",
+						},
+						schema = {
+							model = {
+								default = "gpt-4.1",
+							},
+						},
+					})
+				end,
 			},
 			strategies = {
 				chat = {
