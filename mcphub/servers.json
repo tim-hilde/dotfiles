@@ -1,28 +1,11 @@
 {
-  "mcpServers": {
-    "sequentialthinking": {
-      "disabled": false,
-      "command": "docker",
-      "args": [
-        "run",
-        "--rm",
-        "-i",
-        "mcp/sequentialthinking"
-      ]
-    }
-  },
   "nativeMCPServers": {
     "neovim": {
       "disabled_prompts": [
         "parrot"
       ],
       "disabled_tools": [
-        "delete_item",
-        "move_item",
-        "replace_in_file",
-        "write_file",
-        "execute_command",
-        "execute_lua"
+        "delete_item"
       ],
       "disabled": false
     },
@@ -30,6 +13,18 @@
       "disabled_tools": [
         "toggle_mcp_server"
       ]
+    }
+  },
+  "mcpServers": {
+    "sequentialthinking": {
+      "args": [
+        "run",
+        "--rm",
+        "-i",
+        "mcp/sequentialthinking"
+      ],
+      "command": "docker",
+      "disabled": false
     }
   }
 }
