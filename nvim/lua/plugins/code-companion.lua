@@ -1,7 +1,7 @@
 return {
-	dir = "~/code/Projects/codecompanion.nvim/",
-	dev = true,
-	-- "olimorris/codecompanion.nvim",
+	-- dir = "~/code/Projects/codecompanion.nvim/",
+	-- dev = true,
+	"olimorris/codecompanion.nvim",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		"nvim-treesitter/nvim-treesitter",
