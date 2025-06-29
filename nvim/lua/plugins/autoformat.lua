@@ -21,11 +21,11 @@ return {
 			}
 		end,
 		formatters_by_ft = {
+			json = { "fixjson" },
 			lua = { "stylua" },
-			shell = { "beautysh" },
 			markdown = { "markdownlint" },
 			python = { "ruff_format", "ruff_organize_imports" },
-			json = { "fixjson" },
+			shell = { "beautysh" },
 			toml = { "taplo" },
 			yaml = { "yamlfmt" },
 			yml = { "yamlfmt" },
