@@ -27,6 +27,8 @@ return {
 			python = { "ruff_format", "ruff_organize_imports" },
 			json = { "fixjson" },
 			toml = { "taplo" },
+			yaml = { "yamlfmt" },
+			yml = { "yamlfmt" },
 		},
 		-- formatters = {
 		-- 	stylua = {
