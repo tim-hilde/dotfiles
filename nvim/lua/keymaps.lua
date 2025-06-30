@@ -26,8 +26,25 @@ vim.keymap.set("n", "<leader>l", function()
 	require("quicker").toggle { loclist = false }
 end, { desc = "Open qlist" })
 
-vim.keymap.set("n", "<C-M-J>", ":cnext<CR>", { desc = "Next loclist item" })
-vim.keymap.set("n", "<C-M-K>", ":cprevious<CR>", { desc = "Previous loclist item" })
+local function next_item()
+	-- Try to go to the next quickfix item. If empty, try the loclist.
+	if vim.fn.getqflist({ size = 0 }).size > 0 then
+		vim.cmd "cnext"
+	elseif vim.fn.getloclist(0, { size = 0 }).size > 0 then
+		vim.cmd "lnext"
+	end
+end
+
+local function prev_item()
+	if vim.fn.getqflist({ size = 0 }).size > 0 then
+		vim.cmd "cprevious"
+	elseif vim.fn.getloclist(0, { size = 0 }).size > 0 then
+		vim.cmd "lprevious"
+	end
+end
+
+vim.keymap.set("n", "<C-M-J>", next_item, { desc = "Next quickfix or loclist item" })
+vim.keymap.set("n", "<C-M-K>", prev_item, { desc = "Previous quickfix or loclist item" })
 
 -- Hover Documentation
 vim.keymap.set(
@@ -61,7 +78,7 @@ vim.keymap.set("n", "<C-l>", "<CMD>TmuxNavigateRight<CR>", { desc = "Move focus 
 -- Toggle Neotree
 vim.keymap.set("n", "<C-n>", ":Neotree filesystem reveal left toggle<CR>")
 
--- Toogle Oil
+-- Toggle Oil
 vim.keymap.set("n", "<leader>to", "<CMD>Oil --float<CR>", { desc = "[T]oggle [O]il" })
 
 -- Tabby
@@ -211,7 +228,7 @@ vim.keymap.set("n", "<leader>4", function()
 	require("harpoon"):list():select(4)
 end, { desc = "Harpoon 4" })
 
--- Toggle call hierachy
+-- Toggle call hierarchy
 vim.keymap.set("n", "<leader>ch", vim.lsp.buf.outgoing_calls, { desc = "[C]ode [H]ierarchy" })
 
 vim.keymap.del("n", "grr")
