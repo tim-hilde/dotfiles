@@ -10,9 +10,13 @@ return {
 				scratch_repl = true,
 				repl_definition = {
 					python = {
-						command = { "ipython", "--no-autoindent" },
-						format = python_format,
-					},
+						command = { "jupyter-console", "--ZMQTerminalInteractiveShell.image_handler=None" },
+						format = require("iron.fts.common").bracketed_paste_python,
+						block_dividers = { "# %%", "#%%" },
+					}, -- python = {
+					-- 	command = { "ipython", "--no-autoindent" },
+					-- 	format = python_format,
+					-- },
 				},
 				-- How the repl window will be displayed
 				repl_open_cmd = view.split.vertical.botright(0.5),
