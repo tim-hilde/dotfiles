@@ -19,7 +19,9 @@ return {
 					-- },
 				},
 				-- How the repl window will be displayed
-				repl_open_cmd = view.split.vertical.botright(0.5),
+				repl_open_cmd = view.split.vertical.botright(0.5, {
+					winfixwidth = false,
+				}),
 			},
 			keymaps = {
 				send_motion = "<leader>ic",
@@ -28,6 +30,8 @@ return {
 				send_line = "<leader>il",
 				send_paragraph = "<leader>ip",
 				send_until_cursor = "<leader>iu",
+				send_code_block = "<space>ib",
+				send_code_block_and_move = "<space>in",
 				send_mark = "<leader>im",
 				cr = "<leader>i<cr>",
 				interrupt = "<leader>i<space>",
