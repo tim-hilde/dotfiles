@@ -31,8 +31,8 @@ local function syncDotfiles()
 end
 syncDotfiles()
 hs.timer
-	.doEvery(config.syncIntervalMins * 60, function()
-		local idleMins = hs.host.idleTime() / 60
+	.doEvery(config.syncIntervalMins * 30, function()
+		local idleMins = hs.host.idleTime() / 30
 		if idleMins < config.syncIntervalMins then
 			syncDotfiles()
 		end
