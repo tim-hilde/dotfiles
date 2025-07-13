@@ -63,10 +63,23 @@ ignore = ["D104", "D100", "E501"]
 indent-style = "tab"
 
 [tool.semantic_release]
-version_toml = [
-    "pyproject.toml:project.version",
-]
-branch = "main"
+version_toml = ["pyproject.toml:project.version"]
+build_command = """
+  uv lock
+  uv build
+"""
+
+[tool.semantic_release.branches.main]
+match = "(main|master)"
+prerelease = false
+changelog = true
+
+[tool.semantic_release.branches.dev]
+match = "dev"
+prerelease = true
+changelog = false
+
+[changelog.default_templates.changelog_file]
 changelog_file = "CHANGELOG.md"
 
 [build-system]

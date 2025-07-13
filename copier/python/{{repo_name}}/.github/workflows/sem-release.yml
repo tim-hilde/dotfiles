@@ -1,15 +1,12 @@
 name: semantic-release
-
 on:
   push:
     branches:
       - dev
       - main
-
 concurrency:
   group: semantic-release
   cancel-in-progress: true
-
 jobs:
   release:
     outputs:
