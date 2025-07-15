@@ -297,7 +297,7 @@ return {
 						{
 							role = "user",
 							content = function()
-								local target_branch = vim.fn.input("Target branch for merge base diff (default: master): ", "master")
+								local target_branch = vim.fn.input("Target branch for merge base diff (default: main): ", "master")
 
 								return string.format(
 									[[
