@@ -115,8 +115,9 @@ return {
 					adapter = "copilot",
 					tools = {
 						opts = {
-							auto_submit_errors = true, -- Send any errors to the LLM automatically?
-							auto_submit_success = true, -- Send any successful output to the LLM automatically?
+							requires_approval = false,
+							auto_submit_errors = true,
+							auto_submit_success = true,
 						},
 					},
 					slash_commands = {

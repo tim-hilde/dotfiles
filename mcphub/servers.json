@@ -1,20 +1,4 @@
 {
-  "nativeMCPServers": {
-    "neovim": {
-      "disabled_prompts": [
-        "parrot"
-      ],
-      "disabled_tools": [
-        "delete_item"
-      ],
-      "disabled": false
-    },
-    "mcphub": {
-      "disabled_tools": [
-        "toggle_mcp_server"
-      ]
-    }
-  },
   "mcpServers": {
     "sequentialthinking": {
       "args": [
@@ -25,6 +9,28 @@
       ],
       "command": "docker",
       "disabled": false
+    }
+  },
+  "nativeMCPServers": {
+    "mcphub": {
+      "disabled_tools": [
+        "toggle_mcp_server"
+      ]
+    },
+    "neovim": {
+      "disabled": false,
+      "disabled_prompts": [
+        "parrot"
+      ],
+      "disabled_tools": [
+        "delete_item",
+        "execute_command",
+        "execute_lua",
+        "delete_items",
+        "edit_file",
+        "move_item",
+        "write_file"
+      ]
     }
   }
 }
