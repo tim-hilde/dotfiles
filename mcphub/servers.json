@@ -27,9 +27,7 @@
         "execute_command",
         "execute_lua",
         "delete_items",
-        "edit_file",
-        "move_item",
-        "write_file"
+        "move_item"
       ]
     }
   }
