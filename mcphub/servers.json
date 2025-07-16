@@ -13,6 +13,7 @@
   },
   "nativeMCPServers": {
     "mcphub": {
+      "disabled": true,
       "disabled_tools": [
         "toggle_mcp_server"
       ]
@@ -28,7 +29,9 @@
         "execute_lua",
         "delete_items",
         "move_item",
-        "list_directory"
+        "list_directory",
+        "edit_file",
+        "write_file"
       ]
     }
   }

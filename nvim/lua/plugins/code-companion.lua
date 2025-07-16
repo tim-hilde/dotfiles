@@ -305,7 +305,8 @@ return {
           You are a senior software engineer performing a code review. Analyze the following code changes.
            Identify any potential bugs, performance issues, security vulnerabilities, or areas that could be refactored for better readability or maintainability.
            Explain your reasoning clearly and provide specific suggestions for improvement.
-           Consider edge cases, error handling, and adherence to best practices and coding standards.
+           Consider edge cases, error handling, and adherence to best practices and coding standards. 
+		   You can use @{sequentialthinking} to plan your review.
            Here are the code changes:
            ```
             %s
