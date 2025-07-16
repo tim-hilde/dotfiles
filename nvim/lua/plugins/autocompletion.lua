@@ -54,12 +54,12 @@ return {
 					},
 				},
 			},
-			signature = {
-				enabled = false,
-				-- window = {
-				-- 	border = "rounded",
-				-- },
-			},
+			-- signature = {
+			-- 	enabled = false,
+			-- 	window = {
+			-- 		border = "rounded",
+			-- 	},
+			-- },
 			snippets = {
 				preset = "default",
 			},
