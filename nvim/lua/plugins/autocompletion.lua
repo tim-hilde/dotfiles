@@ -55,6 +55,7 @@ return {
 				},
 			},
 			signature = {
+				enabled = false,
 				window = {
 					border = "rounded",
 				},
