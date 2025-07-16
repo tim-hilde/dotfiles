@@ -297,18 +297,19 @@ return {
 					prompts = {
 						{
 							role = "system",
+							content = "You are a senior software engineer performing a code review. Analyze the following code changes.\n"
+								.. "Identify any potential bugs, performance issues, security vulnerabilities, or areas that could be refactored for better readability or maintainability.\n"
+								.. "Explain your reasoning clearly and provide specific suggestions for improvement.\n"
+								.. "Consider edge cases, error handling, and adherence to best practices and coding standards.\n"
+								.. "Do a review for each file. Files like lock files can be ignored.\n",
+						},
+						{
+							role = "user",
 							content = function()
-								local target_branch = vim.fn.input("Target branch for merge base diff (default: main): ", "master")
+								local target_branch = vim.fn.input("Target branch for merge base diff (default: main): ", "main")
 
 								return string.format(
-									"You are a senior software engineer performing a code review. Analyze the following code changes.\n"
-										.. "Identify any potential bugs, performance issues, security vulnerabilities, or areas that could be refactored for better readability or maintainability.\n"
-										.. "Explain your reasoning clearly and provide specific suggestions for improvement.\n"
-										.. "Consider edge cases, error handling, and adherence to best practices and coding standards.\n"
-										.. "Do a review for each file. Files like lock files can be ignored.\n"
-										.. "You can use sequentialthinking__sequentialthinking to plan your review.\n"
-										.. "Here are the code changes:\n"
-										.. "```\n\n%s\n```",
+									"You can use @{sequentialthinking} to plan your review." .. "Here are the code changes:\n\n```diff\n%s\n```",
 									vim.fn.system("git diff --merge-base " .. target_branch)
 								)
 							end,
