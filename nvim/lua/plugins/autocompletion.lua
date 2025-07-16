@@ -56,9 +56,9 @@ return {
 			},
 			signature = {
 				enabled = false,
-				window = {
-					border = "rounded",
-				},
+				-- window = {
+				-- 	border = "rounded",
+				-- },
 			},
 			snippets = {
 				preset = "default",

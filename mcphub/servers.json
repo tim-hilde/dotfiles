@@ -23,6 +23,9 @@
       "disabled_prompts": [
         "parrot"
       ],
+      "disabled_resources": [
+        "neovim://workspace"
+      ],
       "disabled_tools": [
         "delete_item",
         "execute_command",
