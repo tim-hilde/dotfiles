@@ -30,11 +30,15 @@ return {
 			yaml = { "yamlfmt" },
 			yml = { "yamlfmt" },
 		},
-		-- formatters = {
-		-- 	stylua = {
-		-- 		indent_style = "Spaces",
-		-- 		indent_width = 2,
-		-- 	},
-		-- },
+		formatters = {
+			yamlfmt = {
+				args = { "-formatter", "retain_line_breaks=true" },
+			},
+			-- 	stylua = {
+			-- 		indent_style = "Spaces",
+			-- 		indent_width = 2,
+			-- 	},
+			-- },
+		},
 	},
 }
