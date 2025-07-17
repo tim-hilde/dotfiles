@@ -99,7 +99,7 @@ return {
 		{
 			"<leader><leader>",
 			function()
-				Snacks.picker.buffers()
+				Snacks.picker.buffers { current = false }
 			end,
 			desc = "[ ] Find existing buffers",
 		},
