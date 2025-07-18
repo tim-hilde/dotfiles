@@ -62,16 +62,6 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>E140BE00-C110-4C12-B890-B1FA678545EC</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-			<dict>
-				<key>destinationuid</key>
 				<string>F788AE94-B5FF-436F-B870-E5826E09BD31</string>
 				<key>modifiers</key>
 				<integer>0</integer>
@@ -125,6 +115,19 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>81D189FF-D03F-47FE-A9BE-57C03FAC5B9B</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>F788AE94-B5FF-436F-B870-E5826E09BD31</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>E140BE00-C110-4C12-B890-B1FA678545EC</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -346,6 +349,45 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>query=$1
+
+json=$(jq -n \
+  --arg model "mistralai/mistral-small-3.2" \
+  --arg sys "generate title for a pull request in conventional commit style. Output only the title and nothing else" \
+  --arg user "$query" \
+  '{
+    model: $model,
+    messages: [
+      { role: "system", content: $sys },
+      { role: "user", content: $user }
+    ]
+  }')
+
+curl -X POST http://localhost:1234/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -d "$json" | jq -r '.choices[0].message.content'</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>11</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>4C71F133-A8A9-4124-990F-6B46E607F16F</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>autopaste</key>
 				<false/>
 				<key>clipboardtext</key>
@@ -361,45 +403,6 @@
 			<string>E140BE00-C110-4C12-B890-B1FA678545EC</string>
 			<key>version</key>
 			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>query=$1
-
-curl -X POST http://localhost:1234/v1/chat/completions \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "gpt-3.5-turbo",
-    "messages": [
-      {
-        "role": "system",
-        "content": "generate title for a pull request in conventional commit style"
-      },
-      {
-        "role": "user",
-        "content": $query
-      }
-    ]
-  }'</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>11</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>4C71F133-A8A9-4124-990F-6B46E607F16F</string>
-			<key>version</key>
-			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -593,9 +596,9 @@ curl -X POST http://localhost:1234/v1/chat/completions \
 		<key>E140BE00-C110-4C12-B890-B1FA678545EC</key>
 		<dict>
 			<key>xpos</key>
-			<real>975</real>
+			<real>1065</real>
 			<key>ypos</key>
-			<real>720</real>
+			<real>765</real>
 		</dict>
 		<key>E2D67ABA-6908-476E-9651-5D20816EBA71</key>
 		<dict>
@@ -614,9 +617,9 @@ curl -X POST http://localhost:1234/v1/chat/completions \
 		<key>F788AE94-B5FF-436F-B870-E5826E09BD31</key>
 		<dict>
 			<key>xpos</key>
-			<real>975</real>
+			<real>915</real>
 			<key>ypos</key>
-			<real>850</real>
+			<real>775</real>
 		</dict>
 	</dict>
 	<key>userconfigurationconfig</key>
