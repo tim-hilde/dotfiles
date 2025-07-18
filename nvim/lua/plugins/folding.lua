@@ -25,7 +25,7 @@ return {
 		opts = {
 			keepFoldsAcrossSessions = false,
 			pauseFoldsOnSearch = true,
-			foldtextWithLineCount = {
+			fodltext = {
 				enabled = true,
 				template = "   %s lines", -- `%s` gets the number of folded lines
 			},
