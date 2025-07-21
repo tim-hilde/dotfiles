@@ -1,5 +1,14 @@
 {
   "mcpServers": {
+    "git": {
+      "args": [
+        "mcp-server-git",
+        "--repository",
+        "/Users/tim/code/teqyard/private-gpt"
+      ],
+      "command": "uvx",
+      "disabled": false
+    },
     "sequentialthinking": {
       "args": [
         "run",
