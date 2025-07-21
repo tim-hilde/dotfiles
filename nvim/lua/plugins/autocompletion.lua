@@ -59,7 +59,6 @@ return {
 				window = {
 					border = "rounded",
 				},
-				documentation = false,
 			},
 			snippets = {
 				preset = "default",
