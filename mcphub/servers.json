@@ -7,7 +7,7 @@
         "/Users/tim/code/teqyard/private-gpt"
       ],
       "command": "uvx",
-      "disabled": false
+      "disabled": true
     },
     "sequentialthinking": {
       "args": [
