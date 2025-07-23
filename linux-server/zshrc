@@ -1,0 +1,126 @@
+# ~/.zshrc for Linux servers - minimal and fast
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+# Oh My Zsh configuration
+export ZSH="$HOME/.oh-my-zsh"
+
+# Use a simple theme for servers
+ZSH_THEME=""
+
+# Essential plugins only for server performance
+plugins=(
+    git
+    zsh-syntax-highlighting
+    zsh-autosuggestions
+    direnv
+)
+
+# Load Oh My Zsh
+source $ZSH/oh-my-zsh.sh
+
+# Starship prompt (faster than powerlevel10k)
+if command -v starship >/dev/null 2>&1; then
+    eval "$(starship init zsh)"
+fi
+
+# History configuration
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=~/.zsh_history
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_VERIFY
+setopt SHARE_HISTORY
+
+# Better completion
+autoload -Uz compinit
+compinit
+
+# Case insensitive completion
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+
+# Load aliases
+if [[ -f ~/.aliases ]]; then
+    source ~/.aliases
+fi
+
+# Environment variables
+export EDITOR="nvim"
+export VISUAL="nvim"
+export PAGER="less"
+
+# Add local bin to PATH
+export PATH="$HOME/.local/bin:$PATH"
+
+# Python user base
+if command -v python3 >/dev/null 2>&1; then
+    export PATH="$(python3 -m site --user-base)/bin:$PATH"
+fi
+
+# Cargo (Rust) path
+if [[ -d "$HOME/.cargo/bin" ]]; then
+    export PATH="$HOME/.cargo/bin:$PATH"
+fi
+
+# Initialize zoxide if available
+if command -v zoxide >/dev/null 2>&1; then
+    eval "$(zoxide init zsh)"
+fi
+
+# Initialize direnv if available
+if command -v direnv >/dev/null 2>&1; then
+    eval "$(direnv hook zsh)"
+fi
+
+# FZF configuration
+if command -v fzf >/dev/null 2>&1; then
+    # Use fd for fzf if available
+    if command -v fd >/dev/null 2>&1; then
+        export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+        export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+        export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+    fi
+    
+    # Better colors for fzf
+    export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
+fi
+
+# Load machine-specific configuration if it exists
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+
+# Quick functions for server administration
+sshkey() {
+    if [[ -f ~/.ssh/id_rsa.pub ]]; then
+        cat ~/.ssh/id_rsa.pub
+    elif [[ -f ~/.ssh/id_ed25519.pub ]]; then
+        cat ~/.ssh/id_ed25519.pub
+    else
+        echo "No SSH public key found"
+    fi
+}
+
+# Quick service status check
+srvstatus() {
+    if [[ -n "$1" ]]; then
+        sudo systemctl status "$1"
+    else
+        echo "Usage: srvstatus <service-name>"
+    fi
+}
+
+# Quick log viewing
+logs() {
+    if [[ -n "$1" ]]; then
+        sudo journalctl -fu "$1"
+    else
+        sudo journalctl -f
+    fi
+}
+
+# Welcome message for servers
+echo "🚀 Server environment ready!"
+if command -v neofetch >/dev/null 2>&1; then
+    neofetch --config none --stdout | head -10
+fi

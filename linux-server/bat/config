@@ -1,0 +1,20 @@
+# bat configuration for Linux servers
+
+# Use a theme that works well on dark terminals
+--theme="Monokai Extended"
+
+# Show line numbers
+--style="numbers,changes,header"
+
+# Use italic text on the terminal
+--italic-text=always
+
+# Add mouse scrolling support in less
+--pager="less -FR"
+
+# Map common file extensions
+--map-syntax "*.conf:INI"
+--map-syntax ".env:Bash"
+--map-syntax "*.service:INI"
+--map-syntax "Dockerfile:Dockerfile"
+--map-syntax "docker-compose*.yml:YAML"

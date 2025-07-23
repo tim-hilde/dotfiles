@@ -1,0 +1,105 @@
+# Essential aliases for Linux servers
+alias ll="ls -alF"
+alias la="ls -A"
+alias l="ls -CF"
+
+# Use eza if available, fallback to ls
+if command -v eza >/dev/null 2>&1; then
+    alias ls="eza --color always --icons"
+    alias ll="eza --color always --icons -1labh -s name --group-directories-first"
+    alias tree="eza --tree"
+else
+    alias ls="ls --color=auto"
+    alias ll="ls -alh"
+    alias tree="tree"
+fi
+
+# Navigation
+if command -v zoxide >/dev/null 2>&1; then
+    alias cd="z"
+fi
+
+# Common shortcuts
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+
+# Git shortcuts
+alias g="git"
+alias gs="git status"
+alias ga="git add"
+alias gc="git commit"
+alias gp="git push"
+alias gl="git pull"
+alias gd="git diff"
+alias gb="git branch"
+alias gco="git checkout"
+
+# Editor
+alias v="nvim"
+alias nv="nvim"
+
+# System monitoring
+alias h="htop"
+alias df="df -h"
+alias du="du -h"
+alias free="free -h"
+
+# Network
+alias myip="curl -s https://ipinfo.io/ip"
+alias ports="netstat -tulpn"
+
+# File operations
+alias cp="cp -iv"
+alias mv="mv -iv"
+alias rm="rm -iv"
+alias mkdir="mkdir -pv"
+
+# Search and find
+if command -v rg >/dev/null 2>&1; then
+    alias grep="rg"
+fi
+
+if command -v fd >/dev/null 2>&1; then
+    alias find="fd"
+fi
+
+# Cat with syntax highlighting
+if command -v bat >/dev/null 2>&1; then
+    alias cat="bat --paging=never"
+    alias less="bat"
+fi
+
+# Process management
+alias psg="ps aux | grep"
+alias k9="kill -9"
+
+# Docker shortcuts (if docker is installed)
+if command -v docker >/dev/null 2>&1; then
+    alias d="docker"
+    alias dc="docker-compose"
+    alias dps="docker ps"
+    alias dpa="docker ps -a"
+    alias di="docker images"
+    alias dexec="docker exec -it"
+fi
+
+# Tmux shortcuts
+alias t="tmux"
+alias ta="tmux attach-session -t"
+alias ts="tmux new-session -s"
+alias tl="tmux list-sessions"
+
+# Quick directory navigation to common locations
+alias cdl="cd /var/log"
+alias cde="cd /etc"
+alias cdh="cd $HOME"
+alias cdt="cd /tmp"
+
+# System services (systemd)
+alias sctl="sudo systemctl"
+alias jctl="sudo journalctl"
+
+# Disk usage
+alias space="du -sh * | sort -h"
+alias ducks="du -cks * | sort -rn | head"
