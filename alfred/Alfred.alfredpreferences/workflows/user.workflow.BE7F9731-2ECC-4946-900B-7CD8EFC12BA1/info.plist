@@ -505,9 +505,9 @@ curl -X POST http://localhost:1234/v1/chat/completions \
 				<key>script</key>
 				<string>query=$1
 
-curl -X POST http://localhost:5001/download \
+curl -X POST http://raspberrypi.local:5001/download \
   -H "Content-Type: application/json" \
-  -d '{"url": $query}'</string>
+  -d "{\"url\": \"$query\"}"</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
