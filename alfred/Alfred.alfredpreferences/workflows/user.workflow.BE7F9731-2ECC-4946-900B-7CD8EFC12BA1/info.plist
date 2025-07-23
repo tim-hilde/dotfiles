@@ -71,6 +71,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>8D0BEB1E-7AF0-4C7F-8448-AB3F1D0DDBE4</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>4D2B1D83-ADB3-4B1B-BAFF-39C4D019C87C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>A4125F74-562A-4A00-A377-83F3CD27735E</key>
 		<array>
 			<dict>
@@ -464,6 +477,54 @@ curl -X POST http://localhost:1234/v1/chat/completions \
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>acceptsfiles</key>
+				<false/>
+				<key>acceptsmulti</key>
+				<integer>0</integer>
+				<key>acceptstext</key>
+				<false/>
+				<key>acceptsurls</key>
+				<true/>
+				<key>name</key>
+				<string>yt pi</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.universalaction</string>
+			<key>uid</key>
+			<string>8D0BEB1E-7AF0-4C7F-8448-AB3F1D0DDBE4</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>query=$1
+
+curl -X POST http://localhost:5001/download \
+  -H "Content-Type: application/json" \
+  -d '{"url": $query}'</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>11</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>4D2B1D83-ADB3-4B1B-BAFF-39C4D019C87C</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>escaping</key>
 				<integer>0</integer>
 				<key>script</key>
@@ -544,12 +605,26 @@ curl -X POST http://localhost:1234/v1/chat/completions \
 			<key>ypos</key>
 			<real>720</real>
 		</dict>
+		<key>4D2B1D83-ADB3-4B1B-BAFF-39C4D019C87C</key>
+		<dict>
+			<key>xpos</key>
+			<real>215</real>
+			<key>ypos</key>
+			<real>880</real>
+		</dict>
 		<key>81D189FF-D03F-47FE-A9BE-57C03FAC5B9B</key>
 		<dict>
 			<key>xpos</key>
 			<real>345</real>
 			<key>ypos</key>
 			<real>280</real>
+		</dict>
+		<key>8D0BEB1E-7AF0-4C7F-8448-AB3F1D0DDBE4</key>
+		<dict>
+			<key>xpos</key>
+			<real>30</real>
+			<key>ypos</key>
+			<real>875</real>
 		</dict>
 		<key>A4125F74-562A-4A00-A377-83F3CD27735E</key>
 		<dict>
