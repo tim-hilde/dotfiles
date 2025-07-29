@@ -37,6 +37,12 @@ return {
 				{ filter = { event = "msg_show", find = "%d more lines" } },
 				{ filter = { event = "msg_show", find = "<ed" } },
 				{ filter = { event = "msg_show", find = ">ed" } },
+				{
+					view = "notify",
+					filter = { event = "msg_showmode", any = {
+						{ find = "recording" },
+					} },
+				},
 			},
 		},
 		dependencies = {
