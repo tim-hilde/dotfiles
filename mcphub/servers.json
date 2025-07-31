@@ -21,29 +21,27 @@
     }
   },
   "nativeMCPServers": {
-    "mcphub": {
-      "disabled_tools": [
-        "toggle_mcp_server"
-      ],
-      "disabled": true
-    },
     "neovim": {
       "disabled_tools": [
         "execute_lua",
         "delete_items",
         "edit_file",
-        "execute_command",
         "list_directory",
-        "move_item",
-        "write_file"
+        "move_item"
       ],
       "disabled": false,
-      "disabled_resources": [
-        "neovim://workspace"
-      ],
       "disabled_prompts": [
         "parrot"
+      ],
+      "disabled_resources": [
+        "neovim://workspace"
       ]
+    },
+    "mcphub": {
+      "disabled_tools": [
+        "toggle_mcp_server"
+      ],
+      "disabled": true
     }
   }
 }
