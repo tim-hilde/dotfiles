@@ -104,7 +104,7 @@ return {
 						},
 						schema = {
 							model = {
-								default = "gpt-4o",
+								default = "gpt-4.1",
 							},
 						},
 					})
