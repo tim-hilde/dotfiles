@@ -45,6 +45,21 @@
 				<false/>
 			</dict>
 		</array>
+		<key>1E2462B3-DB15-4A2B-BA31-4F75700B73CB</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>434F35CB-CEBD-469A-93CE-5FBE4134D18C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>51572E79-999E-4170-BE6F-989F040AF30D</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>35250579-616D-4017-A0E8-4C991421C56C</key>
 		<array>
 			<dict>
@@ -63,6 +78,19 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>F788AE94-B5FF-436F-B870-E5826E09BD31</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>4D2B1D83-ADB3-4B1B-BAFF-39C4D019C87C</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>1E2462B3-DB15-4A2B-BA31-4F75700B73CB</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -401,25 +429,6 @@ curl -X POST http://localhost:1234/v1/chat/completions \
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>autopaste</key>
-				<false/>
-				<key>clipboardtext</key>
-				<string>{query}</string>
-				<key>ignoredynamicplaceholders</key>
-				<false/>
-				<key>transient</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.clipboard</string>
-			<key>uid</key>
-			<string>E140BE00-C110-4C12-B890-B1FA678545EC</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>acceptsfiles</key>
 				<false/>
 				<key>acceptsmulti</key>
@@ -441,17 +450,21 @@ curl -X POST http://localhost:1234/v1/chat/completions \
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>escaping</key>
-				<integer>0</integer>
-				<key>script</key>
-				<string>yt-dlp -f bestaudio --extract-audio --audio-format mp3 "{query}"</string>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>ignoredynamicplaceholders</key>
+				<false/>
+				<key>transient</key>
+				<false/>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.action.terminalcommand</string>
+			<string>alfred.workflow.output.clipboard</string>
 			<key>uid</key>
-			<string>EACAE753-9AAA-4B46-8058-AE37D6D371D8</string>
+			<string>E140BE00-C110-4C12-B890-B1FA678545EC</string>
 			<key>version</key>
-			<integer>1</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -471,6 +484,21 @@ curl -X POST http://localhost:1234/v1/chat/completions \
 			<string>alfred.workflow.output.notification</string>
 			<key>uid</key>
 			<string>F788AE94-B5FF-436F-B870-E5826E09BD31</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>script</key>
+				<string>yt-dlp -f bestaudio --extract-audio --audio-format mp3 "{query}"</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.terminalcommand</string>
+			<key>uid</key>
+			<string>EACAE753-9AAA-4B46-8058-AE37D6D371D8</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -521,6 +549,59 @@ curl -X POST http://raspberrypi.local:5001/download \
 			<string>4D2B1D83-ADB3-4B1B-BAFF-39C4D019C87C</string>
 			<key>version</key>
 			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<true/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>Video queued</string>
+				<key>title</key>
+				<string>Youtube Downloader</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>434F35CB-CEBD-469A-93CE-5FBE4134D18C</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>conditions</key>
+				<array>
+					<dict>
+						<key>inputstring</key>
+						<string></string>
+						<key>matchcasesensitive</key>
+						<false/>
+						<key>matchmode</key>
+						<integer>4</integer>
+						<key>matchstring</key>
+						<string>queue</string>
+						<key>outputlabel</key>
+						<string>queued</string>
+						<key>uid</key>
+						<string>51572E79-999E-4170-BE6F-989F040AF30D</string>
+					</dict>
+				</array>
+				<key>elselabel</key>
+				<string>else</string>
+				<key>hideelse</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.conditional</string>
+			<key>uid</key>
+			<string>1E2462B3-DB15-4A2B-BA31-4F75700B73CB</string>
+			<key>version</key>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -591,12 +672,26 @@ curl -X POST http://raspberrypi.local:5001/download \
 			<key>ypos</key>
 			<real>720</real>
 		</dict>
+		<key>1E2462B3-DB15-4A2B-BA31-4F75700B73CB</key>
+		<dict>
+			<key>xpos</key>
+			<real>390</real>
+			<key>ypos</key>
+			<real>920</real>
+		</dict>
 		<key>35250579-616D-4017-A0E8-4C991421C56C</key>
 		<dict>
 			<key>xpos</key>
 			<real>30</real>
 			<key>ypos</key>
 			<real>765</real>
+		</dict>
+		<key>434F35CB-CEBD-469A-93CE-5FBE4134D18C</key>
+		<dict>
+			<key>xpos</key>
+			<real>510</real>
+			<key>ypos</key>
+			<real>890</real>
 		</dict>
 		<key>4C71F133-A8A9-4124-990F-6B46E607F16F</key>
 		<dict>
