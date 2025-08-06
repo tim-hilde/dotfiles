@@ -75,7 +75,7 @@ vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 vim.opt.inccommand = "split"
 
 -- save tab layout etc in session
-vim.opt.sessionoptions = "blank,buffers,curdir,folds,globals,help,tabpages,terminal,winsize,winpos,localoptions"
+vim.opt.sessionoptions = "blank,buffers,curdir,globals,help,tabpages,terminal,winsize,winpos,localoptions"
 
 -- make borders of pop ups round
 -- vim.o.winborder = "rounded"

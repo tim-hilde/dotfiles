@@ -1,7 +1,7 @@
 -- -- Nice and simple folding:
 -- vim.o.foldenable = true
--- vim.o.foldlevel = 99
--- vim.o.foldlevelstart = 99
+-- vim.opt.foldlevel = 99
+-- vim.opt.foldlevelstart = 99
 -- vim.o.foldmethod = "expr"
 -- vim.o.foldtext = ""
 -- vim.opt.foldcolumn = "0"
@@ -20,27 +20,27 @@
 -- 	end,
 -- })
 return {
-	{
-		"chrisgrieser/nvim-origami",
-		event = "VeryLazy",
-		opts = {
-			pauseFoldsOnSearch = true,
-			foldtext = {
-				enabled = true,
-				template = "   %s lines", -- `%s` gets the number of folded lines
-			},
-			foldKeymaps = {
-				setup = true, -- modifies `h` and `l`
-				hOnlyOpensOnFirstColumn = true,
-			},
-			autoFold = {
-				enabled = false,
-				kinds = { "comment", "imports" }, ---@type lsp.FoldingRangeKind[]
-			},
-		},
-		init = function()
-			vim.opt.foldlevel = 99
-			vim.opt.foldlevelstart = 99
-		end,
-	},
+	-- {
+	-- 	"chrisgrieser/nvim-origami",
+	-- 	event = "VeryLazy",
+	-- 	opts = {
+	-- 		pauseFoldsOnSearch = true,
+	-- 		foldtext = {
+	-- 			enabled = true,
+	-- 			template = "   %s lines", -- `%s` gets the number of folded lines
+	-- 		},
+	-- 		foldKeymaps = {
+	-- 			setup = true, -- modifies `h` and `l`
+	-- 			hOnlyOpensOnFirstColumn = true,
+	-- 		},
+	-- 		autoFold = {
+	-- 			enabled = false,
+	-- 			kinds = { "comment", "imports" }, ---@type lsp.FoldingRangeKind[]
+	-- 		},
+	-- 	},
+	-- 	init = function()
+	-- 		vim.opt.foldlevel = 99
+	-- 		vim.opt.foldlevelstart = 99
+	-- 	end,
+	-- },
 }
