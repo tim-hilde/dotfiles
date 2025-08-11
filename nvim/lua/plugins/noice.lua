@@ -38,7 +38,7 @@ return {
 				{ filter = { event = "msg_show", find = "<ed" } },
 				{ filter = { event = "msg_show", find = ">ed" } },
 				{
-					view = "notify",
+					view = "cmdline",
 					filter = { event = "msg_showmode", any = {
 						{ find = "recording" },
 					} },
