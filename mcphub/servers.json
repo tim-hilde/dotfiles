@@ -1,47 +1,39 @@
 {
   "mcpServers": {
-    "git": {
-      "command": "uvx",
-      "disabled": true,
-      "args": [
-        "mcp-server-git",
-        "--repository",
-        "/Users/tim/code/teqyard/private-gpt"
-      ]
-    },
     "sequentialthinking": {
-      "command": "docker",
-      "disabled": false,
       "args": [
         "run",
         "--rm",
         "-i",
         "mcp/sequentialthinking"
-      ]
+      ],
+      "command": "docker",
+      "disabled": false
     }
   },
   "nativeMCPServers": {
-    "neovim": {
+    "mcphub": {
+      "disabled": true,
       "disabled_tools": [
-        "execute_lua",
-        "delete_items",
-        "edit_file",
-        "list_directory",
-        "move_item"
-      ],
+        "toggle_mcp_server"
+      ]
+    },
+    "neovim": {
       "disabled": false,
       "disabled_prompts": [
         "parrot"
       ],
       "disabled_resources": [
         "neovim://workspace"
-      ]
-    },
-    "mcphub": {
-      "disabled_tools": [
-        "toggle_mcp_server"
       ],
-      "disabled": true
+      "disabled_tools": [
+        "execute_lua",
+        "delete_items",
+        "edit_file",
+        "list_directory",
+        "move_item",
+        "write_file"
+      ]
     }
   }
 }
