@@ -28,14 +28,14 @@ repos:
   hooks:
   - id: mypy
     name: Type checking (mypy)
-    entry: make mypy
+    entry: uv run mypy . --install-types --ignore-missing-imports --non-interactive
     pass_filenames: false
     language: system
     types: [python]
     stages: [pre-commit]
   - id: test
     name: Unit tests (pytest)
-    entry: make test
+    entry: uv run pytest tests
     pass_filenames: false
     language: system
     types: [python]
