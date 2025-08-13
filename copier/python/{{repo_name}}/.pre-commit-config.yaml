@@ -32,14 +32,14 @@ repos:
     pass_filenames: false
     language: system
     types: [python]
-    stages: [commit]
+    stages: [pre-commit]
   - id: test
     name: Unit tests (pytest)
     entry: make test
     pass_filenames: false
     language: system
     types: [python]
-    stages: [push]
+    stages: [pre-push]
 
 - repo: https://github.com/compilerla/conventional-pre-commit
   rev: "v4.2.0"

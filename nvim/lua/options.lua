@@ -50,10 +50,10 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 20
 
-vim.cmd "set noexpandtab"
-vim.cmd "set tabstop=4"
--- vim.cmd "set softtabstop=4"
--- vim.cmd "set shiftwidth=4"
+vim.opt.expandtab = true
+-- vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = "a"
