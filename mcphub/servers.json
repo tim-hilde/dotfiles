@@ -29,10 +29,7 @@
       "disabled_tools": [
         "execute_lua",
         "delete_items",
-        "edit_file",
-        "list_directory",
-        "move_item",
-        "write_file"
+        "list_directory"
       ]
     }
   }
