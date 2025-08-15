@@ -27,9 +27,8 @@
         "neovim://workspace"
       ],
       "disabled_tools": [
-        "execute_lua",
-        "delete_items",
-        "list_directory"
+        "list_directory",
+        "delete_items"
       ]
     }
   }
