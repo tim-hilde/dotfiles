@@ -15,21 +15,13 @@ return {
 		statuscolumn = { enabled = true },
 		picker = {
 			enabled = true,
-			-- win = {
-			-- 	input = {
-			-- 		keys = {
-			-- 			["<c-h>"] = { "toggle_hidden", mode = { "i", "n" } },
-			-- 			["<c-o>"] = { "toggle_ignored", mode = { "i", "n" } },
-			-- 		},
-			-- 	},
-			-- 	list = {
-			-- 		keys = {
-			-- 			["<c-h>"] = { "toggle_hidden", mode = { "i", "n" } },
-			-- 			["<c-o>"] = { "toggle_ignored", mode = { "i", "n" } },
-			-- 			["s"] = { "edit_split", mode = { "n" } },
-			-- 		},
-			-- 	},
-			-- },
+			win = {
+				input = {
+					keys = {
+						["<M-H>"] = { "toggle_hidden", mode = { "i", "n" } },
+					},
+				},
+			},
 		},
 	},
 	keys = {
