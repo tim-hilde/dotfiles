@@ -1,1 +1,1004 @@
-{"global":{"show_in_menu_bar":false},"profiles":[{"complex_modifications":{"rules":[{"description":"🔺 L-Ctrl (Non-Apple) / fn (Apple)","manipulators":[{"type":"basic","description":"Non-Apple Keyboard","from":{"key_code":"left_control"},"to":[{"key_code":"left_control"}],"parameters":{"basic.to_if_alone_timeout_milliseconds":600},"conditions":[{"type":"variable_unless","name":"LEADER_ACTIVE","value":true},{"type":"device_unless","identifiers":[{"is_built_in_keyboard":true,"is_keyboard":true}]}],"to_if_alone":[{"key_code":"left_control"},{"set_variable":{"name":"LEADER_ACTIVE","value":true}},{"set_notification_message":{"id":"leader-notice","text":"🔺 Leader"}}]},{"type":"basic","description":"Apple Keyboard","from":{"key_code":"fn"},"to":[{"key_code":"fn"}],"conditions":[{"type":"variable_unless","name":"LEADER_ACTIVE","value":true},{"type":"device_if","identifiers":[{"is_built_in_keyboard":true,"is_keyboard":true}]}],"parameters":{"basic.to_if_alone_timeout_milliseconds":600},"to_if_alone":[{"key_code":"fn"},{"set_variable":{"name":"LEADER_ACTIVE","value":true}},{"set_notification_message":{"id":"leader-notice","text":"🔺 Leader"}}]}]},{"description":"🔺 App Switcher Actions","manipulators":[{"type":"basic","description":"Leader Cancel","from":{"key_code":"escape"},"conditions":[{"type":"variable_if","name":"LEADER_ACTIVE","value":true}],"to":[{"set_variable":{"name":"LEADER_ACTIVE","value":false}},{"set_notification_message":{"id":"leader-notice","text":""}}]},{"type":"basic","description":"Hyper (Esc): Leader Cancel","from":{"key_code":"caps_lock"},"conditions":[{"type":"variable_if","name":"LEADER_ACTIVE","value":true}],"to_if_alone":[{"set_variable":{"name":"LEADER_ACTIVE","value":false}},{"set_notification_message":{"id":"leader-notice","text":""}}]},{"type":"basic","from":{"key_code":"period"},"to":[{"key_code":"spacebar","modifiers":["right_control","right_command"]},{"set_variable":{"name":"LEADER_ACTIVE","value":false}},{"set_notification_message":{"id":"leader-notice","text":""}}],"conditions":[{"type":"variable_if","name":"LEADER_ACTIVE","value":true}]},{"type":"basic","from":{"key_code":"o"},"conditions":[{"type":"variable_if","name":"LEADER_ACTIVE","value":true}],"to":[{"shell_command":"open -a 'Obsidian'"},{"set_variable":{"name":"LEADER_ACTIVE","value":false}},{"set_notification_message":{"id":"leader-notice","text":""}}]},{"type":"basic","from":{"key_code":"s"},"conditions":[{"type":"variable_if","name":"LEADER_ACTIVE","value":true}],"to":[{"shell_command":"if [ -d \"/Applications/Vivaldi.app\" ]; then\n  open -a 'Vivaldi'\nelse\n  open -a 'Safari'\nfi"},{"set_variable":{"name":"LEADER_ACTIVE","value":false}},{"set_notification_message":{"id":"leader-notice"}}]},{"type":"basic","from":{"key_code":"p"},"conditions":[{"type":"variable_if","name":"LEADER_ACTIVE","value":true}],"to":[{"shell_command":"open -a 'Activity Monitor'"},{"set_variable":{"name":"LEADER_ACTIVE","value":false}},{"set_notification_message":{"id":"leader-notice","text":""}}]},{"type":"basic","from":{"key_code":"y"},"conditions":[{"type":"variable_if","name":"LEADER_ACTIVE","value":true}],"to":[{"shell_command":"open -a 'Zotero'"},{"set_variable":{"name":"LEADER_ACTIVE","value":false}},{"set_notification_message":{"id":"leader-notice"}}]},{"type":"basic","from":{"key_code":"k"},"conditions":[{"type":"variable_if","name":"LEADER_ACTIVE","value":true}],"to":[{"shell_command":"open -a 'Calendar'"},{"set_variable":{"name":"LEADER_ACTIVE","value":false}},{"set_notification_message":{"id":"leader-notice"}}]},{"type":"basic","from":{"key_code":"m"},"conditions":[{"type":"variable_if","name":"LEADER_ACTIVE","value":true}],"to":[{"shell_command":"open -a 'Mail'"},{"set_variable":{"name":"LEADER_ACTIVE","value":false}},{"set_notification_message":{"id":"leader-notice"}}]},{"type":"basic","from":{"key_code":"a"},"conditions":[{"type":"variable_if","name":"LEADER_ACTIVE","value":true}],"to":[{"shell_command":"open -a 'Alfred Preferences'"},{"set_variable":{"name":"LEADER_ACTIVE","value":false}},{"set_notification_message":{"id":"leader-notice"}}]},{"type":"basic","from":{"key_code":"w"},"conditions":[{"type":"variable_if","name":"LEADER_ACTIVE","value":true}],"to":[{"shell_command":"open -a 'WebEx'"},{"set_variable":{"name":"LEADER_ACTIVE","value":false}},{"set_notification_message":{"id":"leader-notice"}}]},{"type":"basic","from":{"key_code":"l"},"conditions":[{"type":"variable_if","name":"LEADER_ACTIVE","value":true}],"to":[{"shell_command":"open -a 'kitty'"},{"set_variable":{"name":"LEADER_ACTIVE","value":false}},{"set_notification_message":{"id":"leader-notice"}}]},{"type":"basic","from":{"key_code":"comma"},"conditions":[{"type":"variable_if","name":"LEADER_ACTIVE","value":true}],"to":[{"shell_command":"open -a 'System Preferences'"},{"set_variable":{"name":"LEADER_ACTIVE","value":false}},{"set_notification_message":{"id":"leader-notice"}}]},{"type":"basic","from":{"key_code":"f"},"conditions":[{"type":"variable_if","name":"LEADER_ACTIVE","value":true}],"to":[{"shell_command":"open -a 'Finder'"},{"set_variable":{"name":"LEADER_ACTIVE","value":false}},{"set_notification_message":{"id":"leader-notice"}}]},{"type":"basic","from":{"key_code":"u"},"conditions":[{"type":"variable_if","name":"LEADER_ACTIVE","value":true}],"to":[{"shell_command":"open -a 'Microsoft Outlook'"},{"set_variable":{"name":"LEADER_ACTIVE","value":false}},{"set_notification_message":{"id":"leader-notice"}}]},{"type":"basic","from":{"key_code":"v"},"conditions":[{"type":"variable_if","name":"LEADER_ACTIVE","value":true}],"to":[{"shell_command":"open -a 'Visual Studio Code'"},{"set_variable":{"name":"LEADER_ACTIVE","value":false}},{"set_notification_message":{"id":"leader-notice"}}]},{"type":"basic","from":{"key_code":"t"},"conditions":[{"type":"variable_if","name":"LEADER_ACTIVE","value":true}],"to":[{"shell_command":"open -a 'Todoist'"},{"set_variable":{"name":"LEADER_ACTIVE","value":false}},{"set_notification_message":{"id":"leader-notice"}}]},{"type":"basic","from":{"key_code":"c"},"conditions":[{"type":"variable_if","name":"LEADER_ACTIVE","value":true}],"to":[{"shell_command":"open -a 'ChatGPT'"},{"set_variable":{"name":"LEADER_ACTIVE","value":false}},{"set_notification_message":{"id":"leader-notice"}}]},{"type":"basic","from":{"key_code":"e"},"conditions":[{"type":"variable_if","name":"LEADER_ACTIVE","value":true}],"to":[{"shell_command":"open -a 'Microsoft Teams'"},{"set_variable":{"name":"LEADER_ACTIVE","value":false}},{"set_notification_message":{"id":"leader-notice"}}]}]},{"description":"↹ Tab →  Meh","manipulators":[{"type":"basic","from":{"key_code":"tab"},"to_if_alone":[{"key_code":"tab"}],"to":[{"key_code":"right_shift","modifiers":["right_control","right_option"]}]}]},{"description":"⇪ Capslock → Hyper/Esc","manipulators":[{"type":"basic","from":{"key_code":"caps_lock"},"to_if_alone":[{"key_code":"escape"}],"to":[{"key_code":"right_shift","modifiers":["command","control","option"]}],"conditions":[{"type":"variable_unless","name":"LEADER_ACTIVE","value":true}]},{"type":"basic","from":{"key_code":"caps_lock","modifiers":{"mandatory":["left_shift"]}},"to":[{"key_code":"left_shift","modifiers":["command","right_shift","control","option"]}],"conditions":[{"type":"variable_unless","name":"LEADER_ACTIVE","value":true}]},{"from":{"key_code":"comma","modifiers":{"mandatory":["command","shift","option","control"]}},"to":[{"key_code":"vk_none"}],"type":"basic"}]},{"description":"Hyper + Esc → Sleep","manipulators":[{"type":"basic","from":{"key_code":"escape","modifiers":{"mandatory":["command","right_shift","control","option"]}},"to":[{"shell_command":"osascript -e 'tell application \"System Events\" to sleep'"}]}]},{"description":"f24/lightbulb → Sleep","manipulators":[{"type":"basic","from":{"key_code":"f24"},"to":[{"shell_command":"osascript -e 'tell application \"System Events\" to keystroke \"q\" using {control down, command down}'"}]}]},{"description":"Post right_option if right_control is pressed alone.","manipulators":[{"type":"basic","from":{"key_code":"right_control","modifiers":{"optional":["any"]}},"to":[{"key_code":"right_option"}]}]},{"description":"1 to shift, cmd + a & shift, cmd, m","manipulators":[{"type":"basic","from":{"key_code":"1"},"to":[{"key_code":"a","modifiers":["command","left_shift"]},{"key_code":"m","modifiers":["command","left_shift"]}],"conditions":[{"type":"device_if","identifiers":[{"product_id":8217,"is_keyboard":true}]}]}]},{"description":"2 to shift, cmd + a & shift, cmd, m","manipulators":[{"type":"basic","from":{"key_code":"2"},"to":[{"key_code":"a","modifiers":["command","left_shift"]},{"key_code":"m","modifiers":["command","left_shift"]}],"conditions":[{"type":"device_if","identifiers":[{"product_id":8217,"is_keyboard":true}]}]}]},{"description":"3 to shift, cmd + a & shift, cmd, m","manipulators":[{"type":"basic","from":{"key_code":"3"},"to":[{"key_code":"a","modifiers":["command","left_shift"]},{"key_code":"m","modifiers":["command","left_shift"]}],"conditions":[{"type":"device_if","identifiers":[{"product_id":8217,"is_keyboard":true}]}]}]},{"description":"Page down to option+command+left arrow","manipulators":[{"type":"basic","from":{"key_code":"page_down"},"to":[{"key_code":"left_arrow","modifiers":["left_alt","left_gui"]}],"conditions":[{"type":"frontmost_application_if","bundle_identifiers":["md.obsidian"]}]}]},{"description":"Page up to option+command+right arrow","manipulators":[{"type":"basic","from":{"key_code":"page_up"},"to":[{"key_code":"right_arrow","modifiers":["left_alt","left_gui"]}],"conditions":[{"type":"frontmost_application_if","bundle_identifiers":["md.obsidian"]}]}]},{"description":"fn Enter to ctrl Enter","manipulators":[{"type":"basic","from":{"key_code":"return_or_enter","modifiers":{"mandatory":["fn"]}},"to":[{"key_code":"return_or_enter","modifiers":["left_control"]}],"conditions":[{"type":"frontmost_application_if","bundle_identifiers":["md.obsidian"]}]}]},{"description":"Command hat to escape (to cancel tab switching)","manipulators":[{"type":"basic","from":{"key_code":"grave_accent_and_tilde","modifiers":{"mandatory":"command"}},"to":[{"key_code":"escape","modifiers":"command"}]}]},{"description":"ctrl backspace to del","manipulators":[{"type":"basic","from":{"key_code":"delete_or_backspace","modifiers":{"mandatory":"left_control"}},"to":[{"key_code":"delete_forward"}]}]}]},"devices":[{"identifiers":{"is_keyboard":true,"product_id":34304,"vendor_id":1452},"manipulate_caps_lock_led":false},{"fn_function_keys":[{"from":{"key_code":"f4"},"to":[{"apple_vendor_keyboard_key_code":"launchpad"}]}],"identifiers":{"is_keyboard":true,"product_id":592,"vendor_id":1452}},{"identifiers":{"is_keyboard":true,"is_pointing_device":true,"product_id":592,"vendor_id":1452},"ignore":false},{"identifiers":{"is_pointing_device":true,"product_id":8217,"vendor_id":20785},"ignore":false},{"identifiers":{"is_keyboard":true,"is_pointing_device":true,"product_id":545,"vendor_id":13364},"ignore":false,"manipulate_caps_lock_led":false},{"fn_function_keys":[{"from":{"key_code":"f1"},"to":[{"key_code":"f1"}]},{"from":{"key_code":"f2"},"to":[{"key_code":"f2"}]},{"from":{"key_code":"f3"},"to":[{"key_code":"f3"}]},{"from":{"key_code":"f4"},"to":[{"key_code":"f4"}]},{"from":{"key_code":"f5"},"to":[{"key_code":"f5"}]},{"from":{"key_code":"f6"},"to":[{"key_code":"f6"}]},{"from":{"key_code":"f7"},"to":[{"key_code":"f7"}]},{"from":{"key_code":"f8"},"to":[{"key_code":"f8"}]},{"from":{"key_code":"f9"},"to":[{"key_code":"f9"}]},{"from":{"key_code":"f10"},"to":[{"key_code":"f10"}]},{"from":{"key_code":"f11"},"to":[{"key_code":"f11"}]},{"from":{"key_code":"f12"},"to":[{"key_code":"f12"}]}],"identifiers":{"is_keyboard":true,"product_id":545,"vendor_id":13364},"manipulate_caps_lock_led":false},{"identifiers":{"is_keyboard":true,"product_id":41060,"vendor_id":1256},"simple_modifications":[{"from":{"key_code":"left_command"},"to":[{"key_code":"left_option"}]},{"from":{"key_code":"left_option"},"to":[{"key_code":"left_command"}]}]},{"identifiers":{"is_keyboard":true,"product_id":641,"vendor_id":1452},"simple_modifications":[{"from":{"key_code":"grave_accent_and_tilde"},"to":[{"key_code":"non_us_backslash"}]},{"from":{"key_code":"non_us_backslash"},"to":[{"key_code":"grave_accent_and_tilde"}]}]},{"identifiers":{"is_keyboard":true},"simple_modifications":[{"from":{"key_code":"grave_accent_and_tilde"},"to":[{"key_code":"non_us_backslash"}]},{"from":{"key_code":"non_us_backslash"},"to":[{"key_code":"grave_accent_and_tilde"}]}]},{"identifiers":{"is_keyboard":true,"is_pointing_device":true,"product_id":834,"vendor_id":13364},"ignore":false},{"identifiers":{"is_keyboard":true,"product_id":834,"vendor_id":13364},"simple_modifications":[{"from":{"key_code":"grave_accent_and_tilde"},"to":[{"key_code":"non_us_backslash"}]},{"from":{"key_code":"non_us_backslash"},"to":[{"key_code":"grave_accent_and_tilde"}]}]}],"name":"Default","selected":true,"virtual_hid_keyboard":{"keyboard_type_v2":"iso"}}]}
+{
+    "global": { "show_in_menu_bar": false },
+    "profiles": [
+        {
+            "complex_modifications": {
+                "rules": [
+                    {
+                        "description": "🔺 L-Ctrl (Non-Apple) / fn (Apple)",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "LEADER_ACTIVE",
+                                        "type": "variable_unless",
+                                        "value": true
+                                    },
+                                    {
+                                        "identifiers": [
+                                            {
+                                                "is_built_in_keyboard": true,
+                                                "is_keyboard": true
+                                            }
+                                        ],
+                                        "type": "device_unless"
+                                    }
+                                ],
+                                "description": "Non-Apple Keyboard",
+                                "from": { "key_code": "left_control" },
+                                "parameters": { "basic.to_if_alone_timeout_milliseconds": 600 },
+                                "to": [{ "key_code": "left_control" }],
+                                "to_if_alone": [
+                                    { "key_code": "left_control" },
+                                    {
+                                        "set_variable": {
+                                            "name": "LEADER_ACTIVE",
+                                            "value": true
+                                        }
+                                    },
+                                    {
+                                        "set_notification_message": {
+                                            "id": "leader-notice",
+                                            "text": "🔺 Leader"
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "LEADER_ACTIVE",
+                                        "type": "variable_unless",
+                                        "value": true
+                                    },
+                                    {
+                                        "identifiers": [
+                                            {
+                                                "is_built_in_keyboard": true,
+                                                "is_keyboard": true
+                                            }
+                                        ],
+                                        "type": "device_if"
+                                    }
+                                ],
+                                "description": "Apple Keyboard",
+                                "from": { "key_code": "fn" },
+                                "parameters": { "basic.to_if_alone_timeout_milliseconds": 600 },
+                                "to": [{ "key_code": "fn" }],
+                                "to_if_alone": [
+                                    { "key_code": "fn" },
+                                    {
+                                        "set_variable": {
+                                            "name": "LEADER_ACTIVE",
+                                            "value": true
+                                        }
+                                    },
+                                    {
+                                        "set_notification_message": {
+                                            "id": "leader-notice",
+                                            "text": "🔺 Leader"
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "🔺 App Switcher Actions",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "LEADER_ACTIVE",
+                                        "type": "variable_if",
+                                        "value": true
+                                    }
+                                ],
+                                "description": "Leader Cancel",
+                                "from": { "key_code": "escape" },
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "LEADER_ACTIVE",
+                                            "value": false
+                                        }
+                                    },
+                                    {
+                                        "set_notification_message": {
+                                            "id": "leader-notice",
+                                            "text": ""
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "LEADER_ACTIVE",
+                                        "type": "variable_if",
+                                        "value": true
+                                    }
+                                ],
+                                "description": "Hyper (Esc): Leader Cancel",
+                                "from": { "key_code": "caps_lock" },
+                                "to_if_alone": [
+                                    {
+                                        "set_variable": {
+                                            "name": "LEADER_ACTIVE",
+                                            "value": false
+                                        }
+                                    },
+                                    {
+                                        "set_notification_message": {
+                                            "id": "leader-notice",
+                                            "text": ""
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "LEADER_ACTIVE",
+                                        "type": "variable_if",
+                                        "value": true
+                                    }
+                                ],
+                                "from": { "key_code": "period" },
+                                "to": [
+                                    {
+                                        "key_code": "spacebar",
+                                        "modifiers": ["right_control", "right_command"]
+                                    },
+                                    {
+                                        "set_variable": {
+                                            "name": "LEADER_ACTIVE",
+                                            "value": false
+                                        }
+                                    },
+                                    {
+                                        "set_notification_message": {
+                                            "id": "leader-notice",
+                                            "text": ""
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "LEADER_ACTIVE",
+                                        "type": "variable_if",
+                                        "value": true
+                                    }
+                                ],
+                                "from": { "key_code": "o" },
+                                "to": [
+                                    { "shell_command": "open -a 'Obsidian'" },
+                                    {
+                                        "set_variable": {
+                                            "name": "LEADER_ACTIVE",
+                                            "value": false
+                                        }
+                                    },
+                                    {
+                                        "set_notification_message": {
+                                            "id": "leader-notice",
+                                            "text": ""
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "LEADER_ACTIVE",
+                                        "type": "variable_if",
+                                        "value": true
+                                    }
+                                ],
+                                "from": { "key_code": "s" },
+                                "to": [
+                                    { "shell_command": "if [ -d \"/Applications/Vivaldi.app\" ]; then\n  open -a 'Vivaldi'\nelse\n  open -a 'Safari'\nfi" },
+                                    {
+                                        "set_variable": {
+                                            "name": "LEADER_ACTIVE",
+                                            "value": false
+                                        }
+                                    },
+                                    { "set_notification_message": { "id": "leader-notice" } }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "LEADER_ACTIVE",
+                                        "type": "variable_if",
+                                        "value": true
+                                    }
+                                ],
+                                "from": { "key_code": "p" },
+                                "to": [
+                                    { "shell_command": "open -a 'Activity Monitor'" },
+                                    {
+                                        "set_variable": {
+                                            "name": "LEADER_ACTIVE",
+                                            "value": false
+                                        }
+                                    },
+                                    {
+                                        "set_notification_message": {
+                                            "id": "leader-notice",
+                                            "text": ""
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "LEADER_ACTIVE",
+                                        "type": "variable_if",
+                                        "value": true
+                                    }
+                                ],
+                                "from": { "key_code": "y" },
+                                "to": [
+                                    { "shell_command": "open -a 'Zotero'" },
+                                    {
+                                        "set_variable": {
+                                            "name": "LEADER_ACTIVE",
+                                            "value": false
+                                        }
+                                    },
+                                    { "set_notification_message": { "id": "leader-notice" } }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "LEADER_ACTIVE",
+                                        "type": "variable_if",
+                                        "value": true
+                                    }
+                                ],
+                                "from": { "key_code": "k" },
+                                "to": [
+                                    { "shell_command": "open -a 'Calendar'" },
+                                    {
+                                        "set_variable": {
+                                            "name": "LEADER_ACTIVE",
+                                            "value": false
+                                        }
+                                    },
+                                    { "set_notification_message": { "id": "leader-notice" } }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "LEADER_ACTIVE",
+                                        "type": "variable_if",
+                                        "value": true
+                                    }
+                                ],
+                                "from": { "key_code": "m" },
+                                "to": [
+                                    { "shell_command": "open -a 'Mail'" },
+                                    {
+                                        "set_variable": {
+                                            "name": "LEADER_ACTIVE",
+                                            "value": false
+                                        }
+                                    },
+                                    { "set_notification_message": { "id": "leader-notice" } }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "LEADER_ACTIVE",
+                                        "type": "variable_if",
+                                        "value": true
+                                    }
+                                ],
+                                "from": { "key_code": "a" },
+                                "to": [
+                                    { "shell_command": "open -a 'Alfred Preferences'" },
+                                    {
+                                        "set_variable": {
+                                            "name": "LEADER_ACTIVE",
+                                            "value": false
+                                        }
+                                    },
+                                    { "set_notification_message": { "id": "leader-notice" } }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "LEADER_ACTIVE",
+                                        "type": "variable_if",
+                                        "value": true
+                                    }
+                                ],
+                                "from": { "key_code": "w" },
+                                "to": [
+                                    { "shell_command": "open -a 'WebEx'" },
+                                    {
+                                        "set_variable": {
+                                            "name": "LEADER_ACTIVE",
+                                            "value": false
+                                        }
+                                    },
+                                    { "set_notification_message": { "id": "leader-notice" } }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "LEADER_ACTIVE",
+                                        "type": "variable_if",
+                                        "value": true
+                                    }
+                                ],
+                                "from": { "key_code": "l" },
+                                "to": [
+                                    { "shell_command": "open -a 'kitty'" },
+                                    {
+                                        "set_variable": {
+                                            "name": "LEADER_ACTIVE",
+                                            "value": false
+                                        }
+                                    },
+                                    { "set_notification_message": { "id": "leader-notice" } }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "LEADER_ACTIVE",
+                                        "type": "variable_if",
+                                        "value": true
+                                    }
+                                ],
+                                "from": { "key_code": "comma" },
+                                "to": [
+                                    { "shell_command": "open -a 'System Preferences'" },
+                                    {
+                                        "set_variable": {
+                                            "name": "LEADER_ACTIVE",
+                                            "value": false
+                                        }
+                                    },
+                                    { "set_notification_message": { "id": "leader-notice" } }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "LEADER_ACTIVE",
+                                        "type": "variable_if",
+                                        "value": true
+                                    }
+                                ],
+                                "from": { "key_code": "f" },
+                                "to": [
+                                    { "shell_command": "open -a 'Finder'" },
+                                    {
+                                        "set_variable": {
+                                            "name": "LEADER_ACTIVE",
+                                            "value": false
+                                        }
+                                    },
+                                    { "set_notification_message": { "id": "leader-notice" } }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "LEADER_ACTIVE",
+                                        "type": "variable_if",
+                                        "value": true
+                                    }
+                                ],
+                                "from": { "key_code": "u" },
+                                "to": [
+                                    { "shell_command": "open -a 'Microsoft Outlook'" },
+                                    {
+                                        "set_variable": {
+                                            "name": "LEADER_ACTIVE",
+                                            "value": false
+                                        }
+                                    },
+                                    { "set_notification_message": { "id": "leader-notice" } }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "LEADER_ACTIVE",
+                                        "type": "variable_if",
+                                        "value": true
+                                    }
+                                ],
+                                "from": { "key_code": "v" },
+                                "to": [
+                                    { "shell_command": "open -a 'Visual Studio Code'" },
+                                    {
+                                        "set_variable": {
+                                            "name": "LEADER_ACTIVE",
+                                            "value": false
+                                        }
+                                    },
+                                    { "set_notification_message": { "id": "leader-notice" } }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "LEADER_ACTIVE",
+                                        "type": "variable_if",
+                                        "value": true
+                                    }
+                                ],
+                                "from": { "key_code": "t" },
+                                "to": [
+                                    { "shell_command": "open -a 'Todoist'" },
+                                    {
+                                        "set_variable": {
+                                            "name": "LEADER_ACTIVE",
+                                            "value": false
+                                        }
+                                    },
+                                    { "set_notification_message": { "id": "leader-notice" } }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "LEADER_ACTIVE",
+                                        "type": "variable_if",
+                                        "value": true
+                                    }
+                                ],
+                                "from": { "key_code": "c" },
+                                "to": [
+                                    { "shell_command": "open -a 'ChatGPT'" },
+                                    {
+                                        "set_variable": {
+                                            "name": "LEADER_ACTIVE",
+                                            "value": false
+                                        }
+                                    },
+                                    { "set_notification_message": { "id": "leader-notice" } }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "LEADER_ACTIVE",
+                                        "type": "variable_if",
+                                        "value": true
+                                    }
+                                ],
+                                "from": { "key_code": "e" },
+                                "to": [
+                                    { "shell_command": "open -a 'Microsoft Teams'" },
+                                    {
+                                        "set_variable": {
+                                            "name": "LEADER_ACTIVE",
+                                            "value": false
+                                        }
+                                    },
+                                    { "set_notification_message": { "id": "leader-notice" } }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "↹ Tab →  Meh",
+                        "manipulators": [
+                            {
+                                "from": { "key_code": "tab" },
+                                "to": [
+                                    {
+                                        "key_code": "right_shift",
+                                        "modifiers": ["right_control", "right_option"]
+                                    }
+                                ],
+                                "to_if_alone": [{ "key_code": "tab" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "⇪ Capslock → Hyper/Esc",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "LEADER_ACTIVE",
+                                        "type": "variable_unless",
+                                        "value": true
+                                    }
+                                ],
+                                "from": { "key_code": "caps_lock" },
+                                "to": [
+                                    {
+                                        "key_code": "right_shift",
+                                        "modifiers": ["command", "control", "option"]
+                                    }
+                                ],
+                                "to_if_alone": [{ "key_code": "escape" }],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "LEADER_ACTIVE",
+                                        "type": "variable_unless",
+                                        "value": true
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "caps_lock",
+                                    "modifiers": { "mandatory": ["left_shift"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_shift",
+                                        "modifiers": ["command", "right_shift", "control", "option"]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "comma",
+                                    "modifiers": { "mandatory": ["command", "shift", "option", "control"] }
+                                },
+                                "to": [{ "key_code": "vk_none" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Hyper + Esc → Sleep",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "escape",
+                                    "modifiers": { "mandatory": ["command", "right_shift", "control", "option"] }
+                                },
+                                "to": [{ "shell_command": "osascript -e 'tell application \"System Events\" to sleep'" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "f24/lightbulb → Sleep",
+                        "manipulators": [
+                            {
+                                "from": { "key_code": "f24" },
+                                "to": [{ "shell_command": "osascript -e 'tell application \"System Events\" to keystroke \"q\" using {control down, command down}'" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Post right_option if right_control is pressed alone.",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "right_control",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [{ "key_code": "right_option" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "1 to shift, cmd + a & shift, cmd, m",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "identifiers": [
+                                            {
+                                                "is_keyboard": true,
+                                                "product_id": 8217
+                                            }
+                                        ],
+                                        "type": "device_if"
+                                    }
+                                ],
+                                "from": { "key_code": "1" },
+                                "to": [
+                                    {
+                                        "key_code": "a",
+                                        "modifiers": ["command", "left_shift"]
+                                    },
+                                    {
+                                        "key_code": "m",
+                                        "modifiers": ["command", "left_shift"]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "2 to shift, cmd + a & shift, cmd, m",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "identifiers": [
+                                            {
+                                                "is_keyboard": true,
+                                                "product_id": 8217
+                                            }
+                                        ],
+                                        "type": "device_if"
+                                    }
+                                ],
+                                "from": { "key_code": "2" },
+                                "to": [
+                                    {
+                                        "key_code": "a",
+                                        "modifiers": ["command", "left_shift"]
+                                    },
+                                    {
+                                        "key_code": "m",
+                                        "modifiers": ["command", "left_shift"]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "3 to shift, cmd + a & shift, cmd, m",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "identifiers": [
+                                            {
+                                                "is_keyboard": true,
+                                                "product_id": 8217
+                                            }
+                                        ],
+                                        "type": "device_if"
+                                    }
+                                ],
+                                "from": { "key_code": "3" },
+                                "to": [
+                                    {
+                                        "key_code": "a",
+                                        "modifiers": ["command", "left_shift"]
+                                    },
+                                    {
+                                        "key_code": "m",
+                                        "modifiers": ["command", "left_shift"]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Page down to option+command+left arrow",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "md.obsidian"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
+                                "from": { "key_code": "page_down" },
+                                "to": [
+                                    {
+                                        "key_code": "left_arrow",
+                                        "modifiers": ["left_alt", "left_gui"]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Page up to option+command+right arrow",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "md.obsidian"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
+                                "from": { "key_code": "page_up" },
+                                "to": [
+                                    {
+                                        "key_code": "right_arrow",
+                                        "modifiers": ["left_alt", "left_gui"]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "fn Enter to ctrl Enter",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "md.obsidian"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "return_or_enter",
+                                    "modifiers": { "mandatory": ["fn"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "return_or_enter",
+                                        "modifiers": ["left_control"]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Command hat to escape (to cancel tab switching)",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "grave_accent_and_tilde",
+                                    "modifiers": { "mandatory": "command" }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "escape",
+                                        "modifiers": "command"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "ctrl backspace to del",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "delete_or_backspace",
+                                    "modifiers": { "mandatory": "left_control" }
+                                },
+                                "to": [{ "key_code": "delete_forward" }],
+                                "type": "basic"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "devices": [
+                {
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "product_id": 34304,
+                        "vendor_id": 1452
+                    },
+                    "manipulate_caps_lock_led": false
+                },
+                {
+                    "fn_function_keys": [
+                        {
+                            "from": { "key_code": "f4" },
+                            "to": [{ "apple_vendor_keyboard_key_code": "launchpad" }]
+                        }
+                    ],
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "product_id": 592,
+                        "vendor_id": 1452
+                    }
+                },
+                {
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": true,
+                        "product_id": 592,
+                        "vendor_id": 1452
+                    },
+                    "ignore": false
+                },
+                {
+                    "identifiers": {
+                        "is_pointing_device": true,
+                        "product_id": 8217,
+                        "vendor_id": 20785
+                    },
+                    "ignore": false
+                },
+                {
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": true,
+                        "product_id": 545,
+                        "vendor_id": 13364
+                    },
+                    "ignore": false,
+                    "manipulate_caps_lock_led": false
+                },
+                {
+                    "fn_function_keys": [
+                        {
+                            "from": { "key_code": "f1" },
+                            "to": [{ "key_code": "f1" }]
+                        },
+                        {
+                            "from": { "key_code": "f2" },
+                            "to": [{ "key_code": "f2" }]
+                        },
+                        {
+                            "from": { "key_code": "f3" },
+                            "to": [{ "key_code": "f3" }]
+                        },
+                        {
+                            "from": { "key_code": "f4" },
+                            "to": [{ "key_code": "f4" }]
+                        },
+                        {
+                            "from": { "key_code": "f5" },
+                            "to": [{ "key_code": "f5" }]
+                        },
+                        {
+                            "from": { "key_code": "f6" },
+                            "to": [{ "key_code": "f6" }]
+                        },
+                        {
+                            "from": { "key_code": "f7" },
+                            "to": [{ "key_code": "f7" }]
+                        },
+                        {
+                            "from": { "key_code": "f8" },
+                            "to": [{ "key_code": "f8" }]
+                        },
+                        {
+                            "from": { "key_code": "f9" },
+                            "to": [{ "key_code": "f9" }]
+                        },
+                        {
+                            "from": { "key_code": "f10" },
+                            "to": [{ "key_code": "f10" }]
+                        },
+                        {
+                            "from": { "key_code": "f11" },
+                            "to": [{ "key_code": "f11" }]
+                        },
+                        {
+                            "from": { "key_code": "f12" },
+                            "to": [{ "key_code": "f12" }]
+                        }
+                    ],
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "product_id": 545,
+                        "vendor_id": 13364
+                    },
+                    "manipulate_caps_lock_led": false
+                },
+                {
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "product_id": 41060,
+                        "vendor_id": 1256
+                    },
+                    "simple_modifications": [
+                        {
+                            "from": { "key_code": "left_command" },
+                            "to": [{ "key_code": "left_option" }]
+                        },
+                        {
+                            "from": { "key_code": "left_option" },
+                            "to": [{ "key_code": "left_command" }]
+                        }
+                    ]
+                },
+                {
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "product_id": 641,
+                        "vendor_id": 1452
+                    },
+                    "simple_modifications": [
+                        {
+                            "from": { "key_code": "grave_accent_and_tilde" },
+                            "to": [{ "key_code": "non_us_backslash" }]
+                        },
+                        {
+                            "from": { "key_code": "non_us_backslash" },
+                            "to": [{ "key_code": "grave_accent_and_tilde" }]
+                        }
+                    ]
+                },
+                {
+                    "identifiers": { "is_keyboard": true },
+                    "simple_modifications": [
+                        {
+                            "from": { "key_code": "grave_accent_and_tilde" },
+                            "to": [{ "key_code": "non_us_backslash" }]
+                        },
+                        {
+                            "from": { "key_code": "non_us_backslash" },
+                            "to": [{ "key_code": "grave_accent_and_tilde" }]
+                        }
+                    ]
+                },
+                {
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": true,
+                        "product_id": 834,
+                        "vendor_id": 13364
+                    },
+                    "ignore": false
+                },
+                {
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "product_id": 834,
+                        "vendor_id": 13364
+                    },
+                    "simple_modifications": [
+                        {
+                            "from": { "key_code": "grave_accent_and_tilde" },
+                            "to": [{ "key_code": "non_us_backslash" }]
+                        },
+                        {
+                            "from": { "key_code": "non_us_backslash" },
+                            "to": [{ "key_code": "grave_accent_and_tilde" }]
+                        }
+                    ]
+                }
+            ],
+            "name": "Default",
+            "selected": true,
+            "virtual_hid_keyboard": { "keyboard_type_v2": "iso" }
+        }
+    ]
+}
