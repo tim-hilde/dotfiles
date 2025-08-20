@@ -177,6 +177,7 @@ return {
 						},
 					},
 				},
+				typescript_language_server = {},
 				bashls = {},
 				docker_compose_langserver = {},
 				dockerls = {},
