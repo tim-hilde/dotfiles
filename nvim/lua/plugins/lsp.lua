@@ -177,7 +177,7 @@ return {
 						},
 					},
 				},
-				typescript_language_server = {},
+				ts_ls = {},
 				bashls = {},
 				dockerls = {},
 				ltex_plus = {
