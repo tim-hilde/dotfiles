@@ -179,7 +179,6 @@ return {
 				},
 				typescript_language_server = {},
 				bashls = {},
-				docker_compose_langserver = {},
 				dockerls = {},
 				ltex_plus = {
 					on_attach = function(client, bufnr)
