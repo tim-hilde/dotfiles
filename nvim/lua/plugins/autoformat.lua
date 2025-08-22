@@ -34,6 +34,12 @@ return {
 			yamlfmt = {
 				args = { "-formatter", "retain_line_breaks=true" },
 			},
+			markdownlint = {
+				prepend_args = {
+					"--config",
+					vim.fn.stdpath "config" .. "/formatters/markdownlint.json",
+				},
+			},
 			-- 	stylua = {
 			-- 		indent_style = "Spaces",
 			-- 		indent_width = 2,
