@@ -86,6 +86,12 @@
       path: starship/starship.toml
       relative: true
       force: true
+    $HOME/.config/crush:
+      path: crush
+      relative: true
+      create: true
+      force: true
+
 
 
 - shell:
