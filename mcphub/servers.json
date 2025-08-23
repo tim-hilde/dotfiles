@@ -1,20 +1,21 @@
 {
   "mcpServers": {
-    "fetch": {
-      "args": [
-        "mcp-server-fetch"
-      ],
-      "command": "uvx"
-    },
     "sequentialthinking": {
+      "command": "docker",
+      "disabled": false,
       "args": [
         "run",
         "--rm",
         "-i",
         "mcp/sequentialthinking"
-      ],
-      "command": "docker",
-      "disabled": false
+      ]
+    },
+    "fetch": {
+      "command": "uvx",
+      "disabled": true,
+      "args": [
+        "mcp-server-fetch"
+      ]
     }
   },
   "nativeMCPServers": {
@@ -25,13 +26,13 @@
       ]
     },
     "neovim": {
-      "disabled": false,
-      "disabled_prompts": [
-        "parrot"
-      ],
       "disabled_resources": [
         "neovim://workspace"
       ],
+      "disabled_prompts": [
+        "parrot"
+      ],
+      "disabled": false,
       "disabled_tools": [
         "list_directory",
         "delete_items",
