@@ -18,34 +18,7 @@
     description: Make zsh default shell
     quiet: true
   -
-    command: sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev python3-dev
-    description: Installing python dependencies (apt)
-    quiet: true
-  -
-    command: if [[ ! -d "$HOME/.pyenv" ]]; then curl https://pyenv.run | bash; fi
-    description: Installing pyenv
-    quiet: true
-  -
-    quiet: true
-  -
-    command: git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
-    description: Installing pyenv-virtualenv
-    quiet: true
-    stderr: true
-  -
-    command: yes N | pyenv install 3.10.6 && pyenv global 3.10.6
-    description: Installing python 3.10.6
-    quiet: true
-    stderr: true
-  -
-    command: pip install --upgrade pip
-    quiet: true
-  -
-    command: curl -sSL https://install.python-poetry.org | python3 -
-    quiet: true
-    description: Install poetry
-  -
-    command: sudo apt-get install -y eza direnv fzf gh tree jq bat zoxide tmux neovim
+    command: sudo apt-get install -y eza direnv fzf tree jq bat zoxide tmux neovim
     description: Installing packages
     quiet: true
   -

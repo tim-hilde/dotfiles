@@ -22,6 +22,10 @@
       path: tmux
       relative: true
       create: true
+    $HOME/.config/starship.toml:
+      path: starship/starship.toml
+      relative: true
+      force: true
 
 - shell:
   -
@@ -37,14 +41,10 @@
     description: Installing zsh syntax highlighting cattpuccin theme
     quiet: true
   -
-    command: if [[ ! -d "$HOME/.oh-my-zsh/custom/themes/powerlevel10k" ]]; then git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $HOME/.oh-my-zsh/custom/themes/powerlevel10k; fi
-    description: Installing powerlevel10k theme
+    command: curl -sS https://starship.rs/install.sh | sh
+    description: Installing starship
     quiet: true
   -
     command: if [[ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-bat" ]]; then git clone https://github.com/fdellwing/zsh-bat.git $HOME/.oh-my-zsh/custom/plugins/zsh-bat; fi
     description: Installing bat zsh plugin
-    quiet: true
-  -
-    command: if [[ ! -d "$HOME/.oh-my-zsh/custom/plugins/you-should-use" ]]; then git clone https://github.com/MichaelAquilina/zsh-you-should-use.git $HOME/.oh-my-zsh/custom/plugins/you-should-use; fi
-    description: Installing you should use plugin
     quiet: true
