@@ -159,6 +159,16 @@ esac
 export PATH="$PATH:/Users/tim/.lmstudio/bin"
 export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
 
+# atuin
 . "$HOME/.atuin/bin/env"
 
 eval "$(atuin init zsh)"
+
+# Add a newline between commands
+# https://github.com/starship/starship/issues/560
+precmd() { precmd() { echo "" } }
+alias clear="precmd() { precmd() { echo } } && clear"
+
+# transient prompt
+# https://github.com/starship/starship/pull/4205#issuecomment-2230335985
+source transient-prompt.zsh
