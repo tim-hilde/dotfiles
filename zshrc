@@ -20,13 +20,9 @@ plugins=(
     jsontools
     last-working-dir
     poetry
-    # poetry-env
     python
     ssh-agent
-    # virtualenv
-    # pyenv
     autoswitch_virtualenv
-    # you-should-use
     zsh-bat
     zsh-syntax-highlighting
     azure
