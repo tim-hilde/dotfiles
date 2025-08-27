@@ -91,6 +91,11 @@
       relative: true
       create: true
       force: true
+    $HOME/.config/opencode:
+      path: opencode
+      relative: true
+      create: true
+      force: true
 
 
 
