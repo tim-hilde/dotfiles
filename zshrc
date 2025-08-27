@@ -172,3 +172,6 @@ alias clear="precmd() { precmd() { echo } } && clear"
 # transient prompt
 # https://github.com/starship/starship/pull/4205#issuecomment-2230335985
 source ~/dotfiles/transient-prompt.zsh
+
+# opencode
+export PATH=/Users/tim/.opencode/bin:$PATH
