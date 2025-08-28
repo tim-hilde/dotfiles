@@ -329,7 +329,7 @@ rules:
             name: LEADER_ACTIVE
             value: true
         to:
-          - shell_command: open -a 'ChatGPT'
+          - shell_command: open -a 'Claude'
           - set_variable:
               name: LEADER_ACTIVE
               value: false
