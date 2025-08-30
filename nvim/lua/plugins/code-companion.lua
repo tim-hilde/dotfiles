@@ -87,35 +87,37 @@ return {
 				},
 			},
 			adapters = {
-				copilot = function()
-					return require("codecompanion.adapters").extend("copilot", {
-						schema = {
-							model = {
-								default = "claude-sonnet-4",
+				http = {
+					copilot = function()
+						return require("codecompanion.adapters").extend("copilot", {
+							schema = {
+								model = {
+									default = "claude-sonnet-4",
+								},
 							},
-						},
-					})
-				end,
-				azure_openai = function()
-					return require("codecompanion.adapters").extend("azure_openai", {
-						env = {
-							api_key = "CC_AZURE_API_KEY",
-							endpoint = "CC_AZURE_ENDPOINT",
-						},
-						schema = {
-							model = {
-								default = "gpt-4.1",
+						})
+					end,
+					azure_openai = function()
+						return require("codecompanion.adapters").extend("azure_openai", {
+							env = {
+								api_key = "CC_AZURE_API_KEY",
+								endpoint = "CC_AZURE_ENDPOINT",
 							},
-						},
-					})
-				end,
-				ollama = function()
-					return require("codecompanion.adapters").extend("openai_compatible", {
-						env = {
-							url = "http://127.0.0.1:1234", -- optional: default value is ollama url http://127.0.0.1:11434
-						},
-					})
-				end,
+							schema = {
+								model = {
+									default = "gpt-4.1",
+								},
+							},
+						})
+					end,
+					ollama = function()
+						return require("codecompanion.adapters").extend("openai_compatible", {
+							env = {
+								url = "http://127.0.0.1:1234", -- optional: default value is ollama url http://127.0.0.1:11434
+							},
+						})
+					end,
+				},
 			},
 			strategies = {
 				chat = {
