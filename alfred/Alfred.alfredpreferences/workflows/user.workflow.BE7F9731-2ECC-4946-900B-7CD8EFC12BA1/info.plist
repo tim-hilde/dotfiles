@@ -505,6 +505,27 @@ curl -X POST http://localhost:1234/v1/chat/completions \
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<true/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>Video queued</string>
+				<key>title</key>
+				<string>Youtube Downloader</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>434F35CB-CEBD-469A-93CE-5FBE4134D18C</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>acceptsfiles</key>
 				<false/>
 				<key>acceptsmulti</key>
@@ -549,27 +570,6 @@ curl -X POST http://raspberrypi.local:5001/download \
 			<string>4D2B1D83-ADB3-4B1B-BAFF-39C4D019C87C</string>
 			<key>version</key>
 			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>lastpathcomponent</key>
-				<false/>
-				<key>onlyshowifquerypopulated</key>
-				<true/>
-				<key>removeextension</key>
-				<false/>
-				<key>text</key>
-				<string>Video queued</string>
-				<key>title</key>
-				<string>Youtube Downloader</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.notification</string>
-			<key>uid</key>
-			<string>434F35CB-CEBD-469A-93CE-5FBE4134D18C</string>
-			<key>version</key>
-			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -689,9 +689,9 @@ curl -X POST http://raspberrypi.local:5001/download \
 		<key>434F35CB-CEBD-469A-93CE-5FBE4134D18C</key>
 		<dict>
 			<key>xpos</key>
-			<real>510</real>
+			<real>530</real>
 			<key>ypos</key>
-			<real>890</real>
+			<real>850</real>
 		</dict>
 		<key>4C71F133-A8A9-4124-990F-6B46E607F16F</key>
 		<dict>
