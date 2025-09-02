@@ -83,9 +83,9 @@ return {
 				},
 				diff = {
 					enabled = true,
-					provider = "default",
 				},
 			},
+
 			adapters = {
 				http = {
 					copilot = function()
