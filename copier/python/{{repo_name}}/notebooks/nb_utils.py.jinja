@@ -11,9 +11,9 @@ def set_path():
 	Allows notebooks to import modules from the rest of the project, outside of the
 	notebooks folder.
 	For example, in a notebook cell, run:
-	```
-		from nb_utils import set_path
-		set_path()
+	```py
+	from nb_utils import set_path
+	set_path()
 	```
 	This will add '/path/to/project/root/' to the python path.
 	Then is it is possible to import from the main package into the notebook, e.g.

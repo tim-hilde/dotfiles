@@ -6,11 +6,11 @@
 
 {{description}}
 
-## Getting started
+# Getting started
 
-### Installation
+## Installation
 
-#### 1. Install uv
+### 1. Install uv
 
 ```sh
 pipx install uv
@@ -18,12 +18,13 @@ pipx install uv
 pip install uv
 ```
 
-#### 2. Install package
+### 2. Install package
 
 ```sh
 uv sync
 ```
-#### 3. Install pre-commit hooks
+
+### 3. Install pre-commit hooks
 
 ```sh
 uv run pre-commit install --install-hooks
@@ -41,11 +42,9 @@ uv run mkdocs build
 uv run mkdocs serve
 ```
 
-### Setup local documentation
+# General documentation
 
-## General documentation
-
-### `data` vs `static` directories
+## `data` vs `static` directories
 
 The `data` directory is for storing raw data, processed data (produced by this code but not final) and output data.
 The contents of these folders should not be tracked by git,

@@ -24,14 +24,14 @@ def get_root_path() -> str:
 
 def get_project_path(*lower_paths):
     """If repo directory is
-	    `/path/to/repo/project`
+    `/path/to/repo/project`
     and `lower_paths` is `file.txt`
     then return
-	    `/path/to/repo/project/file.txt`
+    `/path/to/repo/project/file.txt`
 
     Alternatively, if `lower_paths` is ["subfolder", "file.txt"]
     then return
-	    `/path/to/repo/project/subfolder/file.txt`
+    `/path/to/repo/project/subfolder/file.txt`
     etc for any number of subfolder layers.
     """
     root = get_root_path()
@@ -40,24 +40,24 @@ def get_project_path(*lower_paths):
 
 
 def get_static_path(*lower_paths):
-	"""Get path to static folder"""
+    """Get path to static folder"""
     path = get_project_path(STATIC_DIR, *lower_paths)
     return path
 
 
 def get_raw_path(*lower_paths):
-	"""Get path to raw folder"""
+    """Get path to raw folder"""
     path = get_project_path(DATA_DIR, RAW_DIR, *lower_paths)
     return path
 
 
 def get_processed_path(*lower_paths):
-	"""Get path to processed folder"""
+    """Get path to processed folder"""
     path = get_project_path(DATA_DIR, PROCESSED_DIR, *lower_paths)
     return path
 
 
 def get_output_path(*lower_paths):
-	"""Get path to output folder"""
+    """Get path to output folder"""
     path = get_project_path(DATA_DIR, OUTPUT_DIR, *lower_paths)
     return path
