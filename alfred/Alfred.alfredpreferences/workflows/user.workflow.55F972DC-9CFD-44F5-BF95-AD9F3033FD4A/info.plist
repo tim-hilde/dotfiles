@@ -585,7 +585,7 @@
 				<key>lastpathcomponent</key>
 				<false/>
 				<key>onlyshowifquerypopulated</key>
-				<false/>
+				<true/>
 				<key>removeextension</key>
 				<false/>
 				<key>text</key>
@@ -681,7 +681,7 @@
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
-				<string>scripts/bluetooth-connect.sh</string>
+				<string>scripts/bluetooth-connect.js</string>
 				<key>type</key>
 				<integer>8</integer>
 			</dict>
@@ -1270,7 +1270,7 @@ JSON.stringify({ 'items': volume_array });
 				<key>removeextension</key>
 				<false/>
 				<key>text</key>
-				<string>{var:server_name}</string>
+				<string>{var:serverName}</string>
 				<key>title</key>
 				<string>✅ DNS server changed</string>
 			</dict>
@@ -1355,7 +1355,7 @@ only processes that have child processes.
 
 ### Bluetooth Devices
 Display paired Bluetooth devices directly via `blue`.
-- &lt;kbd&gt;⏎&lt;/kbd&gt;: If `blueutil` is installed, toggle the connection state. Otherwise, open the bluetooth preferences.
+- &lt;kbd&gt;⏎&lt;/kbd&gt;: Connect/Disconnect the selected device.
 - &lt;kbd&gt;⌥&lt;/kbd&gt;&lt;kbd&gt;⏎&lt;/kbd&gt;: Copy the device address.
 
 ### Removable Volumes
@@ -1935,7 +1935,7 @@ Display mounted volumes directly via `vol`.
 		</dict>
 	</array>
 	<key>version</key>
-	<string>1.5.3</string>
+	<string>1.6.1</string>
 	<key>webaddress</key>
 	<string>https://chris-grieser.de/</string>
 </dict>

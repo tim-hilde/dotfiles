@@ -10,7 +10,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>645F6DE3-586C-4C79-99FC-FE9FB8819591</string>
+				<string>67FD276C-5372-4EA2-872A-57CE302B594D</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -24,6 +24,19 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>EAAAFDA5-DA25-4F5C-A7EC-5D9FBAE44974</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>45D283C8-4002-4431-8BDD-F25413BA836D</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>8AD069FD-6249-4FF1-8384-83024BD91710</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -47,6 +60,31 @@
 				<false/>
 			</dict>
 		</array>
+		<key>67FD276C-5372-4EA2-872A-57CE302B594D</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>D12F7CC0-F59B-4AAD-8184-63D7ADD2C081</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>33B5735B-ACC4-42A5-8833-F9E170BE088A</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>645F6DE3-586C-4C79-99FC-FE9FB8819591</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>8AD069FD-6249-4FF1-8384-83024BD91710</key>
 		<array>
 			<dict>
@@ -60,6 +98,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>ADA5BCE0-BE38-49C8-A592-7FABB41871C3</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>45D283C8-4002-4431-8BDD-F25413BA836D</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<true/>
+			</dict>
+		</array>
 		<key>CF0AFB89-59D4-4303-8D76-B1E08055A855</key>
 		<array>
 			<dict>
@@ -69,6 +120,21 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>D12F7CC0-F59B-4AAD-8184-63D7ADD2C081</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>CF0AFB89-59D4-4303-8D76-B1E08055A855</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>_button2</string>
 				<key>vitoclose</key>
 				<false/>
 			</dict>
@@ -96,7 +162,7 @@
 				<key>modifiersubtext</key>
 				<string></string>
 				<key>vitoclose</key>
-				<false/>
+				<true/>
 			</dict>
 		</array>
 		<key>EAAAFDA5-DA25-4F5C-A7EC-5D9FBAE44974</key>
@@ -116,31 +182,13 @@
 	<key>createdby</key>
 	<string>Stephen Christy</string>
 	<key>description</key>
-	<string>Display word and character count of selected text</string>
+	<string>Display word and character count of text</string>
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
 	<string>Word and character count</string>
 	<key>objects</key>
 	<array>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>tasksettings</key>
-				<dict>
-					<key>metric</key>
-					<string>characters</string>
-				</dict>
-				<key>taskuid</key>
-				<string>com.alfredapp.automation.core/text-processing/text.metrics</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.automation.task</string>
-			<key>uid</key>
-			<string>EAAAFDA5-DA25-4F5C-A7EC-5D9FBAE44974</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
@@ -165,6 +213,50 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>button1</key>
+				<string>Quit the workflow</string>
+				<key>button2</key>
+				<string>Copy result to clipboard</string>
+				<key>button3</key>
+				<string></string>
+				<key>description</key>
+				<string>The copied text contains {var:wordCount} words and {var:charCount} characters.
+
+What would you like to do next?</string>
+				<key>title</key>
+				<string>Word &amp; character count</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.dialog</string>
+			<key>uid</key>
+			<string>D12F7CC0-F59B-4AAD-8184-63D7ADD2C081</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>{var:keyword}</string>
+				<key>subtext</key>
+				<string>Press &lt;space&gt; &amp; paste some text...</string>
+				<key>text</key>
+				<string>Word &amp; character count of copied text</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>ADA5BCE0-BE38-49C8-A592-7FABB41871C3</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>tasksettings</key>
 				<dict/>
 				<key>taskuid</key>
@@ -180,21 +272,18 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>lastpathcomponent</key>
-				<false/>
-				<key>onlyshowifquerypopulated</key>
-				<false/>
-				<key>removeextension</key>
-				<false/>
-				<key>text</key>
-				<string>The numbers of words ({var:wordCount}) and characters ({var:charCount}) have been copied to the clipboard.</string>
-				<key>title</key>
-				<string>Word &amp; character count</string>
+				<key>tasksettings</key>
+				<dict>
+					<key>metric</key>
+					<string>characters</string>
+				</dict>
+				<key>taskuid</key>
+				<string>com.alfredapp.automation.core/text-processing/text.metrics</string>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.output.notification</string>
+			<string>alfred.workflow.automation.task</string>
 			<key>uid</key>
-			<string>01F211DC-11F2-4747-ABA3-45D43090E83C</string>
+			<string>EAAAFDA5-DA25-4F5C-A7EC-5D9FBAE44974</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -221,43 +310,53 @@ Characters: {var:charCount}</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>button1</key>
-				<string>Quit the workflow</string>
-				<key>button2</key>
-				<string>Copy result to clipboard</string>
-				<key>button3</key>
-				<string></string>
-				<key>description</key>
-				<string>The selected text contains {var:wordCount} words and {var:charCount} characters.
-
-What would you like to do next?</string>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>The numbers of words ({var:wordCount}) and characters ({var:charCount}) have been copied to the clipboard</string>
 				<key>title</key>
 				<string>Word &amp; character count</string>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.utility.dialog</string>
+			<string>alfred.workflow.output.notification</string>
 			<key>uid</key>
-			<string>645F6DE3-586C-4C79-99FC-FE9FB8819591</string>
+			<string>01F211DC-11F2-4747-ABA3-45D43090E83C</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>argument</key>
-				<string></string>
-				<key>passthroughargument</key>
-				<true/>
-				<key>variables</key>
-				<dict>
-					<key>theText</key>
-					<string>{query}</string>
-				</dict>
+				<key>conditions</key>
+				<array>
+					<dict>
+						<key>inputstring</key>
+						<string>{var:pastedText}</string>
+						<key>matchcasesensitive</key>
+						<false/>
+						<key>matchmode</key>
+						<integer>5</integer>
+						<key>matchstring</key>
+						<string></string>
+						<key>outputlabel</key>
+						<string>Pasted text</string>
+						<key>uid</key>
+						<string>33B5735B-ACC4-42A5-8833-F9E170BE088A</string>
+					</dict>
+				</array>
+				<key>elselabel</key>
+				<string>else</string>
+				<key>hideelse</key>
+				<false/>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.utility.argument</string>
+			<string>alfred.workflow.utility.conditional</string>
 			<key>uid</key>
-			<string>8AD069FD-6249-4FF1-8384-83024BD91710</string>
+			<string>67FD276C-5372-4EA2-872A-57CE302B594D</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -285,6 +384,46 @@ What would you like to do next?</string>
 			<key>config</key>
 			<dict>
 				<key>argument</key>
+				<string></string>
+				<key>passthroughargument</key>
+				<true/>
+				<key>variables</key>
+				<dict>
+					<key>theText</key>
+					<string>{query}</string>
+				</dict>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.argument</string>
+			<key>uid</key>
+			<string>8AD069FD-6249-4FF1-8384-83024BD91710</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string>{query}</string>
+				<key>passthroughargument</key>
+				<false/>
+				<key>variables</key>
+				<dict>
+					<key>pastedText</key>
+					<string>true</string>
+				</dict>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.argument</string>
+			<key>uid</key>
+			<string>45D283C8-4002-4431-8BDD-F25413BA836D</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
 				<string>{var:theText}</string>
 				<key>passthroughargument</key>
 				<false/>
@@ -301,11 +440,45 @@ What would you like to do next?</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>button1</key>
+				<string>Quit the workflow</string>
+				<key>button2</key>
+				<string>Copy result to clipboard</string>
+				<key>button3</key>
+				<string></string>
+				<key>description</key>
+				<string>The selected text contains {var:wordCount} words and {var:charCount} characters.
+
+What would you like to do next?</string>
+				<key>title</key>
+				<string>Word &amp; character count</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.dialog</string>
+			<key>uid</key>
+			<string>645F6DE3-586C-4C79-99FC-FE9FB8819591</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
 	</array>
 	<key>readme</key>
-	<string># Usage
+	<string># Introduction
 
-This Universal Action is available for selected text and returns the word count and character count in a dialog box. 
+This workflow provides two methods for obtaining the word count and character count of a piece of text.
+- You can use your Universal Action hotkey on a piece of selected text.
+- You can copy some text then use the workflow keyword (`wxc` by default) and paste the text in the workflow.
+
+# Usage
+
+To use the Universal Action:
+
+- Select some text and press your Universal Action hotkey (&lt;kbd&gt;⌘/&lt;/kbd&gt; by default).
+- Choose the `Word and character count` action and press &lt;kbd&gt;↩︎&lt;/kbd&gt;.
+
+The word count and character count is returned in a dialog box. 
 
 ![Word and character count](Images/UA.png)
 
@@ -313,11 +486,10 @@ This Universal Action is available for selected text and returns the word count 
 
 There is an option to copy the result to the clipboard.
 
----
-**Note:** If you have not previously used `Automation Tasks` in any Alfred workflow you may need to double click on an `Automation Task` in this workflow and then `Options` at the bottom of the left hand pane followed by `Reinstall Tasks` to ensure tasks are up to date.
----
-**Version 2.0** 18/05/2023: substantial revision to show *both* word and character counts (rather than offering them as alternatives).  
-**Version 2.1** 08/04/2024: deleted unnecessary additional Arg and Vars utility before character count Automation Task.</string>
+To use the keyword:
+
+- Select some text and copy it to the clipboard.
+- Type the keyword (`wxc` by default—but you can change it opposite), press &lt;space&gt; then &lt;kbd&gt;⌘V&lt;/kbd&gt; (to add the copied text) then press &lt;kbd&gt;↩︎&lt;/kbd&gt;.</string>
 	<key>uidata</key>
 	<dict>
 		<key>01F211DC-11F2-4747-ABA3-45D43090E83C</key>
@@ -325,63 +497,99 @@ There is an option to copy the result to the clipboard.
 			<key>note</key>
 			<string>…and confirm it's done so</string>
 			<key>xpos</key>
-			<real>1235</real>
+			<real>1620</real>
 			<key>ypos</key>
-			<real>155</real>
+			<real>160</real>
 		</dict>
 		<key>09972F6A-AE40-4B4C-8880-B632478A7CAC</key>
 		<dict>
 			<key>note</key>
 			<string>Save character count as variable</string>
 			<key>xpos</key>
-			<real>795</real>
+			<real>950</real>
 			<key>ypos</key>
-			<real>170</real>
+			<real>185</real>
 		</dict>
 		<key>13A14BD1-5863-4BA2-AE25-6A7772D16F39</key>
 		<dict>
 			<key>note</key>
 			<string>Save word count as variable</string>
 			<key>xpos</key>
-			<real>485</real>
+			<real>645</real>
 			<key>ypos</key>
-			<real>170</real>
+			<real>185</real>
+		</dict>
+		<key>45D283C8-4002-4431-8BDD-F25413BA836D</key>
+		<dict>
+			<key>note</key>
+			<string>Set keyword to true</string>
+			<key>xpos</key>
+			<real>220</real>
+			<key>ypos</key>
+			<real>185</real>
 		</dict>
 		<key>645F6DE3-586C-4C79-99FC-FE9FB8819591</key>
 		<dict>
 			<key>note</key>
-			<string>Quit or copy to clipboard</string>
+			<string>Quit or copy to clipboard (selected text)</string>
 			<key>xpos</key>
-			<real>910</real>
+			<real>1235</real>
 			<key>ypos</key>
-			<real>160</real>
+			<real>250</real>
+		</dict>
+		<key>67FD276C-5372-4EA2-872A-57CE302B594D</key>
+		<dict>
+			<key>note</key>
+			<string>Route according to selected or pasted text</string>
+			<key>xpos</key>
+			<real>1060</real>
+			<key>ypos</key>
+			<real>175</real>
 		</dict>
 		<key>8AD069FD-6249-4FF1-8384-83024BD91710</key>
 		<dict>
 			<key>note</key>
 			<string>Save the text as a variable (1)</string>
 			<key>xpos</key>
-			<real>210</real>
+			<real>370</real>
 			<key>ypos</key>
-			<real>170</real>
+			<real>185</real>
+		</dict>
+		<key>ADA5BCE0-BE38-49C8-A592-7FABB41871C3</key>
+		<dict>
+			<key>note</key>
+			<string>Keyword to act on pasted text</string>
+			<key>xpos</key>
+			<real>30</real>
+			<key>ypos</key>
+			<real>155</real>
 		</dict>
 		<key>CF0AFB89-59D4-4303-8D76-B1E08055A855</key>
 		<dict>
 			<key>note</key>
 			<string>Copy count to clipboard…</string>
 			<key>xpos</key>
-			<real>1070</real>
+			<real>1445</real>
 			<key>ypos</key>
-			<real>155</real>
+			<real>160</real>
+		</dict>
+		<key>D12F7CC0-F59B-4AAD-8184-63D7ADD2C081</key>
+		<dict>
+			<key>note</key>
+			<string>Quit or copy to clipboard (copied text)</string>
+			<key>xpos</key>
+			<real>1235</real>
+			<key>ypos</key>
+			<real>90</real>
 		</dict>
 		<key>D214F710-337A-4880-99AD-BB804C800E58</key>
 		<dict>
 			<key>note</key>
 			<string>Automation Task to get word count</string>
 			<key>xpos</key>
-			<real>305</real>
+			<real>465</real>
 			<key>ypos</key>
-			<real>140</real>
+			<real>155</real>
 		</dict>
 		<key>E5D7021E-2777-45A5-87F0-E89E08AA218B</key>
 		<dict>
@@ -390,25 +598,47 @@ There is an option to copy the result to the clipboard.
 			<key>xpos</key>
 			<real>30</real>
 			<key>ypos</key>
-			<real>140</real>
+			<real>15</real>
 		</dict>
 		<key>EAAAFDA5-DA25-4F5C-A7EC-5D9FBAE44974</key>
 		<dict>
 			<key>note</key>
 			<string>Automation Task to get character count</string>
 			<key>xpos</key>
-			<real>600</real>
+			<real>760</real>
 			<key>ypos</key>
-			<real>140</real>
+			<real>155</real>
 		</dict>
 	</dict>
 	<key>userconfigurationconfig</key>
-	<array/>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>wxc</string>
+				<key>placeholder</key>
+				<string></string>
+				<key>required</key>
+				<false/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>The default keyword to run this workflow is "wxc". You can change it here.</string>
+			<key>label</key>
+			<string>Workflow keyword</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>keyword</string>
+		</dict>
+	</array>
 	<key>variablesdontexport</key>
 	<array/>
 	<key>version</key>
-	<string>2.1</string>
+	<string>2025.1</string>
 	<key>webaddress</key>
-	<string></string>
+	<string>https://github.com/stephen-lon</string>
 </dict>
 </plist>

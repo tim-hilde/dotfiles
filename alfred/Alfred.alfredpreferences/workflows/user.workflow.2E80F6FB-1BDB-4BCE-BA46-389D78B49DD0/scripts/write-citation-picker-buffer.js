@@ -27,6 +27,7 @@ class BibtexEntry {
 		this.citekey = ""; // without "@"
 		this.title = "";
 		this.year = ""; // as string since no calculations are made
+		this.origyear = ""; // as string since no calculations are made
 		this.url = "";
 		this.booktitle = "";
 		this.journal = "";
@@ -157,7 +158,7 @@ function bibtexDecode(encodedStr) {
 function bibtexParse(rawBibtexStr) {
 	const bibtexEntryArray = bibtexDecode(rawBibtexStr)
 		.split(/^@/m) // split by `@` from citekeys
-		.slice(1) // first element is other stuff before first entry
+		.slice(1) // first element is header info before first entry
 		.reduce((/** @type {BibtexEntry[]} */ acc, rawEntryStr) => {
 			const [_, category, citekey, propertyStr] =
 				rawEntryStr.trim().match(/^(.*?){(.*?),(.*)}$/s) || [];
@@ -202,19 +203,22 @@ function bibtexParse(rawBibtexStr) {
 						break;
 					}
 					case "keywords": {
-						entry.keywords = value.split(/ *, */);
+						entry.keywords = value ? value.split(/ *, */) : [];
 						break;
 					}
 					case "file":
+					case "local-url":
 					case "attachment": {
-						// see https://github.com/chrisgrieser/alfred-bibtex-citation-picker/issues/45
-						const multipleAttachments = value.includes(";/Users/");
-						entry.attachment = multipleAttachments ? value.split(";/Users/")[0] : value;
+						// PERF file is decoded later when opening
+						entry.attachment = value;
 						break;
 					}
 					default:
-						// @ts-expect-error
-						entry[field] = value;
+						// check if field is needed before adding it, to reduce JSON size
+						if (field in entry) {
+							// @ts-expect-error unclear how to annotate it so typescript is happy
+							entry[field] = value;
+						}
 				}
 			}
 
@@ -238,7 +242,7 @@ function run() {
 	const secondLibraryIcon = "2️⃣ ";
 	const litNoteFilterStr = "*";
 	const pdfFilterStr = "pdf";
-	const alfredBarWidth = Number.parseInt($.getenv("alfred_bar_width") || "60");
+	const alfredBarWidth = Number.parseInt($.getenv("alfred_bar_width"));
 
 	const matchAuthorsInEtAl = $.getenv("match_authors_in_etal") === "1";
 	const matchShortYears = $.getenv("match_year_type").includes("short");
@@ -279,9 +283,7 @@ function run() {
 			.doShellScript(`find "${litNoteFolder}" -type f -name "*.md"`)
 			.split("\r")
 			.map((/** @type {string} */ filepath) => {
-				return filepath
-					.replace(/.*\/(.*)\.md/, "$1") // only basename w/o ext
-					.replace(/(_[^_]*$)/, ""); // INFO part before underscore, this method does not work for citkeys which contain an underscore though...
+				return filepath.replace(/.*\/(.*)\.md/, "$1"); // only basename w/o ext
 			});
 	}
 
@@ -292,7 +294,7 @@ function run() {
 			.map((/** @type {string} */ filepath) => {
 				return filepath
 					.replace(/.*\/(.*)\.pdf$/, "$1") // only basename w/o ext
-					.replace(/(_[^_]*$)/, ""); // INFO part before underscore, this method does not work for citkeys which contain an underscore though...
+					.replace(/(_[^_]*$)/, ""); // part before underscore
 			});
 	}
 
@@ -306,7 +308,7 @@ function run() {
 		const emojis = [];
 		// biome-ignore format: too long
 		const {
-			title, url, citekey, keywords, icon, journal, volume, issue, booktitle,
+			title, url, citekey, keywords, icon, journal, volume, issue, booktitle, origyear,
 			author, editor, year, abstract, primaryNamesEtAlString, primaryNames, attachment
 		} = entry;
 		const isFirstLibrary = whichLibrary === "first";
@@ -395,10 +397,13 @@ function run() {
 		// // Indicate 2nd library (this set via .map thisAry)
 		const libraryIndicator = isFirstLibrary ? "" : secondLibraryIcon;
 
+		// year
+		const displayYear = origyear ? `${year} [${origyear}]` : year;
+
 		return {
 			title: libraryIndicator + shorterTitle,
 			autocomplete: primaryNames[0],
-			subtitle: namesToDisplay + year + collectionSubtitle + "   " + emojis.join(" "),
+			subtitle: namesToDisplay + displayYear + collectionSubtitle + "   " + emojis.join(" "),
 			match: alfredMatcher,
 			arg: citekey,
 			icon: { path: iconPath },
