@@ -240,3 +240,8 @@ vim.keymap.del("n", "gra")
 vim.keymap.set({ "n", "x" }, "<leader>cr", function()
 	require("refactoring").select_refactor()
 end, { desc = "[C]ode [R]efactor" })
+
+-- GitSigns
+local gitsigns = require "gitsigns"
+vim.keymap.set("n", "<leader>gl", gitsigns.toggle_current_line_blame, { desc = "Toggle [l]ine blame" })
+vim.keymap.set("n", "<leader>gb", gitsigns.blame, { desc = "[B]lame" })

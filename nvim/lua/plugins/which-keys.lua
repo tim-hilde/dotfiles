@@ -54,6 +54,7 @@ return {
 			{ "<leader>wa", group = "[A]utosession" },
 			{ "<C-w>t", group = "[T]abs" },
 			{ "<C-w>tm", group = "[M]ove" },
+			{ "<leader>g", group = "[G]it", mode = { "n" } },
 		},
 	},
 }
