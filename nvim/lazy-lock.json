@@ -1,5 +1,5 @@
 {
-  "LuaSnip": { "branch": "master", "commit": "de10d8414235b0a8cabfeba60d07c24304e71f5c" },
+  "LuaSnip": { "branch": "master", "commit": "21f74f7ba8c49f95f9d7c8293b147c2901dd2d3a" },
   "actions-preview.nvim": { "branch": "master", "commit": "36513ad213855d497b7dd3391a24d1d75d58e36f" },
   "blink-cmp-git": { "branch": "master", "commit": "4c1e2581c01189e04fc175cca27c5cebff447514" },
   "blink.cmp": { "branch": "main", "commit": "bae4bae0eedd1fa55f34b685862e94a222d5c6f8" },
@@ -7,7 +7,7 @@
   "codecompanion.nvim": { "branch": "main", "commit": "019be206a96cf6de12ea71f02a9e1b847a2debbb" },
   "colorful-menu.nvim": { "branch": "master", "commit": "bc3e82609f2fcf7dad7ca87c20e65e51d5d9d87c" },
   "conform.nvim": { "branch": "master", "commit": "b4aab989db276993ea5dcb78872be494ce546521" },
-  "csvview.nvim": { "branch": "main", "commit": "a4c45eadb03a462a80dd1a545d0f9cb636b73664" },
+  "csvview.nvim": { "branch": "main", "commit": "99b327ca97cabd242de0f2ddca7fbc7d378b84a7" },
   "dressing.nvim": { "branch": "master", "commit": "2d7c2db2507fa3c4956142ee607431ddb2828639" },
   "duck.nvim": { "branch": "main", "commit": "d8a6b08af440e5a0e2b3b357e2f78bb1883272cd" },
   "fidget.nvim": { "branch": "main", "commit": "4d5858bd4c471c895060e1b9f3575f1551184dc5" },
