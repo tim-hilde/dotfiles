@@ -16,6 +16,7 @@ return {
 				-- github action
 				ghaction = { "actionlint" },
 				shell = { "shellcheck" },
+				typescriptreact = { "eslint_d" },
 			}
 
 			-- Create autocommand which carries out the actual linting
