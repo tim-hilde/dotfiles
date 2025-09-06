@@ -80,6 +80,7 @@
   },
   "widgets": {
     "processWidget": true,
+    "githubWidget": false,
     "weatherWidget": false,
     "netstatsWidget": false,
     "cpuWidget": false,
@@ -102,9 +103,18 @@
     "mpdWidget": false,
     "browserTrackWidget": false
   },
+  "githubWidgetOptions": {
+    "refreshFrequency": 600000,
+    "showOnDisplay": "",
+    "showIcon": true,
+    "hideWhenNoNotification": false,
+    "notificationUrl": "https://github.com/notifications",
+    "ghBinaryPath": "/opt/homebrew/bin/gh"
+  },
   "weatherWidgetOptions": {
     "refreshFrequency": 1800000,
     "showOnDisplay": "",
+    "showIcon": true,
     "unit": "C",
     "hideLocation": false,
     "hideGradient": false,
@@ -113,34 +123,40 @@
   "netstatsWidgetOptions": {
     "refreshFrequency": 2000,
     "showOnDisplay": "",
+    "showIcon": true,
     "displayAsGraph": false
   },
   "cpuWidgetOptions": {
     "refreshFrequency": 2000,
     "showOnDisplay": "",
+    "showIcon": true,
     "displayAsGraph": true,
     "cpuMonitorApp": "Activity Monitor"
   },
   "gpuWidgetOptions": {
     "refreshFrequency": 3000,
     "showOnDisplay": "",
+    "showIcon": true,
     "displayAsGraph": true,
     "gpuMacmonBinaryPath": "/opt/homebrew/bin/macmon"
   },
   "memoryWidgetOptions": {
     "refreshFrequency": 4000,
     "showOnDisplay": "",
+    "showIcon": true,
     "memoryMonitorApp": "Activity Monitor"
   },
   "batteryWidgetOptions": {
     "refreshFrequency": 10000,
     "showOnDisplay": "",
+    "showIcon": true,
     "toggleCaffeinateOnClick": false,
     "caffeinateOption": ""
   },
   "networkWidgetOptions": {
     "refreshFrequency": 20000,
     "showOnDisplay": "",
+    "showIcon": true,
     "networkDevice": "en0",
     "hideWifiIfDisabled": false,
     "toggleWifiOnClick": false,
@@ -149,6 +165,7 @@
   "vpnWidgetOptions": {
     "refreshFrequency": 8000,
     "showOnDisplay": "",
+    "showIcon": true,
     "vpnConnectionName": "",
     "vpnShowConnectionName": false
   },
@@ -160,15 +177,18 @@
   },
   "soundWidgetOptions": {
     "refreshFrequency": 20000,
-    "showOnDisplay": ""
+    "showOnDisplay": "",
+    "showIcon": true
   },
   "micWidgetOptions": {
     "refreshFrequency": 20000,
-    "showOnDisplay": ""
+    "showOnDisplay": "",
+    "showIcon": true
   },
   "dateWidgetOptions": {
     "refreshFrequency": 30000,
     "showOnDisplay": "",
+    "showIcon": true,
     "shortDateFormat": true,
     "locale": "de-de",
     "calendarApp": ""
@@ -176,17 +196,20 @@
   "timeWidgetOptions": {
     "refreshFrequency": 1000,
     "showOnDisplay": "",
+    "showIcon": true,
     "hour12": false,
     "dayProgress": false,
     "showSeconds": false
   },
   "keyboardWidgetOptions": {
     "refreshFrequency": 20000,
-    "showOnDisplay": ""
+    "showOnDisplay": "",
+    "showIcon": true
   },
   "cryptoWidgetOptions": {
     "refreshFrequency": 300000,
     "showOnDisplay": "",
+    "showIcon": true,
     "denomination": "usd",
     "identifiers": "bitcoin,ethereum,celo",
     "precision": 5
@@ -194,6 +217,7 @@
   "stockWidgetOptions": {
     "refreshFrequency": 900000,
     "showOnDisplay": "",
+    "showIcon": true,
     "yahooFinanceApiKey": "YOUR_API_KEY",
     "symbols": "AAPL,TSLA",
     "showSymbol": true,
@@ -206,22 +230,27 @@
   "spotifyWidgetOptions": {
     "refreshFrequency": 10000,
     "showOnDisplay": "",
-    "showSpecter": false
+    "showIcon": true,
+    "showSpecter": false,
+    "showSpotifyMetadata": true
   },
   "youtubeMusicWidgetOptions": {
     "refreshFrequency": 10000,
     "showOnDisplay": "",
+    "showIcon": true,
     "showSpecter": true,
     "youtubeMusicPort": 26538
   },
   "musicWidgetOptions": {
     "refreshFrequency": 10000,
     "showOnDisplay": "",
+    "showIcon": true,
     "showSpecter": true
   },
   "mpdWidgetOptions": {
     "refreshFrequency": 10000,
     "showOnDisplay": "",
+    "showIcon": true,
     "showSpecter": true,
     "mpdBinaryPath": "/opt/homebrew/bin/mpc",
     "mpdPort": "6600",
@@ -231,6 +260,7 @@
   "browserTrackWidgetOptions": {
     "refreshFrequency": 10000,
     "showOnDisplay": "",
+    "showIcon": true,
     "showSpecter": true
   },
   "userWidgets": {
