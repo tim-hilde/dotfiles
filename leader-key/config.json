@@ -16,7 +16,7 @@
         {
           "key": "m",
           "type": "application",
-          "value": "/Applications/Mail.app"
+          "value": "/System/Applications/Mail.app"
         },
         {
           "key": "o",
@@ -36,17 +36,17 @@
         {
           "key": "k",
           "type": "application",
-          "value": "/Applications/Calendar.app"
+          "value": "/System/Applications/Calendar.app"
         },
         {
           "key": "a",
-          "type": "application",
-          "value": "/Applications/Alfred Preferences.app"
+          "type": "command",
+          "value": "open -a 'Alfred Preferences'"
         },
         {
           "key": ",",
           "type": "application",
-          "value": "/Applications/System Settings.app"
+          "value": "/System/Applications/System Settings.app"
         },
         {
           "key": "f",
@@ -76,6 +76,56 @@
       ],
       "key": "o",
       "label": "Open",
+      "type": "group"
+    },
+    {
+      "key": "1",
+      "type": "command",
+      "value": "/opt/homebrew/bin/yabai -m space --focus 1"
+    },
+    {
+      "key": "2",
+      "type": "command",
+      "value": "/opt/homebrew/bin/yabai -m space --focus 2"
+    },
+    {
+      "key": "3",
+      "type": "command",
+      "value": "/opt/homebrew/bin/yabai -m space --focus 3"
+    },
+    {
+      "key": "4",
+      "type": "command",
+      "value": "/opt/homebrew/bin/yabai -m space --focus 4"
+    },
+    {
+      "key": "5",
+      "type": "command",
+      "value": "/opt/homebrew/bin/yabai -m space --focus 5"
+    },
+    {
+      "key": "6",
+      "type": "command",
+      "value": "/opt/homebrew/bin/yabai -m space --focus 6"
+    },
+    {
+      "key": "7",
+      "type": "command",
+      "value": "/opt/homebrew/bin/yabai -m space --focus 7"
+    },
+    {
+      "key": "8",
+      "type": "command",
+      "value": "/opt/homebrew/bin/yabai -m space --focus 8"
+    },
+    {
+      "key": "9",
+      "type": "command",
+      "value": "/opt/homebrew/bin/yabai -m space --focus 9"
+    },
+    {
+      "actions": [],
+      "key": "w",
       "type": "group"
     }
   ],
