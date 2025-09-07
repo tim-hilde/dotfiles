@@ -8,25 +8,27 @@ rules:
         from:
           key_code: left_control
         to:
-          - key_code: left_control
+          - key_code: f23
+            modifiers: fn
         parameters:
           basic.to_if_alone_timeout_milliseconds: 600
         conditions:
-          - type: variable_unless
-            name: LEADER_ACTIVE
-            value: true
+          # - type: variable_unless
+          #   name: LEADER_ACTIVE
+          #   value: true
           - type: device_unless
             identifiers:
               - is_built_in_keyboard: true
                 is_keyboard: true
         to_if_alone:
-          - key_code: left_control
-          - set_variable:
-              name: LEADER_ACTIVE
-              value: true
-          - set_notification_message:
-              id: leader-notice
-              text: 🔺 Leader
+          - key_code: f23
+            modifiers: fn
+          # - set_variable:
+          #     name: LEADER_ACTIVE
+          #     value: true
+          # - set_notification_message:
+          #     id: leader-notice
+          #     text: 🔺 Leader
       - type: basic
         description: Apple Keyboard
         from:
@@ -34,9 +36,9 @@ rules:
         to:
           - key_code: fn
         conditions:
-          - type: variable_unless
-            name: LEADER_ACTIVE
-            value: true
+          # - type: variable_unless
+          #   name: LEADER_ACTIVE
+          #   value: true
           - type: device_if
             identifiers:
               - is_built_in_keyboard: true
@@ -44,13 +46,13 @@ rules:
         parameters:
           basic.to_if_alone_timeout_milliseconds: 600
         to_if_alone:
-          - key_code: fn
-          - set_variable:
-              name: LEADER_ACTIVE
-              value: true
-          - set_notification_message:
-              id: leader-notice
-              text: 🔺 Leader
+          - key_code: f23
+          # - set_variable:
+          #     name: LEADER_ACTIVE
+          #     value: true
+          # - set_notification_message:
+          #     id: leader-notice
+          #     text: 🔺 Leader
   - description: 🔺 App Switcher Actions
     manipulators:
       # Cancel (Esc/Hyper)
