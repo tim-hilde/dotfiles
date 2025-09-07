@@ -13,8 +13,7 @@
           },
           "to": [
             {
-              "key_code": "f23",
-              "modifiers": "fn"
+              "key_code": "left_control"
             }
           ],
           "parameters": {
@@ -33,7 +32,7 @@
           ],
           "to_if_alone": [
             {
-              "key_code": "f23",
+              "key_code": "f12",
               "modifiers": "fn"
             }
           ]
@@ -65,7 +64,8 @@
           },
           "to_if_alone": [
             {
-              "key_code": "f23"
+              "key_code": "f12",
+              "modifiers": "fn"
             }
           ]
         }

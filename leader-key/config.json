@@ -1,0 +1,84 @@
+{
+  "actions": [
+    {
+      "iconPath": "/Applications/kitty.app",
+      "key": "l",
+      "type": "application",
+      "value": "/Applications/kitty.app"
+    },
+    {
+      "actions": [
+        {
+          "key": "s",
+          "type": "application",
+          "value": "/Applications/Vivaldi.app"
+        },
+        {
+          "key": "m",
+          "type": "application",
+          "value": "/Applications/Mail.app"
+        },
+        {
+          "key": "o",
+          "type": "application",
+          "value": "/Applications/Obsidian.app"
+        },
+        {
+          "key": "p",
+          "type": "application",
+          "value": "/System/Applications/Utilities/Activity Monitor.app"
+        },
+        {
+          "key": "z",
+          "type": "application",
+          "value": "/Applications/Zotero.app"
+        },
+        {
+          "key": "k",
+          "type": "application",
+          "value": "/Applications/Calendar.app"
+        },
+        {
+          "key": "a",
+          "type": "application",
+          "value": "/Applications/Alfred Preferences.app"
+        },
+        {
+          "key": ",",
+          "type": "application",
+          "value": "/Applications/System Settings.app"
+        },
+        {
+          "key": "f",
+          "type": "application",
+          "value": "/System/Library/CoreServices/Finder.app"
+        },
+        {
+          "key": "u",
+          "type": "application",
+          "value": "/Applications/Outlook.app"
+        },
+        {
+          "key": "t",
+          "type": "application",
+          "value": "/Applications/Todoist.app"
+        },
+        {
+          "key": "c",
+          "type": "application",
+          "value": "/Applications/Claude.app"
+        },
+        {
+          "key": "e",
+          "type": "application",
+          "value": "/Applications/Teams.app"
+        }
+      ],
+      "key": "o",
+      "label": "Open",
+      "type": "group"
+    }
+  ],
+  "type": "group"
+}
+

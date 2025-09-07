@@ -8,8 +8,7 @@ rules:
         from:
           key_code: left_control
         to:
-          - key_code: f23
-            modifiers: fn
+          - key_code: left_control
         parameters:
           basic.to_if_alone_timeout_milliseconds: 600
         conditions:
@@ -21,7 +20,7 @@ rules:
               - is_built_in_keyboard: true
                 is_keyboard: true
         to_if_alone:
-          - key_code: f23
+          - key_code: f12
             modifiers: fn
           # - set_variable:
           #     name: LEADER_ACTIVE
@@ -46,7 +45,8 @@ rules:
         parameters:
           basic.to_if_alone_timeout_milliseconds: 600
         to_if_alone:
-          - key_code: f23
+          - key_code: f12
+            modifiers: fn
           # - set_variable:
           #     name: LEADER_ACTIVE
           #     value: true
