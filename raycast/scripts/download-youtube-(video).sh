@@ -3,16 +3,14 @@
 # Required parameters:
 # @raycast.schemaVersion 1
 # @raycast.title Download Youtube (Video)
-# @raycast.mode compact
-# @raycast.argument1 {"type": "text", "placeholder": "url", "optional": false, "percentEncoded": true}
+# @raycast.mode fullOutput
+# @raycast.argument1 {"type": "text", "placeholder": "url", "optional": false}
 
 # Optional parameters:
-# @raycast.icon 🤖
+# @raycast.icon 📺
 
 # Documentation:
 # @raycast.author Tim
 
-curl -X POST http://raspberrypi.local:5001/download \
-  -H "Content-Type: application/json" \
-  -d "{\"url\": \"$1\"}"
+yt-dlp -S "res:1080" -f "bestvideo+bestaudio" --remux-video "mp4" "${1}"
 
