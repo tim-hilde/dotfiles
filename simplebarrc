@@ -80,6 +80,7 @@
   },
   "widgets": {
     "processWidget": true,
+    "githubWidget": false,
     "weatherWidget": false,
     "netstatsWidget": false,
     "cpuWidget": false,
@@ -100,66 +101,73 @@
     "youtubeMusicWidget": false,
     "musicWidget": false,
     "mpdWidget": false,
-    "browserTrackWidget": false,
-    "githubWidget": false
+    "browserTrackWidget": false
+  },
+  "githubWidgetOptions": {
+    "refreshFrequency": 600000,
+    "showOnDisplay": "",
+    "showIcon": true,
+    "hideWhenNoNotification": false,
+    "notificationUrl": "https://github.com/notifications",
+    "ghBinaryPath": "/opt/homebrew/bin/gh"
   },
   "weatherWidgetOptions": {
     "refreshFrequency": 1800000,
     "showOnDisplay": "",
+    "showIcon": true,
     "unit": "C",
     "hideLocation": false,
     "hideGradient": false,
-    "customLocation": "",
-    "showIcon": true
+    "customLocation": ""
   },
   "netstatsWidgetOptions": {
     "refreshFrequency": 2000,
     "showOnDisplay": "",
-    "displayAsGraph": false,
-    "showIcon": true
+    "showIcon": true,
+    "displayAsGraph": false
   },
   "cpuWidgetOptions": {
     "refreshFrequency": 2000,
     "showOnDisplay": "",
+    "showIcon": true,
     "displayAsGraph": true,
-    "cpuMonitorApp": "Activity Monitor",
-    "showIcon": true
+    "cpuMonitorApp": "Activity Monitor"
   },
   "gpuWidgetOptions": {
     "refreshFrequency": 3000,
     "showOnDisplay": "",
+    "showIcon": true,
     "displayAsGraph": true,
-    "gpuMacmonBinaryPath": "/opt/homebrew/bin/macmon",
-    "showIcon": true
+    "gpuMacmonBinaryPath": "/opt/homebrew/bin/macmon"
   },
   "memoryWidgetOptions": {
     "refreshFrequency": 4000,
     "showOnDisplay": "",
-    "memoryMonitorApp": "Activity Monitor",
-    "showIcon": true
+    "showIcon": true,
+    "memoryMonitorApp": "Activity Monitor"
   },
   "batteryWidgetOptions": {
     "refreshFrequency": 10000,
     "showOnDisplay": "",
+    "showIcon": true,
     "toggleCaffeinateOnClick": false,
-    "caffeinateOption": "",
-    "showIcon": true
+    "caffeinateOption": ""
   },
   "networkWidgetOptions": {
     "refreshFrequency": 20000,
     "showOnDisplay": "",
+    "showIcon": true,
     "networkDevice": "en0",
     "hideWifiIfDisabled": false,
     "toggleWifiOnClick": false,
-    "hideNetworkName": false,
-    "showIcon": true
+    "hideNetworkName": false
   },
   "vpnWidgetOptions": {
     "refreshFrequency": 8000,
     "showOnDisplay": "",
+    "showIcon": true,
     "vpnConnectionName": "",
-    "vpnShowConnectionName": false,
-    "showIcon": true
+    "vpnShowConnectionName": false
   },
   "zoomWidgetOptions": {
     "refreshFrequency": 5000,
@@ -180,18 +188,18 @@
   "dateWidgetOptions": {
     "refreshFrequency": 30000,
     "showOnDisplay": "",
+    "showIcon": true,
     "shortDateFormat": true,
     "locale": "de-de",
-    "calendarApp": "",
-    "showIcon": true
+    "calendarApp": ""
   },
   "timeWidgetOptions": {
     "refreshFrequency": 1000,
     "showOnDisplay": "",
+    "showIcon": true,
     "hour12": false,
     "dayProgress": false,
-    "showSeconds": false,
-    "showIcon": true
+    "showSeconds": false
   },
   "keyboardWidgetOptions": {
     "refreshFrequency": 20000,
@@ -201,14 +209,15 @@
   "cryptoWidgetOptions": {
     "refreshFrequency": 300000,
     "showOnDisplay": "",
+    "showIcon": true,
     "denomination": "usd",
     "identifiers": "bitcoin,ethereum,celo",
-    "precision": 5,
-    "showIcon": true
+    "precision": 5
   },
   "stockWidgetOptions": {
     "refreshFrequency": 900000,
     "showOnDisplay": "",
+    "showIcon": true,
     "yahooFinanceApiKey": "YOUR_API_KEY",
     "symbols": "AAPL,TSLA",
     "showSymbol": true,
@@ -216,44 +225,43 @@
     "showMarketPrice": true,
     "showMarketChange": false,
     "showMarketPercent": true,
-    "showColor": true,
-    "showIcon": true
+    "showColor": true
   },
   "spotifyWidgetOptions": {
     "refreshFrequency": 10000,
     "showOnDisplay": "",
-    "showSpecter": false,
     "showIcon": true,
+    "showSpecter": false,
     "showSpotifyMetadata": true
   },
   "youtubeMusicWidgetOptions": {
     "refreshFrequency": 10000,
     "showOnDisplay": "",
+    "showIcon": true,
     "showSpecter": true,
-    "youtubeMusicPort": 26538,
-    "showIcon": true
+    "youtubeMusicPort": 26538
   },
   "musicWidgetOptions": {
     "refreshFrequency": 10000,
     "showOnDisplay": "",
-    "showSpecter": true,
-    "showIcon": true
+    "showIcon": true,
+    "showSpecter": true
   },
   "mpdWidgetOptions": {
     "refreshFrequency": 10000,
     "showOnDisplay": "",
+    "showIcon": true,
     "showSpecter": true,
     "mpdBinaryPath": "/opt/homebrew/bin/mpc",
     "mpdPort": "6600",
     "mpdHost": "127.0.0.1",
-    "mpdFormatString": "%title%[ - %artist%]|[%file%]",
-    "showIcon": true
+    "mpdFormatString": "%title%[ - %artist%]|[%file%]"
   },
   "browserTrackWidgetOptions": {
     "refreshFrequency": 10000,
     "showOnDisplay": "",
-    "showSpecter": true,
-    "showIcon": true
+    "showIcon": true,
+    "showSpecter": true
   },
   "userWidgets": {
     "userWidgetsList": {
@@ -274,13 +282,5 @@
   },
   "customStyles": {
     "styles": "/* your custom css styles here */"
-  },
-  "githubWidgetOptions": {
-    "refreshFrequency": 600000,
-    "showOnDisplay": "",
-    "showIcon": true,
-    "hideWhenNoNotification": false,
-    "notificationUrl": "https://github.com/notifications",
-    "ghBinaryPath": "/opt/homebrew/bin/gh"
   }
 }
