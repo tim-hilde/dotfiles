@@ -1,4 +1,4 @@
-services=("github" "datev" "zwoenitz" "teqyard" "siemens")
+services=("stackit-otp" "sbi-otp")
 
 echo "Fetching OTP tokens for your services..."
 echo "========================================"
