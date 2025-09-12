@@ -3,7 +3,6 @@ local utils = require("utils")
 
 -- Initialize reload configuration
 hs.loadSpoon("ReloadConfiguration")
-hs.loadSpoon("pasteboard")
 spoon.ReloadConfiguration:start()
 
 -- Load modules
