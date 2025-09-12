@@ -7,6 +7,7 @@ require("clipboard")
 
 -- Initialize reload configuration
 hs.loadSpoon("ReloadConfiguration")
+hs.loadSpoon("Pasteboard")
 spoon.ReloadConfiguration:start()
 
 utils.notify("Hammerspoon configuration loaded")
