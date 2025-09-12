@@ -9,12 +9,12 @@ cursor-style = block
 
 link-url = true
 
-title = ""
+# title = ""
 window-padding-x = 6
 window-padding-y = 6
 
 window-decoration = auto
-
+quit-after-last-window-closed = true
 clipboard-read = allow
 clipboard-write = allow
 

@@ -1,171 +1,120 @@
 {
-  "actions": [
+  "actions" : [
     {
-      "key": "l",
-      "type": "application",
-      "value": "/Applications/Ghostty.app"
+      "key" : "l",
+      "type" : "application",
+      "value" : "/Applications/Ghostty.app"
     },
     {
-      "key": "s",
-      "type": "application",
-      "value": "/Applications/Vivaldi.app"
+      "key" : "s",
+      "type" : "application",
+      "value" : "/Applications/Vivaldi.app"
     },
     {
-      "key": "m",
-      "type": "application",
-      "value": "/System/Applications/Mail.app"
+      "key" : "m",
+      "type" : "application",
+      "value" : "/System/Applications/Mail.app"
     },
     {
-      "key": "o",
-      "type": "application",
-      "value": "/Applications/Obsidian.app"
+      "key" : "o",
+      "type" : "application",
+      "value" : "/Applications/Obsidian.app"
     },
     {
-      "key": "p",
-      "type": "application",
-      "value": "/System/Applications/Utilities/Activity Monitor.app"
+      "key" : "p",
+      "type" : "application",
+      "value" : "/System/Applications/Utilities/Activity Monitor.app"
     },
     {
-      "key": "z",
-      "type": "application",
-      "value": "/Applications/Zotero.app"
+      "key" : "z",
+      "type" : "application",
+      "value" : "/Applications/Zotero.app"
     },
     {
-      "key": "k",
-      "type": "application",
-      "value": "/System/Applications/Calendar.app"
+      "key" : "k",
+      "type" : "application",
+      "value" : "/System/Applications/Calendar.app"
     },
     {
-      "key": "a",
-      "type": "command",
-      "value": "open -a 'Alfred Preferences'"
+      "key" : "a",
+      "type" : "command",
+      "value" : "open -a 'Alfred Preferences'"
     },
     {
-      "key": ",",
-      "type": "application",
-      "value": "/System/Applications/System Settings.app"
+      "key" : ",",
+      "type" : "application",
+      "value" : "/System/Applications/System Settings.app"
     },
     {
-      "key": "f",
-      "type": "application",
-      "value": "/System/Library/CoreServices/Finder.app"
+      "key" : "f",
+      "type" : "application",
+      "value" : "/System/Library/CoreServices/Finder.app"
     },
     {
-      "key": "u",
-      "type": "application",
-      "value": "/Applications/Microsoft Outlook.app"
+      "key" : "u",
+      "type" : "application",
+      "value" : "/Applications/Microsoft Outlook.app"
     },
     {
-      "key": "t",
-      "type": "application",
-      "value": "/Applications/Todoist.app"
+      "key" : "t",
+      "type" : "application",
+      "value" : "/Applications/Todoist.app"
     },
     {
-      "key": "c",
-      "type": "application",
-      "value": "/Applications/Claude.app"
+      "key" : "c",
+      "type" : "application",
+      "value" : "/Applications/Claude.app"
     },
     {
-      "key": "e",
-      "type": "application",
-      "value": "/Applications/Microsoft Teams.app"
+      "key" : "e",
+      "type" : "application",
+      "value" : "/Applications/Microsoft Teams.app"
     },
     {
-      "key": "1",
-      "type": "command",
-      "value": "/opt/homebrew/bin/yabai -m space --focus 1"
+      "key" : "1",
+      "type" : "command",
+      "value" : "/opt/homebrew/bin/yabai -m space --focus 1"
     },
     {
-      "key": "2",
-      "type": "command",
-      "value": "/opt/homebrew/bin/yabai -m space --focus 2"
+      "key" : "2",
+      "type" : "command",
+      "value" : "/opt/homebrew/bin/yabai -m space --focus 2"
     },
     {
-      "key": "3",
-      "type": "command",
-      "value": "/opt/homebrew/bin/yabai -m space --focus 3"
+      "key" : "3",
+      "type" : "command",
+      "value" : "/opt/homebrew/bin/yabai -m space --focus 3"
     },
     {
-      "key": "4",
-      "type": "command",
-      "value": "/opt/homebrew/bin/yabai -m space --focus 4"
+      "key" : "4",
+      "type" : "command",
+      "value" : "/opt/homebrew/bin/yabai -m space --focus 4"
     },
     {
-      "key": "5",
-      "type": "command",
-      "value": "/opt/homebrew/bin/yabai -m space --focus 5"
+      "key" : "5",
+      "type" : "command",
+      "value" : "/opt/homebrew/bin/yabai -m space --focus 5"
     },
     {
-      "key": "6",
-      "type": "command",
-      "value": "/opt/homebrew/bin/yabai -m space --focus 6"
+      "key" : "6",
+      "type" : "command",
+      "value" : "/opt/homebrew/bin/yabai -m space --focus 6"
     },
     {
-      "key": "7",
-      "type": "command",
-      "value": "/opt/homebrew/bin/yabai -m space --focus 7"
+      "key" : "7",
+      "type" : "command",
+      "value" : "/opt/homebrew/bin/yabai -m space --focus 7"
     },
     {
-      "key": "8",
-      "type": "command",
-      "value": "/opt/homebrew/bin/yabai -m space --focus 8"
+      "key" : "8",
+      "type" : "command",
+      "value" : "/opt/homebrew/bin/yabai -m space --focus 8"
     },
     {
-      "key": "9",
-      "type": "command",
-      "value": "/opt/homebrew/bin/yabai -m space --focus 9"
-    },
-    {
-      "actions": [
-        {
-          "key": "1",
-          "type": "command",
-          "value": "/opt/homebrew/bin/yabai -m space --focus 1"
-        },
-        {
-          "key": "2",
-          "type": "command",
-          "value": "/opt/homebrew/bin/yabai -m space --focus 2"
-        },
-        {
-          "key": "3",
-          "type": "command",
-          "value": "/opt/homebrew/bin/yabai -m space --focus 3"
-        },
-        {
-          "key": "4",
-          "type": "command",
-          "value": "/opt/homebrew/bin/yabai -m space --focus 4"
-        },
-        {
-          "key": "5",
-          "type": "command",
-          "value": "/opt/homebrew/bin/yabai -m space --focus 5"
-        },
-        {
-          "key": "6",
-          "type": "command",
-          "value": "/opt/homebrew/bin/yabai -m space --focus 6"
-        },
-        {
-          "key": "7",
-          "type": "command",
-          "value": "/opt/homebrew/bin/yabai -m space --focus 7"
-        },
-        {
-          "key": "8",
-          "type": "command",
-          "value": "/opt/homebrew/bin/yabai -m space --focus 8"
-        },
-        {
-          "key": "9",
-          "type": "command",
-          "value": "/opt/homebrew/bin/yabai -m space --focus 9"
-        }
-      ],
-      "key": "m",
-      "type": "group"
+      "key" : "9",
+      "type" : "command",
+      "value" : "/opt/homebrew/bin/yabai -m space --focus 9"
     }
   ],
-  "type": "group"
+  "type" : "group"
 }
