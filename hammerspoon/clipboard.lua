@@ -27,4 +27,4 @@ hs.hotkey.bind({ "cmd" }, "c", function()
 	lastCmdCTime = currentTime
 end)
 
-return clipboard
+--return clipboard
