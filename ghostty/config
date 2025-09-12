@@ -24,6 +24,7 @@ shell-integration-features = no-cursor, sudo, title
 # macos
 macos-titlebar-style = hidden
 macos-auto-secure-input = true
+macos-option-as-alt = left
 macos-secure-input-indication = true
 
 # keybindings
