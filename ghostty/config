@@ -26,8 +26,6 @@ macos-titlebar-style = hidden
 macos-auto-secure-input = true
 macos-secure-input-indication = true
 macos-window-shadow = false
-macos-icon = paper 
-#blueprint,,,,, paper, retro, xray
 
 # keybindings
 # needed for snacks picker
