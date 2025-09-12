@@ -4,6 +4,7 @@ local clipboard = {}
 
 -- Double-tap Cmd+C state
 local lastCmdCTime = 0
+local previousClipboard = ""
 
 -- Double-tap Cmd+C to merge clipboard content
 
@@ -12,29 +13,29 @@ hs.hotkey.bind({ "cmd" }, "c", function()
 	local timeSinceLastC = currentTime - lastCmdCTime
 
 	if timeSinceLastC <= config.doubleTapThreshold and timeSinceLastC > 0.05 then
-		-- Doppel-C erkannt - Text zusammenführen
-		-- Zuerst den ausgewählten Text kopieren
+		-- Double-tap detected - merge text
+		-- First copy the selected text
 		hs.eventtap.keyStroke({ "cmd" }, "c", 0)
 
 		hs.timer.doAfter(0.1, function()
 			local currentText = hs.pasteboard.getContents() or ""
-			if #clipboardHistory >= 2 then
-				local currentText = clipboardHistory[1] or ""
-				local previousText = clipboardHistory[2] or ""
-				if currentText ~= "" and previousText ~= "" then
-					local mergedText = previousText .. "\n" .. currentText
-					hs.pasteboard.setContents(mergedText)
-					hs.alert.show("Text merged!")
-				end
+			if currentText ~= "" and previousClipboard ~= "" then
+				local mergedText = previousClipboard .. "\n" .. currentText
+				hs.pasteboard.setContents(mergedText)
+				hs.alert.show("Text merged!")
 			end
 		end)
 
-		lastCmdCTime = 0 -- Reset um weitere Doppel-Taps zu vermeiden
+		lastCmdCTime = 0 -- Reset to prevent further double-taps
 	else
-		-- Normales Cmd+C - das Original-Event durchlassen
+		-- Normal Cmd+C - store current clipboard for potential merge
+		-- Let the original event pass through first
+		hs.timer.doAfter(0.05, function()
+			previousClipboard = hs.pasteboard.getContents() or ""
+		end)
 		lastCmdCTime = currentTime
-		-- Das Event nicht abfangen, sondern weiterleiten
-		return false -- Lässt das ursprüngliche Event durch
+		-- Don't intercept, let the original event through
+		return false
 	end
 end)
 
