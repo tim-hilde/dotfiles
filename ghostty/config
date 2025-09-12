@@ -23,14 +23,18 @@ shell-integration-features = no-cursor, sudo, title
 
 # macos
 macos-titlebar-style = hidden
-macos-option-as-alt = left
 macos-auto-secure-input = true
 macos-secure-input-indication = true
 
 # keybindings
-## change to previous dir
-keybind = alt+cmd+left=text:dirhistory_back
-keybind = alt+cmd+right=text:dirhistory_forward
+
+# change to previous dir
+#keybind = option+cmd+left=text:dirhistory_back
+#keybind = option+cmd+right=text:dirhistory_forward
+
+# needed for snacks picker
+keybind = option+shift+h=unbind
+keybind = option+i=unbind
 
 ## history search
 # keybind = "ctrl+r=text:h | fzf --preview="echo {}" --preview-window=down,3,wrap --height=60%\r"
