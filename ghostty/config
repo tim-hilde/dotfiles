@@ -6,6 +6,7 @@ theme = catppuccin-mocha
 alpha-blending = linear
 
 cursor-style = block
+cursor-text = #1E1E2E
 
 link-url = true
 
@@ -13,6 +14,7 @@ window-padding-x = 6
 window-padding-y = 6, 0
 window-decoration = auto
 background-opacity = 0.9
+background-blur = true
 
 quit-after-last-window-closed = true
 
