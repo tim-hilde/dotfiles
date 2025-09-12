@@ -9,9 +9,8 @@ cursor-style = block
 
 link-url = true
 
-# title = ""
 window-padding-x = 6
-window-padding-y = 6
+window-padding-y = 6, 0
 
 window-decoration = auto
 quit-after-last-window-closed = true
