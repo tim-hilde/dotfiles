@@ -28,7 +28,7 @@ macos-auto-secure-input = true
 macos-secure-input-indication = true
 
 # keybindings
-## change to previos dir
+## change to previous dir
 keybind = alt+cmd+left=text:dirhistory_back
 keybind = alt+cmd+right=text:dirhistory_forward
 
