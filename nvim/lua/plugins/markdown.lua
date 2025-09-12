@@ -9,10 +9,7 @@ return {
 			"nvim-tree/nvim-web-devicons",
 		},
 		init = function()
-			-- vim.cmd [[set foldlevelstart=6]]
 			vim.cmd [[set conceallevel=2]]
-			-- vim.cmd [[colorscheme catppuccin]]
-
 			require("markview").setup { markdown = {
 				list_items = {
 					shift_width = 2,
