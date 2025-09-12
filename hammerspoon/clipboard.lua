@@ -11,7 +11,7 @@ hs.hotkey.bind({ "cmd" }, "c", function()
 	local currentTime = hs.timer.secondsSinceEpoch()
 	local timeSinceLastC = currentTime - lastCmdCTime
 
-	if timeSinceLastC <= doubleTapThreshold and timeSinceLastC > 0.05 then
+	if timeSinceLastC <= config.doubleTapThreshold and timeSinceLastC > 0.05 then
 		-- Doppel-C erkannt - Text zusammenführen
 		-- Zuerst den ausgewählten Text kopieren
 		hs.eventtap.keyStroke({ "cmd" }, "c", 0)
