@@ -17,7 +17,7 @@ hs.hotkey.bind({ "cmd" }, "c", function()
 		hs.eventtap.keyStroke({ "cmd" }, "c", 0)
 
 		hs.timer.doAfter(0.1, function()
-			local clipboardHistory = hs.pasteboard.getHistory()
+			local currentText = hs.pasteboard.getContents() or ""
 			if #clipboardHistory >= 2 then
 				local currentText = clipboardHistory[1] or ""
 				local previousText = clipboardHistory[2] or ""
