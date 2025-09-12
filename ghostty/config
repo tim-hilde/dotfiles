@@ -24,19 +24,15 @@ shell-integration-features = no-cursor, sudo, title
 # macos
 macos-titlebar-style = hidden
 macos-auto-secure-input = true
-macos-option-as-alt = left
 macos-secure-input-indication = true
+macos-window-shadow = false
+macos-icon = paper 
+#blueprint,,,,, paper, retro, xray
 
 # keybindings
-
-# change to previous dir
-#keybind = option+cmd+left=text:dirhistory_back
-#keybind = option+cmd+right=text:dirhistory_forward
-
 # needed for snacks picker
-keybind = option+shift+h=unbind
-keybind = option+i=unbind
+keybind = option+shift+h=esc:H
+keybind = option+i=esc:i
 
-## history search
-# keybind = "ctrl+r=text:h | fzf --preview="echo {}" --preview-window=down,3,wrap --height=60%\r"
-# keybind = cmd+f=action:write_scrollback_file
+# open folder with fzf
+keybind = option+c=esc:c

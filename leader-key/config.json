@@ -1,10 +1,9 @@
 {
   "actions": [
     {
-      "iconPath": "/Applications/kitty.app",
       "key": "l",
       "type": "application",
-      "value": "/Applications/kitty.app"
+      "value": "/Applications/Ghostty.app"
     },
     {
       "key": "s",
