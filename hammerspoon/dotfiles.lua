@@ -16,11 +16,9 @@ local function runBrewBundleDump()
 
 	if status then
 		local msg = string.format("✅ Brew bundle dumped to Brewfile-%s", deviceName)
-		print(msg)
 		utils.notify(msg)
 	else
 		local msg = string.format("❌ Failed to dump brew bundle for %s", deviceName)
-		print(msg)
 		hs.alert(msg, 5)
 		utils.notify(msg)
 	end
