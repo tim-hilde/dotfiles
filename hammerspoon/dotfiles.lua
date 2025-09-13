@@ -3,9 +3,16 @@ local utils = require("utils")
 
 local dotfiles = {}
 
--- Save brew file
+-- Get device name for file prefixing
+local function getDeviceName()
+	return hs.host.localizedName():gsub("%s+", "-"):lower()
+end
+
+-- Save brew file with device prefix
 local function runBrewBundleDump()
-	hs.execute("brew bundle dump --force --file='~/dotfiles/brew/Brewfile'")
+	local deviceName = getDeviceName()
+	local brewFilePath = string.format("~/dotfiles/brew/Brewfile-%s", deviceName)
+	hs.execute(string.format("brew bundle dump --force --file='%s'", brewFilePath))
 end
 
 -- Sync dotfiles
