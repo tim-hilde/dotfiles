@@ -23,6 +23,7 @@ local function runBrewBundleDump()
 
 	local command = string.format("%s bundle dump --force --file='%s'", brewPath, brewFilePath)
 
+	local result, status, type, rc = hs.execute(command)
 	print(string.format("🔄 Running brew dump command: %s", command))
 
 	print(
