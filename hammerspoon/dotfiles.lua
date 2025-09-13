@@ -11,12 +11,19 @@ end
 -- Save brew file with device prefix
 local function runBrewBundleDump()
 	local deviceName = getDeviceName()
-	local brewFilePath = string.format("~/dotfiles/brew/Brewfile-%s", deviceName)
-	local command = string.format("brew bundle dump --force --file='%s'", brewFilePath)
+	-- Expand the home directory path
+	local homeDir = os.getenv("HOME")
+	local brewFilePath = string.format("%s/dotfiles/brew/Brewfile-%s", homeDir, deviceName)
+
+	-- Use full path to brew (common locations)
+	local brewPath = "/opt/homebrew/bin/brew" -- Apple Silicon Macs
+	if not hs.fs.attributes(brewPath) then
+		brewPath = "/usr/local/bin/brew" -- Intel Macs
+	end
+
+	local command = string.format("%s bundle dump --force --file='%s'", brewPath, brewFilePath)
 
 	print(string.format("🔄 Running brew dump command: %s", command))
-
-	local result, status, type, rc = hs.execute(command)
 
 	print(
 		string.format(
