@@ -12,7 +12,18 @@ end
 local function runBrewBundleDump()
 	local deviceName = getDeviceName()
 	local brewFilePath = string.format("~/dotfiles/brew/Brewfile-%s", deviceName)
-	hs.execute(string.format("brew bundle dump --force --file='%s'", brewFilePath))
+	local result, status = hs.execute(string.format("brew bundle dump --force --file='%s'", brewFilePath))
+
+	if status then
+		local msg = string.format("✅ Brew bundle dumped to Brewfile-%s", deviceName)
+		print(msg)
+		utils.notify(msg)
+	else
+		local msg = string.format("❌ Failed to dump brew bundle for %s", deviceName)
+		print(msg)
+		hs.alert(msg, 5)
+		utils.notify(msg)
+	end
 end
 
 -- Sync dotfiles
