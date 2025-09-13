@@ -23,33 +23,16 @@ local function runBrewBundleDump()
 
 	local command = string.format("%s bundle dump --force --file='%s'", brewPath, brewFilePath)
 
-	local result, status, type, rc = hs.execute(command)
 	print(string.format("🔄 Running brew dump command: %s", command))
 
-	print(
-		string.format(
-			"📊 Brew dump result - Status: %s, Type: %s, RC: %s",
-			tostring(status),
-			tostring(type),
-			tostring(rc)
-		)
-	)
-
-	if result and result ~= "" then
-		print(string.format("📝 Brew dump output: %s", result))
-	end
+	local result, status, type, rc = hs.execute(command)
 
 	if status then
 		local msg = string.format("✅ Brew bundle dumped to Brewfile-%s", deviceName)
 		print(msg)
 		utils.notify(msg)
 	else
-		local msg = string.format(
-			"❌ Failed to dump brew bundle for %s - RC: %s, Output: %s",
-			deviceName,
-			tostring(rc),
-			result or "no output"
-		)
+		local msg = string.format("❌ Failed to dump brew bundle for %s (exit code: %s)", deviceName, rc)
 		print(msg)
 		hs.alert(msg, 5)
 		utils.notify(msg)
