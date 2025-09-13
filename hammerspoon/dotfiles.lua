@@ -42,6 +42,16 @@ hs.timer
 	end)
 	:start()
 
+-- Initialize brew dump (run once on startup)
+runBrewBundleDump()
+
+-- Schedule weekly brew dump (every 7 days = 604800 seconds)
+hs.timer
+	.doEvery(604800, function()
+		runBrewBundleDump()
+	end)
+	:start()
+
 dotfiles.sync = syncDotfiles
 dotfiles.brewDump = runBrewBundleDump
 
