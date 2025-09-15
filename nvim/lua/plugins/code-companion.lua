@@ -8,7 +8,13 @@ return {
 		"saghen/blink.cmp",
 		"folke/snacks.nvim",
 		{ "stevearc/dressing.nvim", opts = {} },
-		"j-hui/fidget.nvim",
+		{ "j-hui/fidget.nvim", opts = {
+			notification = {
+				window = {
+					winblend = 0,
+				},
+			},
+		} },
 		"ravitemer/codecompanion-history.nvim",
 	},
 	config = function()
