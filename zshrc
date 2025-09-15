@@ -113,7 +113,6 @@ export FZF_DEFAULT_OPTS=" \
 --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
 --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
 --color=selected-bg:#45475a \
---color=bg:-1 \
 --multi"
 
 ZSH_THEME_TERM_TITLE_IDLE="%n@%m: %1~"
@@ -146,7 +145,6 @@ bindkey -M emacs '^S' sesh-sessions
 bindkey -M vicmd '^S' sesh-sessions
 bindkey -M viins '^S' sesh-sessions
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
-export GUM_CONFIRM_SELECTED_BACKGROUND="0"
 
 # pnpm
 export PNPM_HOME="/Users/tim/Library/pnpm"
