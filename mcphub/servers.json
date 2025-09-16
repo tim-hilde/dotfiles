@@ -5,7 +5,7 @@
         "mcp-server-fetch"
       ],
       "command": "uvx",
-      "disabled": true
+      "disabled": false
     },
     "sequentialthinking": {
       "args": [
