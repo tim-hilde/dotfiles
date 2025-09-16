@@ -1,6 +1,17 @@
 {
   "$schema": "https://charm.land/crush.json",
   "providers": {
+    "azure": {
+      "type": "openai",
+      "base_url": "$AZURE_OPENAI_ENDPOINT",
+      "api_key": "$AZURE_OPENAI_API_KEY",
+      "models": [
+        {
+          "name": "GPT-4.1",
+          "default_max_tokens": 32768
+        }
+      ]
+    },
     "lmstudio": {
       "name": "LM Studio",
       "base_url": "http://localhost:1234/v1/",
