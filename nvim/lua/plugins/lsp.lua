@@ -206,10 +206,6 @@ return {
 				taplo = {},
 				typos_lsp = {},
 				yamlls = {},
-				ghostty = {
-					cmd = { "ghostty-ls" },
-					filetypes = { "ghostty" },
-				},
 			}
 
 			local ensure_installed = vim.tbl_keys(servers or {})
@@ -228,11 +224,6 @@ return {
 
 			require("mason").setup {
 				ensure_installed = ensure_installed,
-				providers = {
-					"mason.providers.registry-api",
-					"mason.providers.client",
-					"github:mkindberg/ghostty-ls",
-				},
 			}
 		end,
 	},
