@@ -15,6 +15,7 @@
         "--stdio"
       ],
       "command": "npx",
+      "disabled": false,
       "env": {
         "FIGMA_API_KEY": "${FIGMA_API_KEY}"
       }
