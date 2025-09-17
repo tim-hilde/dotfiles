@@ -8,6 +8,11 @@ return {
 	config = function()
 		require("mcphub").setup {
 			auto_approve = true,
+			global_env = function(context)
+				return {
+					FIGMA_API_KEY = os.getenv "FIGMA_API_KEY" or "",
+				}
+			end,
 		}
 	end,
 }
