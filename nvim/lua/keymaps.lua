@@ -43,8 +43,8 @@ local function prev_item()
 	end
 end
 
-vim.keymap.set("n", "<C-M-J>", next_item, { desc = "Next quickfix or loclist item" })
-vim.keymap.set("n", "<C-M-K>", prev_item, { desc = "Previous quickfix or loclist item" })
+vim.keymap.set("n", "<C-M-down>", next_item, { desc = "Next quickfix or loclist item" })
+vim.keymap.set("n", "<C-M-up>", prev_item, { desc = "Previous quickfix or loclist item" })
 
 -- Hover Documentation
 vim.keymap.set(

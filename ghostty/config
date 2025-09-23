@@ -10,7 +10,7 @@ cursor-text = #1E1E2E
 link-url = true
 
 window-padding-x = 6
-window-padding-y = 6, 0
+window-padding-y = 6, 1
 window-decoration = auto
 background-opacity = 1
 background-blur = 50
@@ -33,6 +33,10 @@ macos-window-shadow = false
 # needed for snacks picker
 keybind = option+shift+h=esc:H
 keybind = option+i=esc:i
+
+# Fix for Neovim Ctrl+Meta navigation (Meta = Cmd on Mac)
+keybind = ctrl+cmd+j=text:\x1b[1;7B
+keybind = ctrl+cmd+k=text:\x1b[1;7A
 
 # open folder with fzf
 keybind = option+c=esc:c

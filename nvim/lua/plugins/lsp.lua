@@ -156,8 +156,7 @@ return {
 				end,
 			})
 
-			local capabilities = vim.lsp.protocol.make_client_capabilities()
-			capabilities = vim.tbl_deep_extend("force", capabilities, require("blink.cmp").get_lsp_capabilities())
+			local capabilities = require("blink.cmp").get_lsp_capabilities()
 			local servers = {
 
 				basedpyright = {
@@ -219,7 +218,9 @@ return {
 			})
 
 			for server_name, server_config in pairs(servers) do
-				require("lspconfig")[server_name].setup(server_config)
+				server_config.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server_config.capabilities or {})
+				vim.lsp.config(server_name, server_config)
+				vim.lsp.enable(server_name)
 			end
 
 			require("mason").setup {
