@@ -234,8 +234,9 @@ return {
 			"rcarriga/nvim-dap-ui",
 		},
 		config = function(_, opts)
-			local python_path = vim.fn.system("which python"):gsub("\n", "")
-			require("dap-python").setup(python_path)
+			-- local python_path = vim.fn.system("which python"):gsub("\n", "")
+			-- require("dap-python").setup(python_path)
+			require("dap-python").setup "uv"
 
 			require("dap").set_exception_breakpoints { "raised", "uncaught" }
 			require("dap").configurations.python[3].justMyCode = false
