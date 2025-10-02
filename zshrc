@@ -19,7 +19,7 @@ plugins=(
     history-substring-search
     jsontools
     last-working-dir
-    poetry
+    # poetry
     python
     ssh-agent
     autoswitch_virtualenv
