@@ -229,14 +229,14 @@ return {
 	{
 		"mfussenegger/nvim-dap-python",
 		ft = "python",
+		commit = "030385d03363988370adaa5cf21fa465daddb088", -- Known working commit before the issue
 		dependencies = {
 			"mfussenegger/nvim-dap",
 			"rcarriga/nvim-dap-ui",
 		},
 		config = function(_, opts)
-			-- local python_path = vim.fn.system("which python"):gsub("\n", "")
-			-- require("dap-python").setup(python_path)
-			require("dap-python").setup "uv"
+			local python_path = vim.fn.system("which python"):gsub("\n", "")
+			require("dap-python").setup(python_path)
 
 			require("dap").set_exception_breakpoints { "raised", "uncaught" }
 			require("dap").configurations.python[3].justMyCode = false
