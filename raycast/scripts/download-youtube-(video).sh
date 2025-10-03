@@ -3,7 +3,7 @@
 # Required parameters:
 # @raycast.schemaVersion 1
 # @raycast.title Download Youtube (Video)
-# @raycast.mode fullOutput
+# @raycast.mode compact
 # @raycast.argument1 {"type": "text", "placeholder": "url", "optional": false}
 
 # Optional parameters:
