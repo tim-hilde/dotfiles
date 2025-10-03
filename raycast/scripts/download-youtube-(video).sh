@@ -12,5 +12,5 @@
 # Documentation:
 # @raycast.author Tim
 
-yt-dlp -S "res:1080" -f "bestvideo+bestaudio" --remux-video "mp4" "${1}"
+yt-dlp -q -S "res:1080" -f "bestvideo+bestaudio" --remux-video "mp4" "${1}"
 
