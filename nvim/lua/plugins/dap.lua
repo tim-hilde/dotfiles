@@ -229,7 +229,6 @@ return {
 	{
 		"mfussenegger/nvim-dap-python",
 		ft = "python",
-		commit = "030385d03363988370adaa5cf21fa465daddb088", -- Known working commit before the issue
 		dependencies = {
 			"mfussenegger/nvim-dap",
 			"rcarriga/nvim-dap-ui",
