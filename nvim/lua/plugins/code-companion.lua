@@ -284,7 +284,6 @@ return {
 									.. " developer."
 									.. "I will send you a function or class and I want you to generate the docstrings using the google format."
 									.. "Generate only the docstrings and nothing more. Put the generated docstring at the correct position in the code depending on the programming language."
-									.. "Use tabs instead of spaces"
 							end,
 						},
 						{
