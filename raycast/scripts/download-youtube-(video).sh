@@ -15,7 +15,7 @@
 url="${1}"
 
 if yt-dlp -q -S "res:1080" -f "bestvideo+bestaudio" --remux-video "mp4" "${url}"; then
-    echo "✅ Video download completed successfully"
+    echo "✅ Video download completed"
 else
     echo "❌ Video download failed"
 fi
