@@ -16,6 +16,7 @@ background-opacity = 1
 background-blur = 50
 
 quit-after-last-window-closed = true
+confirm-close-surface = true
 
 clipboard-read = allow
 clipboard-write = allow
