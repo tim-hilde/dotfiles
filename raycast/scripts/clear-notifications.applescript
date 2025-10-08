@@ -2,7 +2,7 @@
 
 // Required parameters:
 // @raycast.schemaVersion 1
-// @raycast.title Clear Notification Banners
+// @raycast.title Clear Notifications
 // @raycast.mode silent
 
 // Optional parameters:
