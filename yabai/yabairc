@@ -67,4 +67,4 @@ yabai -m rule --add app="^Leader Key$" manage=off
 yabai -m rule --apply
 
 # JankyBorders
-borders active_color=0xffcba6f7 inactive_color=0xff1e1e2e width=5.0 &
+borders active_color=0xffcba6f7 inactive_color=0xff636369 width=5.0 hidpi=true &
