@@ -164,6 +164,7 @@ return {
 						basedpyright = {
 							disableOrganizeImports = true,
 							analysis = {
+								diagnosticMode = "openFilesOnly",
 								ignore = { "*" },
 								-- typeCheckingMode = "basic",
 								-- inlayHints = {
@@ -202,6 +203,7 @@ return {
 					},
 				},
 				ruff = {},
+				ty = {},
 				taplo = {},
 				typos_lsp = {},
 				yamlls = {},
