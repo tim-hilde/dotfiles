@@ -61,11 +61,6 @@
       "value" : "/Applications/Todoist.app"
     },
     {
-      "key" : "c",
-      "type" : "application",
-      "value" : "/Applications/Claude.app"
-    },
-    {
       "key" : "e",
       "type" : "application",
       "value" : "/Applications/Microsoft Teams.app"
@@ -114,6 +109,22 @@
       "key" : "9",
       "type" : "command",
       "value" : "/opt/homebrew/bin/yabai -m space --focus 9"
+    },
+    {
+      "actions" : [
+        {
+          "key" : "a",
+          "type" : "application",
+          "value" : "/Applications/Claude.app"
+        },
+        {
+          "key" : "o",
+          "type" : "application",
+          "value" : "/Applications/ChatGPT.app"
+        }
+      ],
+      "key" : "c",
+      "type" : "group"
     }
   ],
   "type" : "group"
