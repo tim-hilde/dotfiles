@@ -159,24 +159,24 @@ return {
 			local capabilities = require("blink.cmp").get_lsp_capabilities()
 			local servers = {
 
-				basedpyright = {
-					settings = {
-						basedpyright = {
-							disableOrganizeImports = true,
-							analysis = {
-								diagnosticMode = "openFilesOnly",
-								ignore = { "*" },
-								-- typeCheckingMode = "basic",
-								-- inlayHints = {
-								-- 	variableTypes = true,
-								-- 	callArgumentNames = true,
-								-- 	functionReturnTypes = true,
-								-- 	genericTypes = true,
-								-- },
-							},
-						},
-					},
-				},
+				-- basedpyright = {
+				-- 	settings = {
+				-- 		basedpyright = {
+				-- 			disableOrganizeImports = true,
+				-- 			analysis = {
+				-- 				diagnosticMode = "openFilesOnly",
+				-- 				ignore = { "*" },
+				-- 				-- typeCheckingMode = "basic",
+				-- 				inlayHints = {
+				-- 					variableTypes = false,
+				-- 					callArgumentNames = false,
+				-- 					functionReturnTypes = false,
+				-- 					genericTypes = false,
+				-- 				},
+				-- 			},
+				-- 		},
+				-- 	},
+				-- },
 				ts_ls = {},
 				bashls = {},
 				dockerls = {},
@@ -203,7 +203,16 @@ return {
 					},
 				},
 				ruff = {},
-				ty = {},
+				ty = {
+					inlayHints = {
+						variableTypes = true,
+						callArgumentNames = true,
+					},
+					experimental = {
+						rename = true,
+						autoImport = true,
+					},
+				},
 				taplo = {},
 				typos_lsp = {},
 				yamlls = {},
