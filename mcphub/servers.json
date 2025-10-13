@@ -49,7 +49,8 @@
         "execute_command",
         "execute_lua",
         "move_item",
-        "write_file"
+        "write_file",
+        "edit_file"
       ]
     }
   }
