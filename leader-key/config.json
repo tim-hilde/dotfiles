@@ -36,11 +36,6 @@
       "value" : "/System/Applications/Calendar.app"
     },
     {
-      "key" : "a",
-      "type" : "command",
-      "value" : "open -a 'Alfred Preferences'"
-    },
-    {
       "key" : ",",
       "type" : "application",
       "value" : "/System/Applications/System Settings.app"
