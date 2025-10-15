@@ -159,24 +159,25 @@ return {
 			local capabilities = require("blink.cmp").get_lsp_capabilities()
 			local servers = {
 
-				basedpyright = {
-					settings = {
-						basedpyright = {
-							disableOrganizeImports = true,
-							analysis = {
-								diagnosticMode = "openFilesOnly",
-								ignore = { "*" },
-								-- typeCheckingMode = "basic",
-								-- inlayHints = {
-								-- 	variableTypes = false,
-								-- 	callArgumentNames = false,
-								-- 	functionReturnTypes = false,
-								-- 	genericTypes = false,
-								-- },
-							},
-						},
-					},
-				},
+				-- basedpyright = {
+				-- 	settings = {
+				-- 		basedpyright = {
+				-- 			disableOrganizeImports = true,
+				-- 			analysis = {
+				-- 				diagnosticMode = "openFilesOnly",
+				-- 				ignore = { "*" },
+				-- 				-- typeCheckingMode = "basic",
+				-- 				-- inlayHints = {
+				-- 				-- 	variableTypes = false,
+				-- 				-- 	callArgumentNames = false,
+				-- 				-- 	functionReturnTypes = false,
+				-- 				-- 	genericTypes = false,
+				-- 				-- },
+				-- 			},
+				-- 		},
+				-- 	},
+				-- },
+				pyrefly = {},
 				ts_ls = {},
 				bashls = {},
 				dockerls = {},
@@ -210,6 +211,7 @@ return {
 
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, {
+				"pyrefly",
 				"stylua",
 				"ruff",
 				"bashls",
