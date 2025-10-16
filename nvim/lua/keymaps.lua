@@ -21,7 +21,11 @@ vim.keymap.set({ "n", "v" }, "<leader>f", function()
 end, { desc = "[F]ormat buffer" })
 
 -- Diagnostic keymaps
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
+vim.keymap.set("n", "<leader>q", function()
+	require("quicker").refresh()
+	vim.diagnostic.setloclist()
+end, { desc = "Open diagnostic [Q]uickfix list" })
+
 vim.keymap.set("n", "<leader>l", function()
 	require("quicker").toggle { loclist = false }
 end, { desc = "Open qlist" })
