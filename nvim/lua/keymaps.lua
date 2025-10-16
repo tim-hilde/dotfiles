@@ -21,14 +21,7 @@ vim.keymap.set({ "n", "v" }, "<leader>f", function()
 end, { desc = "[F]ormat buffer" })
 
 -- Diagnostic keymaps
-vim.keymap.set("n", "<leader>q", function()
-	-- Only populate diagnostics if location list is not open
-	local loclist_winid = vim.fn.getloclist(0, { winid = 0 }).winid
-	if loclist_winid == 0 then
-		vim.diagnostic.setloclist()
-	end
-	require("quicker").toggle { loclist = true }
-end, { desc = "Toggle diagnostic [L]ocation list" })
+vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 vim.keymap.set("n", "<leader>l", function()
 	require("quicker").toggle { loclist = false }
 end, { desc = "Open qlist" })
