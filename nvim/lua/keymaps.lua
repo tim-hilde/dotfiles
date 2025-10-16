@@ -28,7 +28,7 @@ end, { desc = "Open diagnostic [Q]uickfix list" })
 
 vim.keymap.set("n", "<leader>l", function()
 	require("quicker").toggle { loclist = false }
-end, { desc = "Open qlist" })
+end, { desc = "Open qflist" })
 
 local function next_item()
 	-- Try to go to the next quickfix item. If empty, try the loclist.
