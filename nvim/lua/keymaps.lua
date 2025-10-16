@@ -21,14 +21,14 @@ vim.keymap.set({ "n", "v" }, "<leader>f", function()
 end, { desc = "[F]ormat buffer" })
 
 -- Diagnostic keymaps
-vim.keymap.set("n", "<leader>q", function()
+vim.keymap.set("n", "<leader>l", function()
 	require("quicker").refresh()
 	vim.diagnostic.setloclist()
-end, { desc = "Open diagnostic [Q]uickfix list" })
+end, { desc = "Open diagnostic [l]oc list" })
 
-vim.keymap.set("n", "<leader>l", function()
+vim.keymap.set("n", "<leader>q", function()
 	require("quicker").toggle { loclist = false }
-end, { desc = "Open qflist" })
+end, { desc = "Open [q]uickfix list" })
 
 local function next_item()
 	-- Try to go to the next quickfix item. If empty, try the loclist.
