@@ -320,10 +320,11 @@ return {
 						{
 							role = "user",
 							content = function()
-								local target_branch = vim.fn.input("Target branch for merge base diff (default: main): ", "main")
+								local target_branch = vim.fn.input("Target branch for merge diff (default: main): ", "main")
 
 								return string.format(
-									"You can use @{sequentialthinking} to plan your review and @{git__git_diff} to get the code changes to the '" .. target_branch .. "' branch."
+									"You can use @{sequentialthinking} to plan your review." .. "Here are the code changes:\n\n```diff\n%s\n```",
+									vim.fn.system("git diff --merge-base " .. target_branch)
 								)
 							end,
 						},
@@ -343,8 +344,8 @@ return {
 								.. "Write a clear, professional summary that explains what changes were made and why."
 								.. "Include the problem being solved, the solution implemented, and any important technical details or side effects."
 								.. "Keep the tone factual and concise.\n"
-								.. "Structure the summary with a brief title line, a summary of the whole PR,"
-								.. "followed by 2-3 paragraphs for each context, change, and impact.\n"
+								.. "Structure the summary with a brief title line, a summary and the impact of the whole PR. This is followed by 2-3 paragraphs for each change."
+								.. "Files like lock files can be ignored.\n"
 								.. "The goal is to be able to copy paste the summary into GitHub. Put the summary into a markdown code block like this:\n"
 								.. "\n```markdown\n"
 								.. "PR SUMMARY TEXT\n"
@@ -353,20 +354,8 @@ return {
 						{
 							role = "user",
 							content = function()
-								local target_branch = vim.fn.input("Target branch for merge base diff (default: main): ", "main")
-								--
-								-- Enable YOLO mode!
-								vim.g.codecompanion_yolo_mode = true
-
-								return string.format(
-									"Target the branch '"
-										.. target_branch
-										.. "'."
-										.. "Use @{cmd_runner} and `git diff --name-only` to first get the files changed"
-										.. "and then `git diff` to get the code changes of the files to the branch.\n"
-										.. "Files like lock files should be ignored to not pollute the context window."
-										.. "Do not seek confirmation for generating the summary."
-								)
+								local target_branch = vim.fn.input("Target branch for diff (default: main): ", "main")
+								return string.format("Here are the code changes:\n\n```diff\n%s\n```", vim.fn.system("git diff " .. target_branch))
 							end,
 						},
 					},
