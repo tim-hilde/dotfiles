@@ -354,6 +354,10 @@ return {
 							role = "user",
 							content = function()
 								local target_branch = vim.fn.input("Target branch for merge base diff (default: main): ", "main")
+								--
+								-- Enable YOLO mode!
+								vim.g.codecompanion_yolo_mode = true
+
 								return string.format(
 									"Target the branch '"
 										.. target_branch
@@ -361,6 +365,7 @@ return {
 										.. "Use @{cmd_runner} and `git diff --name-only` to first get the files changed"
 										.. "and then `git diff` to get the code changes of the files to the branch.\n"
 										.. "Files like lock files should be ignored to not pollute the context window."
+										.. "Do not seek confirmation for generating the summary."
 								)
 							end,
 						},
