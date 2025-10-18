@@ -24,6 +24,7 @@
         "mcp-server-git"
       ],
       "command": "uvx",
+      "disabled": true,
       "disabled_tools": [
         "git_commit",
         "git_create_branch",

@@ -339,18 +339,28 @@ return {
 					prompts = {
 						{
 							role = "system",
+							content = "You are a technical writer creating a GitHub pull request summary.\n"
+								.. "Write a clear, professional summary that explains what changes were made and why."
+								.. "Include the problem being solved, the solution implemented, and any important technical details or side effects."
+								.. "Keep the tone factual and concise.\n"
+								.. "Structure the summary with a brief title line, a summary of the whole PR,"
+								.. "followed by 2-3 paragraphs for each context, change, and impact.\n"
+								.. "The goal is to be able to copy paste the summary into GitHub. Put the summary into a markdown code block like this:\n"
+								.. "\n```markdown\n"
+								.. "PR SUMMARY TEXT\n"
+								.. "```",
+						},
+						{
+							role = "user",
 							content = function()
 								local target_branch = vim.fn.input("Target branch for merge base diff (default: main): ", "main")
 								return string.format(
-									"You are a technical writer creating a GitHub pull request summary.\n"
-										.. "Write a clear, professional summary that explains what changes were made and why."
-										.. "Include the problem being solved, the solution implemented, and any important technical details or side effects."
-										.. "Keep the tone factual and concise.\n"
-										.. "Structure the summary with a brief title line, followed by 2-3 paragraphs covering the context, changes, and impact.\n"
-										.. "You can use @{git__git_diff} to get the code changes to the '"
+									"Target the branch '"
 										.. target_branch
-										.. "' branch.\n"
-										.. "Files like lock files can be ignored."
+										.. "'."
+										.. "Use @{cmd_runner} and `git diff --name-only` to first get the files changed"
+										.. "and then `git diff` to get the code changes of the files to the branch.\n"
+										.. "Files like lock files should be ignored to not pollute the context window."
 								)
 							end,
 						},
