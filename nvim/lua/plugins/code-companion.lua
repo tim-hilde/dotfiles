@@ -323,8 +323,34 @@ return {
 								local target_branch = vim.fn.input("Target branch for merge base diff (default: main): ", "main")
 
 								return string.format(
-									"You can use @{sequentialthinking} to plan your review." .. "Here are the code changes:\n\n```diff\n%s\n```",
-									vim.fn.system("git diff --merge-base " .. target_branch)
+									"You can use @{sequentialthinking} to plan your review and @{git__git_diff} to get the code changes to the '" .. target_branch .. "' branch."
+								)
+							end,
+						},
+					},
+				},
+				["PR Summary"] = {
+					strategy = "chat",
+					description = "Write a PR summary",
+					opts = {
+						auto_submit = true,
+						user_prompt = false,
+					},
+					prompts = {
+						{
+							role = "system",
+							content = function()
+								local target_branch = vim.fn.input("Target branch for merge base diff (default: main): ", "main")
+								return string.format(
+									"You are a technical writer creating a GitHub pull request summary.\n"
+										.. "Write a clear, professional summary that explains what changes were made and why."
+										.. "Include the problem being solved, the solution implemented, and any important technical details or side effects."
+										.. "Keep the tone factual and concise.\n"
+										.. "Structure the summary with a brief title line, followed by 2-3 paragraphs covering the context, changes, and impact.\n"
+										.. "You can use @{git__git_diff} to get the code changes to the '"
+										.. target_branch
+										.. "' branch.\n"
+										.. "Files like lock files can be ignored."
 								)
 							end,
 						},
