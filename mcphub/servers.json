@@ -19,6 +19,20 @@
         "FIGMA_API_KEY": "${FIGMA_API_KEY}"
       }
     },
+    "git": {
+      "args": [
+        "mcp-server-git"
+      ],
+      "command": "uvx",
+      "disabled_tools": [
+        "git_commit",
+        "git_create_branch",
+        "git_reset",
+        "git_branch",
+        "git_add",
+        "git_checkout"
+      ]
+    },
     "sequentialthinking": {
       "args": [
         "run",
