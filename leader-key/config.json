@@ -120,6 +120,11 @@
       ],
       "key" : "c",
       "type" : "group"
+    },
+    {
+      "key" : "i",
+      "type" : "application",
+      "value" : "/System/Applications/Music.app"
     }
   ],
   "type" : "group"
