@@ -23,7 +23,7 @@ truncation_length = 5
 ssh_symbol = ""
 
 [character]
-success_symbol = "[❯](purple)"
+success_symbol = "[❯](green)"
 error_symbol = "[❯](red)"
 vimcmd_symbol = "[❮](green)"
 
