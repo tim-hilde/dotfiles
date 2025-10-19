@@ -27,6 +27,7 @@ plugins=(
     zsh-syntax-highlighting
     azure
     common-aliases
+    vi-mode
 )
 
 # (macOS-only) Prevent Homebrew from reporting - https://github.com/Homebrew/brew/blob/master/docs/Analytics.md
