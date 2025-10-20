@@ -12,6 +12,7 @@ return {
 			},
 		},
 		bigfile = { enabled = true },
+		image = { enabled = true },
 		statuscolumn = { enabled = true },
 		picker = {
 			enabled = true,
