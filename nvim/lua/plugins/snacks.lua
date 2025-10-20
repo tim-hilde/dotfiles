@@ -20,6 +20,7 @@ return {
 					keys = {
 						["<M-H>"] = { "toggle_hidden", mode = { "i", "n" } },
 						["<c-h>"] = { "edit_split", mode = { "i", "n" } },
+						["<c-r>"] = { "toggle_regex", mode = { "i", "n" } },
 					},
 				},
 			},
