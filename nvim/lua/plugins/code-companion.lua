@@ -301,7 +301,7 @@ return {
 						},
 					},
 				},
-				["Diff code review"] = {
+				["PR Review"] = {
 					strategy = "chat",
 					description = "Perform a code review",
 					opts = {
@@ -324,7 +324,7 @@ return {
 
 								return string.format(
 									"You can use @{sequentialthinking} to plan your review." .. "Here are the code changes:\n\n```diff\n%s\n```",
-									vim.fn.system("git diff --merge-base " .. target_branch)
+									vim.fn.system("git diff --merge-base " .. target_branch .. " -- . ':(exclude)*.lock' ':(exclude)*-lock.json'")
 								)
 							end,
 						},
