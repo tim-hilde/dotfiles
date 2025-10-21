@@ -163,6 +163,20 @@ end
 
 vim.api.nvim_set_keymap("n", "<leader>td", "<cmd>lua _lazydocker_toggle()<CR>", { noremap = true, silent = true, desc = "[T]oggle lazy[d]ocker" })
 
+local yazi = Terminal:new {
+	cmd = "yazi",
+	direction = "float",
+	float_opts = {
+		border = "rounded",
+	},
+	hidden = true,
+}
+
+function _yazi_toggle()
+	yazi:toggle()
+end
+vim.api.nvim_set_keymap("n", "<leader>ty", "<cmd>lua _yazi_toggle()<CR>", { noremap = true, silent = true, desc = "[T]oggle [y]azi" })
+
 -- Clipboard
 vim.keymap.set("n", "<leader>tn", "<cmd>Telescope neoclip<CR>", { noremap = true, desc = "[T]oggle [n]eoclip" })
 
