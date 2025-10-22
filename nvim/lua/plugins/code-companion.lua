@@ -344,7 +344,7 @@ return {
 								.. "Write a clear, professional summary that explains what changes were made and why."
 								.. "Include the problem being solved, the solution implemented, and any important technical details or side effects."
 								.. "Keep the tone factual and concise.\n"
-								.. "Structure the summary with a brief title line, a summary and the impact of the whole PR. This is followed by 2-3 paragraphs for each change."
+								.. "Structure the summary with a brief title line (should be conventional commit message), a summary and the impact of the whole PR. This is followed by 2-3 paragraphs for each change."
 								.. "Files like lock files can be ignored.\n"
 								.. "The goal is to be able to copy paste the summary into GitHub. Put the summary into a markdown code block like this:\n"
 								.. "\n```markdown\n"
