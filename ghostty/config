@@ -22,7 +22,7 @@ clipboard-read = allow
 clipboard-write = allow
 
 shell-integration = detect
-shell-integration-features = no-cursor, sudo, title
+shell-integration-features = cursor, sudo, title
 
 # macos
 macos-titlebar-style = hidden
