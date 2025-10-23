@@ -178,12 +178,10 @@ return {
 				-- 	},
 				-- },
 				pyrefly = {
-					pyrefly = {
-						settings = {
-							python = {
-								pyrefly = {
-									displayTypeErrors = "force-on",
-								},
+					settings = {
+						python = {
+							pyrefly = {
+								displayTypeErrors = "force-on",
 							},
 						},
 					},
