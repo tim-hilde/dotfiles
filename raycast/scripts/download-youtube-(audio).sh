@@ -3,7 +3,7 @@
 # Required parameters:
 # @raycast.schemaVersion 1
 # @raycast.title Download Youtube (Audio)
-# @raycast.mode fullOutput
+# @raycast.mode compact
 # @raycast.argument1 {"type": "text", "placeholder": "url", "optional": false}
 
 # Optional parameters:
@@ -14,4 +14,8 @@
 
 url="${1}"
 
-yt-dlp -f bestaudio --extract-audio --audio-format mp3 "${url}"
+if yt-dlp -f bestaudio --extract-audio --audio-format mp3 "${url}"; then
+    echo "✅ Audio download completed"
+else
+    echo "❌ Audio download failed"
+fi

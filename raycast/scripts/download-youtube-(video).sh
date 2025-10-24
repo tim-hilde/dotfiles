@@ -3,7 +3,7 @@
 # Required parameters:
 # @raycast.schemaVersion 1
 # @raycast.title Download Youtube (Video)
-# @raycast.mode fullOutput
+# @raycast.mode compact
 # @raycast.argument1 {"type": "text", "placeholder": "url", "optional": false}
 
 # Optional parameters:
@@ -14,4 +14,8 @@
 
 url="${1}"
 
-yt-dlp -S "res:1080" -f "bestvideo+bestaudio" --remux-video "mp4" "${url}"
+if yt-dlp -q -S "res:1080" -f "bestvideo+bestaudio" --remux-video "mp4" "${url}"; then
+    echo "✅ Video download completed"
+else
+    echo "❌ Video download failed"
+fi
