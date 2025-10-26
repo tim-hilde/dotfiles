@@ -76,12 +76,6 @@ vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = "split"
 
--- save tab layout etc in session
--- vim.opt.sessionoptions = "blank,buffers,curdir,globals,help,tabpages,terminal,winsize,winpos,localoptions"
-
--- make borders of pop ups round
--- vim.o.winborder = "rounded"
-
--- vim.diagnostic.config {
--- 	virtual_text = true,
--- }
+vim.diagnostic.config {
+	virtual_text = true,
+}
