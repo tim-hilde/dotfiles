@@ -82,6 +82,6 @@ vim.opt.inccommand = "split"
 -- make borders of pop ups round
 -- vim.o.winborder = "rounded"
 
-vim.diagnostic.config {
-	virtual_text = true,
-}
+-- vim.diagnostic.config {
+-- 	virtual_text = true,
+-- }
