@@ -290,23 +290,4 @@ return {
 			require("litee.calltree").setup(opts)
 		end,
 	},
-	{
-		"rachartier/tiny-inline-diagnostic.nvim",
-		event = "VeryLazy",
-		priority = 1000,
-		opts = {
-			options = {
-				use_icons_from_diagnostic = true,
-				multilines = {
-					enabled = true, -- Enable support for multiline diagnostic messages
-					always_show = true, -- Always show messages on all lines of multiline diagnostics
-				},
-			},
-		},
-		config = function(opts)
-			require("tiny-inline-diagnostic").setup(opts)
-			vim.diagnostic.config { virtual_text = false } -- Disable Neovim's default virtual text diagnostics
-			vim.diagnostic.open_float = require("tiny-inline-diagnostic.override").open_float
-		end,
-	},
 }
