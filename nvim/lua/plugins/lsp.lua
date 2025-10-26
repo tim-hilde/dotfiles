@@ -242,6 +242,27 @@ return {
 		},
 	},
 	{
+		"AbysmalBiscuit/insert-inlay-hints.nvim",
+		keys = {
+			{
+				"<leader>ci",
+				function()
+					require("insert-inlay-hints").closest()
+				end,
+				desc = "[C]ode: insert [i]nline hint",
+				mode = { "n" },
+			},
+			{
+				"<leader>ci",
+				function()
+					require("insert-inlay-hints").visual()
+				end,
+				desc = "[C]ode: insert [i]nline hint",
+				mode = { "v" },
+			},
+		},
+	},
+	{
 		-- Call tree hierarchy
 		"ldelossa/litee.nvim",
 		event = "VeryLazy",
@@ -269,9 +290,23 @@ return {
 			require("litee.calltree").setup(opts)
 		end,
 	},
-	-- {
-	-- 	"Fildo7525/pretty_hover",
-	-- 	event = "LspAttach",
-	-- 	opts = { border = "rounded" },
-	-- },
+	{
+		"rachartier/tiny-inline-diagnostic.nvim",
+		event = "VeryLazy",
+		priority = 1000,
+		opts = {
+			options = {
+				use_icons_from_diagnostic = true,
+				multilines = {
+					enabled = true, -- Enable support for multiline diagnostic messages
+					always_show = true, -- Always show messages on all lines of multiline diagnostics
+				},
+			},
+		},
+		config = function(opts)
+			require("tiny-inline-diagnostic").setup(opts)
+			vim.diagnostic.config { virtual_text = false } -- Disable Neovim's default virtual text diagnostics
+			vim.diagnostic.open_float = require("tiny-inline-diagnostic.override").open_float
+		end,
+	},
 }
