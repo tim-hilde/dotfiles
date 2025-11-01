@@ -17,6 +17,9 @@ return {
 		},
 		image = { enabled = true },
 		statuscolumn = { enabled = true },
+		scratch = {
+			enabled = true,
+		},
 		picker = {
 			enabled = true,
 			win = {
@@ -142,6 +145,20 @@ return {
 				Snacks.picker.gh_pr()
 			end,
 			desc = "GitHub Pull Requests (open)",
+		},
+		{
+			"<leader>.",
+			function()
+				Snacks.scratch()
+			end,
+			desc = "Toggle Scratch Buffer",
+		},
+		{
+			"<leader>S",
+			function()
+				Snacks.scratch.select()
+			end,
+			desc = "Select Scratch Buffer",
 		},
 	},
 }
