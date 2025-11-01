@@ -14,5 +14,5 @@ You can install only the defaults and also for macOS and Linux:
 ```
 ./install # for installing defaults
 ./install mac # for installing defaults and macos
-./install linux # for installing defaults and linux
+./install server # for installing defaults and server
 ```
