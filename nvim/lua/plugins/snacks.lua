@@ -12,6 +12,9 @@ return {
 			},
 		},
 		bigfile = { enabled = true },
+		gh = {
+			enabled = true,
+		},
 		image = { enabled = true },
 		statuscolumn = { enabled = true },
 		picker = {
@@ -125,6 +128,20 @@ return {
 				require("yaml-companion").open_ui_select()
 			end,
 			desc = "[S]earch [y]aml schemas",
+		},
+		{
+			"<leader>gi",
+			function()
+				Snacks.picker.gh_issue()
+			end,
+			desc = "GitHub Issues (open)",
+		},
+		{
+			"<leader>gp",
+			function()
+				Snacks.picker.gh_pr()
+			end,
+			desc = "GitHub Pull Requests (open)",
 		},
 	},
 }
