@@ -1,5 +1,5 @@
-  # yaml-language-server: $schema=https://raw.githubusercontent.com/ajmarkow/espanso-schema-json/master/schemas/Espanso_Matches_File_Schema.json
-  # official docs at: https://espanso.org/docs/
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ajmarkow/espanso-schema-json/master/schemas/Espanso_Matches_File_Schema.json
+# official docs at: https://espanso.org/docs/
 ---
 matches:
     # update brew
@@ -21,3 +21,7 @@ matches:
     # save brewfile
     - trigger: "!savebrew"
       replace: "brew bundle dump --force --file='~/dotfiles/brew/Brewfile'"
+
+    # dotfiles setup
+    - trigger: "!setup"
+      replace: "git clone https://github.com/tim-hilde/dotfiles.git ~/dotfiles && cd $_"
