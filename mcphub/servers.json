@@ -42,7 +42,7 @@
         "mcp/sequentialthinking"
       ],
       "command": "docker",
-      "disabled": false
+      "disabled": true
     }
   },
   "nativeMCPServers": {

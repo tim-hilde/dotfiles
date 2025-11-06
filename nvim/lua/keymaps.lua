@@ -260,3 +260,8 @@ end, { desc = "[C]ode [R]efactor" })
 local gitsigns = require "gitsigns"
 vim.keymap.set("n", "<leader>gl", gitsigns.toggle_current_line_blame, { desc = "Toggle [l]ine blame" })
 vim.keymap.set("n", "<leader>gb", gitsigns.blame, { desc = "[B]lame" })
+
+-- fix file ending in commit scope
+vim.keymap.set("n", "<leader>cf", function()
+	vim.api.nvim_feedkeys("f.dt)", "n", false)
+end, { desc = "[F]ix file ending in scope" })

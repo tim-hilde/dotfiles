@@ -1,5 +1,4 @@
 return {
-
 	{ -- Linting
 		"mfussenegger/nvim-lint",
 		event = { "BufReadPre", "BufNewFile" },
@@ -26,7 +25,6 @@ return {
 				group = lint_augroup,
 				callback = function()
 					lint.try_lint()
-					lint.try_lint { "woke" }
 				end,
 			})
 		end,

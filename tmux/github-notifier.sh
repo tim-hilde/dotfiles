@@ -37,5 +37,5 @@ fi
 
 # Nur anzeigen, wenn >0
 if [[ "$count" =~ ^[0-9]+$ && "$count" -gt 0 ]]; then
-  echo "#[fg=#{@thm_overlay_0}]│ #[fg=#{@thm_yellow}] $count"
+  echo "#[fg=#{@thm_yellow}] $count #[fg=#{@thm_overlay_0}]│ "
 fi
