@@ -10,7 +10,8 @@ cursor-text = #1E1E2E
 link-url = true
 
 window-padding-x = 6
-window-padding-y = 6,1
+window-padding-y = 2
+window-padding-balance = true
 window-decoration = auto
 background-opacity = 1
 background-blur = 50
