@@ -126,6 +126,8 @@ return {
 				},
 				acp = {
 					opencode = function()
+						local helpers = require "codecompanion.adapters.acp.helpers"
+
 						---@class CodeCompanion.ACPAdapter.OpenCode: CodeCompanion.ACPAdapter
 						return {
 							name = "opencode",
