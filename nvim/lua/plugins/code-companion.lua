@@ -167,6 +167,15 @@ return {
 									return true
 								end,
 
+								---Manually handle authentication - OpenCode uses external auth
+								---@param self CodeCompanion.ACPAdapter
+								---@return boolean
+								auth = function(self)
+									-- OpenCode handles auth via `opencode auth login`
+									-- Return true to indicate auth is handled externally
+									return true
+								end,
+
 								---@param self CodeCompanion.ACPAdapter
 								---@param messages table
 								---@param capabilities table
@@ -264,7 +273,7 @@ return {
 						auto_generate_title = true,
 						title_generation_opts = {
 							---Adapter for generating titles (defaults to current chat adapter)
-							adapter = nil, -- "copilot"
+							adapter = "copilot", -- "copilot"
 							---Model for generating titles (defaults to current chat model)
 							model = nil, -- "gpt-4o"
 							---Number of user prompts after which to refresh the title (0 to disable)

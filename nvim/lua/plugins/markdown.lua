@@ -1,8 +1,7 @@
 return {
 	{
 		"OXY2DEV/markview.nvim",
-		lazy = true,
-		ft = { "markdown", "codecompanion" }, -- If you decide to lazy-load anyway
+		lazy = false,
 
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
@@ -10,13 +9,21 @@ return {
 		},
 		init = function()
 			vim.cmd [[set conceallevel=2]]
-			require("markview").setup { markdown = {
-				list_items = {
-					shift_width = 2,
+			require("markview").setup {
+				preview = {
+					filetypes = { "markdown", "codecompanion" },
+					ignore_buftypes = {},
 				},
-			}, experimental = {
-				check_rtp_message = false,
-			} }
+
+				markdown = {
+					list_items = {
+						shift_width = 2,
+					},
+				},
+				experimental = {
+					check_rtp_message = false,
+				},
+			}
 		end,
 	},
 	-- {
