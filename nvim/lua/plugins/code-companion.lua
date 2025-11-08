@@ -124,6 +124,18 @@ return {
 						})
 					end,
 				},
+				acp = {
+					opencode = function()
+						return require("codecompanion.adapters").extend("opencode", {
+							commands = {
+								default = {
+									"opencode",
+									"acp",
+								},
+							},
+						})
+					end,
+				},
 			},
 			strategies = {
 				chat = {
