@@ -30,6 +30,7 @@ vim.keymap.set("n", "<leader>q", function()
 	require("quicker").toggle { loclist = false }
 end, { desc = "Open [q]uickfix list" })
 
+-- Next item in loc and q list
 local function next_item()
 	-- Try to go to the next quickfix item. If empty, try the loclist.
 	if vim.fn.getqflist({ size = 0 }).size > 0 then
@@ -157,6 +158,7 @@ local lazydocker = Terminal:new {
 	hidden = true,
 }
 
+-- Yazi
 function _lazydocker_toggle()
 	lazydocker:toggle()
 end
@@ -210,11 +212,6 @@ vim.api.nvim_set_keymap("v", "ga", "<cmd>CodeCompanionChat Add<cr>", { noremap =
 
 -- Expand 'cc' into 'CodeCompanion' in the command line
 vim.cmd [[cab cc CodeCompanion]]
-
--- Autosession
-vim.keymap.set("n", "<leader>sa", "<cmd>SessionSearch<CR>", { desc = "[S]earch [A]utosessions" })
-vim.keymap.set("n", "<leader>was", "<cmd>SessionSave<CR>", { desc = "[W]orkplace [S]ession [S]ave" })
-vim.keymap.set("n", "<leader>ta", "<cmd>SessionToggleAutoSave<CR>", { desc = "[T]oggle session [a]utosave" })
 
 -- IRON REPL
 vim.keymap.set("n", "<leader>ti", ":IronRepl<CR>", { desc = "[T]oggle [I]ronRepl" })
