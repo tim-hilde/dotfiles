@@ -33,7 +33,7 @@ return {
 					winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:BlinkCmpMenuSelection,Search:None",
 					draw = {
 						gap = 1,
-						columns = { { "kind_icon" }, { "label", gap = 1 } },
+						columns = { { "kind_icon" }, { "label", gap = 1 }, { "source_name" } },
 						components = {
 							label = {
 								text = function(ctx)
@@ -72,7 +72,11 @@ return {
 					git = {
 						module = "blink-cmp-git",
 						name = "Git",
-						opts = {},
+						opts = {
+							commit = {
+								enable = false,
+							},
+						},
 					},
 				},
 			},
