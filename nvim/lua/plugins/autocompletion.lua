@@ -72,11 +72,7 @@ return {
 					git = {
 						module = "blink-cmp-git",
 						name = "Git",
-						opts = {
-							commit = {
-								enable = false,
-							},
-						},
+						opts = {},
 					},
 				},
 			},
