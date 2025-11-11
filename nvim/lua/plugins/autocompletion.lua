@@ -33,7 +33,7 @@ return {
 					winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:BlinkCmpMenuSelection,Search:None",
 					draw = {
 						gap = 1,
-						columns = { { "kind_icon" }, { "label", gap = 1 }, { "source_name" } },
+						columns = { { "kind_icon" }, { "label", gap = 1 } },
 						components = {
 							label = {
 								text = function(ctx)
