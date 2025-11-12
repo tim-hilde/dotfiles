@@ -67,4 +67,4 @@ yabai -m rule --add app="^Leader Key$" manage=off
 yabai -m rule --apply
 
 # JankyBorders
-borders active_color=glow(0xffcba6f7) inactive_color=glow(0xff636369) width=4 hidpi=true &
+borders active_color='glow(0xffcba6f7)' inactive_color='glow(0xff636369)' width=3 hidpi=on ax_focus=on &
