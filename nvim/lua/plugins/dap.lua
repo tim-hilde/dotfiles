@@ -43,7 +43,7 @@ return {
 							},
 						},
 						position = "left",
-						size = 40,
+						size = 45,
 					},
 					{
 						elements = { {
@@ -54,7 +54,7 @@ return {
 							size = 0.5,
 						} },
 						position = "bottom",
-						size = 10,
+						size = 20,
 					},
 				},
 			}
