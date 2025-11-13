@@ -16,10 +16,6 @@ vim.keymap.set("n", "<leader>J", ":TSJToggle<CR>", { desc = "[J]oin lines" })
 
 local wk = require "which-key"
 
-vim.keymap.set({ "n", "v" }, "<leader>f", function()
-	require("conform").format { async = true, lsp_format = "fallback" }
-end, { desc = "[F]ormat buffer" })
-
 -- Diagnostic keymaps
 vim.keymap.set("n", "<leader>l", function()
 	require("quicker").refresh()
