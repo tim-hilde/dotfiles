@@ -228,6 +228,5 @@ autoload edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd o edit-command-line
 
-
-# eza config folder
-export EZA_CONFIG_DIR=$HOME/.config/eza
+# colors when using "ls" and completion
+export LS_COLORS=$(vivid generate catppuccin-mocha)
