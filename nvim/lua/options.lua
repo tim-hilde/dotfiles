@@ -79,3 +79,6 @@ vim.opt.inccommand = "split"
 vim.diagnostic.config {
 	virtual_text = true,
 }
+
+-- deactivate swap files
+vim.opt.swapfile = false
