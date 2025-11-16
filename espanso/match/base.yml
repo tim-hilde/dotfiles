@@ -175,11 +175,6 @@ matches:
     replace: "{{uuid}}"
     vars:
       - name: uuid
-        type: script
+        type: shell
         params:
-          args:
-            - /Users/tim/.pyenv/shims/python
-            - -c
-            - |
-              import uuid
-              print(uuid.uuid4())
+          cmd: "uuidgen | tr '[:upper:]' '[:lower:]'"
