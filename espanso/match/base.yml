@@ -170,3 +170,16 @@ matches:
   # transdisciplinary
   - trigger: "!etrans"
     replace: transdisciplinary
+
+  - trigger: "!uuid"
+    replace: "{{uuid}}"
+    vars:
+      - name: uuid
+        type: script
+        params:
+          args:
+            - /Users/tim/.pyenv/shims/python
+            - -c
+            - |
+              import uuid
+              print(uuid.uuid4())
