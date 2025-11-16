@@ -1,8 +1,10 @@
-- defaults:
-    link:
-      relink: true
-      create: false
-    force: false
+---
+- link:
+    $HOME/.config/nvim:
+      path: minimal-nvim
+      relative: true
+      create: true
+      force: true
 
 - shell:
     -
@@ -14,7 +16,7 @@
       description: Installing zsh
       quiet: true
     -
-      command: sudo apt-get install -y eza fzf tree jq bat zoxide tmux neovim
+      command: sudo apt-get install -y eza fzf tree jq bat zoxide tmux neovim ripgrep
       description: Installing packages
       quiet: true
     -

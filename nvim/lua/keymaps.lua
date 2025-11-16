@@ -76,14 +76,10 @@ vim.keymap.set("n", "<C-j>", "<CMD>TmuxNavigateDown<CR>", { desc = "Move focus t
 vim.keymap.set("n", "<C-k>", "<CMD>TmuxNavigateUp<CR>", { desc = "Move focus to the upper window" })
 vim.keymap.set("n", "<C-l>", "<CMD>TmuxNavigateRight<CR>", { desc = "Move focus to the right window" })
 
--- Toggle Neotree
-vim.keymap.set("n", "<C-n>", ":Neotree filesystem reveal left toggle<CR>")
-
 -- Toggle Oil
 vim.keymap.set("n", "<leader>to", "<CMD>Oil --float<CR>", { desc = "[T]oggle [O]il" })
 
 -- Tabby
-
 vim.keymap.set("n", "<C-w>ta", ":$tabnew<CR>", { noremap = true, desc = "[A]dd" })
 vim.keymap.set("n", "<C-w>tc", ":tabclose<CR>", { noremap = true, desc = "[C]lose" })
 vim.keymap.set("n", "<C-w>to", ":tabonly<CR>", { noremap = true, desc = "[O]nly" })
