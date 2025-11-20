@@ -177,6 +177,15 @@ return {
 						},
 					},
 				},
+				pyrefly = {
+					settings = {
+						python = {
+							pyrefly = {
+								displayTypeErrors = "force-on",
+							},
+						},
+					},
+				},
 				ts_ls = {},
 				bashls = {},
 				dockerls = {},
