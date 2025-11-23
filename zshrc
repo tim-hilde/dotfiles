@@ -14,7 +14,6 @@ plugins=(
     copypath
     direnv
     dirhistory
-    fzf-tab
     git
     gitfast
     history-substring-search
@@ -65,7 +64,10 @@ else
     compinit -C
 fi
 
-zstyle ':fzf-tab:*' use-fzf-default-opts yes
+# Autocompletion by caraspace
+export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
+zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+source <(carapace _carapace)
 
 # Actually load Oh-My-Zsh
 source "${ZSH}/oh-my-zsh.sh"
