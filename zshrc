@@ -14,6 +14,7 @@ plugins=(
     copypath
     direnv
     dirhistory
+    fzf-tab
     git
     gitfast
     history-substring-search
@@ -64,10 +65,7 @@ else
     compinit -C
 fi
 
-# Autocompletion by caraspace
-export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
-zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
-source <(carapace _carapace)
+zstyle ':fzf-tab:*' use-fzf-default-opts yes
 
 # Actually load Oh-My-Zsh
 source "${ZSH}/oh-my-zsh.sh"
@@ -113,7 +111,6 @@ export FZF_DEFAULT_OPTS=" \
 --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
 --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
 --color=selected-bg:#45475a \
---preview 'bat -n --color=always {}' \
 --preview-window=right,60% \
 --layout=reverse \
 --height=80% \
@@ -121,6 +118,8 @@ export FZF_DEFAULT_OPTS=" \
 
 export FZF_CTRL_T_OPTS="
   --walker-skip .git,node_modules,target
+  --preview 'bat -n --color=always {}' \
+  --preview-window=right,60% \
   --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 
 export FZF_ALT_C_OPTS="
