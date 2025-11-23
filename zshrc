@@ -113,7 +113,19 @@ export FZF_DEFAULT_OPTS=" \
 --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
 --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
 --color=selected-bg:#45475a \
+--preview 'bat -n --color=always {}' \
+--preview-window=right,60% \
+--layout=reverse \
+--height=80% \
 --multi"
+
+export FZF_CTRL_T_OPTS="
+  --walker-skip .git,node_modules,target
+  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
+
+export FZF_ALT_C_OPTS="
+  --walker-skip .git,node_modules,target
+  --preview 'tree -C {}'"
 
 ZSH_THEME_TERM_TITLE_IDLE="%n@%m: %1~"
 ZSH_THEME_TERM_TAB_TITLE_IDLE="%n@%m: %1~"
