@@ -4,5 +4,6 @@ return {
 	opts = {
 		render = "background",
 		enable_short_hex = false,
+		enable_named_colors = false,
 	},
 }
