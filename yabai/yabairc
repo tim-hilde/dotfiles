@@ -62,6 +62,7 @@ yabai -m rule --add label="Safari" app="^Safari$" title="^(Allgemein|Tabs|Automa
 yabai -m rule --add app="^Logi Options\+$" manage=off
 yabai -m rule --add app="^Raycast$" manage=off
 yabai -m rule --add app="^Leader Key$" manage=off
+yabai -m rule --add app="Vivaldi" title="Picture in Picture" manage=off
 
 # actually apply rules
 yabai -m rule --apply
