@@ -215,6 +215,7 @@ return {
 				taplo = {},
 				typos_lsp = {},
 				yamlls = {},
+				sonarqube = {},
 			}
 
 			local ensure_installed = vim.tbl_keys(servers or {})
@@ -270,5 +271,11 @@ return {
 				mode = { "v" },
 			},
 		},
+	},
+	{
+		"iamkarasik/sonarqube.nvim",
+		config = function()
+			require("sonarqube").setup {}
+		end,
 	},
 }
