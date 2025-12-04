@@ -74,6 +74,7 @@ return {
 		end
 
 		require("codecompanion").setup {
+			ignore_warnings = true,
 			display = {
 				chat = {
 					start_in_insert_mode = false,
