@@ -178,7 +178,7 @@ end, { silent = true, noremap = true, desc = "[t]oggle signature" })
 
 vim.keymap.set("", "<leader>tl", function()
 	vim.diagnostic.config {
-		-- virtual_lines = not vim.diagnostic.config().virtual_lines,
+		virtual_lines = not vim.diagnostic.config().virtual_lines,
 		virtual_text = not vim.diagnostic.config().virtual_text,
 	}
 end, { desc = "[T]oggle diagnostic [l]ines" })
