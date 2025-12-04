@@ -284,7 +284,7 @@ return {
 		priority = 1000,
 		config = function()
 			require("tiny-inline-diagnostic").setup {
-				preset = "nonerdfont",
+				preset = "classic",
 				options = {
 					multilines = {
 						enabled = true,
@@ -294,7 +294,10 @@ return {
 					},
 				},
 			}
-			vim.diagnostic.config { virtual_text = false } -- Disable Neovim's default virtual text diagnostics
+			-- Disable Neovim's default virtual text diagnostics
+			vim.diagnostic.config { virtual_text = false }
+			-- Auto-Disable on Float
+			vim.diagnostic.open_float = require("tiny-inline-diagnostic.override").open_float
 		end,
 	},
 }
