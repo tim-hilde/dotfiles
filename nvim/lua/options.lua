@@ -76,9 +76,9 @@ vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = "split"
 
-vim.diagnostic.config {
-	virtual_text = true,
-}
+-- vim.diagnostic.config {
+-- 	virtual_text = true,
+-- }
 
 -- deactivate swap files
 vim.opt.swapfile = false
