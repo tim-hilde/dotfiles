@@ -43,7 +43,7 @@ return {
 							},
 						},
 						position = "left",
-						size = 45,
+						size = 55,
 					},
 					{
 						elements = { {
