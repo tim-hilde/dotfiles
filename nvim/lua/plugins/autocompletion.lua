@@ -65,9 +65,6 @@ return {
 			},
 			sources = {
 				default = { "lsp", "path", "snippets", "buffer", "git" },
-				per_filetype = {
-					codecompanion = { "codecompanion" },
-				},
 				providers = {
 					git = {
 						module = "blink-cmp-git",
