@@ -426,7 +426,10 @@ return {
 							role = "user",
 							content = function()
 								local target_branch = vim.fn.input("Target branch for diff (default: main): ", "main")
-								return string.format("Here are the code changes:\n\n```diff\n%s\n```", vim.fn.system("git diff " .. target_branch))
+								return string.format(
+									"Here are the code changes:\n\n```diff\n%s\n```",
+									vim.fn.system("git diff " .. target_branch .. " -- . ':(exclude)*.lock'")
+								)
 							end,
 						},
 					},
