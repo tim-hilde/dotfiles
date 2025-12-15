@@ -1,4 +1,6 @@
 import matplotlib as mpl
+import matplotlib.pyplot as plt
+import pandas as pd
 
 CYAN = "#26a5b8"
 MAGENTA = "#dd0075"
@@ -27,8 +29,6 @@ class CF:
 
 def show_trivial_demo():
     """Trivial color demo"""
-    import matplotlib.pyplot as plt
-    import pandas as pd
 
     _df = pd.DataFrame()
     _df.index = list(range(10))
