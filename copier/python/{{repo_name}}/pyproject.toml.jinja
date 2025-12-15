@@ -38,23 +38,8 @@ package = true
 extend-include = ["*.ipynb"]
 
 [tool.ruff.lint]
-# Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`)  codes by default.
-# Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
-# McCabe complexity (`C901`) by default.
 select = [
-  "B",
-  "C90",
-  "D1",
-  "E",
-  "F",
-  "N",
-  "NPY",
-  "PERF",
-  "PD",
-  "PL",
-  "S",
-  "SIM",
-  "W",
+  "ALL"
 ]
 ignore = ["D104", "D100", "E501"]
 
