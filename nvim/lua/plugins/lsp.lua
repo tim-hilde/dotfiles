@@ -177,16 +177,7 @@ return {
 				-- 		},
 				-- 	},
 				-- },
-				ty = {
-					settings = {
-						ty = {
-							inlayHints = {
-								variableTypes = true,
-								callArgumentNames = true,
-							},
-						},
-					},
-				},
+				ty = {},
 				-- pyrefly = {
 				-- 	settings = {
 				-- 		python = {
