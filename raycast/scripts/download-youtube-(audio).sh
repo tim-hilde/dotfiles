@@ -12,13 +12,6 @@
 # Documentation:
 # @raycast.author Tim
 
-url="${1}"
-
-if yt-dlp -f bestaudio --extract-audio --audio-format mp3 "${url}"; then
-    echo "✅ Audio download completed"
-else
-    echo "❌ Audio download failed"
-fi
 SESSION="dotfiles"
 URL="${1}"
 
@@ -29,7 +22,7 @@ fi
 
 # Create new window and run yt-dlp command with success/failure handling
 tmux new-window -t "$SESSION" -n "${URL}" "bash -c '
-if yt-dlp -f bestaudio --extract-audio --audio-format mp3 \"${URL}\"; then
+if yt-dlp -f bestaudio --extract-audio \"${URL}\"; then
   sleep 2
   tmux kill-window -t $SESSION:${URL}
 else
