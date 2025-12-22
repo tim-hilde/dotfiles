@@ -60,3 +60,4 @@ function get_gcloud_env() {
 }
 
 alias yy=yazi
+alias youtube="open ~/YouTube/"
