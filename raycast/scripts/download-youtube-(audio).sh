@@ -22,7 +22,7 @@ fi
 
 # Create new window and run yt-dlp command with success/failure handling
 tmux new-window -t "$SESSION" -n "${URL}" "bash -c '
-if yt-dlp -f bestaudio --extract-audio \"${URL}\"; then
+if yt-dlp -f bestaudio --extract-audio --audio-format aac \"${URL}\"; then
   sleep 2
   tmux kill-window -t $SESSION:${URL}
 else
