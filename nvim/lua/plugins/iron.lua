@@ -15,7 +15,7 @@ return {
 					-- 	block_dividers = { "# %%", "#%%" },
 					-- },
 					python = {
-						command = { "ipython", "--no-autoindent" },
+						command = { "uv run ipython --no-autoindent" },
 						format = python_format,
 					},
 				},
