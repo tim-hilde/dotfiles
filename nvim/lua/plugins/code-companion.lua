@@ -390,7 +390,7 @@ return {
 						{
 							role = "user",
 							content = function()
-								local target_branch = vim.fn.input("Target branch for merge diff (default: main): ", "main")
+								local target_branch = vim.fn.input("Target branch for merge diff (default: dev): ", "dev")
 
 								return string.format(
 									"You can use @{sequentialthinking} to plan your review." .. "Here are the code changes:\n\n```diff\n%s\n```",
@@ -425,7 +425,7 @@ return {
 						{
 							role = "user",
 							content = function()
-								local target_branch = vim.fn.input("Target branch for diff (default: main): ", "main")
+								local target_branch = vim.fn.input("Target branch for diff (default: dev): ", "dev")
 								return string.format(
 									"Here are the code changes:\n\n```diff\n%s\n```",
 									vim.fn.system("git diff " .. target_branch .. " -- . ':(exclude)*.lock'")
