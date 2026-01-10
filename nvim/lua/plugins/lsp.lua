@@ -293,6 +293,10 @@ return {
 					show_source = {
 						enabled = true,
 					},
+					overflow = {
+						mode = "wrap",
+						padding = 2, -- Extra characters to trigger wrapping earlier
+					},
 				},
 			}
 			-- Disable Neovim's default virtual text diagnostics
