@@ -252,5 +252,5 @@ vim.keymap.set("n", "<leader>gb", gitsigns.blame, { desc = "[B]lame" })
 
 -- fix file ending in commit scope
 vim.keymap.set("n", "<leader>cf", function()
-	vim.api.nvim_feedkeys("f.de", "n", false)
+	vim.api.nvim_feedkeys("f.dt)", "n", false)
 end, { desc = "[F]ix file ending in scope" })
