@@ -14,7 +14,8 @@ $cmd_duration\
 $line_break\
 $character"""
 
-right_format = """$time"""
+right_format = """$time\
+"""
 
 [directory]
 style = "blue"
