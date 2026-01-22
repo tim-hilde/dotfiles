@@ -297,6 +297,9 @@ return {
 						mode = "wrap",
 						padding = 2, -- Extra characters to trigger wrapping earlier
 					},
+					break_line = {
+						enabled = true,
+					},
 				},
 			}
 			-- Disable Neovim's default virtual text diagnostics

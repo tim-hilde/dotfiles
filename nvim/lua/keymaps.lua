@@ -176,12 +176,7 @@ vim.keymap.set({ "n" }, "<leader>tk", function()
 	require("lsp_signature").toggle_float_win()
 end, { silent = true, noremap = true, desc = "[t]oggle signature" })
 
-vim.keymap.set("", "<leader>tl", function()
-	vim.diagnostic.config {
-		virtual_lines = not vim.diagnostic.config().virtual_lines,
-		virtual_text = not vim.diagnostic.config().virtual_text,
-	}
-end, { desc = "[T]oggle diagnostic [l]ines" })
+vim.keymap.set("", "<leader>tl", require("tiny-inline-diagnostic.override").open_float, { desc = "[T]oggle diagnostic [l]ines" })
 
 -- BUILD SYSTEM
 vim.keymap.set("n", "<leader>cb", function()
