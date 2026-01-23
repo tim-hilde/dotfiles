@@ -14,9 +14,6 @@ $cmd_duration\
 $line_break\
 $character"""
 
-right_format = """$time\
-"""
-
 [directory]
 style = "blue"
 truncate_to_repo = false
@@ -55,9 +52,4 @@ style = "yellow"
 
 [python]
 format = "[$virtualenv]($style) "
-style = "bright-black"
-
-[time]
-disabled = false
-format = '[$time]($style)'
 style = "bright-black"
