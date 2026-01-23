@@ -33,6 +33,13 @@ repos:
     language: system
     types: [python]
     stages: [pre-commit]
+  - id: ty
+    name: Type checking (ty)
+    entry: uv run ty check .
+    pass_filenames: false
+    language: system
+    types: [python]
+    stages: [pre-commit]
   - id: test
     name: Unit tests (pytest)
     entry: uv run pytest tests
