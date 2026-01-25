@@ -21,7 +21,7 @@ truncation_length = 5
 
 [hostname]
 ssh_symbol = ""
-format = "[$ssh_symbol]($style) in "
+format = "[$hostname]($style) "
 
 [character]
 success_symbol = "[❯](green)"
