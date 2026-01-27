@@ -9,7 +9,7 @@ return {
 			},
 			calendar = {
 				language = "de",
-				start_week_on = "monday",
+				start_day = "monday",
 			},
 			per_project = {
 				enabled = false,
