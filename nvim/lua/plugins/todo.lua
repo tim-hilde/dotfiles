@@ -1,7 +1,5 @@
 return {
-	dir = "~/code/Projects/dooing",
-	dev = true,
-	-- "atiladefreitas/dooing",
+	"tim-hilde/dooing",
 	config = function()
 		require("dooing").setup {
 			keymaps = {
