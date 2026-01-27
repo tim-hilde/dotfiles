@@ -304,8 +304,9 @@ return {
 							browse_summaries_keymap = "gbs",
 
 							generation_opts = {
-								adapter = nil, -- defaults to current chat adapter
-								model = nil, -- defaults to current chat model
+								adapter = "copilot", -- "copilot"
+								---Model for generating titles (defaults to current chat model)
+								model = "gpt-4o", -- "gpt-4o"
 								context_size = 90000, -- max tokens that the model supports
 								include_references = true, -- include slash command content
 								include_tool_outputs = true, -- include tool execution results
