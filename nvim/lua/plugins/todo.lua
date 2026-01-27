@@ -1,5 +1,7 @@
 return {
-	"atiladefreitas/dooing",
+	dir = "~/code/Projects/dooing",
+	dev = true,
+	-- "atiladefreitas/dooing",
 	config = function()
 		require("dooing").setup {
 			keymaps = {
@@ -7,6 +9,7 @@ return {
 			},
 			calendar = {
 				language = "de",
+				start_week_on = "monday",
 			},
 			per_project = {
 				enabled = false,
