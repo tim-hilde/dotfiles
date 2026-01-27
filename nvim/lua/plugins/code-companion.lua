@@ -299,9 +299,9 @@ return {
 						-- Summary system
 						summary = {
 							-- Keymap to generate summary for current chat (default: "gcs")
-							create_summary_keymap = "gcs",
+							create_summary_keymap = "gsc",
 							-- Keymap to browse summaries (default: "gbs")
-							browse_summaries_keymap = "gbs",
+							browse_summaries_keymap = "gsb",
 
 							generation_opts = {
 								adapter = "copilot", -- "copilot"
