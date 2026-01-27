@@ -25,14 +25,13 @@
         "mcp-server-git"
       ],
       "command": "uvx",
-      "disabled": true,
+      "disabled": false,
       "disabled_tools": [
         "git_commit",
         "git_create_branch",
         "git_reset",
         "git_branch",
-        "git_add",
-        "git_checkout"
+        "git_add"
       ]
     },
     "sequentialthinking": {
