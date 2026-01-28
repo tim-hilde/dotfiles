@@ -24,6 +24,7 @@ format = "[$user]($style)@"
 
 [hostname]
 ssh_symbol = ""
+aliases = { "Mac" = "MacbookPro" }
 
 [character]
 success_symbol = "[❯](green)"
