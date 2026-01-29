@@ -50,7 +50,7 @@
   "nvim-origami": { "branch": "main", "commit": "c660a3d7e3db602faa5fb6b5ff19ba7a1d9e71fe" },
   "nvim-puppeteer": { "branch": "main", "commit": "c01d5cbb690af0d1df651f1eef01fcfab149c63b" },
   "nvim-regexplainer": { "branch": "main", "commit": "78257e4ade22ddcc74dc18b67444e8da079ee7ec" },
-  "nvim-rip-substitute": { "branch": "main", "commit": "8352e8417e9f9dd98cf9a0e84bcbcfef9aa8ea9f" },
+  "nvim-rip-substitute": { "branch": "main", "commit": "c5aa8a3c61b7d55210f2eb760c41cf9dbb01d7f6" },
   "nvim-silicon": { "branch": "main", "commit": "7f66bda8f60c97a5bf4b37e5b8acb0e829ae3c32" },
   "nvim-treesitter": { "branch": "master", "commit": "42fc28ba918343ebfd5565147a42a26580579482" },
   "nvim-treesitter-context": { "branch": "master", "commit": "64dd4cf3f6fd0ab17622c5ce15c91fc539c3f24a" },
