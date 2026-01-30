@@ -160,5 +160,19 @@ return {
 			end,
 			desc = "Select Scratch Buffer",
 		},
+		{
+			"gai",
+			function()
+				Snacks.picker.lsp_incoming_calls()
+			end,
+			desc = "C[a]lls Incoming",
+		},
+		{
+			"gao",
+			function()
+				Snacks.picker.lsp_outgoing_calls()
+			end,
+			desc = "C[a]lls Outgoing",
+		},
 	},
 }
