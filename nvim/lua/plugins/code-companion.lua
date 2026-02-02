@@ -450,6 +450,9 @@ return {
 					},
 				},
 			},
+			keymaps = {
+				system_prompt = nil,
+			},
 		}
 	end,
 }
