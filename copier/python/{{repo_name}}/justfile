@@ -1,0 +1,33 @@
+## Install / sync dependencies via uv
+sync:
+	uv sync
+
+test:
+    uv run pytest
+
+## Lint with ruff
+ruff:
+	uv run ruff check src tests notebooks
+
+## Format with ruff
+format:
+	uv run ruff format
+
+## Static type checking (mypy)
+mypy:
+	uv run mypy src --install-types --ignore-missing-imports --non-interactive
+
+## Static type checking (ty) - experimental alternative
+ty:
+	ty check src
+
+## Run all pre-commit hooks
+pre-commit:
+	uv run pre-commit run --all-files
+
+## Run the standard quality checks
+check: format ruff mypy test
+
+## Serve documentation locally
+docs:
+	uv run mkdocs serve
