@@ -8,6 +8,7 @@
   "colorful-menu.nvim": { "branch": "master", "commit": "b51a659459df8d078201aefc995db8175ed55e84" },
   "conform.nvim": { "branch": "master", "commit": "c2526f1cde528a66e086ab1668e996d162c75f4f" },
   "csvview.nvim": { "branch": "main", "commit": "8d068c526ab5ade68226de036d533298cd93a399" },
+  "diffview.nvim": { "branch": "main", "commit": "4516612fe98ff56ae0415a259ff6361a89419b0a" },
   "dooing": { "branch": "main", "commit": "681af59f91c04ac033b60b22a1fd1b6bb0d44d79" },
   "dressing.nvim": { "branch": "master", "commit": "2d7c2db2507fa3c4956142ee607431ddb2828639" },
   "duck.nvim": { "branch": "main", "commit": "d8a6b08af440e5a0e2b3b357e2f78bb1883272cd" },
