@@ -7,3 +7,4 @@ Pseudonymizer
 SoVD
 pseudonymizing
 uv
+Keybinding
