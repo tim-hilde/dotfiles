@@ -54,6 +54,7 @@ return {
 						-- ["il"] = { query = "@loop.inner", desc = "Inner loop" },
 
 						["ar"] = { query = "@assignment.rhs", desc = "Right side assignment" },
+						["al"] = { query = "@assignment.lhs", desc = "Left side assignment" },
 					},
 					-- If you set this to `true` (default is `false`) then any textobject is
 					-- extended to include preceding or succeeding whitespace. Succeeding
