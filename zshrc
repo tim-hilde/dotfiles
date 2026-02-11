@@ -1,5 +1,8 @@
 ZSH=$HOME/.oh-my-zsh
 
+# Disables automatic cd into directories
+unsetopt AUTO_CD
+
 # starship theme
 eval "$(starship init zsh)"
 
