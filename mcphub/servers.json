@@ -1,5 +1,8 @@
 {
   "mcpServers": {
+    "langfuse-docs": {
+      "url": "https://langfuse.com/api/mcp"
+    },
     "fetch": {
       "args": [
         "mcp-server-fetch"
