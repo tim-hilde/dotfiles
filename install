@@ -22,6 +22,7 @@ IFS='|' read -ra parts <<< "$input_string"
 
 modules="${parts[0]}"
 
+echo "Installing ${modules} config."
 # If there's a second part, store it as 'args'; otherwise, 'args' is an empty string
 if [[ ${#parts[@]} -gt 1 ]]; then
     args="--${parts[1]}"
