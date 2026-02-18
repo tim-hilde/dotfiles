@@ -96,9 +96,6 @@ bindkey -M vicmd '^S' sesh-sessions
 bindkey -M viins '^S' sesh-sessions
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
-# atuin
-. "$HOME/.atuin/bin/env"
-
 eval "$(atuin init zsh)"
 
 # Add a newline between commands
@@ -109,7 +106,6 @@ alias clear="precmd() { precmd() { echo } } && clear"
 # transient prompt
 # https://github.com/starship/starship/pull/4205#issuecomment-2230335985
 source ~/dotfiles/transient-prompt.zsh
-
 
 # Vi mode
 # ANSI cursor escape codes:
