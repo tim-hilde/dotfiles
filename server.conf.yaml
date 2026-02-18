@@ -5,6 +5,10 @@
       relative: true
       create: true
       force: true
+    $HOME/.zshrc:
+      path: minimal-zshrc
+      relative: true
+      force: true
 
 - shell:
     -
@@ -12,11 +16,25 @@
       description: Updating apt
       quiet: true
     -
+      command: sudo apt install -y gpg
+      description: Install gpg
+      quiet: true
+    -
+      command: |
+        sudo mkdir -p /etc/apt/keyrings && \
+        wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg && \
+        echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list && \
+        sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list && \
+        sudo apt update && \
+        sudo apt install -y eza
+      description: Install eza
+      quiet: true
+    -
       command: sudo apt install -y zsh
       description: Installing zsh
       quiet: true
     -
-      command: sudo apt-get install -y eza fzf tree jq bat zoxide tmux neovim ripgrep
+      command: sudo apt-get install -y fzf tree jq bat zoxide tmux neovim ripgrep
       description: Installing packages
       quiet: true
     -

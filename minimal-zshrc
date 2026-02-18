@@ -1,0 +1,162 @@
+# Disables automatic cd into directories
+unsetopt AUTO_CD
+
+# starship theme
+eval "$(starship init zsh)"
+
+export DIRENV_LOG_FORMAT=""
+# Disable warning about insecure completion-dependent directories
+ZSH_DISABLE_COMPFIX=true
+
+# ssh-agent settings
+zstyle :omz:plugins:ssh-agent quiet yes
+zstyle :omz:plugins:ssh-agent lazy yes
+
+# Load pyenv (to manage your Python versions)
+export AUTOSWITCH_SILENT=1
+export PYENV_VIRTUALENV_DISABLE_PROMPT=0
+type -a pyenv > /dev/null && eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init - 2> /dev/null)"
+
+# Load autocompletion and built cache only once a day
+autoload -Uz compinit
+if [ "$(date +'%j')" != "$(stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null)" ]; then
+    compinit
+else
+    compinit -C
+fi
+
+# Store your own aliases in the ~/.aliases file and load the here.
+[[ -f "$HOME/.aliases" ]] && source "$HOME/.aliases"
+
+# Encoding stuff for the terminal
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+export BUNDLER_EDITOR=nvim
+export EDITOR=nvim
+
+# Set ipdb as the default Python debugger
+export PYTHONBREAKPOINT=ipdb.set_trace
+export GOOGLE_APPLICATION_CREDENTIALS=/Users/tim/code/gcp/gcloud_credentials.json
+
+# zoxide
+eval "$(zoxide init zsh)"
+
+# fzf
+eval "$(fzf --zsh)"
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export FZF_DEFAULT_OPTS=" \
+--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+--color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+--color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
+--color=selected-bg:#45475a \
+--preview-window=right,60% \
+--layout=reverse \
+--height=80% \
+--multi"
+
+export FZF_CTRL_T_OPTS="
+  --walker-skip .git,node_modules,target
+  --preview 'bat -n --color=always {}' \
+  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
+
+export FZF_ALT_C_OPTS="
+  --walker-skip .git,node_modules,target
+  --preview 'tree -C {}'"
+
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 --bind=tab:accept
+zstyle ':fzf-tab:*' use-fzf-default-opts yes
+
+ZSH_THEME_TERM_TITLE_IDLE="%n@%m: %1~"
+ZSH_THEME_TERM_TAB_TITLE_IDLE="%n@%m: %1~"
+
+timezsh() {
+  shell=${1-$SHELL}
+  for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
+}
+
+# sesh
+function sesh-sessions() {
+  {
+    exec </dev/tty
+    exec <&1
+    local session
+    session=$(sesh list -t -c | fzf --height 40% --reverse --border-label ' sesh ' --border --prompt '⚡  ')
+    zle reset-prompt > /dev/null 2>&1 || true
+    [[ -z "$session" ]] && return
+    sesh connect $session
+  }
+}
+
+zle     -N             sesh-sessions
+bindkey -M emacs '^S' sesh-sessions
+bindkey -M vicmd '^S' sesh-sessions
+bindkey -M viins '^S' sesh-sessions
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+
+# atuin
+. "$HOME/.atuin/bin/env"
+
+eval "$(atuin init zsh)"
+
+# Add a newline between commands
+# https://github.com/starship/starship/issues/560
+precmd() { precmd() { echo "" } }
+alias clear="precmd() { precmd() { echo } } && clear"
+
+# transient prompt
+# https://github.com/starship/starship/pull/4205#issuecomment-2230335985
+source ~/dotfiles/transient-prompt.zsh
+
+
+# Vi mode
+# ANSI cursor escape codes:
+# \e[0 q: Reset to the default cursor style.
+# \e[1 q: Blinking block cursor.
+# \e[2 q: Steady block cursor (non-blinking).
+# \e[3 q: Blinking underline cursor.
+# \e[4 q: Steady underline cursor (non-blinking).
+# \e[5 q: Blinking bar cursor.
+# \e[6 q: Steady bar cursor (non-blinking).
+
+bindkey -v # Enable vi keybindings
+export KEYTIMEOUT=1 # Makes switching modes quicker
+export VI_MODE_SET_CURSOR=true # trigger cursor shape changes when switching modes
+
+# Gets called every time the keymap changes (insert <-> normal mode)
+function zle-keymap-select {
+  if [[ ${KEYMAP} == vicmd ]]; then
+    echo -ne '\e[2 q' # block
+  else
+    echo -ne '\e[6 q' # beam
+  fi
+}
+# Register this function as a ZLE (Zsh Line Editor) widget
+zle -N zle-keymap-select
+
+# Runs once when a new ZLE session starts (e.g. when a prompt appears)
+zle-line-init() {
+  zle -K viins # initiate 'vi insert' as keymap (can be removed if 'binkey -V has been set elsewhere')
+  echo -ne '\e[6 q'
+}
+zle -N zle-line-init
+echo -ne '\e[6 q' # Use beam shape cursor on startup
+
+# Yank to the system clipboard
+function vi-yank-xclip {
+  zle vi-yank
+  echo "$CUTBUFFER" | pbcopy -i
+}
+
+zle -N vi-yank-xclip
+bindkey -M vicmd 'y' vi-yank-xclip
+
+# Press 'v' in normal mode to launch Vim with current line
+autoload edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd o edit-command-line
+
+# colors when using "ls" and completion
+export LS_COLORS=$(vivid generate catppuccin-mocha)

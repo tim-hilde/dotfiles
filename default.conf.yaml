@@ -2,7 +2,7 @@
     link:
       relink: true
       create: true
-    force: true
+      backup: true
 
 - link:
     $HOME/.aliases:
@@ -13,7 +13,6 @@
       create: true
     $HOME/.zshrc:
       relative: true
-      force: true
     $HOME/.zprofile:
       relative: true
     $HOME/.gitconfig:
