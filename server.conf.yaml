@@ -16,6 +16,7 @@
       description: Updating apt
       quiet: true
       stdout: true
+      stdin: true
     -
       command: sudo apt install -y gpg
       description: Install gpg
