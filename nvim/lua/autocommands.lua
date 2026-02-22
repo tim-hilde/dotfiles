@@ -36,3 +36,15 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.keymap.set("n", "gd", "<C-]>", { buffer = true, silent = true })
 	end,
 })
+
+-- Clear highlights on search when pressing <Esc> in normal mode
+--  See `:help hlsearch`
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+
+-- HJKL as amplified versions of hjkl
+vim.keymap.set("n", "J", "6j")
+vim.keymap.set("n", "K", "6k")
+vim.keymap.set("n", "H", "^")
+vim.keymap.set("n", "L", "$")
+
+vim.keymap.set("n", "<leader>M", "J", { desc = "[M]erge lines" }) -- mnemonic: [M]erge
