@@ -12,9 +12,10 @@
 
 - shell:
     -
-      command: sudo apt update
+      command: sudo apt update -y && sudo apt full-upgrade -y && sudo apt autoremove -y && sudo apt clean -y && sudo apt autoclean -y
       description: Updating apt
       quiet: true
+      stdout: true
     -
       command: sudo apt install -y gpg
       description: Install gpg
