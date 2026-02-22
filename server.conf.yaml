@@ -38,7 +38,7 @@
       description: Installing zsh
       quiet: true
     -
-      command: sudo apt-get install -y fzf tree jq bat zoxide tmux neovim ripgrep
+      command: sudo apt-get install -y tree jq zoxide tmux neovim ripgrep
       description: Installing packages
       quiet: true
     -
@@ -51,9 +51,6 @@
       quiet: true
       stdin: true
       stdout: true
-    -
-      command: bat cache --build
-      quiet: true
     -
       command: export PATH=$PATH:~/.local/bin
       description: Add local bin to path

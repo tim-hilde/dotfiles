@@ -42,41 +42,12 @@ export GOOGLE_APPLICATION_CREDENTIALS=/Users/tim/code/gcp/gcloud_credentials.jso
 # zoxide
 eval "$(zoxide init zsh)"
 
-# fzf
-source <(fzf --zsh)
-
-export FZF_CTRL_T_OPTS="
-  --walker-skip .git,node_modules,target
-  --preview 'bat -n --color=always {}' \
-  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
-
-export FZF_ALT_C_OPTS="
-  --walker-skip .git,node_modules,target
-  --preview 'tree -C {}'"
-
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
-zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 --bind=tab:accept
-zstyle ':fzf-tab:*' use-fzf-default-opts yes
-
 ZSH_THEME_TERM_TITLE_IDLE="%n@%m: %1~"
 ZSH_THEME_TERM_TAB_TITLE_IDLE="%n@%m: %1~"
 
 timezsh() {
   shell=${1-$SHELL}
   for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
-}
-
-# sesh
-function sesh-sessions() {
-  {
-    exec </dev/tty
-    exec <&1
-    local session
-    session=$(sesh list -t -c | fzf --height 40% --reverse --border-label ' sesh ' --border --prompt '⚡  ')
-    zle reset-prompt > /dev/null 2>&1 || true
-    [[ -z "$session" ]] && return
-    sesh connect $session
-  }
 }
 
 zle     -N             sesh-sessions
