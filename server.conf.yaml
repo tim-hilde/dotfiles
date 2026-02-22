@@ -42,6 +42,9 @@
     -
       command: curl -sS https://starship.rs/install.sh | sh
       description: Installing starship
+      quiet: true
+      stdin: true
+      stdout: true
     -
       command: bat cache --build
       quiet: true

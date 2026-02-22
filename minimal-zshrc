@@ -96,8 +96,6 @@ bindkey -M vicmd '^S' sesh-sessions
 bindkey -M viins '^S' sesh-sessions
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
-eval "$(atuin init zsh)"
-
 # Add a newline between commands
 # https://github.com/starship/starship/issues/560
 precmd() { precmd() { echo "" } }
@@ -153,6 +151,3 @@ bindkey -M vicmd 'y' vi-yank-xclip
 autoload edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd o edit-command-line
-
-# colors when using "ls" and completion
-export LS_COLORS=$(vivid generate catppuccin-mocha)
