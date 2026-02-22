@@ -40,7 +40,7 @@ export PYTHONBREAKPOINT=ipdb.set_trace
 export GOOGLE_APPLICATION_CREDENTIALS=/Users/tim/code/gcp/gcloud_credentials.json
 
 # zoxide
-eval "$(zoxide init zsh)"
+eval "$(zoxide init --cmd cd zsh)"
 
 # fzf
 eval "$(fzf --zsh)"
