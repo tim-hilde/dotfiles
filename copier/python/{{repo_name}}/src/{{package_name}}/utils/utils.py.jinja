@@ -1,29 +1,31 @@
-import os
+from pathlib import Path
 
-from {{repo_name}}.utils.config import (
-    STATIC_DIR,
+from {{package_name}}.utils.config import (
     DATA_DIR,
-    RAW_DIR,
-    PROCESSED_DIR,
     OUTPUT_DIR,
+    PROCESSED_DIR,
+    RAW_DIR,
+    STATIC_DIR,
 )
 
 
-def get_root_path() -> str:
+def get_root_path() -> Path:
     """Automatically detect the full path leading to the repo folder.
+
     Assuming directory structure is:
-	    /this/project/path/repo_name/package/this_module.py
+            /this/project/path/repo_name/package/this_module.py
     Return:
-	    /path/to/this/project/repo_name
+            /path/to/this/project/repo_name
     """
-    module_path = os.path.abspath(__file__)
-    package_path = os.path.dirname(module_path)
-    repo_path = os.path.dirname(package_path)
-    return repo_path
+    module_path = Path(__file__).resolve()
+    package_path = module_path.parent
+    return package_path.parent
 
 
-def get_project_path(*lower_paths):
-    """If repo directory is
+def get_project_path(*lower_paths: str | Path) -> Path:
+    """Return project path.
+
+    If repo directory is
     `/path/to/repo/project`
     and `lower_paths` is `file.txt`
     then return
@@ -35,29 +37,24 @@ def get_project_path(*lower_paths):
     etc for any number of subfolder layers.
     """
     root = get_root_path()
-    path = os.path.join(root, *lower_paths)
-    return path
+    return root.joinpath(*lower_paths)
 
 
-def get_static_path(*lower_paths):
-    """Get path to static folder"""
-    path = get_project_path(STATIC_DIR, *lower_paths)
-    return path
+def get_static_path(*lower_paths: str | Path) -> Path:
+    """Get path to static folder."""
+    return get_project_path(STATIC_DIR, *lower_paths)
 
 
-def get_raw_path(*lower_paths):
-    """Get path to raw folder"""
-    path = get_project_path(DATA_DIR, RAW_DIR, *lower_paths)
-    return path
+def get_raw_path(*lower_paths: str | Path) -> Path:
+    """Get path to raw folder."""
+    return get_project_path(DATA_DIR, RAW_DIR, *lower_paths)
 
 
-def get_processed_path(*lower_paths):
-    """Get path to processed folder"""
-    path = get_project_path(DATA_DIR, PROCESSED_DIR, *lower_paths)
-    return path
+def get_processed_path(*lower_paths: str | Path) -> Path:
+    """Get path to processed folder."""
+    return get_project_path(DATA_DIR, PROCESSED_DIR, *lower_paths)
 
 
-def get_output_path(*lower_paths):
-    """Get path to output folder"""
-    path = get_project_path(DATA_DIR, OUTPUT_DIR, *lower_paths)
-    return path
+def get_output_path(*lower_paths: str | Path) -> Path:
+    """Get path to output folder."""
+    return get_project_path(DATA_DIR, OUTPUT_DIR, *lower_paths)
