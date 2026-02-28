@@ -1,3 +1,3 @@
-def test_initial():
-	"""Initial unit test for poetry config"""
-	assert 1+1 == 2
+def test_initial() -> None:
+    """Initial unit test."""
+    assert 1 + 1 == 2
