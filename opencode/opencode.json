@@ -1,5 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "theme": "catppuccin",
   "mcp": {
     "pipecat-docs": {
       "type": "remote",
@@ -26,3 +27,4 @@
     }
   }
 }
+
