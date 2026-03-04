@@ -125,75 +125,6 @@ return {
 						})
 					end,
 				},
-				acp = {
-					opencode = function()
-						local helpers = require "codecompanion.adapters.acp.helpers"
-
-						---@class CodeCompanion.ACPAdapter.OpenCode: CodeCompanion.ACPAdapter
-						return {
-							name = "opencode",
-							formatted_name = "OpenCode",
-							type = "acp",
-							roles = {
-								llm = "assistant",
-								user = "user",
-							},
-							opts = {
-								vision = true,
-							},
-							commands = {
-								default = {
-									"opencode",
-									"acp",
-								},
-							},
-							defaults = {
-								mcpServers = {},
-								timeout = 20000, -- 20 seconds
-							},
-							parameters = {
-								protocolVersion = 1,
-								clientCapabilities = {
-									fs = { readTextFile = true, writeTextFile = true },
-								},
-								clientInfo = {
-									name = "CodeCompanion.nvim",
-									version = "1.0.0",
-								},
-							},
-							handlers = {
-								---@param self CodeCompanion.ACPAdapter
-								---@return boolean
-								setup = function(self)
-									return true
-								end,
-
-								---Manually handle authentication - OpenCode uses external auth
-								---@param self CodeCompanion.ACPAdapter
-								---@return boolean
-								auth = function(self)
-									-- OpenCode handles auth via `opencode auth login`
-									-- Return true to indicate auth is handled externally
-									return true
-								end,
-
-								---@param self CodeCompanion.ACPAdapter
-								---@param messages table
-								---@param capabilities table
-								---@return table
-								form_messages = function(self, messages, capabilities)
-									return helpers.form_messages(self, messages, capabilities)
-								end,
-
-								---Function to run when the request has completed. Useful to catch errors
-								---@param self CodeCompanion.ACPAdapter
-								---@param code number
-								---@return nil
-								on_exit = function(self, code) end,
-							},
-						}
-					end,
-				},
 			},
 			strategies = {
 				chat = {
@@ -245,7 +176,7 @@ return {
 					end,
 					opts = {
 						show_result_in_chat = true, -- Show the mcp tool result in the chat buffer
-						make_vars = true, -- make chat #variables from MCP server resources
+						make_vars = false, -- make chat #variables from MCP server resources
 						make_slash_commands = true, -- make /slash_commands from MCP server prompts
 					},
 				},
