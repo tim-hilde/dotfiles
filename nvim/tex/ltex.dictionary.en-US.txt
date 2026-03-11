@@ -8,3 +8,4 @@ SoVD
 pseudonymizing
 uv
 Keybinding
+Langfuse
