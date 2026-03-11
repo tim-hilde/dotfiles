@@ -197,7 +197,7 @@ return {
 					settings = {
 						ltex = {
 							enabled = { "markdown", "python" },
-							language = "en-US",
+							language = "auto",
 						},
 					},
 				},
