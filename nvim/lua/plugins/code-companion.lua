@@ -125,79 +125,18 @@ return {
 						})
 					end,
 				},
-				acp = {
-					opencode = function()
-						local helpers = require "codecompanion.adapters.acp.helpers"
-
-						---@class CodeCompanion.ACPAdapter.OpenCode: CodeCompanion.ACPAdapter
-						return {
-							name = "opencode",
-							formatted_name = "OpenCode",
-							type = "acp",
-							roles = {
-								llm = "assistant",
-								user = "user",
-							},
-							opts = {
-								vision = true,
-							},
-							commands = {
-								default = {
-									"opencode",
-									"acp",
-								},
-							},
-							defaults = {
-								mcpServers = {},
-								timeout = 20000, -- 20 seconds
-							},
-							parameters = {
-								protocolVersion = 1,
-								clientCapabilities = {
-									fs = { readTextFile = true, writeTextFile = true },
-								},
-								clientInfo = {
-									name = "CodeCompanion.nvim",
-									version = "1.0.0",
-								},
-							},
-							handlers = {
-								---@param self CodeCompanion.ACPAdapter
-								---@return boolean
-								setup = function(self)
-									return true
-								end,
-
-								---Manually handle authentication - OpenCode uses external auth
-								---@param self CodeCompanion.ACPAdapter
-								---@return boolean
-								auth = function(self)
-									-- OpenCode handles auth via `opencode auth login`
-									-- Return true to indicate auth is handled externally
-									return true
-								end,
-
-								---@param self CodeCompanion.ACPAdapter
-								---@param messages table
-								---@param capabilities table
-								---@return table
-								form_messages = function(self, messages, capabilities)
-									return helpers.form_messages(self, messages, capabilities)
-								end,
-
-								---Function to run when the request has completed. Useful to catch errors
-								---@param self CodeCompanion.ACPAdapter
-								---@param code number
-								---@return nil
-								on_exit = function(self, code) end,
-							},
-						}
-					end,
+			},
+			interactions = {
+				chat = {
+					adapter = {
+						name = "opencode",
+						model = "claude-sonnet-4.6",
+					},
 				},
 			},
 			strategies = {
 				chat = {
-					adapter = "copilot",
+					adapter = "opencode",
 					tools = {
 						opts = {
 							requires_approval = false,
@@ -232,23 +171,25 @@ return {
 					},
 				},
 				inline = {
-					adapter = "copilot",
+					adapter = "opencode",
 				},
 				agent = {
-					adapter = "copilot",
+					adapter = "opencode",
+				},
+			},
+			mcp = {
+				servers = {
+					["sequential-thinking"] = {
+						cmd = { "npx", "-y", "@modelcontextprotocol/server-sequential-thinking" },
+					},
+				},
+				opts = {
+					show_result_in_chat = true, -- Show the mcp tool result in the chat buffer
+					make_vars = true, -- make chat #variables from MCP server resources
+					make_slash_commands = true, -- make /slash_commands from MCP server prompts
 				},
 			},
 			extensions = {
-				mcp = {
-					callback = function()
-						return require "mcphub.extensions.codecompanion"
-					end,
-					opts = {
-						show_result_in_chat = true, -- Show the mcp tool result in the chat buffer
-						make_vars = true, -- make chat #variables from MCP server resources
-						make_slash_commands = true, -- make /slash_commands from MCP server prompts
-					},
-				},
 				history = {
 					enabled = true,
 					opts = {
