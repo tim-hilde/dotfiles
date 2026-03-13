@@ -74,8 +74,8 @@
       relative: true
       create: true
       force: true
-    $HOME/.config/topgrade:
-      path: topgrade
+    $HOME/.config/topgrade.toml:
+      path: topgrade/topgrade.toml
       relative: true
       create: true
       force: true

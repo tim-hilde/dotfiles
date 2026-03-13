@@ -1,8 +1,5 @@
 ZSH=$HOME/.oh-my-zsh
 
-# Disables automatic cd into directories
-unsetopt AUTO_CD
-
 # starship theme
 eval "$(starship init zsh)"
 
@@ -243,3 +240,6 @@ bindkey -M vicmd o edit-command-line
 
 # colors when using "ls" and completion
 export LS_COLORS=$(vivid generate catppuccin-mocha)
+
+# Disables automatic cd into directories
+unsetopt AUTO_CD
