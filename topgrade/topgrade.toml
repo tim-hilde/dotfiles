@@ -22,7 +22,7 @@
 # sudo_command = "sudo"
 
 # Disable specific steps - same options as the command line flag
-disable = ["system", "emacs", "vscode", "atuin"]
+disable = ["system", "emacs", "vscode", "atuin", "tlmgr", "git"]
 
 # Ignore failures for these steps
 # ignore_failures = ["powershell"]
