@@ -64,7 +64,7 @@ vim.keymap.set(
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
-vim.keymap.set("n", "<C-D>", "<C-D>zz", { noremap = true })
+vim.keymap.set("x", "<C-D>", "<C-D>zz", { noremap = true })
 vim.keymap.set("x", "<C-U>", "<C-U>zz", { noremap = true })
 
 -- Keybinds to make split navigation easier.
