@@ -79,6 +79,8 @@ return {
 				chat = {
 					start_in_insert_mode = false,
 					show_settings = false,
+					fold_reasoning = false,
+					show_reasoning = false,
 				},
 				action_palette = {
 					provider = "default",
