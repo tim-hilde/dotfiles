@@ -2,6 +2,7 @@
     link:
       relink: true
       create: true
+      backup: true
     force: true
 - link:
     $HOME/.yt-dlp:
