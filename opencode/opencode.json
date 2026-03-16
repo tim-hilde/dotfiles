@@ -11,7 +11,8 @@
       "type": "local"
     },
     "langfuse-docs": {
-      "url": "https://langfuse.com/api/mcp"
+      "url": "https://langfuse.com/api/mcp",
+      "type": "remote"
     }
   },
   "provider": {
@@ -24,4 +25,3 @@
     }
   }
 }
-
