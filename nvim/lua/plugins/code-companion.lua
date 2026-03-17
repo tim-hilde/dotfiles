@@ -141,7 +141,7 @@ return {
 					adapter = "opencode",
 					tools = {
 						opts = {
-							requires_approval = false,
+							requires_approval = true,
 							auto_submit_errors = true,
 							auto_submit_success = true,
 						},
