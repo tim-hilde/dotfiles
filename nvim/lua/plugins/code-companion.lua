@@ -353,7 +353,7 @@ return {
 					},
 					prompts = {
 						{
-							role = "system",
+							role = "user",
 							content = "You are a technical writer creating a GitHub pull request summary.\n"
 								.. "Write a clear, professional summary that explains what changes were made and why."
 								.. "Include the problem being solved, the solution implemented, and any important technical details or side effects."
