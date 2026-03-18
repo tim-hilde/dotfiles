@@ -70,4 +70,4 @@ yabai -m rule --add app="Vivaldi" title="Picture in Picture" manage=off
 yabai -m rule --apply
 
 # JankyBorders
-# borders active_color='0xffcba6f7' inactive_color='0xff636369' width=3 hidpi=on ax_focus=on &
+borders active_color='0xffcba6f7' inactive_color='0xff636369' width=3 hidpi=on ax_focus=on &
