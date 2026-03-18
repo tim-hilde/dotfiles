@@ -123,7 +123,7 @@ brew "get-woke/tap/woke"
 brew "jackielii/tap/skhd-zig"
 brew "jesseduffield/lazydocker/lazydocker"
 brew "joshmedeski/sesh/sesh"
-brew "koekeishiya/formulae/yabai", args: ["HEAD"]
+brew "koekeishiya/formulae/yabai"
 brew "mgmeyers/pdfannots2json/pdfannots2json"
 brew "morantron/tmux-fingers/tmux-fingers"
 brew "qmk/qmk/qmk"
