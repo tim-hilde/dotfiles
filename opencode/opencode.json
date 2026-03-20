@@ -4,6 +4,10 @@
     "opencode-anthropic-oauth"
   ],
   "mcp": {
+    "langfuse-docs": {
+      "url": "https://langfuse.com/api/mcp",
+      "type": "remote"
+    },
     "pencil": {
       "command": [
         "/Applications/Pencil.app/Contents/Resources/app.asar.unpacked/out/mcp-server-darwin-arm64",
@@ -12,10 +16,6 @@
       ],
       "enabled": true,
       "type": "local"
-    },
-    "langfuse-docs": {
-      "url": "https://langfuse.com/api/mcp",
-      "type": "remote"
     }
   },
   "provider": {
