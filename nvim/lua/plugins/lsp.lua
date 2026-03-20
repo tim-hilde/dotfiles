@@ -291,7 +291,10 @@ return {
 						enabled = true,
 					},
 					show_source = {
-						enabled = true,
+						enabled = false,
+					},
+					show_related = {
+						false,
 					},
 					overflow = {
 						mode = "wrap",
@@ -300,6 +303,7 @@ return {
 					break_line = {
 						enabled = true,
 					},
+					show_all_diags_on_cursorline = true,
 				},
 			}
 			-- Disable Neovim's default virtual text diagnostics
