@@ -169,9 +169,10 @@ export PATH="$PATH:/Users/tim/.lmstudio/bin"
 export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
 
 # atuin
+export ATUIN_NOVI=true
 . "$HOME/.atuin/bin/env"
 eval "$(atuin init zsh)"
-eval "$(atuin hex hinit)"
+eval "$(atuin hex init)"
 
 # Add a newline between commands
 # https://github.com/starship/starship/issues/560
