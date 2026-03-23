@@ -33,6 +33,7 @@ return {
 							tab.name(),
 							-- tab.close_btn(''), -- show a close button
 							line.sep("", hl, theme.fill), -- 
+							hl = hl,
 							margin = " ",
 						}
 					end),
