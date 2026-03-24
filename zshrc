@@ -170,8 +170,7 @@ export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
 
 # atuin
 . "$HOME/.atuin/bin/env"
-eval "$(atuin hex init zsh)"
-# eval "$(atuin init zsh)"
+eval "$(atuin init zsh)"
 
 # Add a newline between commands
 # https://github.com/starship/starship/issues/560
