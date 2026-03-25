@@ -15,7 +15,7 @@
         "--app",
         "desktop"
       ],
-      "enabled": true,
+      "enabled": false,
       "type": "local"
     }
   },
@@ -29,3 +29,4 @@
     }
   }
 }
+
