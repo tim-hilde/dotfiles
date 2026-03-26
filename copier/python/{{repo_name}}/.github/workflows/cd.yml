@@ -1,0 +1,26 @@
+name: CI/CD
+on:
+  push:
+    branches: [dev, main]
+concurrency:
+  group: release
+  cancel-in-progress: true
+jobs:
+  release:
+    uses: ./.github/workflows/release.yml
+    permissions:
+      id-token: write
+      contents: write
+  build-and-push:
+    needs: release
+    if: needs.release.outputs.released == 'true'
+    secrets: inherit
+    with:
+      version: ${{ needs.release.outputs.version }}
+
+  deploy:
+    needs: [release, build-and-push]
+    if: needs.release.outputs.released == 'true'
+    secrets: inherit
+    with:
+      version: ${{ needs.release.outputs.version }}
