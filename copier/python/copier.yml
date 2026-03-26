@@ -26,5 +26,5 @@ _tasks:
     working_directory: "{{repo_name}}"
   - command: "uv sync"
     working_directory: "{{repo_name}}"
-  - command: "uv run pre-commit install --install-hooks"
+  - command: "uv run prek install --prepare-hooks"
     working_directory: "{{repo_name}}"

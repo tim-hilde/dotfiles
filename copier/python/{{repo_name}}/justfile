@@ -21,10 +21,6 @@ mypy:
 ty:
 	ty check src
 
-## Run all pre-commit hooks
-pre-commit:
-	uv run pre-commit run --all-files
-
 ## Run the standard quality checks
 check: format ruff mypy test
 
