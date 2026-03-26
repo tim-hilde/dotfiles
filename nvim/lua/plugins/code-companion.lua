@@ -122,14 +122,14 @@ return {
 			interactions = {
 				chat = {
 					adapter = {
-						name = "opencode",
-						model = "anthropic/claude-sonnet-4-6",
+						name = "copilot",
+						model = "claude-sonnet-4.6",
 					},
 				},
 			},
 			strategies = {
 				chat = {
-					adapter = "opencode",
+					adapter = "copilot",
 					tools = {
 						opts = {
 							requires_approval = true,
@@ -164,10 +164,10 @@ return {
 					},
 				},
 				inline = {
-					adapter = "opencode",
+					adapter = "copilot",
 				},
 				agent = {
-					adapter = "opencode",
+					adapter = "copilot",
 				},
 			},
 			mcp = {
