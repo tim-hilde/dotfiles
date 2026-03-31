@@ -1,6 +1,7 @@
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
+		lazy = false,
 		dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
 		build = ":TSUpdate",
 		main = "nvim-treesitter.configs", -- Sets main module to use for opts
@@ -127,14 +128,5 @@ return {
 	{
 		"fladson/vim-kitty",
 		ft = "kitty",
-	},
-	{
-		"andymass/vim-matchup",
-		---@type matchup.Config
-		opts = {
-			treesitter = {
-				stopline = 500,
-			},
-		},
 	},
 }
