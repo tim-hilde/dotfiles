@@ -1,7 +1,8 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "plugin": [
-    "opencode-claude-auth"
+    "opencode-claude-auth",
+    "@mohak34/opencode-notifier@latest"
   ],
   "mcp": {
     "langfuse-docs": {
@@ -29,4 +30,3 @@
     }
   }
 }
-
