@@ -82,24 +82,3 @@ vim.opt.inccommand = "split"
 
 -- deactivate swap files
 vim.opt.swapfile = false
-
--- treesitter fix
-local ts = vim.treesitter
-
-local orig = ts.get_node_text
-
-ts.get_node_text = function(node, bufnr)
-	if not node then
-		return ""
-	end
-
-	local ok = pcall(function()
-		return node:range()
-	end)
-
-	if not ok then
-		return ""
-	end
-
-	return orig(node, bufnr)
-end
