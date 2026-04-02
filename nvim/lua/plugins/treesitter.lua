@@ -129,4 +129,13 @@ return {
 		"fladson/vim-kitty",
 		ft = "kitty",
 	},
+	{
+		"andymass/vim-matchup",
+		---@type matchup.Config
+		opts = {
+			treesitter = {
+				stopline = 500,
+			},
+		},
+	},
 }
