@@ -242,3 +242,10 @@ export LS_COLORS=$(vivid generate catppuccin-mocha)
 
 # Disables automatic cd into directories
 unsetopt AUTO_CD
+
+# bun completions
+[ -s "/Users/tim/.bun/_bun" ] && source "/Users/tim/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
