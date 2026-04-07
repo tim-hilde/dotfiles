@@ -1,4 +1,6 @@
 return {
 	"andrewferrier/wrapping.nvim",
-	opts = {},
+	config = function()
+		require("wrapping").setup {}
+	end,
 }
