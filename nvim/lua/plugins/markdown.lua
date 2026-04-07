@@ -1,12 +1,8 @@
 return {
 	{
 		"OXY2DEV/markview.nvim",
+		dependencies = { "saghen/blink.cmp" },
 		lazy = false,
-
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter",
-			"nvim-tree/nvim-web-devicons",
-		},
 		init = function()
 			vim.cmd [[set conceallevel=2]]
 			require("markview").setup {
