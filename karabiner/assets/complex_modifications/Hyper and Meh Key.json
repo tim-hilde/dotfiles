@@ -126,7 +126,11 @@
           },
           "to": [
             {
-              "shell_command": "osascript -e 'tell application \"System Events\" to sleep'"
+              "key_code": "q",
+              "modifiers": [
+                "left_control",
+                "left_command"
+              ]
             }
           ]
         }
@@ -142,7 +146,11 @@
           },
           "to": [
             {
-              "shell_command": "osascript -e 'tell application \"System Events\" to keystroke \"q\" using {control down, command down}'"
+              "key_code": "q",
+              "modifiers": [
+                "left_control",
+                "left_command"
+              ]
             }
           ]
         }

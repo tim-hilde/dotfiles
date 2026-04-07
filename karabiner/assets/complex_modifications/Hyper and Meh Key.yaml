@@ -62,9 +62,9 @@ rules:
           - key_code: vk_none
         type: basic
   - description: Hyper + Esc → Sleep
-    manipulators: 
+    manipulators:
       - type: basic
-        from: 
+        from:
           key_code: escape
           modifiers:
             mandatory:
@@ -72,12 +72,18 @@ rules:
               - right_shift
               - control
               - option
-        to: 
-          - shell_command: osascript -e 'tell application "System Events" to sleep'
+        to:
+          - key_code: q
+            modifiers:
+              - left_control
+              - left_command
   - description: f24/lightbulb → Sleep
-    manipulators: 
+    manipulators:
       - type: basic
-        from: 
+        from:
           key_code: f24
-        to: 
-          - shell_command: osascript -e 'tell application "System Events" to keystroke "q" using {control down, command down}'
+        to:
+          - key_code: q
+            modifiers:
+              - left_control
+              - left_command
