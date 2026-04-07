@@ -74,8 +74,8 @@ return {
 				{ "ic", "@class.inner", "Inner class" },
 				{ "aa", "@parameter.outer", "Outer parameter" },
 				{ "ia", "@parameter.inner", "Inner parameter" },
-				{ "ar", "@assignment.rhs", "Right side assignment" },
-				{ "al", "@assignment.lhs", "Left side assignment" },
+				{ "aR", "@assignment.rhs", "Right side assignment" },
+				{ "aL", "@assignment.lhs", "Left side assignment" },
 			}
 			for _, m in ipairs(select_maps) do
 				local key, query, desc = m[1], m[2], m[3]
@@ -89,7 +89,7 @@ return {
 				{ "]f", "goto_next_start", "@function.outer", "textobjects", "Next function start" },
 				{ "]c", "goto_next_start", "@class.outer", "textobjects", "Next class start" },
 				{ "]a", "goto_next_start", "@parameter.outer", "textobjects", "Next parameter start" },
-				{ "]r", "goto_next_start", "@assignment.rhs", "textobjects", "Next right side assignment" },
+				{ "]R", "goto_next_start", "@assignment.rhs", "textobjects", "Next right side assignment" },
 				{ "]z", "goto_next_start", "@fold", "folds", "Next fold" },
 				-- goto_next_end
 				{ "]F", "goto_next_end", "@function.outer", "textobjects", "Next function end" },
