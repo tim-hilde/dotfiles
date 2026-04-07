@@ -1,12 +1,9 @@
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
-		dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
+		branch = "main",
 		lazy = false,
 		build = ":TSUpdate",
-		branch = "master",
-		main = "nvim-treesitter.configs", -- Sets main module to use for opts
-		-- [[ Configure Treesitter ]] See `:help nvim-treesitter`
 		opts = {
 			ensure_installed = {
 				"bash",
@@ -23,120 +20,125 @@ return {
 				"python",
 				"yaml",
 			},
-			-- Autoinstall languages that are not installed
 			auto_install = true,
-			highlight = {
-				enable = true,
-				-- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-				--  If you are experiencing weird indenting issues, add the language to
-				--  the list of additional_vim_regex_highlighting and disabled languages for indent.
-				additional_vim_regex_highlighting = { "ruby" },
-			},
-			indent = { enable = true, disable = { "ruby" } },
-			textobjects = {
+		},
+		config = function(_, opts)
+			require("nvim-treesitter").setup(opts)
+
+			local indent_disabled = { ruby = true }
+			local regex_highlight = { ruby = true }
+
+			vim.api.nvim_create_autocmd("FileType", {
+				group = vim.api.nvim_create_augroup("treesitter_setup", { clear = true }),
+				desc = "Treesitter highlight and indent",
+				callback = function(ev)
+					local buf = ev.buf
+					local ft = vim.bo[buf].filetype
+					pcall(vim.treesitter.start, buf)
+					if regex_highlight[ft] then
+						vim.bo[buf].syntax = "ON"
+					end
+					if not indent_disabled[ft] and pcall(vim.treesitter.get_parser, buf) then
+						vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+					end
+				end,
+			})
+		end,
+	},
+	{
+		"nvim-treesitter/nvim-treesitter-textobjects",
+		branch = "main",
+		dependencies = "nvim-treesitter/nvim-treesitter",
+		init = function()
+			-- Verhindert Konflikte mit built-in ftplugin Mappings (z.B. Python ]m/[m)
+			-- Alternativ: nur pro Filetype, z.B. vim.g.no_python_maps = true
+			vim.g.no_plugin_maps = true
+		end,
+		config = function()
+			local select = require "nvim-treesitter-textobjects.select"
+			local move = require "nvim-treesitter-textobjects.move"
+			local ts_repeat = require "nvim-treesitter-textobjects.repeatable_move"
+
+			-- Setup: nur Optionen, keine Keymaps mehr
+			require("nvim-treesitter-textobjects").setup {
 				select = {
-					enable = true,
-
-					-- Automatically jump forward to textobj, similar to targets.vim
 					lookahead = true,
-
-					keymaps = {
-						-- outer: outer part
-						-- inner: inner part
-						["af"] = { query = "@function.outer", desc = "Outer function" },
-						["if"] = { query = "@function.inner", desc = "Inner function" },
-
-						["aa"] = { query = "@parameter.outer", desc = "Outer parameter" },
-						["ia"] = { query = "@parameter.inner", desc = "Inner parameter" },
-
-						["ac"] = { query = "@class.outer", desc = "Outer class" },
-						["ic"] = { query = "@class.inner", desc = "Inner class" },
-
-						-- ["al"] = { query = "@loop.outer", desc = "Outer loop" },
-						-- ["il"] = { query = "@loop.inner", desc = "Inner loop" },
-
-						["ar"] = { query = "@assignment.rhs", desc = "Right side assignment" },
-						["al"] = { query = "@assignment.lhs", desc = "Left side assignment" },
-					},
-					-- If you set this to `true` (default is `false`) then any textobject is
-					-- extended to include preceding or succeeding whitespace. Succeeding
-					-- whitespace has priority in order to act similarly to eg the built-in
-					-- `ap`.
-					--
-					-- Can also be a function which gets passed a table with the keys
-					-- * query_string: eg '@function.inner'
-					-- * selection_mode: eg 'v'
-					-- and should return true or false
 					include_surrounding_whitespace = false,
 				},
 				move = {
-					enable = true,
-					set_jumps = true, -- whether to set jumps in the jumplist
-					goto_next_start = {
-						["]f"] = { query = "@function.outer", desc = "Next function start" },
-						["]c"] = { query = "@class.outer", desc = "Next class start" },
-						--
-						["]a"] = { query = "@parameter.outer", desc = "Next parameter start" },
-						["]r"] = { query = "@assignment.rhs", desc = "Next right side assignment start" },
-
-						-- You can use regex matching (i.e. lua pattern) and/or pass a list in a "query" key to group multiple queires.
-						-- ["]l"] = { query = "@loop.*", desc = "Next loop start" }, -- that is, ["]o"] = { query = { "@loop.inner", "@loop.outer" } }
-
-						-- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
-						-- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
-						["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
-					},
-					goto_next_end = {
-						["]F"] = { query = "@function.outer", desc = "Next function end" },
-						["]C"] = { query = "@class.outer", desc = "Next class end" },
-						["]A"] = { query = "@parameter.outer", desc = "Next parameter end" },
-					},
-					goto_previous_start = {
-						["[f"] = { query = "@function.outer", desc = "Previous function start" },
-						["[c"] = { query = "@class.outer", desc = "Previous class start" },
-						["[a"] = { query = "@parameter.outer", desc = "Previous parameter start" },
-					},
-					goto_previous_end = {
-						["[F"] = { query = "@function.outer", desc = "Previous function end" },
-						["[C"] = { query = "@class.outer", desc = "Previous class end" },
-						["[A"] = { query = "@parameter.outer", desc = "Previous parameter end" },
-					},
-					-- Below will go to either the start or the end, whichever is closer.
-					-- Use if you want more granular movements
-					-- Make it even more gradual by adding multiple queries and regex.
-					goto_next = {},
-					goto_previous = {},
+					set_jumps = true,
 				},
-			},
-		},
-		-- There are additional nvim-treesitter modules that you can use to interact
-		-- with nvim-treesitter. You should go explore a few and see what interests you:
-		--
-		--    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
-		--    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
-		--    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+			}
+
+			-------------------------------------------------
+			-- SELECT
+			-------------------------------------------------
+			local select_maps = {
+				["af"] = "@function.outer",
+				["if"] = "@function.inner",
+				["ac"] = "@class.outer",
+				["ic"] = "@class.inner",
+				["aa"] = "@parameter.outer",
+				["ia"] = "@parameter.inner",
+				["ar"] = "@assignment.rhs",
+				["al"] = "@assignment.lhs",
+			}
+			for key, query in pairs(select_maps) do
+				vim.keymap.set({ "x", "o" }, key, function()
+					select.select_textobject(query, "textobjects")
+				end, { desc = "TS: " .. query })
+			end
+
+			-------------------------------------------------
+			-- MOVE
+			-------------------------------------------------
+			local move_maps = {
+				-- goto_next_start
+				{ "]f", move.goto_next_start, "@function.outer" },
+				{ "]c", move.goto_next_start, "@class.outer" },
+				{ "]a", move.goto_next_start, "@parameter.outer" },
+				{ "]r", move.goto_next_start, "@assignment.rhs" },
+				{ "]z", move.goto_next_start, "@fold", "folds" },
+				-- goto_next_end
+				{ "]F", move.goto_next_end, "@function.outer" },
+				{ "]C", move.goto_next_end, "@class.outer" },
+				{ "]A", move.goto_next_end, "@parameter.outer" },
+				-- goto_previous_start
+				{ "[f", move.goto_previous_start, "@function.outer" },
+				{ "[c", move.goto_previous_start, "@class.outer" },
+				{ "[a", move.goto_previous_start, "@parameter.outer" },
+				-- goto_previous_end
+				{ "[F", move.goto_previous_end, "@function.outer" },
+				{ "[C", move.goto_previous_end, "@class.outer" },
+				{ "[A", move.goto_previous_end, "@parameter.outer" },
+			}
+			for _, m in ipairs(move_maps) do
+				local key, fn, query, group = m[1], m[2], m[3], m[4] or "textobjects"
+				vim.keymap.set({ "n", "x", "o" }, key, function()
+					fn(query, group)
+				end, { desc = "TS move: " .. key .. " " .. query })
+			end
+			-------------------------------------------------
+			-- REPEATABLE MOVES mit ; und ,
+			-------------------------------------------------
+			vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat.repeat_last_move_next)
+			vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat.repeat_last_move_previous)
+			-- f/F/t/T ebenfalls repeatable machen
+			vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat.builtin_f_expr, { expr = true })
+			vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat.builtin_F_expr, { expr = true })
+			vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat.builtin_t_expr, { expr = true })
+			vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat.builtin_T_expr, { expr = true })
+		end,
 	},
 	{
 		"nvim-treesitter/nvim-treesitter-context",
-		opts = {
-			multiline_threshold = 1,
-		},
+		opts = { multiline_threshold = 1 },
 	},
-	{
-		-- Colored paranthesis
-		"HiPhish/rainbow-delimiters.nvim",
-	},
-	{
-		"fladson/vim-kitty",
-		ft = "kitty",
-	},
+	{ "HiPhish/rainbow-delimiters.nvim" },
+	{ "fladson/vim-kitty", ft = "kitty" },
 	{
 		"andymass/vim-matchup",
 		---@type matchup.Config
-		opts = {
-			treesitter = {
-				stopline = 500,
-			},
-		},
+		opts = { treesitter = { stopline = 500 } },
 	},
 }
