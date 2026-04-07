@@ -67,9 +67,6 @@ return {
 				},
 			}
 
-			-------------------------------------------------
-			-- SELECT (lazy require wie in der README)
-			-------------------------------------------------
 			local select_maps = {
 				{ "af", "@function.outer", "Outer function" },
 				{ "if", "@function.inner", "Inner function" },
@@ -87,15 +84,12 @@ return {
 				end, { desc = desc })
 			end
 
-			-------------------------------------------------
-			-- MOVE (lazy require wie in der README)
-			-------------------------------------------------
 			local move_maps = {
 				-- goto_next_start
 				{ "]f", "goto_next_start", "@function.outer", "textobjects", "Next function start" },
 				{ "]c", "goto_next_start", "@class.outer", "textobjects", "Next class start" },
 				{ "]a", "goto_next_start", "@parameter.outer", "textobjects", "Next parameter start" },
-				{ "]r", "goto_next_start", "@assignment.rhs", "textobjects", "Next right side assignment start" },
+				{ "]r", "goto_next_start", "@assignment.rhs", "textobjects", "Next right side assignment" },
 				{ "]z", "goto_next_start", "@fold", "folds", "Next fold" },
 				-- goto_next_end
 				{ "]F", "goto_next_end", "@function.outer", "textobjects", "Next function end" },
