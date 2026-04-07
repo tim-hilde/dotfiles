@@ -55,11 +55,6 @@ return {
 			vim.g.no_plugin_maps = true
 		end,
 		config = function()
-			local select = require "nvim-treesitter-textobjects.select"
-			local move = require "nvim-treesitter-textobjects.move"
-			local ts_repeat = require "nvim-treesitter-textobjects.repeatable_move"
-
-			-- Setup: nur Optionen, keine Keymaps mehr
 			require("nvim-treesitter-textobjects").setup {
 				select = {
 					lookahead = true,
@@ -71,7 +66,7 @@ return {
 			}
 
 			-------------------------------------------------
-			-- SELECT
+			-- SELECT (lazy require wie in der README)
 			-------------------------------------------------
 			local select_maps = {
 				["af"] = "@function.outer",
@@ -85,49 +80,50 @@ return {
 			}
 			for key, query in pairs(select_maps) do
 				vim.keymap.set({ "x", "o" }, key, function()
-					select.select_textobject(query, "textobjects")
+					require("nvim-treesitter-textobjects.select").select_textobject(query, "textobjects")
 				end, { desc = "TS: " .. query })
 			end
 
 			-------------------------------------------------
-			-- MOVE
+			-- MOVE (lazy require wie in der README)
 			-------------------------------------------------
 			local move_maps = {
 				-- goto_next_start
-				{ "]f", move.goto_next_start, "@function.outer" },
-				{ "]c", move.goto_next_start, "@class.outer" },
-				{ "]a", move.goto_next_start, "@parameter.outer" },
-				{ "]r", move.goto_next_start, "@assignment.rhs" },
-				{ "]z", move.goto_next_start, "@fold", "folds" },
+				{ "]f", "goto_next_start", "@function.outer", "textobjects" },
+				{ "]c", "goto_next_start", "@class.outer", "textobjects" },
+				{ "]a", "goto_next_start", "@parameter.outer", "textobjects" },
+				{ "]r", "goto_next_start", "@assignment.rhs", "textobjects" },
+				{ "]z", "goto_next_start", "@fold", "folds" },
 				-- goto_next_end
-				{ "]F", move.goto_next_end, "@function.outer" },
-				{ "]C", move.goto_next_end, "@class.outer" },
-				{ "]A", move.goto_next_end, "@parameter.outer" },
+				{ "]F", "goto_next_end", "@function.outer", "textobjects" },
+				{ "]C", "goto_next_end", "@class.outer", "textobjects" },
+				{ "]A", "goto_next_end", "@parameter.outer", "textobjects" },
 				-- goto_previous_start
-				{ "[f", move.goto_previous_start, "@function.outer" },
-				{ "[c", move.goto_previous_start, "@class.outer" },
-				{ "[a", move.goto_previous_start, "@parameter.outer" },
+				{ "[f", "goto_previous_start", "@function.outer", "textobjects" },
+				{ "[c", "goto_previous_start", "@class.outer", "textobjects" },
+				{ "[a", "goto_previous_start", "@parameter.outer", "textobjects" },
 				-- goto_previous_end
-				{ "[F", move.goto_previous_end, "@function.outer" },
-				{ "[C", move.goto_previous_end, "@class.outer" },
-				{ "[A", move.goto_previous_end, "@parameter.outer" },
+				{ "[F", "goto_previous_end", "@function.outer", "textobjects" },
+				{ "[C", "goto_previous_end", "@class.outer", "textobjects" },
+				{ "[A", "goto_previous_end", "@parameter.outer", "textobjects" },
 			}
 			for _, m in ipairs(move_maps) do
-				local key, fn, query, group = m[1], m[2], m[3], m[4] or "textobjects"
+				local key, fn_name, query, group = m[1], m[2], m[3], m[4]
 				vim.keymap.set({ "n", "x", "o" }, key, function()
-					fn(query, group)
+					require("nvim-treesitter-textobjects.move")[fn_name](query, group)
 				end, { desc = "TS move: " .. key .. " " .. query })
 			end
+
 			-------------------------------------------------
 			-- REPEATABLE MOVES mit ; und ,
 			-------------------------------------------------
-			vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat.repeat_last_move_next)
-			vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat.repeat_last_move_previous)
-			-- f/F/t/T ebenfalls repeatable machen
-			vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat.builtin_f_expr, { expr = true })
-			vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat.builtin_F_expr, { expr = true })
-			vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat.builtin_t_expr, { expr = true })
-			vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat.builtin_T_expr, { expr = true })
+			-- local ts_repeat = require "nvim-treesitter-textobjects.repeatable_move"
+			-- vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat.repeat_last_move_next)
+			-- vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat.repeat_last_move_previous)
+			-- vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat.builtin_f_expr, { expr = true })
+			-- vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat.builtin_F_expr, { expr = true })
+			-- vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat.builtin_t_expr, { expr = true })
+			-- vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat.builtin_T_expr, { expr = true })
 		end,
 	},
 	{
