@@ -12,49 +12,14 @@ return {
 					{ icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
 					{ icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
 					{ icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
-					{ icon = " ", key = "s", desc = "Restore Session", section = "session" },
 					{ icon = "󰒲 ", key = "L", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
 					{ icon = " ", key = "M", desc = "Mason", action = ":Mason" },
 					{ icon = " ", key = "q", desc = "Quit", action = ":qa" },
 				},
-				header = function()
-					return {
-						align = "center",
-						padding = 1,
-						text = {
-							{ "│ ", hl = "Special" },
-							{ "╲ ││\n", hl = "String" },
-							{ "││", hl = "Special" },
-							{ "╲╲││\n", hl = "String" },
-							{ "││ ", hl = "Special" },
-							{ "╲ │", hl = "String" },
-						},
-					}
-				end,
-				function()
-					local v = vim.version()
-					return {
-						align = "center",
-						text = {
-							{
-								string.format("NVIM v%d.%d.%d", v.major, v.minor, v.patch),
-								hl = "String",
-							},
-						},
-					}
-				end,
-				{
-					align = "center",
-					text = {
-						{
-							"──────────────────────────────────────────────",
-							hl = "NonText",
-						},
-					},
-				},
+
 				sections = {
 					{ section = "header" },
-					{ section = "keys", gap = 1, padding = 1 },
+					{ section = "keys", gap = 0.5, padding = 1 },
 					{ section = "startup" },
 				},
 			},
