@@ -5,14 +5,6 @@
     "@mohak34/opencode-notifier@0.2.1",
     "@tarquinen/opencode-dcp@3.1.9"
   ],
-  "mode": {
-    "plan": {
-      "prompt": "You are Claude Code, Anthropic's official CLI for Claude."
-    },
-    "build": {
-      "prompt": "You are Claude Code, Anthropic's official CLI for Claude."
-    }
-  },
   "mcp": {
     "langfuse-docs": {
       "url": "https://langfuse.com/api/mcp",
