@@ -5,6 +5,11 @@
     "@mohak34/opencode-notifier@0.2.1",
     "@tarquinen/opencode-dcp@3.1.9"
   ],
+  "mode": {
+    "build": {
+      "prompt": "You are Claude Code, Anthropic's official CLI for Claude."
+    }
+  },
   "mcp": {
     "langfuse-docs": {
       "url": "https://langfuse.com/api/mcp",
@@ -30,7 +35,7 @@
       },
       "models": {
         "google/gemma-4-26b-a4b": {
-          "name": "Gemma 4 (local)"
+          "name": "Gemma 4"
         }
       }
     }
