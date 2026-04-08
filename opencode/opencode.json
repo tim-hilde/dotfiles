@@ -3,7 +3,8 @@
   "plugin": [
     "opencode-claude-auth@1.4.7",
     "@mohak34/opencode-notifier@0.2.1",
-    "@tarquinen/opencode-dcp@3.1.9"
+    "@tarquinen/opencode-dcp@3.1.9",
+    "superpowers@git+https://github.com/obra/superpowers.git#v5.0.7"
   ],
   "mcp": {
     "langfuse-docs": {
