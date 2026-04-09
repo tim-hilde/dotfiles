@@ -63,3 +63,4 @@ alias yy=yazi
 alias youtube="open ~/YouTube/"
 
 alias oc=opencode
+alias tt=taskwarrior-tui
