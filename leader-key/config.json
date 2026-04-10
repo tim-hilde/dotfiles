@@ -63,47 +63,47 @@
     {
       "key": "1",
       "type": "command",
-      "value": "/opt/homebrew/bin/yabai -m space --focus 1"
+      "value": "/opt/homebrew/bin/yabai -m space --focus 1 2>/dev/null || true"
     },
     {
       "key": "2",
       "type": "command",
-      "value": "/opt/homebrew/bin/yabai -m space --focus 2"
+      "value": "/opt/homebrew/bin/yabai -m space --focus 2 2>/dev/null || true"
     },
     {
       "key": "3",
       "type": "command",
-      "value": "/opt/homebrew/bin/yabai -m space --focus 3"
+      "value": "/opt/homebrew/bin/yabai -m space --focus 3 2>/dev/null || true"
     },
     {
       "key": "4",
       "type": "command",
-      "value": "/opt/homebrew/bin/yabai -m space --focus 4"
+      "value": "/opt/homebrew/bin/yabai -m space --focus 4 2>/dev/null || true"
     },
     {
       "key": "5",
       "type": "command",
-      "value": "/opt/homebrew/bin/yabai -m space --focus 5"
+      "value": "/opt/homebrew/bin/yabai -m space --focus 5 2>/dev/null || true"
     },
     {
       "key": "6",
       "type": "command",
-      "value": "/opt/homebrew/bin/yabai -m space --focus 6"
+      "value": "/opt/homebrew/bin/yabai -m space --focus 6 2>/dev/null || true"
     },
     {
       "key": "7",
       "type": "command",
-      "value": "/opt/homebrew/bin/yabai -m space --focus 7"
+      "value": "/opt/homebrew/bin/yabai -m space --focus 7 2>/dev/null || true"
     },
     {
       "key": "8",
       "type": "command",
-      "value": "/opt/homebrew/bin/yabai -m space --focus 8"
+      "value": "/opt/homebrew/bin/yabai -m space --focus 8 2>/dev/null || true"
     },
     {
       "key": "9",
       "type": "command",
-      "value": "/opt/homebrew/bin/yabai -m space --focus 9"
+      "value": "/opt/homebrew/bin/yabai -m space --focus 9 2>/dev/null || true"
     },
     {
       "actions": [
@@ -134,4 +134,3 @@
   ],
   "type": "group"
 }
-
