@@ -20,6 +20,11 @@
       ],
       "enabled": false,
       "type": "local"
+    },
+    "pipecat-docs": {
+      "url": "https://daily-docs.mcp.kapa.ai",
+      "type": "remote",
+      "enabled": false
     }
   },
   "provider": {

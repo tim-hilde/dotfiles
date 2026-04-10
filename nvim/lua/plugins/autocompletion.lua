@@ -23,7 +23,7 @@ return {
 		opts = {
 			keymap = {
 				preset = "default",
-				["<C-z>"] = { "accept" },
+				["<C-z>"] = { "accept_and_enter" },
 			},
 
 			appearance = {
