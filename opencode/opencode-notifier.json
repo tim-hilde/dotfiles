@@ -7,7 +7,7 @@
   "showIcon": true,
   "suppressWhenFocused": true,
   "enableOnDesktop": false,
-  "notificationSystem": "osascript",
+  "notificationSystem": "ghostty",
   "linux": {
     "grouping": false
   },
