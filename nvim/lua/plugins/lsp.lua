@@ -249,7 +249,9 @@ return {
 			picker = {
 				"snacks",
 				opts = {
-					layout = { preset = "dropdown" },
+					layout = {
+						preset="dropdown"
+					},
 				},
 			},
 		},
