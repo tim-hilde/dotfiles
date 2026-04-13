@@ -241,19 +241,19 @@ return {
 			}
 		end,
 	},
-	-- {
-	-- 	"rachartier/tiny-code-action.nvim",
-	-- 	event = "LspAttach",
-	-- 	opts = {
-	-- 		backend = "vim",
-	-- 		picker = {
-	-- 			"snacks",
-	-- 			opts = {
-	-- 				layout = { preset = "dropdown" },
-	-- 			},
-	-- 		},
-	-- 	},
-	-- },
+	{
+		"rachartier/tiny-code-action.nvim",
+		event = "LspAttach",
+		opts = {
+			backend = "delta",
+			picker = {
+				"snacks",
+				opts = {
+					layout = { preset = "dropdown" },
+				},
+			},
+		},
+	},
 	{
 		-- preview code actions
 		"aznhe21/actions-preview.nvim",
