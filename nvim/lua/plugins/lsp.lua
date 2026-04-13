@@ -242,16 +242,30 @@ return {
 		end,
 	},
 	{
-		-- preview code actions
-		"aznhe21/actions-preview.nvim",
+		"rachartier/tiny-code-action.nvim",
+		event = "LspAttach",
 		opts = {
-			backend = { "snacks" },
-			---@type snacks.picker.Config
-			snacks = {
-				layout = { preset = "dropdown" },
-			},
+			--- The backend to use, currently only "vim", "delta", "difftastic", "diffsofancy" are supported
+			backend = "vim",
+
+			-- The picker to use, "telescope", "snacks", "select", "buffer", "fzf-lua" are supported
+			-- And it's opts that will be passed at the picker's creation, optional
+			--
+			-- You can also set `picker = "<picker>"` without any opts.
+			picker = "snacks",
 		},
 	},
+	-- {
+	-- 	-- preview code actions
+	-- 	"aznhe21/actions-preview.nvim",
+	-- 	opts = {
+	-- 		backend = { "snacks" },
+	-- 		---@type snacks.picker.Config
+	-- 		snacks = {
+	-- 			layout = { preset = "dropdown" },
+	-- 		},
+	-- 	},
+	-- },
 	{
 		"AbysmalBiscuit/insert-inlay-hints.nvim",
 		keys = {
