@@ -107,7 +107,7 @@ return {
 
 					-- Execute a code action, usually your cursor needs to be on top of an error
 					-- or a suggestion from your LSP for this to activate.
-					map("<leader>ca", require("actions-preview").code_actions, "[C]ode [A]ction", { "n", "x" })
+					map("<leader>ca", require("tiny-code-action").code_action, "[C]ode [A]ction", { "n", "x" })
 
 					-- WARN: This is not Goto Definition, this is Goto Declaration.
 					--  For example, in C this would take you to the header.
@@ -249,7 +249,7 @@ return {
 				"snacks",
 				opts = {
 					layout = {
-						preset = "left",
+						preset = "dropdown",
 					},
 				},
 			},
