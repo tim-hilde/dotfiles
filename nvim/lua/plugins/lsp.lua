@@ -250,7 +250,7 @@ return {
 				"snacks",
 				opts = {
 					layout = {
-						preset="dropdown"
+						preset = "left",
 					},
 				},
 			},
