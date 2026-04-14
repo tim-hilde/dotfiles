@@ -216,7 +216,6 @@ return {
 				taplo = {},
 				typos_lsp = {},
 				yamlls = {},
-				sonarqube = {},
 			}
 
 			local ensure_installed = vim.tbl_keys(servers or {})
