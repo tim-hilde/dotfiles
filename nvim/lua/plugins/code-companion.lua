@@ -7,84 +7,10 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		"saghen/blink.cmp",
 		"folke/snacks.nvim",
-		{ "stevearc/dressing.nvim", opts = {} },
-		{
-			"j-hui/fidget.nvim",
-			opts = {
-				progress = {
-					suppress_on_insert = false,
-					ignore_done_already = false,
-					ignore_empty_message = false,
-					display = {
-						render_limit = 0, -- nichts von LSP anzeigen
-					},
-					ignore = { "." },
-				},
-				notification = {
-					window = {
-						winblend = 0,
-					},
-				},
-			},
-		},
 		"ravitemer/codecompanion-history.nvim",
+		"lalitmee/codecompanion-spinners.nvim",
 	},
 	config = function()
-		-- Fidget integration
-		local fidget_progress_handle = nil
-
-		local function start_fidget()
-			local has_fidget, fidget = pcall(require, "fidget")
-			if not has_fidget then
-				return
-			end
-
-			if fidget_progress_handle then
-				fidget_progress_handle.message = "Abort."
-				fidget_progress_handle:cancel()
-				fidget_progress_handle = nil
-			end
-
-			fidget_progress_handle = fidget.progress.handle.create {
-				title = "",
-				message = "Thinking...",
-				lsp_client = { name = "CodeCompanion" },
-			}
-		end
-
-		local function stop_fidget()
-			local has_fidget, _ = pcall(require, "fidget")
-			if not has_fidget then
-				return
-			end
-
-			if fidget_progress_handle then
-				fidget_progress_handle.message = "Done."
-				fidget_progress_handle:finish()
-				fidget_progress_handle = nil
-			end
-		end
-
-		-- Setup fidget hooks
-		local has_fidget, _ = pcall(require, "fidget")
-		if has_fidget then
-			-- New AU group:
-			local group = vim.api.nvim_create_augroup("CodeCompanionHooks", {})
-
-			-- Attach:
-			vim.api.nvim_create_autocmd({ "User" }, {
-				pattern = "CodeCompanionRequest*",
-				group = group,
-				callback = function(request)
-					if request.match == "CodeCompanionRequestStarted" then
-						start_fidget()
-					elseif request.match == "CodeCompanionRequestFinished" then
-						stop_fidget()
-					end
-				end,
-			})
-		end
-
 		require("codecompanion").setup {
 			ignore_warnings = true,
 			display = {
@@ -279,6 +205,10 @@ return {
 							index_on_startup = false,
 						},
 					},
+				},
+				spinner = {
+					style = "noice",
+					opts = {},
 				},
 			},
 			prompt_library = {

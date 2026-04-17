@@ -13,6 +13,9 @@ return {
 				signature = {
 					enabled = false,
 				},
+				progress = {
+					format_done = "",
+				},
 			},
 			presets = {
 				bottom_search = false, -- use a classic bottom cmdline for search
