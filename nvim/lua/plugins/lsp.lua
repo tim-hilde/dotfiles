@@ -220,13 +220,30 @@ return {
 
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, {
-				"pyrefly",
-				"stylua",
-				"ruff",
-				"bashls",
 				"actionlint",
+				"bash-language-server",
+				"bashls",
+				"beautysh",
+				"debugpy",
+				"docker-compose-language-service",
+				"dockerfile-language-server",
 				"fixjson",
+				"just-lsp",
+				"ltex-ls-plus",
+				"lua-language-server",
+				"markdownlint",
+				"pyrefly",
+				"ruff",
+				"shellcheck",
+				"sonarlint-language-server",
+				"stylua",
+				"taplo",
+				"ty",
 				"typos-lsp",
+				"woke",
+				"yaml-language-server",
+				"yamlfmt",
+				"yamllint",
 			})
 
 			for server_name, server_config in pairs(servers) do
@@ -252,17 +269,6 @@ return {
 						preset = "dropdown",
 					},
 				},
-			},
-		},
-	},
-	{
-		-- preview code actions
-		"aznhe21/actions-preview.nvim",
-		opts = {
-			backend = { "snacks" },
-			---@type snacks.picker.Config
-			snacks = {
-				layout = { preset = "dropdown" },
 			},
 		},
 	},
