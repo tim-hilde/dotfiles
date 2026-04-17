@@ -8,13 +8,25 @@ return {
 		"saghen/blink.cmp",
 		"folke/snacks.nvim",
 		{ "stevearc/dressing.nvim", opts = {} },
-		{ "j-hui/fidget.nvim", opts = {
-			notification = {
-				window = {
-					winblend = 0,
+		{
+			"j-hui/fidget.nvim",
+			opts = {
+				progress = {
+					suppress_on_insert = false,
+					ignore_done_already = false,
+					ignore_empty_message = false,
+					display = {
+						render_limit = 0, -- nichts von LSP anzeigen
+					},
+					ignore = { "." },
+				},
+				notification = {
+					window = {
+						winblend = 0,
+					},
 				},
 			},
-		} },
+		},
 		"ravitemer/codecompanion-history.nvim",
 	},
 	config = function()
