@@ -159,34 +159,7 @@ return {
 			local capabilities = require("blink.cmp").get_lsp_capabilities()
 			local servers = {
 
-				-- basedpyright = {
-				-- 	settings = {
-				-- 		basedpyright = {
-				-- 			disableOrganizeImports = true,
-				-- 			analysis = {
-				-- 				diagnosticMode = "openFilesOnly",
-				-- 				ignore = { "*" },
-				-- 				-- typeCheckingMode = "basic",
-				-- 				-- inlayHints = {
-				-- 				-- 	variableTypes = false,
-				-- 				-- 	callArgumentNames = false,
-				-- 				-- 	functionReturnTypes = false,
-				-- 				-- 	genericTypes = false,
-				-- 				-- },
-				-- 			},
-				-- 		},
-				-- 	},
-				-- },
 				ty = {},
-				-- pyrefly = {
-				-- 	settings = {
-				-- 		python = {
-				-- 			pyrefly = {
-				-- 				displayTypeErrors = "force-on",
-				-- 			},
-				-- 		},
-				-- 	},
-				-- },
 				ts_ls = {},
 				bashls = {},
 				dockerls = {},
