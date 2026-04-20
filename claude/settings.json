@@ -1,12 +1,15 @@
 {
+  "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
       "mcp__pencil"
     ]
   },
-  "includeCoAuthoredBy": false,
   "statusLine": {
     "type": "command",
     "command": "starship statusline claude-code"
+  },
+  "enabledPlugins": {
+    "superpowers@claude-plugins-official": true
   }
 }

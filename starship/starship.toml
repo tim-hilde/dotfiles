@@ -58,9 +58,8 @@ style = "yellow"
 format = "[$virtualenv]($style) "
 style = "bright-black"
 
-
 [profiles]
-claude-code = "$directory$git_branch$git_statusXXXX$claude_context$claude_model$claude_cost"
+claude-code = "$git_branch $claude_context$claude_model$claude_cost"
 
 [claude_model]
 format = "[$model]($style) "

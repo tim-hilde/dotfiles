@@ -38,3 +38,5 @@ tmux/plugins
 .repro
 .vectorcode
 /opencode/opencode-notifier-state.json
+
+.claude/
