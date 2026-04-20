@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__pencil"
+    ]
+  },
+  "includeCoAuthoredBy": false,
+  "statusLine": {
+    "type": "command",
+    "command": "starship statusline claude-code"
+  }
+}

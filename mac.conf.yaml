@@ -75,11 +75,27 @@
       relative: true
       create: true
       force: true
-    $HOME/.config/topgrade.toml:
-      path: topgrade/topgrade.toml
+    $HOME/.claude/settings.json:
+      path: claude/settings.json
+      relative: true
+      backup: true
+      force: true
+    $HOME/.claude/CLAUDE.md:
+      path: claude/CLAUDE.md
+      backup: true
+      relative: true
+      force: true
+    $HOME/.claude/keybindings.json:
+      path: claude/keybindings.json
+      backup: true
+      force: true
+      relative: true
+    $HOME/.claude/skills:
+      path: claude/skills
+      force: true
+      backup: true
       relative: true
       create: true
-      force: true
 
 - shell:
     - command: sudo chsh -s $(which zsh) $USER

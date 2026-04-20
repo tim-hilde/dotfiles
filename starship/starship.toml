@@ -57,3 +57,60 @@ style = "yellow"
 [python]
 format = "[$virtualenv]($style) "
 style = "bright-black"
+
+
+[profiles]
+claude-code = "$directory$git_branch$git_statusXXXX$claude_context$claude_model$claude_cost"
+
+[claude_model]
+format = "[$model]($style) "
+symbol = ""
+style = "bright-black"
+
+[claude_model.model_aliases]
+"Claude Opus 4.7" = "opus"
+"Claude Opus 4.6" = "opus"
+"Claude Sonnet 4.6" = "sonnet"
+"Claude Haiku 4.5" = "haiku"
+"Opus" = "opus"
+"Sonnet" = "sonnet"
+"Haiku" = "haiku"
+
+[claude_context]
+format = "[$gauge $percentage]($style) "
+gauge_width = 5
+gauge_full_symbol = "█"
+gauge_partial_symbol = "▒"
+gauge_empty_symbol = "░"
+
+[[claude_context.display]]
+threshold = 0
+style = "bright-black"
+
+[[claude_context.display]]
+threshold = 30
+style = "cyan"
+
+[[claude_context.display]]
+threshold = 60
+style = "yellow"
+
+[[claude_context.display]]
+threshold = 80
+style = "red"
+
+[claude_cost]
+format = "[\\$$cost]($style)"
+symbol = ""
+
+[[claude_cost.display]]
+threshold = 0.0
+hidden = true
+
+[[claude_cost.display]]
+threshold = 1.0
+style = "yellow"
+
+[[claude_cost.display]]
+threshold = 5.0
+style = "red"
