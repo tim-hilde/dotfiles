@@ -5,6 +5,7 @@
       "mcp__pencil"
     ]
   },
+  "model": "opus[1m]",
   "statusLine": {
     "type": "command",
     "command": "bunx -y ccstatusline@latest",
@@ -13,5 +14,7 @@
   "enabledPlugins": {
     "superpowers@claude-plugins-official": true
   },
-  "syntaxHighlightingDisabled": false
+  "syntaxHighlightingDisabled": false,
+  "effortLevel": "xhigh",
+  "awaySummaryEnabled": false
 }
