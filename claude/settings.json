@@ -16,5 +16,29 @@
   },
   "syntaxHighlightingDisabled": false,
   "effortLevel": "xhigh",
-  "awaySummaryEnabled": false
+  "awaySummaryEnabled": false,
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/dotfiles/claude/claude-notify.sh"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/dotfiles/claude/claude-notify.sh"
+          }
+        ]
+      }
+    ]
+  }
 }
