@@ -96,6 +96,10 @@
       backup: true
       relative: true
       create: true
+    $HOME/.config/ccstatusline:
+      path: ccstatusline
+      relative: true
+      create: true
 
 - shell:
     - command: sudo chsh -s $(which zsh) $USER
