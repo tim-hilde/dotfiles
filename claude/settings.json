@@ -13,6 +13,5 @@
   "enabledPlugins": {
     "superpowers@claude-plugins-official": true
   },
-  "syntaxHighlightingDisabled": false,
-  "model": "opus[1m]"
+  "syntaxHighlightingDisabled": false
 }
