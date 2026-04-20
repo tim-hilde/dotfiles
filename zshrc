@@ -249,3 +249,6 @@ unsetopt AUTO_CD
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+
+CLAUDE_CODE_NO_FLICKER=1
