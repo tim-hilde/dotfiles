@@ -13,14 +13,6 @@
       path: espanso
       relative: true
       create: true
-    $HOME/Library/Application Support/Code/User/settings.json:
-      path: vscode/settings.json
-      relative: true
-      create: true
-    $HOME/Library/Application Support/Code/User/keybindings.json:
-      path: vscode/keybindings.json
-      relative: true
-      create: true
     $HOME/.config/kitty:
       path: kitty
       relative: true
