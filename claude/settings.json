@@ -14,5 +14,6 @@
     "superpowers@claude-plugins-official": true
   },
   "syntaxHighlightingDisabled": false,
-  "effortLevel": "xhigh"
+  "effortLevel": "xhigh",
+  "skipAutoPermissionPrompt": true
 }
