@@ -3,7 +3,8 @@
   "permissions": {
     "allow": [
       "mcp__pencil"
-    ]
+    ],
+    "defaultMode": "auto"
   },
   "statusLine": {
     "type": "command",
@@ -15,5 +16,7 @@
   },
   "syntaxHighlightingDisabled": false,
   "effortLevel": "xhigh",
-  "skipAutoPermissionPrompt": true
+  "awaySummaryEnabled": false,
+  "skipAutoPermissionPrompt": true,
+  "useAutoModeDuringPlan": false
 }
