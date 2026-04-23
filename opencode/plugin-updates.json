@@ -1,9 +1,10 @@
 {
   "plugins": {
-    "my-test-plugin": "9.9.9",
-    "new-plugin-1776933284898": "2.0.0",
-    "new-plugin-1776933295813": "2.0.0",
-    "new-plugin-1776933473613": "2.0.0"
+    "@ex-machina/opencode-anthropic-auth": "1.7.5",
+    "@mohak34/opencode-notifier": "0.2.3",
+    "@tarquinen/opencode-dcp": "3.1.9",
+    "@slkiser/opencode-quota": "3.1.3",
+    "rtk": "4.2.0"
   },
-  "lastCheck": "2026-04-23T08:37:53.613Z"
+  "lastCheck": "2026-04-23T08:53:01.967Z"
 }

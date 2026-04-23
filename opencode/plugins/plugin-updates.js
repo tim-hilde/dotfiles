@@ -1,0 +1,1 @@
+/Users/tim/code/opencode-updater/dist/index.js
