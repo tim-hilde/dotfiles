@@ -1,0 +1,1 @@
+/Users/tim/code/opencode-update-notifier/dist/index.js
