@@ -178,3 +178,6 @@ matches:
         type: shell
         params:
           cmd: "uuidgen | tr '[:upper:]' '[:lower:]'"
+
+  - trigger: "!merl"
+    replace: "tim.hildebrandt@hellomerlin.de"
