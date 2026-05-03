@@ -180,4 +180,4 @@ matches:
           cmd: "uuidgen | tr '[:upper:]' '[:lower:]'"
 
   - trigger: "!merl"
-    replace: "tim.hildebrandt@hellomerlin.de"
+    replace: "tim.hildebrandt@hallomerlin.de"
