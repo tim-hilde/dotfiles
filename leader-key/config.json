@@ -46,19 +46,9 @@
       "value": "/System/Library/CoreServices/Finder.app"
     },
     {
-      "key": "u",
-      "type": "application",
-      "value": "/Applications/Microsoft Outlook.app"
-    },
-    {
       "key": "t",
       "type": "application",
       "value": "/Applications/Todoist.app"
-    },
-    {
-      "key": "e",
-      "type": "application",
-      "value": "/Applications/Microsoft Teams.app"
     },
     {
       "key": "1",
