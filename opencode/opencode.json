@@ -4,8 +4,7 @@
     "@ex-machina/opencode-anthropic-auth@1.7.5",
     "@mohak34/opencode-notifier@0.2.3",
     "@tarquinen/opencode-dcp@3.1.9",
-    "superpowers@git+https://github.com/obra/superpowers.git#v5.0.7",
-    "@slkiser/opencode-quota@3.1.2"
+    "superpowers@git+https://github.com/obra/superpowers.git#v5.0.7"
   ],
   "mcp": {
     "langfuse-docs": {
