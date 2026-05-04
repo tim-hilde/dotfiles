@@ -140,7 +140,7 @@
     {
       "key" : "e",
       "type" : "application",
-      "value" : ""
+      "value" : "/Applications/Slack.app"
     }
   ],
   "type" : "group"
