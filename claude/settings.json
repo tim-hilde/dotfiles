@@ -18,5 +18,7 @@
   "effortLevel": "xhigh",
   "awaySummaryEnabled": false,
   "skipAutoPermissionPrompt": true,
-  "useAutoModeDuringPlan": false
+  "useAutoModeDuringPlan": false,
+  "editorMode": "vim",
+  "preferredNotifChannel": "ghostty"
 }
