@@ -1,126 +1,147 @@
 {
-  "actions": [
+  "actions" : [
     {
-      "key": "l",
-      "type": "application",
-      "value": "/Applications/Ghostty.app"
+      "key" : "l",
+      "type" : "application",
+      "value" : "/Applications/Ghostty.app"
     },
     {
-      "key": "s",
-      "type": "application",
-      "value": "/Applications/Vivaldi.app"
+      "key" : "s",
+      "type" : "application",
+      "value" : "/Applications/Vivaldi.app"
     },
     {
-      "key": "m",
-      "type": "application",
-      "value": "/System/Applications/Mail.app"
+      "key" : "m",
+      "type" : "application",
+      "value" : "/System/Applications/Mail.app"
     },
     {
-      "key": "o",
-      "type": "application",
-      "value": "/Applications/Obsidian.app"
+      "key" : "o",
+      "type" : "application",
+      "value" : "/Applications/Obsidian.app"
     },
     {
-      "key": "p",
-      "type": "application",
-      "value": "/System/Applications/Utilities/Activity Monitor.app"
+      "key" : "p",
+      "type" : "application",
+      "value" : "/System/Applications/Utilities/Activity Monitor.app"
     },
     {
-      "key": "z",
-      "type": "application",
-      "value": "/Applications/Zotero.app"
+      "key" : "z",
+      "type" : "application",
+      "value" : "/Applications/Zotero.app"
     },
     {
-      "key": "k",
-      "type": "application",
-      "value": "/System/Applications/Calendar.app"
+      "key" : "k",
+      "type" : "application",
+      "value" : "/System/Applications/Calendar.app"
     },
     {
-      "key": ",",
-      "type": "application",
-      "value": "/System/Applications/System Settings.app"
+      "key" : ",",
+      "type" : "application",
+      "value" : "/System/Applications/System Settings.app"
     },
     {
-      "key": "f",
-      "type": "application",
-      "value": "/System/Library/CoreServices/Finder.app"
+      "key" : "f",
+      "type" : "application",
+      "value" : "/System/Library/CoreServices/Finder.app"
     },
     {
-      "key": "t",
-      "type": "application",
-      "value": "/Applications/Todoist.app"
+      "key" : "t",
+      "type" : "application",
+      "value" : "/Applications/Todoist.app"
     },
     {
-      "key": "1",
-      "type": "command",
-      "value": "/opt/homebrew/bin/yabai -m space --focus 1 2>/dev/null || true"
+      "key" : "1",
+      "type" : "command",
+      "value" : "/opt/homebrew/bin/yabai -m space --focus 1 2>/dev/null || true"
     },
     {
-      "key": "2",
-      "type": "command",
-      "value": "/opt/homebrew/bin/yabai -m space --focus 2 2>/dev/null || true"
+      "key" : "2",
+      "type" : "command",
+      "value" : "/opt/homebrew/bin/yabai -m space --focus 2 2>/dev/null || true"
     },
     {
-      "key": "3",
-      "type": "command",
-      "value": "/opt/homebrew/bin/yabai -m space --focus 3 2>/dev/null || true"
+      "key" : "3",
+      "type" : "command",
+      "value" : "/opt/homebrew/bin/yabai -m space --focus 3 2>/dev/null || true"
     },
     {
-      "key": "4",
-      "type": "command",
-      "value": "/opt/homebrew/bin/yabai -m space --focus 4 2>/dev/null || true"
+      "key" : "4",
+      "type" : "command",
+      "value" : "/opt/homebrew/bin/yabai -m space --focus 4 2>/dev/null || true"
     },
     {
-      "key": "5",
-      "type": "command",
-      "value": "/opt/homebrew/bin/yabai -m space --focus 5 2>/dev/null || true"
+      "key" : "5",
+      "type" : "command",
+      "value" : "/opt/homebrew/bin/yabai -m space --focus 5 2>/dev/null || true"
     },
     {
-      "key": "6",
-      "type": "command",
-      "value": "/opt/homebrew/bin/yabai -m space --focus 6 2>/dev/null || true"
+      "key" : "6",
+      "type" : "command",
+      "value" : "/opt/homebrew/bin/yabai -m space --focus 6 2>/dev/null || true"
     },
     {
-      "key": "7",
-      "type": "command",
-      "value": "/opt/homebrew/bin/yabai -m space --focus 7 2>/dev/null || true"
+      "key" : "7",
+      "type" : "command",
+      "value" : "/opt/homebrew/bin/yabai -m space --focus 7 2>/dev/null || true"
     },
     {
-      "key": "8",
-      "type": "command",
-      "value": "/opt/homebrew/bin/yabai -m space --focus 8 2>/dev/null || true"
+      "key" : "8",
+      "type" : "command",
+      "value" : "/opt/homebrew/bin/yabai -m space --focus 8 2>/dev/null || true"
     },
     {
-      "key": "9",
-      "type": "command",
-      "value": "/opt/homebrew/bin/yabai -m space --focus 9 2>/dev/null || true"
+      "key" : "9",
+      "type" : "command",
+      "value" : "/opt/homebrew/bin/yabai -m space --focus 9 2>/dev/null || true"
     },
     {
-      "actions": [
+      "actions" : [
         {
-          "key": "a",
-          "type": "application",
-          "value": "/Applications/Claude.app"
+          "key" : "a",
+          "type" : "application",
+          "value" : "/Applications/Claude.app"
         },
         {
-          "key": "o",
-          "type": "application",
-          "value": "/Applications/ChatGPT.app"
+          "key" : "o",
+          "type" : "application",
+          "value" : "/Applications/ChatGPT.app"
         },
         {
-          "key": "g",
-          "type": "application",
-          "value": "/Users/tim/Applications/Vivaldi Apps.localized/Google Gemini.app"
+          "key" : "g",
+          "type" : "application",
+          "value" : "/Users/tim/Applications/Vivaldi Apps.localized/Google Gemini.app"
         }
       ],
-      "key": "c",
-      "type": "group"
+      "key" : "c",
+      "type" : "group"
     },
     {
-      "key": "i",
-      "type": "application",
-      "value": "/System/Applications/Music.app"
+      "key" : "i",
+      "type" : "application",
+      "value" : "/System/Applications/Music.app"
+    },
+    {
+      "actions" : [
+        {
+          "key" : "m",
+          "type" : "application",
+          "value" : "/Users/tim/Applications/Vivaldi Apps.localized/Gmail.app"
+        },
+        {
+          "key" : "k",
+          "type" : "application",
+          "value" : "/Users/tim/Applications/Vivaldi Apps.localized/Google Kalender.app"
+        }
+      ],
+      "key" : "g",
+      "type" : "group"
+    },
+    {
+      "key" : "e",
+      "type" : "application",
+      "value" : ""
     }
   ],
-  "type": "group"
+  "type" : "group"
 }
