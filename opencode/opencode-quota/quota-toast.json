@@ -1,0 +1,7 @@
+{
+  "enableToast": false,
+  "showSessionTokens": false,
+  "enabledProviders": "auto",
+  "formatStyle": "classic",
+  "percentDisplayMode": "used"
+}
