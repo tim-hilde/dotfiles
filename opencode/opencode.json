@@ -1,11 +1,11 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "plugin": [
-    "@ex-machina/opencode-anthropic-auth@1.7.5",
-    "@mohak34/opencode-notifier@0.2.3",
+    "@ex-machina/opencode-anthropic-auth@1.8.0",
+    "@mohak34/opencode-notifier@0.2.4",
     "@tarquinen/opencode-dcp@3.1.9",
-    "superpowers@git+https://github.com/obra/superpowers.git#v5.0.7",
-    "@slkiser/opencode-quota@3.1.2",
+    "superpowers@git+https://github.com/obra/superpowers.git#v5.1.0",
+    "@slkiser/opencode-quota@3.6.2",
     "opencode-update-notifier"
   ],
   "mcp": {
