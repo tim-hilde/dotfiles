@@ -56,7 +56,7 @@
   },
   "experimental": {
     "quotaToast": {
-      "enableToast": false,
+      "enableToast": true,
       "showSessionTokens": false,
       "enabledProviders": "auto",
       "formatStyle": "classic",
