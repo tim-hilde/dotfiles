@@ -181,3 +181,6 @@ matches:
 
   - trigger: "!merl"
     replace: "tim.hildebrandt@hallomerlin.de"
+
+  - trigger: "!mun"
+    replace: municipality
