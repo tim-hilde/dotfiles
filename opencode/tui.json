@@ -3,8 +3,5 @@
   "theme": "catppuccin",
   "keybinds": {
     "editor_open": "<leader>o"
-  },
-  "plugin": [
-    "@slkiser/opencode-quota"
-  ]
+  }
 }
