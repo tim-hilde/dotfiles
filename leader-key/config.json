@@ -141,6 +141,11 @@
       "key" : "e",
       "type" : "application",
       "value" : "/Applications/Slack.app"
+    },
+    {
+      "key" : "n",
+      "type" : "application",
+      "value" : "/Applications/Notion.app"
     }
   ],
   "type" : "group"
