@@ -53,14 +53,5 @@
         }
       }
     }
-  },
-  "experimental": {
-    "quotaToast": {
-      "enableToast": true,
-      "showSessionTokens": false,
-      "enabledProviders": "auto",
-      "formatStyle": "classic",
-      "percentDisplayMode": "used"
-    }
   }
 }

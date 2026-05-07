@@ -2,6 +2,14 @@
   "enableToast": false,
   "showSessionTokens": false,
   "enabledProviders": "auto",
-  "formatStyle": "classic",
-  "percentDisplayMode": "used"
+  "formatStyle": "allWindows",
+  "percentDisplayMode": "remaining",
+  "tuiSidebarPanel": {
+    "enabled": true
+  },
+  "tuiCompactStatus": {
+    "enabled": true,
+    "homeBottom": true,
+    "sessionPrompt": false
+  }
 }
