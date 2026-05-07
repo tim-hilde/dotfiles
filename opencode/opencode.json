@@ -16,7 +16,7 @@
     "notion": {
       "url": "https://mcp.notion.com/mcp",
       "type": "remote",
-      "enabled": true
+      "enabled": false
     },
     "pipecat-docs": {
       "url": "https://daily-docs.mcp.kapa.ai",
