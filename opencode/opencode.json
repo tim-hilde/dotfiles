@@ -13,6 +13,11 @@
       "type": "remote",
       "enabled": false
     },
+    "notion": {
+      "url": "https://mcp.notion.com/mcp",
+      "type": "remote",
+      "enabled": true
+    },
     "pipecat-docs": {
       "url": "https://daily-docs.mcp.kapa.ai",
       "type": "remote",
