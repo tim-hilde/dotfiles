@@ -18,11 +18,6 @@
       "type": "remote",
       "enabled": false
     },
-    "pipecat-docs": {
-      "url": "https://daily-docs.mcp.kapa.ai",
-      "type": "remote",
-      "enabled": false
-    },
     "pencil": {
       "command": [
         "/Applications/Pencil.app/Contents/Resources/app.asar.unpacked/out/mcp-server-darwin-arm64",
