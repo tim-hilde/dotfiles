@@ -55,8 +55,7 @@ Use this structure:
 One concise paragraph: what problem was solved, what solution was implemented.
 
 ## Impact
-One concise paragraph: what this changes for users/the system; any side effects,
-migration notes, or breaking changes worth flagging.
+One concise paragraph: what this changes for users/the system; any side effects, migration notes, or breaking changes worth flagging.
 
 ## Changes
 
@@ -73,6 +72,8 @@ migration notes, or breaking changes worth flagging.
 **Grouping changes**: Group related file changes under a meaningful heading (e.g. "Authentication", "Database migrations", "CI pipeline") rather than listing every file individually.
 
 **Depth per group**: 2–3 bullet points per group is ideal. Omit obvious/trivial changes. Prioritise *why* over *what* when the why isn't obvious from the diff.
+
+**Formatting**: Write every paragraph and bullet as a single continuous line — no manual line breaks within paragraphs or bullets. Let GitHub's renderer wrap text. The only allowed newlines are between sections, between paragraphs, and between list items.
 
 **Tone**: Factual, professional, concise. No filler phrases like "this PR aims to..." or "we have updated...".
 
@@ -105,3 +106,4 @@ feat: add user avatar upload with S3 storage
 - [ ] Bullets explain *why*, not just *what*
 - [ ] Output is wrapped in a markdown code block
 - [ ] No empty sections
+- [ ] No manual line breaks within paragraphs or bullets (each is a single continuous line)
