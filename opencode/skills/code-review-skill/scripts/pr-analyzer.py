@@ -9,12 +9,15 @@ Usage:
     git diff main...HEAD | python pr-analyzer.py
 """
 
+import os
 import sys
 import re
 import argparse
 from collections import defaultdict
 from dataclasses import dataclass
 from typing import List, Dict, Optional
+
+RISK_NO_TESTS = "NO_TEST_CHANGES"
 
 
 @dataclass
@@ -44,6 +47,7 @@ class PRAnalysis:
 
 def detect_language(filename: str) -> str:
     """Detect programming language from filename."""
+    _, ext = os.path.splitext(filename)
     extensions = {
         '.py': 'Python',
         '.js': 'JavaScript',
@@ -61,7 +65,13 @@ def detect_language(filename: str) -> str:
         '.hh': 'C++',
         '.hxx': 'C++',
         '.java': 'Java',
+        '.kt': 'Kotlin',
+        '.swift': 'Swift',
         '.rb': 'Ruby',
+        '.php': 'PHP',
+        '.cs': 'C#',
+        '.vue': 'Vue',
+        '.svelte': 'Svelte',
         '.sql': 'SQL',
         '.md': 'Markdown',
         '.json': 'JSON',
@@ -70,12 +80,16 @@ def detect_language(filename: str) -> str:
         '.toml': 'TOML',
         '.css': 'CSS',
         '.scss': 'SCSS',
+        '.less': 'Less',
         '.html': 'HTML',
+        '.zig': 'Zig',
+        '.ex': 'Elixir',
+        '.exs': 'Elixir',
+        '.erl': 'Erlang',
+        '.scala': 'Scala',
+        '.lua': 'Lua',
     }
-    for ext, lang in extensions.items():
-        if filename.endswith(ext):
-            return lang
-    return 'unknown'
+    return extensions.get(ext.lower(), 'unknown')
 
 
 def is_test_file(filename: str) -> bool:
@@ -205,15 +219,12 @@ def identify_risk_factors(files: List[FileStats]) -> List[str]:
     total_changes = sum(f.additions + f.deletions for f in files)
     test_changes = sum(f.additions + f.deletions for f in files if f.is_test)
 
-    # Large PR
     if total_changes > 400:
         risks.append("Large PR (>400 lines) - harder to review thoroughly")
 
-    # No tests
     if test_changes == 0 and total_changes > 50:
-        risks.append("No test changes - verify test coverage")
+        risks.append(f"{RISK_NO_TESTS}: No test changes - verify test coverage")
 
-    # Low test ratio
     if total_changes > 100 and test_changes / max(total_changes, 1) < 0.2:
         risks.append("Low test ratio (<20%) - consider adding more tests")
 
@@ -251,7 +262,7 @@ def generate_suggestions(files: List[FileStats], complexity: float, risks: List[
         suggestions.append("High complexity - allocate extra review time")
         suggestions.append("Consider pair reviewing for critical sections")
 
-    if "No test changes" in str(risks):
+    if any(RISK_NO_TESTS in r for r in risks):
         suggestions.append("Request test additions before approval")
 
     # Language-specific suggestions

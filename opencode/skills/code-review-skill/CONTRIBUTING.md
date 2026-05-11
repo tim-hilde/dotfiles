@@ -9,27 +9,33 @@ Thank you for your interest in contributing! This document provides guidelines f
 ### 目录结构
 
 ```
-ai-code-review-guide/
-├── SKILL.md                    # 必需：主文件（始终加载）
-├── README.md                   # 项目说明文档
-├── CONTRIBUTING.md             # 贡献指南（本文件）
-├── LICENSE                     # 许可证
-├── reference/                  # 按需加载的详细指南
-│   ├── react.md
-│   ├── vue.md
-│   ├── rust.md
-│   ├── typescript.md
-│   ├── python.md
-│   ├── c.md
-│   ├── cpp.md
-│   ├── common-bugs-checklist.md
-│   ├── security-review-guide.md
-│   └── code-review-best-practices.md
-├── assets/                     # 模板和快速参考
+code-review-skill/
+├── SKILL.md                    # Required: main file (always loaded)
+├── README.md
+├── CONTRIBUTING.md
+├── LICENSE
+├── reference/                  # On-demand language/framework guides
+│   ├── react.md                # React 19 / Next.js / TanStack Query v5
+│   ├── vue.md                  # Vue 3.5 Composition API
+│   ├── rust.md                 # Ownership, async, unsafe, cancellation
+│   ├── typescript.md           # Type safety, generics, strict mode
+│   ├── python.md               # Type hints, async, testing
+│   ├── java.md                 # Java 17/21, Spring Boot 3, virtual threads
+│   ├── go.md                   # Error handling, goroutines, context
+│   ├── c.md                    # Memory safety, UB, error handling
+│   ├── cpp.md                  # RAII, move semantics, exception safety
+│   ├── qt.md                   # Object model, signals/slots, GUI perf
+│   ├── css-less-sass.md        # Variables, responsive, performance
+│   ├── architecture-review-guide.md  # SOLID, anti-patterns, coupling
+│   ├── performance-review-guide.md   # Web Vitals, N+1, complexity
+│   ├── security-review-guide.md      # OWASP Top 10, JWT, validation
+│   ├── common-bugs-checklist.md      # Quick-reference bug patterns
+│   └── code-review-best-practices.md # Communication & process
+├── assets/                     # Templates and quick reference
 │   ├── review-checklist.md
 │   └── pr-review-template.md
-└── scripts/                    # 工具脚本
-    └── pr-analyzer.py
+└── scripts/
+    └── pr-analyzer.py          # PR complexity analyzer
 ```
 
 ### Frontmatter 规范

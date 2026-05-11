@@ -12,8 +12,8 @@
     <img src="https://img.shields.io/badge/License-MIT-22c55e?style=flat-square" alt="License: MIT"/>
   </a>
   <img src="https://img.shields.io/badge/Claude_Code-Skill-7c3aed?style=flat-square&logo=anthropic&logoColor=white" alt="Claude Code Skill"/>
-  <img src="https://img.shields.io/badge/Total_Lines-9%2C500%2B-3b82f6?style=flat-square" alt="9500+ lines"/>
-  <img src="https://img.shields.io/badge/Languages-11%2B-f59e0b?style=flat-square" alt="11+ languages"/>
+  <img src="https://img.shields.io/badge/Total_Lines-14%2C000%2B-3b82f6?style=flat-square" alt="14000+ lines"/>
+  <img src="https://img.shields.io/badge/Languages-17%2B-f59e0b?style=flat-square" alt="17+ languages"/>
   <img src="https://img.shields.io/badge/PRs-Welcome-ec4899?style=flat-square" alt="PRs Welcome"/>
 </p>
 
@@ -37,7 +37,7 @@
 
 **Code Review Skill** is a production-ready skill for [Claude Code](https://claude.ai/code) that transforms AI-assisted code review from vague suggestions into a **structured, consistent, and expert-level** process.
 
-It covers **11+ languages and frameworks** with over **9,500 lines** of carefully curated review guidelines — loaded progressively to minimize context window usage.
+It covers **17+ languages and frameworks** with over **14,000 lines** of carefully curated review guidelines — loaded progressively to minimize context window usage.
 
 ---
 
@@ -65,7 +65,7 @@ It covers **11+ languages and frameworks** with over **9,500 lines** of carefull
   </thead>
   <tbody>
     <tr>
-      <td rowspan="4"><strong>Frontend</strong></td>
+      <td rowspan="6"><strong>Frontend</strong></td>
       <td>&#9883;&#65039; React 19 / Next.js / TanStack Query v5</td>
       <td><code>reference/react.md</code></td>
       <td>~870</td>
@@ -74,6 +74,16 @@ It covers **11+ languages and frameworks** with over **9,500 lines** of carefull
       <td>&#128154; Vue 3.5 + Composition API</td>
       <td><code>reference/vue.md</code></td>
       <td>~920</td>
+    </tr>
+    <tr>
+      <td>&#128302; Angular 17+ / Signals / Zoneless</td>
+      <td><code>reference/angular.md</code></td>
+      <td>~420</td>
+    </tr>
+    <tr>
+      <td>&#128293; Svelte 5 / SvelteKit</td>
+      <td><code>reference/svelte.md</code></td>
+      <td>~1,060</td>
     </tr>
     <tr>
       <td>&#127912; CSS / Less / Sass</td>
@@ -86,15 +96,20 @@ It covers **11+ languages and frameworks** with over **9,500 lines** of carefull
       <td>~540</td>
     </tr>
     <tr>
-      <td rowspan="4"><strong>Backend</strong></td>
+      <td rowspan="7"><strong>Backend</strong></td>
       <td>&#9749; Java 17/21 + Spring Boot 3</td>
       <td><code>reference/java.md</code></td>
       <td>~800</td>
     </tr>
     <tr>
-      <td>&#128013; Python</td>
-      <td><code>reference/python.md</code></td>
-      <td>~1,070</td>
+      <td>&#128230; NestJS</td>
+      <td><code>reference/nestjs.md</code></td>
+      <td>~590</td>
+    </tr>
+    <tr>
+      <td>&#128013; Django / DRF</td>
+      <td><code>reference/django.md</code></td>
+      <td>~1,030</td>
     </tr>
     <tr>
       <td>&#128057; Go</td>
@@ -107,7 +122,22 @@ It covers **11+ languages and frameworks** with over **9,500 lines** of carefull
       <td>~840</td>
     </tr>
     <tr>
-      <td rowspan="3"><strong>Systems</strong></td>
+      <td>&#128187; C# / .NET 8</td>
+      <td><code>reference/csharp.md</code></td>
+      <td>~520</td>
+    </tr>
+    <tr>
+      <td>&#128013; Python</td>
+      <td><code>reference/python.md</code></td>
+      <td>~1,070</td>
+    </tr>
+    <tr>
+      <td rowspan="4"><strong>Mobile / Systems</strong></td>
+      <td>&#128241; Kotlin / Android</td>
+      <td><code>reference/kotlin.md</code></td>
+      <td>~1,020</td>
+    </tr>
+    <tr>
       <td>&#9881;&#65039; C</td>
       <td><code>reference/c.md</code></td>
       <td>~210</td>
@@ -123,7 +153,7 @@ It covers **11+ languages and frameworks** with over **9,500 lines** of carefull
       <td>~190</td>
     </tr>
     <tr>
-      <td rowspan="2"><strong>Architecture</strong></td>
+      <td rowspan="3"><strong>Cross-Cutting</strong></td>
       <td>&#127963;&#65039; Architecture Design Review</td>
       <td><code>reference/architecture-review-guide.md</code></td>
       <td>~470</td>
@@ -131,7 +161,12 @@ It covers **11+ languages and frameworks** with over **9,500 lines** of carefull
     <tr>
       <td>&#9889; Performance Review</td>
       <td><code>reference/performance-review-guide.md</code></td>
-      <td>~750</td>
+      <td>~850</td>
+    </tr>
+    <tr>
+      <td>&#128269; Universal Quality Anti-Patterns</td>
+      <td><code>reference/code-quality-universal.md</code></td>
+      <td>~320</td>
     </tr>
   </tbody>
 </table>
@@ -185,16 +220,23 @@ code-review-skill/
 +-- reference/                            # On-demand language guides
 |   +-- react.md                          # React 19 / Next.js / TanStack Query v5
 |   +-- vue.md                            # Vue 3.5 Composition API
+|   +-- angular.md                        # Angular 17+ / Signals / Zoneless
+|   +-- svelte.md                         # Svelte 5 / SvelteKit
 |   +-- rust.md                           # Rust ownership, async/await, unsafe
 |   +-- typescript.md                     # TypeScript strict mode, generics, ESLint
+|   +-- nestjs.md                         # NestJS DI, Guards, Interceptors, DTOs
 |   +-- java.md                           # Java 17/21 & Spring Boot 3
 |   +-- python.md                         # Python async, typing, pytest
+|   +-- django.md                         # Django / DRF security, serializers, async
 |   +-- go.md                             # Go goroutines, channels, context, interfaces
+|   +-- kotlin.md                         # Kotlin / Android coroutines, Compose, Flow
+|   +-- csharp.md                         # C# 12 / .NET 8, EF Core, ASP.NET Core
 |   +-- c.md                              # C memory safety, UB, error handling
 |   +-- cpp.md                            # C++ RAII, move semantics, exception safety
 |   +-- qt.md                             # Qt object model, signals/slots, GUI perf
 |   +-- css-less-sass.md                  # CSS/Less/Sass variables, responsive design
 |   +-- architecture-review-guide.md      # SOLID, anti-patterns, coupling/cohesion
+|   +-- code-quality-universal.md        # Reuse audit, parameter sprawl, TOCTOU, no-op updates
 |   +-- performance-review-guide.md       # Core Web Vitals, N+1, memory leaks
 |   +-- security-review-guide.md          # Security checklist (all languages)
 |   +-- common-bugs-checklist.md          # Language-specific bug patterns
@@ -321,8 +363,8 @@ Focus on: security, performance, and maintainability.
 Contributions are welcome! See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
 
 **Ideas:**
-- New language guides (C#, Swift, Kotlin, Ruby, PHP...)
-- Framework-specific guides (Django, Laravel, NestJS...)
+- New language guides (Swift, Ruby, PHP, Scala...)
+- Framework-specific guides (Laravel, Spring WebFlux, FastAPI...)
 - Additional checklists and templates
 - Translations of core documentation
 
@@ -342,7 +384,7 @@ MIT &copy; [awesome-skills](https://github.com/awesome-skills)
 
 **Code Review Skill** 是专为 [Claude Code](https://claude.ai/code) 打造的生产级代码审查技能，将 AI 辅助的代码审查从模糊建议转变为**结构化、一致且专业级**的流程。
 
-覆盖 **11+ 种语言和框架**，拥有超过 **9,500 行**精心整理的代码审查指南——按需加载，最大程度减少上下文占用。
+覆盖 **17+ 种语言和框架**，拥有超过 **14,000 行**精心整理的代码审查指南——按需加载，最大程度减少上下文占用。
 
 ---
 
@@ -363,17 +405,24 @@ MIT &copy; [awesome-skills](https://github.com/awesome-skills)
 |------|--------|----------|------|
 | **前端** | &#9883;&#65039; React 19 / Next.js / TanStack Query v5 | `reference/react.md` | ~870 |
 | | &#128154; Vue 3.5 Composition API | `reference/vue.md` | ~920 |
+| | &#128302; Angular 17+ / Signals / Zoneless | `reference/angular.md` | ~420 |
+| | &#128293; Svelte 5 / SvelteKit | `reference/svelte.md` | ~1,060 |
 | | &#127912; CSS / Less / Sass | `reference/css-less-sass.md` | ~660 |
 | | &#128311; TypeScript | `reference/typescript.md` | ~540 |
 | **后端** | &#9749; Java 17/21 + Spring Boot 3 | `reference/java.md` | ~800 |
+| | &#128230; NestJS | `reference/nestjs.md` | ~590 |
+| | &#128013; Django / DRF | `reference/django.md` | ~1,030 |
 | | &#128013; Python | `reference/python.md` | ~1,070 |
 | | &#128057; Go | `reference/go.md` | ~990 |
 | | &#129408; Rust | `reference/rust.md` | ~840 |
-| **系统级** | &#9881;&#65039; C | `reference/c.md` | ~210 |
+| | &#128187; C# / .NET 8 | `reference/csharp.md` | ~520 |
+| **移动 / 系统** | &#128241; Kotlin / Android | `reference/kotlin.md` | ~1,020 |
+| | &#9881;&#65039; C | `reference/c.md` | ~210 |
 | | &#128297; C++ | `reference/cpp.md` | ~300 |
 | | &#128421;&#65039; Qt 框架 | `reference/qt.md` | ~190 |
 | **架构** | &#127963;&#65039; 架构设计审查 | `reference/architecture-review-guide.md` | ~470 |
-| | &#9889; 性能审查 | `reference/performance-review-guide.md` | ~750 |
+| | &#9889; 性能审查 | `reference/performance-review-guide.md` | ~850 |
+| | &#128269; 通用质量反模式 | `reference/code-quality-universal.md` | ~320 |
 
 ---
 
@@ -424,16 +473,23 @@ code-review-skill/
 +-- reference/                            # 按需加载的语言指南
 |   +-- react.md                          # React 19 / Next.js / TanStack Query v5
 |   +-- vue.md                            # Vue 3.5 组合式 API
+|   +-- angular.md                        # Angular 17+ / Signals / Zoneless
+|   +-- svelte.md                         # Svelte 5 / SvelteKit
 |   +-- rust.md                           # Rust 所有权、async/await、unsafe
 |   +-- typescript.md                     # TypeScript strict 模式、泛型、ESLint
+|   +-- nestjs.md                         # NestJS 依赖注入、Guard、Interceptor、DTO
 |   +-- java.md                           # Java 17/21 & Spring Boot 3
 |   +-- python.md                         # Python async、类型注解、pytest
+|   +-- django.md                         # Django / DRF 安全、Serializer、异步视图
 |   +-- go.md                             # Go goroutine、channel、context、接口
+|   +-- kotlin.md                         # Kotlin / Android 协程、Compose、Flow
+|   +-- csharp.md                         # C# 12 / .NET 8、EF Core、ASP.NET Core
 |   +-- c.md                              # C 内存安全、UB、错误处理
 |   +-- cpp.md                            # C++ RAII、移动语义、异常安全
 |   +-- qt.md                             # Qt 对象模型、信号/槽、GUI 性能
 |   +-- css-less-sass.md                  # CSS/Less/Sass 变量、响应式设计
 |   +-- architecture-review-guide.md      # SOLID、反模式、耦合度分析
+|   +-- code-quality-universal.md        # 复用审查、参数膨胀、抽象泄漏、TOCTOU
 |   +-- performance-review-guide.md       # Core Web Vitals、N+1、内存泄漏
 |   +-- security-review-guide.md          # 安全审查清单（全语言通用）
 |   +-- common-bugs-checklist.md          # 各语言常见 Bug 模式
@@ -560,8 +616,8 @@ Use code-review-skill to review this PR
 欢迎贡献！请查阅 [CONTRIBUTING.md](./CONTRIBUTING.md) 了解规范。
 
 **可贡献方向：**
-- 新增语言指南（C#、Swift、Kotlin、Ruby、PHP...）
-- 框架专属指南（Django、Laravel、NestJS...）
+- 新增语言指南（Swift、Ruby、PHP、Scala...）
+- 框架专属指南（Laravel、Spring WebFlux、FastAPI...）
 - 补充检查清单和审查模板
 - 核心文档的多语言翻译
 

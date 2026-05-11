@@ -742,6 +742,70 @@ function factorial(n) {
 
 ---
 
+## 低级别效率反模式
+
+代码层面的效率失误，独立于架构层面的性能问题。补充 [common-bugs-checklist.md](common-bugs-checklist.md) 中已涵盖的资源管理与并发缺陷。
+
+### 不必要的重复工作
+
+- [ ] 同一函数 / 查询是否在同一 request/render 中被重复调用？
+- [ ] 文件 / 配置是否在循环内重复读取（loop-invariant）？
+- [ ] 计算结果是否可以被缓存或向下游传递？
+
+```typescript
+// ❌ loop-invariant 在循环内反复执行
+for (const path of paths) {
+  const config = JSON.parse(fs.readFileSync("config.json", "utf-8"));
+  processFile(path, config);
+}
+
+// ✅ 提到循环外
+const config = JSON.parse(fs.readFileSync("config.json", "utf-8"));
+for (const path of paths) processFile(path, config);
+```
+
+### 错失的并发机会
+
+- [ ] 独立的 async 操作是否顺序 `await`？
+- [ ] 是否可以用 `Promise.all` / `asyncio.gather` / `tokio::join!` 并发？
+
+```typescript
+// ❌ 顺序 await
+const a = await fetchA();
+const b = await fetchB();
+
+// ✅ 并发
+const [a, b] = await Promise.all([fetchA(), fetchB()]);
+```
+
+### 热路径膨胀
+
+- [ ] 模块级 / import 时代码是否执行重操作（文件 I/O、网络、大对象构造）？
+- [ ] per-request 路径是否有可延迟的初始化？
+- [ ] 启动时代码是否阻塞首次请求？
+
+### 无界数据结构
+
+> 资源生命周期相关缺陷（未关闭的连接、未移除的监听器、未清除的定时器）见 [common-bugs-checklist.md → Resource Management](common-bugs-checklist.md#resource-management)。本节聚焦 *容量边界*。
+
+- [ ] 全局 dict / list / 缓存是否有 `max-size` 或 TTL？
+- [ ] 累积型数据结构（队列、日志、metrics buffer）是否有上限？
+- [ ] 每请求分配的对象是否会被持久引用而无法 GC？
+
+```python
+# ❌ 无界缓存
+_cache: dict[str, Any] = {}
+
+# ✅ 有界 LRU
+from functools import lru_cache
+
+@lru_cache(maxsize=256)
+def get_cached(key: str) -> Any:
+    return expensive_computation(key)
+```
+
+---
+
 ## 参考资源
 
 - [Core Web Vitals - web.dev](https://web.dev/articles/vitals)
