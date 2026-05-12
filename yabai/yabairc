@@ -66,7 +66,8 @@ yabai -m rule --add app="^Raycast$" manage=off
 yabai -m rule --add app="^Leader Key$" manage=off
 yabai -m rule --add app="^TypeWhisper$" manage=off
 yabai -m rule --add app="^Todoist$" manage=off
-yabai -m rule --add app="Vivaldi" title="Picture in Picture" manage=off
+yabai -m rule --add app="^Vivaldi$" title="Picture in Picture" manage=off
+yabai -m rule --add app="^Raycast Beta$" title="Settings" manage=off
 
 # actually apply rules
 yabai -m rule --apply
