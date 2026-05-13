@@ -181,8 +181,6 @@ alias clear="precmd() { precmd() { echo } } && clear"
 # https://github.com/starship/starship/pull/4205#issuecomment-2230335985
 source ~/dotfiles/transient-prompt.zsh
 
-# opencode
-export PATH=/Users/tim/.opencode/bin:$PATH
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/opt/homebrew/share/google-cloud-sdk/path.zsh.inc' ]; then . '/opt/homebrew/share/google-cloud-sdk/path.zsh.inc'; fi
