@@ -2,15 +2,9 @@
   "enableToast": false,
   "showSessionTokens": false,
   "enabledProviders": "auto",
-  "formatStyle": "singleWindow",
+  "formatStyle": "allWindows",
   "percentDisplayMode": "used",
   "tuiSidebarPanel": {
     "enabled": true
-  },
-  "tuiCompactStatus": {
-    "enabled": true,
-    "homeBottom": true,
-    "sessionPrompt": true,
-    "suppressWhenNativeProviderQuota": true
   }
 }
