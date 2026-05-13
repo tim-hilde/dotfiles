@@ -1,8 +1,10 @@
 # AGENTS.md
 
-Behavioral guidelines to reduce common LLM coding mistakes. Merge with project-specific instructions as needed.
+## Comments
 
-**Tradeoff:** These guidelines bias toward caution over speed. For trivial tasks, use judgment.
+Default to no comments — let naming and structure carry the meaning. Add one only when the code can't: to explain *why* something non-obvious is done, warn about a footgun, or link to external context (bug, spec, ticket).
+
+Don't restate code, narrate decisions, or leave changelog comments ("switched from X to Y").
 
 ## 1. Think Before Coding
 
