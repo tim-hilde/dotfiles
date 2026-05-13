@@ -1,5 +1,5 @@
 {
-  "enableToast": false,
+  "enableToast": true,
   "showSessionTokens": false,
   "enabledProviders": "auto",
   "formatStyle": "singleWindow",
