@@ -1,5 +1,9 @@
 # AGENTS.md
 
+## Skills
+
+If skills for certain tasks are available, use them.
+
 ## Comments
 
 Default to no comments — let naming and structure carry the meaning. Add one only when the code can't: to explain *why* something non-obvious is done, warn about a footgun, or link to external context (bug, spec, ticket).
