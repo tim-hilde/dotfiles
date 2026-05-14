@@ -1,16 +1,20 @@
-# AGENTS.md
+# Skills
 
-## Skills
+**Skills aren't optional. Before creating any file, writing any code, or running any tool, check `<available_skills>` and read every plausibly relevant SKILL.md first.**
 
-If skills for certain tasks are available, use them.
+The check is unconditional. Don't first decide whether a task "needs" a skill — the skills themselves define what they cover. Multiple skills can apply to one task; read all that might fit, not just the most obvious one.
 
-## Comments
+- Read the skill before acting, even if the format feels familiar. Skills encode environment-specific constraints (available libraries, output paths, rendering quirks) that aren't in training data.
+- User-uploaded skills take priority — they're almost certainly relevant to the current request.
+- Skill-Mapping isn't always obvious from the name: a "create a chart" task may need the data-analysis skill, a "write a report" task the docx skill, a "build a component" task the frontend-design skill.
+
+# Comments
 
 Default to no comments — let naming and structure carry the meaning. Add one only when the code can't: to explain *why* something non-obvious is done, warn about a footgun, or link to external context (bug, spec, ticket).
 
 Don't restate code, narrate decisions, or leave changelog comments ("switched from X to Y").
 
-## 1. Think Before Coding
+# Think Before Coding
 
 **Don't assume. Don't hide confusion. Surface tradeoffs.**
 
@@ -21,7 +25,7 @@ Before implementing:
 - If a simpler approach exists, say so. Push back when warranted.
 - If something is unclear, stop. Name what's confusing. Ask.
 
-## 2. Simplicity First
+# Simplicity First
 
 **Minimum code that solves the problem. Nothing speculative.**
 
@@ -33,7 +37,7 @@ Before implementing:
 
 Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
 
-## 3. Surgical Changes
+# Surgical Changes
 
 **Touch only what you must. Clean up only your own mess.**
 
@@ -51,7 +55,7 @@ When your changes create orphans:
 
 The test: Every changed line should trace directly to the user's request.
 
-## 4. Goal-Driven Execution
+# Goal-Driven Execution
 
 **Define success criteria. Loop until verified.**
 
