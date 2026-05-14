@@ -9,23 +9,23 @@
   ],
   "mcp": {
     "langfuse-docs": {
-      "url": "https://langfuse.com/api/mcp",
       "type": "remote",
-      "enabled": false
+      "url": "https://langfuse.com/api/mcp",
+      "enabled": true
     },
     "notion": {
-      "url": "https://mcp.notion.com/mcp",
       "type": "remote",
-      "enabled": false
+      "url": "https://mcp.notion.com/mcp",
+      "enabled": true
     },
     "pencil": {
+      "type": "local",
       "command": [
         "/Applications/Pencil.app/Contents/Resources/app.asar.unpacked/out/mcp-server-darwin-arm64",
         "--app",
         "desktop"
       ],
-      "enabled": false,
-      "type": "local"
+      "enabled": true
     },
     "open-design": {
       "type": "local",
@@ -36,7 +36,7 @@
         "--daemon-url",
         "http://127.0.0.1:61430"
       ],
-      "enabled": false
+      "enabled": true
     }
   },
   "provider": {
