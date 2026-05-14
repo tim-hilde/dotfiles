@@ -11,12 +11,12 @@
     "langfuse-docs": {
       "type": "remote",
       "url": "https://langfuse.com/api/mcp",
-      "enabled": true
+      "enabled": false
     },
     "notion": {
       "type": "remote",
       "url": "https://mcp.notion.com/mcp",
-      "enabled": true
+      "enabled": false
     },
     "pencil": {
       "type": "local",
@@ -25,7 +25,7 @@
         "--app",
         "desktop"
       ],
-      "enabled": true
+      "enabled": false
     },
     "open-design": {
       "type": "local",
@@ -36,7 +36,7 @@
         "--daemon-url",
         "http://127.0.0.1:61430"
       ],
-      "enabled": true
+      "enabled": false
     }
   },
   "provider": {
@@ -54,3 +54,4 @@
     }
   }
 }
+
