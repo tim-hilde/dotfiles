@@ -8,6 +8,11 @@
     "@slkiser/opencode-quota@3.8.2"
   ],
   "mcp": {
+    "livekit-docs": {
+      "type": "remote",
+      "url": "https://docs.livekit.io/mcp",
+      "enabled": false
+    },
     "langfuse-docs": {
       "type": "remote",
       "url": "https://langfuse.com/api/mcp",
