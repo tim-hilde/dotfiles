@@ -13,16 +13,13 @@ ruff:
 format:
 	uv run ruff format
 
-## Static type checking (mypy)
-mypy:
-	uv run mypy src --install-types --ignore-missing-imports --non-interactive
 
 ## Static type checking (ty) - experimental alternative
 ty:
 	ty check src
 
 ## Run the standard quality checks
-check: format ruff mypy test
+check: format ruff test
 
 ## Serve documentation locally
 docs:

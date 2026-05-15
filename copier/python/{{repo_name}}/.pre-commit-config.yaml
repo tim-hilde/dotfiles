@@ -27,13 +27,6 @@ repos:
       - id: ruff-format
   - repo: local
     hooks:
-      - id: mypy
-        name: Type checking (mypy)
-        entry: uv run mypy . --install-types --ignore-missing-imports --non-interactive
-        pass_filenames: false
-        language: system
-        types: [python]
-        stages: [pre-commit]
       - id: ty
         name: Type checking (ty)
         entry: uv run ty check .
