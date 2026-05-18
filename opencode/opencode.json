@@ -5,7 +5,7 @@
     "@mohak34/opencode-notifier@0.2.5",
     "superpowers@git+https://github.com/obra/superpowers.git#v5.1.0",
     "opencode-update-notifier",
-    "@slkiser/opencode-quota@3.8.2"
+    "@slkiser/opencode-quota@3.8.6"
   ],
   "mcp": {
     "livekit-docs": {
