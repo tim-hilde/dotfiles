@@ -36,11 +36,13 @@
       "type": "local",
       "command": [
         "/Applications/Open Design.app/Contents/Resources/open-design/bin/node",
-        "/Applications/Open Design.app/Contents/Resources/app/node_modules/@open-design/daemon/dist/cli.js",
-        "mcp",
-        "--daemon-url",
-        "http://127.0.0.1:61430"
+        "/Applications/Open Design.app/Contents/Resources/app/prebundled/daemon/daemon-cli.mjs",
+        "mcp"
       ],
+      "environment": {
+        "OD_DATA_DIR": "/Users/tim/Library/Application Support/Open Design/namespaces/release-stable/data",
+        "OD_SIDECAR_NAMESPACE": "release-stable"
+      },
       "enabled": false
     }
   },
