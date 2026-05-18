@@ -14,6 +14,29 @@ Default to no comments — let naming and structure carry the meaning. Add one o
 
 Don't restate code, narrate decisions, or leave changelog comments ("switched from X to Y").
 
+# Worktrees
+
+Use a separate git worktree for every new feature, bugfix or refactor. This keeps the main branches clean and lets parallel agent sessions work without conflicts.
+
+## When to create one
+
+- Before the first commit of any task that will produce a PR.
+- Before long-running commands (tests, migrations, builds) that could collide with parallel work in the main checkout.
+
+## Layout & naming
+
+- Location: `../worktrees/<branch-name>/` (sibling of the repo, never inside it).
+- Branch name: `<type>/<kebab-slug>` where `<type>` ∈ `feat | fix | chore | refactor`.
+- Example: `feat/oauth-login`, `fix/null-pointer-checkout`.
+
+## Rules
+
+- ✅ One worktree per task. Reuse only when continuing the same branch.
+- ✅ Remove the worktree as soon as the PR is merged or abandoned.
+- ⚠️ Ask before branching off anything other than `origin/main` (e.g. `release/*`, another open feature branch).
+- 🚫 Never place worktrees inside the repo — they get picked up by globs, linters, and CI.
+- 🚫 Never `worktree remove --force` with uncommitted changes.
+
 # Think Before Coding
 
 **Don't assume. Don't hide confusion. Surface tradeoffs.**
