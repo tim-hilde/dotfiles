@@ -40,3 +40,4 @@ tmux/plugins
 /opencode/opencode-notifier-state.json
 
 .claude/
+/opencode/opencode-quota/opencode-go.json
