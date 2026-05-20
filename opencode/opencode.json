@@ -7,6 +7,9 @@
     "opencode-update-notifier",
     "@slkiser/opencode-quota@3.8.7"
   ],
+  "experimental": {
+    "disable_paste_summary": true
+  },
   "mcp": {
     "livekit-docs": {
       "type": "remote",
@@ -61,4 +64,3 @@
     }
   }
 }
-
