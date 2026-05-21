@@ -6,7 +6,8 @@
     "superpowers@git+https://github.com/obra/superpowers.git#v5.1.0",
     "opencode-update-notifier",
     "@slkiser/opencode-quota@3.8.7",
-    "context-mode@1.0.146"
+    "context-mode@1.0.146",
+    "@cortexkit/opencode-magic-context@latest"
   ],
   "experimental": {
     "disable_paste_summary": true
@@ -63,5 +64,9 @@
         }
       }
     }
+  },
+  "compaction": {
+    "auto": false,
+    "prune": false
   }
 }
