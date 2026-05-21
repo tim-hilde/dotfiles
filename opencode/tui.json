@@ -5,6 +5,7 @@
     "editor_open": "<leader>o"
   },
   "plugin": [
-    "@slkiser/opencode-quota@3.8.2"
+    "@slkiser/opencode-quota@3.8.2",
+    "opencode-sidechat@1.2.0"
   ]
 }
