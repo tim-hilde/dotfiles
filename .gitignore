@@ -41,3 +41,4 @@ tmux/plugins
 
 .claude/
 /opencode/opencode-quota/opencode-go.json
+/opencode/context-mode
