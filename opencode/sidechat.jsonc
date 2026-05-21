@@ -1,0 +1,17 @@
+{
+  // OpenCode SideChat Configuration
+  "model": null,
+  "systemPrompt": "You are a casual side assistant. Answer concisely and directly. Use tools only when helpful.",
+  "keybind": "ctrl+n",
+  "clearKeybind": "alt+c",
+  "thinkToggleKeybind": "alt+t",
+  "allowedTools": ["glob","grep","list","read","websearch","webfetch"],
+  "width": 70,
+  "transcriptHeight": 20,
+  "tokenLimit": 45000,
+  "think": {
+    "defaultState": "collapsed",
+    "showSummary": false
+  },
+  "position": "bottom-right"
+}
