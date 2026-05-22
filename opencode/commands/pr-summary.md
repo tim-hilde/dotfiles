@@ -1,7 +1,6 @@
 ---
 description: Erstellt eine PR-Zusammenfassung vom angegebenen Branch gegen staging oder dev
-agent: plan
-model: anthropic/claude-4.6
+model: anthropic/claude-sonnet-4-6
 ---
 
 Erstelle eine PR-Zusammenfassung für den Branch $ARGUMENTS. Gehe so vor:
