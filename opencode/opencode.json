@@ -7,7 +7,7 @@
     "opencode-update-notifier",
     "@slkiser/opencode-quota@3.8.7",
     "context-mode@1.0.146",
-    "@cortexkit/opencode-magic-context@0.21.6"
+    "@cortexkit/opencode-magic-context@0.21.7"
   ],
   "experimental": {
     "disable_paste_summary": true
