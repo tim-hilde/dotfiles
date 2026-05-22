@@ -15,26 +15,11 @@ Du erstellst PR-Zusammenfassungen mit dem pr-summary Skill.
 5. Folge exakt dem Workflow des **pr-summary** Skills:
    - Analysiere den Diff: Was ist das Problem, die Lösung, betroffene Bereiche?
    - Schreibe die Zusammenfassung mit Title (conventional commit), Summary, Impact, Changes
-   - Gib das Ergebnis **ausschließlich** als Markdown-Codeblock aus. Kein erklärender Text davor oder danach. Kein "## PR Summary for...", kein "**Problem:**", kein "**Solution:**". Nur:
-
-````
-```markdown
-feat: ...
-
-## Summary
-...
-
-## Impact
-...
-
-## Changes
-...
-```
-````
+   - Gib das Ergebnis **ausschließlich** als reines Markdown aus. Kein Codeblock drumherum, kein erklärender Text davor oder danach. Kein "## PR Summary for...", kein "**Problem:**", kein "**Solution:**". Nur das Markdown selbst.
 
 ## Wichtig
 
-- **Nur den Markdown-Codeblock ausgeben, sonst nichts.**
+- **Nur das Markdown ausgeben, sonst nichts. Kein Codeblock-Wrapper, keine "## PR Summary for..."-Überschrift. Die Ausgabe beginnt direkt mit dem conventional-commit-Titel.**
 - Lock-Files (`*.lock`, `package-lock.json`, `yarn.lock`, `Gemfile.lock`) immer ausschließen.
 - Falls der Source-Branch nicht existiert, melde einen Fehler.
 - Falls der Diff leer ist, melde dass es keine Änderungen gibt.
