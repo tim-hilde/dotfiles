@@ -49,6 +49,15 @@
         "OD_SIDECAR_NAMESPACE": "release-stable"
       },
       "enabled": false
+    },
+    "chrome-devtools": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "chrome-devtools-mcp@latest"
+      ],
+      "enabled": false
     }
   },
   "provider": {
