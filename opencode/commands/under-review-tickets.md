@@ -3,11 +3,20 @@ description: Tims Under-Review-Tickets aus der Notion-DB holen, gruppiert nach M
 model: opencode/big-pickle
 ---
 
-Rufe die Notion-Datenbank unter https://www.notion.so/2ee6f202927080908ea6cc9fb1979ede?v=2ee6f202927080fba542000cbfc4d1af auf.
+## Problem
 
-Suche alle Tickets, die:
-- an Tim Hildebrandt (User-ID `356d872b-594c-81fe-a3a9-00021ed61f31`) zugeordnet sind
-- den Status "Under Review" haben
+`notion_notion-search` ist eine semantische Volltext-Suche, **keine** Datenbank-Query. Es gibt keinen Filter für Property-Werte wie Status oder Assigned to. Daher reicht ein einzelner Suchbegriff nicht — Tickets können übersehen werden, wenn ihr Titel/Inhalt semantisch nicht zum Suchbegriff passt.
+
+## Strategie
+
+1. Führe **mehrere breite Suchdurchläufe** mit verschiedenen generischen Begriffen auf der Datenquelle durch, um möglichst alle Seiten der DB zu erfassen (z.B. "Ticket", "Issue", "Municipality Status", "Under Review", "Öffnungszeiten").
+2. Sammle alle gefundenen Page-IDs aus allen Durchläufen (Deduplizieren).
+3. Rufe jede einzelne Seite per `notion_notion-fetch` ab, um die Properties `Assigned to`, `Status`, `Municipality`, `User-Email`, `Description` zu prüfen.
+4. Filtere auf:
+   - Assigned to enthält User-ID `356d872b-594c-81fe-a3a9-00021ed61f31`
+   - Status = `"Under Review"`
+
+## Ausgabe
 
 Gruppiere die Ergebnisse nach Municipality (erste Ebene) und User-Email (zweite Ebene).
 
