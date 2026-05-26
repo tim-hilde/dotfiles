@@ -146,6 +146,11 @@
       "key" : "n",
       "type" : "application",
       "value" : "/Applications/Notion.app"
+    },
+    {
+      "key" : "v",
+      "type" : "application",
+      "value" : "/Applications/IINA.app"
     }
   ],
   "type" : "group"
