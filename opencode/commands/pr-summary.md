@@ -35,6 +35,7 @@ Regeln:
 - Änderungen thematisch gruppieren, nicht jede Datei einzeln.
 - Pro Gruppe 2-3 Bullet Points.
 - Jeder Paragraph/Bullet als eine durchgehende Zeile (keine manuellen Umbrüche).
+- Auf Englisch
 - Keine leeren Sections.
 - Keine Filler-Phrasen wie "this PR aims to...".
 - Kein Codeblock-Wrapper um die Ausgabe.
