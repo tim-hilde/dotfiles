@@ -6,6 +6,6 @@
   },
   "plugin": [
     "@slkiser/opencode-quota@3.8.7",
-    "opencode-sidechat@1.2.0"
+    "opencode-sidechat@1.3.0"
   ]
 }
