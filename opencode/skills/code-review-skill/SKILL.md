@@ -1,7 +1,7 @@
 ---
-name: code-review-excellence
+name: code-review-skill
 description: |
-  Provides comprehensive code review guidance for React 19, Vue 3, Angular 17+, Svelte 5, Rust, TypeScript, Java, PHP, Python, Django, Go, C#/.NET, Kotlin, NestJS, C/C++, and more.
+  Provides comprehensive code review guidance for React 19, Vue 3, Angular 17+, Svelte 5, Rust, TypeScript, Java, PHP, Python, Django, Go, C#/.NET, Kotlin, Swift, NestJS, C/C++, and more.
   Helps catch bugs, improve code quality, and give constructive feedback.
   Use when: reviewing pull requests, conducting PR reviews, code review, reviewing code changes,
   establishing review standards, mentoring developers, architecture reviews, security audits,
@@ -14,7 +14,7 @@ allowed-tools:
   - WebFetch  # 查阅最新文档和最佳实践
 ---
 
-# Code Review Excellence
+# Code Review Skill
 
 Transform code reviews from gatekeeping to knowledge sharing through constructive feedback, systematic analysis, and collaborative improvement.
 
@@ -99,6 +99,8 @@ Before diving into code, understand:
 4. Understand the business requirement
 5. Note any relevant architectural decisions
 
+> For large diffs, pipe the diff through [`scripts/pr-analyzer.py`](scripts/pr-analyzer.py) (`git diff main...HEAD | python scripts/pr-analyzer.py`) to triage complexity and get a suggested review approach before reading.
+
 ### Phase 2: High-Level Review (5-10 minutes)
 
 1. **Architecture & Design** - Does the solution fit the problem?
@@ -170,6 +172,8 @@ Use labels to indicate priority:
 - 📚 `[learning]` - Educational comment, no action needed
 - 🎉 `[praise]` - Good work, keep it up!
 
+**Severity levels:** 🔴 / 🟡 / 🟢 are the three severity tiers used as the standard across all guides in this skill — 🔴 blocks the merge, 🟡 should be addressed, 🟢 is optional. The remaining markers (💡 / 📚 / 🎉) are non-blocking annotations.
+
 ## Language-Specific Guides
 
 根据审查的代码语言，查阅对应的详细指南：
@@ -189,6 +193,7 @@ Use labels to indicate priority:
 | **C# / .NET** | [C# Guide](reference/csharp.md) | C# 12 特性, 异步编程, EF Core 性能, ASP.NET Core, LINQ |
 | **Go** | [Go Guide](reference/go.md) | 错误处理, goroutine/channel, context, 接口设计 |
 | **Kotlin / Android** | [Kotlin Guide](reference/kotlin.md) | 协程, Flow, Jetpack Compose, 空安全, 内存泄漏, 架构模式 |
+| **Swift / SwiftUI** | [Swift Guide](reference/swift.md) | Optionals, Swift Concurrency, Sendable/actors, SwiftUI property wrappers, value vs reference types, API design |
 | **NestJS** | [NestJS Guide](reference/nestjs.md) | 依赖注入, 分层架构, DTO 验证, Guard/Interceptor, 循环依赖 |
 | **Svelte / SvelteKit** | [Svelte Guide](reference/svelte.md) | Runes, Load 函数, Form Actions, Store 迁移, SSR/CSR 边界 |
 | **C** | [C Guide](reference/c.md) | 指针/缓冲区, 内存安全, UB, 错误处理 |
