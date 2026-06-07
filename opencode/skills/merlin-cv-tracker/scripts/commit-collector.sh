@@ -36,8 +36,9 @@ for d in "$MERLIN_REPO_BASE"/*/; do
   while IFS=$'\x1f' read -r hash iso subject || [[ -n "$hash" ]]; do
     [[ -z "$hash" ]] && continue
     [[ "$known_set" == *" $hash "* ]] && continue
-    jq -n --arg repo "$repo" --arg hash "$hash" --arg date "$iso" --arg subject "$subject" \
-      '{repo:$repo, hash:$hash, date:$date, subject:$subject}'
+    stat="$(git -C "$d" show --shortstat --format='' "$hash" | grep -E 'changed' | head -n1 | sed 's/^ *//' || true)"
+    jq -n --arg repo "$repo" --arg hash "$hash" --arg date "$iso" --arg subject "$subject" --arg stat "$stat" \
+      '{repo:$repo, hash:$hash, date:$date, subject:$subject, stat:$stat}'
     new_hashes+=("$hash")
     [[ "$iso" > "$max_iso" ]] && max_iso="$iso"
   done < <(git -C "$d" log --no-merges --author="$MERLIN_AUTHOR" \

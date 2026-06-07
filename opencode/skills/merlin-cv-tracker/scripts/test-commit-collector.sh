@@ -36,5 +36,21 @@ check "state file written" "$([[ -f "$VAULT/_career-log/.merlin-cv-tracker-state
 HASHCOUNT="$(jq '.repos.demo.processed_hashes | length' "$VAULT/_career-log/.merlin-cv-tracker-state.json")"
 check "two hashes recorded" "$HASHCOUNT" "2"
 
+TMP2="$(mktemp -d)"; REPO_BASE2="$TMP2/repos"; VAULT2="$TMP2/vault"
+mkdir -p "$REPO_BASE2/m" "$VAULT2/_career-log"
+git -C "$REPO_BASE2/m" init -q -b main
+git -C "$REPO_BASE2/m" config user.name "Tim Hildebrandt"
+git -C "$REPO_BASE2/m" config user.email "tim@example.com"
+echo base > "$REPO_BASE2/m/base.txt"; git -C "$REPO_BASE2/m" add .; git -C "$REPO_BASE2/m" commit -q -m "chore: base"
+git -C "$REPO_BASE2/m" checkout -q -b feat/x
+echo x > "$REPO_BASE2/m/x.txt"; git -C "$REPO_BASE2/m" add .; git -C "$REPO_BASE2/m" commit -q -m "feat(x): real work"
+git -C "$REPO_BASE2/m" checkout -q main
+git -C "$REPO_BASE2/m" merge -q --no-ff feat/x -m "Merge pull request #42 from org/feat/x"
+OUTM="$(MERLIN_REPO_BASE="$REPO_BASE2" MERLIN_VAULT="$VAULT2" MERLIN_AUTHOR="Tim" "$COLLECTOR")"
+contains "real commit present" "$OUTM" 'feat(x): real work'
+check "merge commit absent" "$(echo "$OUTM" | grep -c 'Merge pull request' || true)" "0"
+contains "json has stat field" "$OUTM" '"stat":'
+rm -rf "$TMP2"
+
 echo; echo "PASS=$PASS FAIL=$FAIL"
 [[ "$FAIL" -eq 0 ]]
