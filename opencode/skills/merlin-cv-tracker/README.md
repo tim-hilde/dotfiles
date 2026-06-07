@@ -5,9 +5,23 @@ zu CV-Bullets synthetisieren (Tier 2).
 
 ## Komponenten
 - `SKILL.md` — beide Modi (capture/synthesize).
-- `scripts/commit-collector.sh` — deterministische Commit-Sammlung (Hash-Watermark).
-- `scripts/run-capture.sh` — launchd-Wrapper.
+- `scripts/commit-collector.sh` — read-only Commit-Sammlung (Hash-Watermark, NDJSON).
+- `scripts/commit-confirm.sh` — schreibt verarbeitete Hashes in den State (nach Notiz-Write).
+- `scripts/run-capture.sh` — launchd-Wrapper (Modell gepinnt: `anthropic/claude-sonnet-4-6`).
 - `com.tim.merlin-cv-tracker.plist` — Cron-Definition (täglich 20:00).
+
+## Voraussetzung: Vault-Schreibrechte
+Der headless-Lauf schreibt nach `~/Zettelkasten` (außerhalb des Projekt-cwd). opencode
+behandelt das als `external_directory` und blockiert es per Default (`ask` = headless
+auto-reject). In `~/dotfiles/opencode/opencode.json` ist daher freigegeben:
+```json
+"permission": { "external_directory": {
+  "~/Zettelkasten/_career-log/**": "allow",
+  "~/Zettelkasten/Merlin Tätigkeiten.md": "allow"
+}}
+```
+Ohne diese Regel läuft der Wrapper mit Exit 0 durch, schreibt aber keine Notiz
+(der State bleibt dank read-then-confirm trotzdem unberührt — keine Commits gehen verloren).
 
 ## Collector-Tests
 ```bash
