@@ -14,8 +14,7 @@
   },
   "permission": {
     "external_directory": {
-      "~/Zettelkasten/_career-log/**": "allow",
-      "~/Zettelkasten/Merlin Tätigkeiten.md": "allow"
+      "~/Zettelkasten/_career-log/**": "allow"
     }
   },
   "mcp": {
