@@ -18,9 +18,12 @@ git -C "$REPO_BASE/demo" add a.txt
 git -C "$REPO_BASE/demo" commit -q -m "feat(core): add a"
 
 OUT="$(MERLIN_REPO_BASE="$REPO_BASE" MERLIN_VAULT="$VAULT" MERLIN_AUTHOR="Tim" "$COLLECTOR")"
-contains "json mentions repo" "$OUT" '"repo": "demo"'
+contains "json mentions repo" "$OUT" '"repo":"demo"'
 contains "json mentions subject" "$OUT" 'feat(core): add a'
 contains "json has hash field" "$OUT" '"hash":'
+# NDJSON contract: exactly one compact JSON object per line (consumer counts/streams by line).
+check "single commit is one line" "$(printf '%s' "$OUT" | grep -c '^{')" "1"
+check "line is valid json" "$(printf '%s' "$OUT" | jq -c .repo 2>/dev/null)" '"demo"'
 
 OUT2="$(MERLIN_REPO_BASE="$REPO_BASE" MERLIN_VAULT="$VAULT" MERLIN_AUTHOR="Tim" "$COLLECTOR")"
 check "second run is empty" "$(echo -n "$OUT2" | tr -d '[:space:]')" ""
@@ -50,6 +53,10 @@ OUTM="$(MERLIN_REPO_BASE="$REPO_BASE2" MERLIN_VAULT="$VAULT2" MERLIN_AUTHOR="Tim
 contains "real commit present" "$OUTM" 'feat(x): real work'
 check "merge commit absent" "$(echo "$OUTM" | grep -c 'Merge pull request' || true)" "0"
 contains "json has stat field" "$OUTM" '"stat":'
+# NDJSON: line count must equal object count (jq -s parses the whole stream into an array).
+check "merge-test lines == object count" \
+  "$(printf '%s\n' "$OUTM" | grep -c '^{')" \
+  "$(printf '%s\n' "$OUTM" | jq -s 'length')"
 rm -rf "$TMP2"
 
 # I1: per-repo failure isolation. A broken ".git" (empty dir) must not abort the
