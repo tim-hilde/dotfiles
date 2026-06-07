@@ -12,6 +12,12 @@
   "experimental": {
     "disable_paste_summary": true
   },
+  "permission": {
+    "external_directory": {
+      "~/Zettelkasten/_career-log/**": "allow",
+      "~/Zettelkasten/Merlin Tätigkeiten.md": "allow"
+    }
+  },
   "mcp": {
     "livekit-docs": {
       "type": "remote",
