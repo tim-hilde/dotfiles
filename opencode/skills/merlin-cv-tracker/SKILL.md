@@ -34,21 +34,43 @@ angeboten.
 ### Ablauf
 
 1. **Collect** (read-only):
-   `bash <skill-dir>/scripts/commit-collector.sh`
-   Gibt NDJSON aus (eine kompakte Zeile pro Commit: `repo, hash, date, subject, stat`).
-   **Bewahre diese exakte Ausgabe** für Schritt 5 auf. Leere Ausgabe → nichts Neues →
-   sauberer Exit, KEIN Notiz-Write, KEIN confirm.
-2. Die Commits nach **logischer Einheit** bündeln (zusammengehörige Commits eines
-   Themas/Feature-Bereichs), NICHT 1:1 pro Commit.
-3. Pro Einheit einen Eintrag im Schema-Vertrag (unten) erzeugen.
-4. An `_career-log/YYYY-MM Commit-Log.md` anhängen (Monat aus dem jüngsten Commit-Datum).
-   Existiert die Monatsnotiz nicht, mit Frontmatter-Header anlegen.
-   **Verifiziere, dass die Notiz wirklich geschrieben wurde, bevor du fortfährst.**
-5. **Confirm** (erst jetzt, State-Write): die in Schritt 1 erhaltene NDJSON-Ausgabe
-   unverändert in `confirm` pipen:
-   `printf '%s\n' "<NDJSON aus Schritt 1>" | bash <skill-dir>/scripts/commit-confirm.sh`
-   Das markiert genau die verarbeiteten Commits als erledigt (idempotent, atomar).
-   Confirme NUR die Commits, die tatsächlich in der Notiz gelandet sind.
+   `bash <skill-dir>/scripts/commit-collector.sh > /tmp/merlin-collect.ndjson`
+   Gibt NDJSON aus, **global chronologisch sortiert (ältester zuerst)**, eine kompakte
+   Zeile pro Commit (`repo, hash, date, subject, stat`). Schreibe die Ausgabe in die
+   Datei oben, damit du sie verlässlich weiterverarbeiten kannst. Leere Ausgabe → nichts
+   Neues → sauberer Exit, KEIN Notiz-Write, KEIN confirm.
+   - Zähle die Commits: `wc -l < /tmp/merlin-collect.ndjson`. Merke dir diese Zahl N.
+
+2. **Tag-weise verarbeiten (gegen Auslassung).** Gruppiere die NDJSON nach `date[0:10]`
+   (Kalendertag). Arbeite die Tage in chronologischer Reihenfolge ab — **ältester Tag
+   zuerst**. Innerhalb eines Tages nach logischen Einheiten bündeln (zusammengehörige
+   Commits eines Themas, NICHT 1:1). So bleibt jede Teilmenge klein genug, dass kein
+   Commit verloren geht.
+   - Praktisch: `jq -r '.date[0:10]' /tmp/merlin-collect.ndjson | sort -u` liefert die
+     Tagesliste; pro Tag mit `jq -c 'select(.date[0:10]=="<TAG>")'` filtern.
+
+3. Pro Einheit einen Eintrag im Schema-Vertrag (unten) erzeugen. **JEDER Commit aus der
+   collect-Ausgabe MUSS in genau einer Einheit als Rohdaten-Zeile auftauchen** — keine
+   Auslassung, keine Dopplung.
+
+4. An `_career-log/YYYY-MM Commit-Log.md` anhängen. **Die `##`-Tagesüberschriften müssen
+   chronologisch aufsteigend sein.** Commits eines Tages stehen unter diesem Tag.
+   Monatszuordnung: ein Commit gehört in die Notiz seines eigenen Monats (`date[0:7]`),
+   nicht in den Monat der "Einheit". Existiert die Monatsnotiz nicht, mit Frontmatter-
+   Header anlegen.
+
+5. **Vollständigkeit verifizieren (PFLICHT vor confirm):** Zähle die Rohdaten-Zeilen, die
+   du in die Notiz(en) geschrieben hast (Zeilen, die mit `> - \`` beginnen). Diese Zahl
+   MUSS exakt N (aus Schritt 1) sein. Stimmt sie nicht: ergänze die fehlenden Commits,
+   bis sie stimmt. Erst dann weiter.
+
+6. **Confirm** (erst jetzt, State-Write): NUR die Commits confirmen, die tatsächlich in
+   der Notiz stehen. Im Normalfall (Vollständigkeit ok) ist das die komplette collect-
+   Ausgabe:
+   `cat /tmp/merlin-collect.ndjson | bash <skill-dir>/scripts/commit-confirm.sh`
+   Falls du (ausnahmsweise) nicht alle schreiben konntest: confirme nur die geschriebenen,
+   indem du die NDJSON auf deren Hashes filterst. Idempotent, atomar. Nicht-confirmte
+   Commits werden beim nächsten Lauf erneut angeboten — kein Verlust.
 
 ### Schema-Vertrag (Pflichtfelder pro Einheit)
 

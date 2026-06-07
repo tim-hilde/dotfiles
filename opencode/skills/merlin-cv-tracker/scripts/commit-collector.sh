@@ -60,12 +60,20 @@ process_repo() {
              --since="$since" --pretty=format:'%H%x1f%cI%x1f%s')
 }
 
-for d in "$MERLIN_REPO_BASE"/*/; do
-  [[ -d "$d/.git" ]] || continue
-  # Isolate per-repo failure: a corrupt/locked git in one repo must not abort the
-  # whole collect (set -e), else other repos' new commits would be silently dropped.
-  if ! process_repo "$d"; then
-    echo "merlin-cv-tracker: skipped repo $(basename "$d") after error" >&2
-    continue
-  fi
-done
+collect_all() {
+  for d in "$MERLIN_REPO_BASE"/*/; do
+    [[ -d "$d/.git" ]] || continue
+    # Isolate per-repo failure: a corrupt/locked git in one repo must not abort the
+    # whole collect (set -e), else other repos' new commits would be silently dropped.
+    if ! process_repo "$d"; then
+      echo "merlin-cv-tracker: skipped repo $(basename "$d") after error" >&2
+      continue
+    fi
+  done
+}
+
+# Sort the combined NDJSON globally oldest-first by ISO date so the LLM processes
+# commits in chronological order (not repo-by-repo). jq -s reads the whole stream;
+# sort_by(.date) on ISO-8601 strings is a correct chronological sort within a fixed
+# offset, and the -c output stays one compact object per line.
+collect_all | jq -c -s 'sort_by(.date) | .[]'
