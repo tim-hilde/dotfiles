@@ -17,6 +17,9 @@ echo "[$(ts)] run-capture start (skill: $SKILL_DIR)" >> "$OUT_LOG"
 
 # build is the primary agent with permission '*: allow', so no headless prompt stalls.
 AGENT="${MERLIN_CV_AGENT:-build}"
+# Pin the model so the daily cron run is reproducible regardless of opencode's
+# interactive default; overridable via MERLIN_CV_MODEL.
+MODEL="${MERLIN_CV_MODEL:-anthropic/claude-sonnet-4-6}"
 
 PROMPT="Aktiviere den Skill 'merlin-cv-tracker' im capture-Modus. \
 Repo-Basis: /Users/tim/code/Merlin. Vault: /Users/tim/Zettelkasten. \
@@ -24,13 +27,7 @@ Fuehre scripts/commit-collector.sh aus, klassifiziere die neuen Commits gemaess 
 Schema-Vertrag und haenge sie an die Monatsnotiz unter _career-log an. \
 Wenn keine neuen Commits, beende ohne Aenderung."
 
-# Only pass --model when explicitly overridden; otherwise let opencode pick its default.
-model_args=()
-if [[ -n "${MERLIN_CV_MODEL:-}" ]]; then
-  model_args=(--model "$MERLIN_CV_MODEL")
-fi
-
-if opencode run --agent "$AGENT" "${model_args[@]}" "$PROMPT" >> "$OUT_LOG" 2>> "$ERR_LOG"; then
+if opencode run --agent "$AGENT" --model "$MODEL" "$PROMPT" >> "$OUT_LOG" 2>> "$ERR_LOG"; then
   echo "[$(ts)] run-capture ok" >> "$OUT_LOG"
 else
   code=$?
