@@ -45,13 +45,14 @@
     "open-design": {
       "type": "local",
       "command": [
-        "/Applications/Open Design.app/Contents/Resources/open-design/bin/node",
+        "/Applications/Open Design.app/Contents/Frameworks/Open Design Helper.app/Contents/MacOS/Open Design Helper",
         "/Applications/Open Design.app/Contents/Resources/app/prebundled/daemon/daemon-cli.mjs",
         "mcp"
       ],
       "environment": {
         "OD_DATA_DIR": "/Users/tim/Library/Application Support/Open Design/namespaces/release-stable/data",
-        "OD_SIDECAR_NAMESPACE": "release-stable"
+        "OD_SIDECAR_IPC_PATH": "/tmp/open-design/ipc/release-stable/daemon.sock",
+        "ELECTRON_RUN_AS_NODE": "1"
       },
       "enabled": false
     },
