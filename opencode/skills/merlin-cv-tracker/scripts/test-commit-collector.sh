@@ -22,5 +22,19 @@ contains "json mentions repo" "$OUT" '"repo": "demo"'
 contains "json mentions subject" "$OUT" 'feat(core): add a'
 contains "json has hash field" "$OUT" '"hash":'
 
+OUT2="$(MERLIN_REPO_BASE="$REPO_BASE" MERLIN_VAULT="$VAULT" MERLIN_AUTHOR="Tim" "$COLLECTOR")"
+check "second run is empty" "$(echo -n "$OUT2" | tr -d '[:space:]')" ""
+
+echo b > "$REPO_BASE/demo/b.txt"
+git -C "$REPO_BASE/demo" add b.txt
+git -C "$REPO_BASE/demo" commit -q -m "feat(core): add b"
+OUT3="$(MERLIN_REPO_BASE="$REPO_BASE" MERLIN_VAULT="$VAULT" MERLIN_AUTHOR="Tim" "$COLLECTOR")"
+contains "third run has new commit" "$OUT3" 'feat(core): add b'
+check "third run lacks old commit" "$(echo "$OUT3" | grep -c 'add a' || true)" "0"
+
+check "state file written" "$([[ -f "$VAULT/_career-log/.merlin-cv-tracker-state.json" ]] && echo yes)" "yes"
+HASHCOUNT="$(jq '.repos.demo.processed_hashes | length' "$VAULT/_career-log/.merlin-cv-tracker-state.json")"
+check "two hashes recorded" "$HASHCOUNT" "2"
+
 echo; echo "PASS=$PASS FAIL=$FAIL"
 [[ "$FAIL" -eq 0 ]]
