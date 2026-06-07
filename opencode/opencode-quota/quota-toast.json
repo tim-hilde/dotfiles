@@ -1,7 +1,10 @@
 {
   "enableToast": false,
   "showSessionTokens": false,
-  "enabledProviders": "auto",
+  "enabledProviders": [
+    "openai",
+    "anthropic"
+  ],
   "formatStyle": "allWindows",
   "percentDisplayMode": "used",
   "tuiSidebarPanel": {
