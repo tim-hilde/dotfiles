@@ -28,9 +28,9 @@ PROMPT="Aktiviere den Skill 'merlin-cv-tracker' im capture-Modus und folge dem A
 3) Jeden Commit klassifizieren - KEINE Auslassung: jeder Commit MUSS als Rohdaten-Zeile in \
 genau einer Einheit erscheinen. 4) An die Monatsnotiz(en) unter _career-log anhaengen, \
 Tagesueberschriften chronologisch aufsteigend, Commit in die Notiz SEINES Monats. \
-5) PFLICHT: Rohdaten-Zeilen (beginnen mit '> - `') zaehlen; muss exakt N sein, sonst fehlende \
-ergaenzen. 6) ERST DANN /tmp/merlin-collect.ndjson in commit-confirm.sh pipen. Confirm nie \
-vor dem Notiz-Write, und nur Commits, die wirklich in der Notiz stehen."
+5) PFLICHT: die geschriebenen Rohdaten-Commit-Zeilen zaehlen; muss exakt N sein, sonst \
+fehlende ergaenzen. 6) ERST DANN /tmp/merlin-collect.ndjson in commit-confirm.sh pipen. \
+Confirm nie vor dem Notiz-Write, und nur Commits, die wirklich in der Notiz stehen."
 
 if opencode run --agent "$AGENT" --model "$MODEL" "$PROMPT" >> "$OUT_LOG" 2>> "$ERR_LOG"; then
   echo "[$(ts)] run-capture ok" >> "$OUT_LOG"
