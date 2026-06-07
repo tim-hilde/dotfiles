@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.tim.merlin-cv-tracker</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/tim/dotfiles/opencode/skills/merlin-cv-tracker/scripts/run-capture.sh</string>
+  </array>
+  <key>WorkingDirectory</key>
+  <string>/Users/tim/dotfiles</string>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    <key>HOME</key>
+    <string>/Users/tim</string>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>/Users/tim/Library/Logs/merlin-cv-tracker.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/tim/Library/Logs/merlin-cv-tracker.err.log</string>
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key><integer>20</integer>
+    <key>Minute</key><integer>0</integer>
+  </dict>
+  <key>RunAtLoad</key>
+  <false/>
+</dict>
+</plist>
