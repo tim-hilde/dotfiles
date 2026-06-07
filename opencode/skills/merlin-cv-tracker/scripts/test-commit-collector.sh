@@ -112,5 +112,29 @@ OUTH2="$(MERLIN_REPO_BASE="$REPO_BASE4" MERLIN_VAULT="$VAULT4" MERLIN_AUTHOR="Ti
 check "wide since does not re-emit confirmed hash" "$(echo -n "$OUTH2" | tr -d '[:space:]')" ""
 rm -rf "$TMP4"
 
+# CHRONOLOGY: output must be globally sorted oldest-first ACROSS repos, so the LLM
+# processes commits in time order (not repo-by-repo). Build two repos with interleaved
+# dates and assert the emitted date sequence is non-decreasing.
+TMP5="$(mktemp -d)"; REPO_BASE5="$TMP5/repos"; VAULT5="$TMP5/vault"
+mkdir -p "$REPO_BASE5/r1" "$REPO_BASE5/r2" "$VAULT5/_career-log"
+for r in r1 r2; do
+  git -C "$REPO_BASE5/$r" init -q
+  git -C "$REPO_BASE5/$r" config user.name "Tim Hildebrandt"
+  git -C "$REPO_BASE5/$r" config user.email "tim@example.com"
+done
+# interleave commit dates between the two repos
+GIT_AUTHOR_DATE="2026-05-01T10:00:00" GIT_COMMITTER_DATE="2026-05-01T10:00:00" git -C "$REPO_BASE5/r1" commit -q --allow-empty -m "r1 day1"
+GIT_AUTHOR_DATE="2026-05-02T10:00:00" GIT_COMMITTER_DATE="2026-05-02T10:00:00" git -C "$REPO_BASE5/r2" commit -q --allow-empty -m "r2 day2"
+GIT_AUTHOR_DATE="2026-05-03T10:00:00" GIT_COMMITTER_DATE="2026-05-03T10:00:00" git -C "$REPO_BASE5/r1" commit -q --allow-empty -m "r1 day3"
+GIT_AUTHOR_DATE="2026-05-04T10:00:00" GIT_COMMITTER_DATE="2026-05-04T10:00:00" git -C "$REPO_BASE5/r2" commit -q --allow-empty -m "r2 day4"
+OUTC="$(MERLIN_REPO_BASE="$REPO_BASE5" MERLIN_VAULT="$VAULT5" MERLIN_AUTHOR="Tim" MERLIN_BOOTSTRAP_SINCE='2 years ago' "$COLLECTOR")"
+DATES="$(printf '%s\n' "$OUTC" | jq -r .date)"
+SORTED="$(printf '%s\n' "$DATES" | sort)"
+check "output is globally chronological (oldest first)" "$DATES" "$SORTED"
+# also confirm interleaving across repos is preserved in order
+SUBJECTS="$(printf '%s\n' "$OUTC" | jq -r .subject | tr '\n' ',')"
+check "cross-repo time order" "$SUBJECTS" "r1 day1,r2 day2,r1 day3,r2 day4,"
+rm -rf "$TMP5"
+
 echo; echo "PASS=$PASS FAIL=$FAIL"
 [[ "$FAIL" -eq 0 ]]
