@@ -48,7 +48,8 @@ process_repo() {
     [[ "$known_set" == *" $hash "* ]] && continue
     # git/grep exit nonzero when shortstat is empty (empty/mode-only commit); stat is best-effort.
     stat="$(git -C "$d" show --shortstat --format='' "$hash" | grep -E 'changed' | head -n1 | sed 's/^ *//' || true)"
-    jq -n --arg repo "$repo" --arg hash "$hash" --arg date "$iso" --arg subject "$subject" --arg stat "$stat" \
+    # -c: one compact object per line (NDJSON) so the consumer can count/stream reliably.
+    jq -c -n --arg repo "$repo" --arg hash "$hash" --arg date "$iso" --arg subject "$subject" --arg stat "$stat" \
       '{repo:$repo, hash:$hash, date:$date, subject:$subject, stat:$stat}'
     new_hashes+=("$hash")
     [[ "$iso" > "$max_iso" ]] && max_iso="$iso"
