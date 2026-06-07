@@ -34,19 +34,19 @@ angeboten.
 ### Ablauf
 
 1. **Collect** (read-only):
-   `bash <skill-dir>/scripts/commit-collector.sh > /tmp/merlin-collect.ndjson`
+   `bash <skill-dir>/scripts/commit-collector.sh > /Users/tim/Zettelkasten/_career-log/.merlin-collect.ndjson`
    Gibt NDJSON aus, **global chronologisch sortiert (ältester zuerst)**, eine kompakte
    Zeile pro Commit (`repo, hash, date, subject, stat`). Schreibe die Ausgabe in die
    Datei oben, damit du sie verlässlich weiterverarbeiten kannst. Leere Ausgabe → nichts
    Neues → sauberer Exit, KEIN Notiz-Write, KEIN confirm.
-   - Zähle die Commits: `wc -l < /tmp/merlin-collect.ndjson`. Merke dir diese Zahl N.
+   - Zähle die Commits: `wc -l < /Users/tim/Zettelkasten/_career-log/.merlin-collect.ndjson`. Merke dir diese Zahl N.
 
 2. **Tag-weise verarbeiten (gegen Auslassung).** Gruppiere die NDJSON nach `date[0:10]`
    (Kalendertag). Arbeite die Tage in chronologischer Reihenfolge ab — **ältester Tag
    zuerst**. Innerhalb eines Tages nach logischen Einheiten bündeln (zusammengehörige
    Commits eines Themas, NICHT 1:1). So bleibt jede Teilmenge klein genug, dass kein
    Commit verloren geht.
-   - Praktisch: `jq -r '.date[0:10]' /tmp/merlin-collect.ndjson | sort -u` liefert die
+   - Praktisch: `jq -r '.date[0:10]' /Users/tim/Zettelkasten/_career-log/.merlin-collect.ndjson | sort -u` liefert die
      Tagesliste; pro Tag mit `jq -c 'select(.date[0:10]=="<TAG>")'` filtern.
 
 3. Pro Einheit einen Eintrag im Schema-Vertrag (unten) erzeugen. **JEDER Commit aus der
@@ -67,7 +67,7 @@ angeboten.
 6. **Confirm** (erst jetzt, State-Write): NUR die Commits confirmen, die tatsächlich in
    der Notiz stehen. Im Normalfall (Vollständigkeit ok) ist das die komplette collect-
    Ausgabe:
-   `cat /tmp/merlin-collect.ndjson | bash <skill-dir>/scripts/commit-confirm.sh`
+   `cat /Users/tim/Zettelkasten/_career-log/.merlin-collect.ndjson | bash <skill-dir>/scripts/commit-confirm.sh`
    Falls du (ausnahmsweise) nicht alle schreiben konntest: confirme nur die geschriebenen,
    indem du die NDJSON auf deren Hashes filterst. Idempotent, atomar. Nicht-confirmte
    Commits werden beim nächsten Lauf erneut angeboten — kein Verlust.
