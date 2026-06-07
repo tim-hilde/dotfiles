@@ -16,8 +16,7 @@ behandelt das als `external_directory` und blockiert es per Default (`ask` = hea
 auto-reject). In `~/dotfiles/opencode/opencode.json` ist daher freigegeben:
 ```json
 "permission": { "external_directory": {
-  "~/Zettelkasten/_career-log/**": "allow",
-  "~/Zettelkasten/Merlin Tätigkeiten.md": "allow"
+  "~/Zettelkasten/_career-log/**": "allow"
 }}
 ```
 Ohne diese Regel läuft der Wrapper mit Exit 0 durch, schreibt aber keine Notiz
