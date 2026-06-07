@@ -2,9 +2,16 @@
 set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 COLLECTOR="$SCRIPT_DIR/commit-collector.sh"
+CONFIRM="$SCRIPT_DIR/commit-confirm.sh"
 PASS=0; FAIL=0
 check() { if [[ "$2" == "$3" ]]; then echo "ok - $1"; PASS=$((PASS+1)); else echo "FAIL - $1"; echo "  expected: $3"; echo "  actual:   $2"; FAIL=$((FAIL+1)); fi; }
 contains() { if [[ "$2" == *"$3"* ]]; then echo "ok - $1"; PASS=$((PASS+1)); else echo "FAIL - $1 (missing: $3)"; FAIL=$((FAIL+1)); fi; }
+
+# Helper: confirm every commit in an NDJSON stream (simulates the LLM having written
+# the note, then acking the processed commits).
+confirm_all() { # $1=ndjson  $2=vault
+  printf '%s\n' "$1" | MERLIN_VAULT="$2" "$CONFIRM"
+}
 
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
@@ -25,8 +32,17 @@ contains "json has hash field" "$OUT" '"hash":'
 check "single commit is one line" "$(printf '%s' "$OUT" | grep -c '^{')" "1"
 check "line is valid json" "$(printf '%s' "$OUT" | jq -c .repo 2>/dev/null)" '"demo"'
 
+# ROOT-CAUSE REGRESSION: collect is READ-ONLY. Running collect alone must NOT write
+# state, so an aborted run (note never written) re-offers the same commits next time.
+check "collect writes no state" "$([[ -f "$VAULT/_career-log/.merlin-cv-tracker-state.json" ]] && echo yes || echo no)" "no"
+OUT_AGAIN="$(MERLIN_REPO_BASE="$REPO_BASE" MERLIN_VAULT="$VAULT" MERLIN_AUTHOR="Tim" "$COLLECTOR")"
+contains "uncommitted commit is re-offered (no data loss)" "$OUT_AGAIN" 'feat(core): add a'
+
+# Now CONFIRM the collected commits (simulates note written + ack), then collect again.
+confirm_all "$OUT" "$VAULT"
+check "state file written after confirm" "$([[ -f "$VAULT/_career-log/.merlin-cv-tracker-state.json" ]] && echo yes)" "yes"
 OUT2="$(MERLIN_REPO_BASE="$REPO_BASE" MERLIN_VAULT="$VAULT" MERLIN_AUTHOR="Tim" "$COLLECTOR")"
-check "second run is empty" "$(echo -n "$OUT2" | tr -d '[:space:]')" ""
+check "after confirm, commit no longer offered" "$(echo -n "$OUT2" | tr -d '[:space:]')" ""
 
 echo b > "$REPO_BASE/demo/b.txt"
 git -C "$REPO_BASE/demo" add b.txt
@@ -35,10 +51,16 @@ OUT3="$(MERLIN_REPO_BASE="$REPO_BASE" MERLIN_VAULT="$VAULT" MERLIN_AUTHOR="Tim" 
 contains "third run has new commit" "$OUT3" 'feat(core): add b'
 check "third run lacks old commit" "$(echo "$OUT3" | grep -c 'add a' || true)" "0"
 
-check "state file written" "$([[ -f "$VAULT/_career-log/.merlin-cv-tracker-state.json" ]] && echo yes)" "yes"
+confirm_all "$OUT3" "$VAULT"
 HASHCOUNT="$(jq '.repos.demo.processed_hashes | length' "$VAULT/_career-log/.merlin-cv-tracker-state.json")"
-check "two hashes recorded" "$HASHCOUNT" "2"
+check "two hashes recorded after both confirms" "$HASHCOUNT" "2"
 
+# confirm is idempotent: re-confirming the same commit doesn't duplicate hashes.
+confirm_all "$OUT3" "$VAULT"
+HASHCOUNT2="$(jq '.repos.demo.processed_hashes | length' "$VAULT/_career-log/.merlin-cv-tracker-state.json")"
+check "re-confirm does not duplicate" "$HASHCOUNT2" "2"
+
+# --- merge exclusion + stat field ---
 TMP2="$(mktemp -d)"; REPO_BASE2="$TMP2/repos"; VAULT2="$TMP2/vault"
 mkdir -p "$REPO_BASE2/m" "$VAULT2/_career-log"
 git -C "$REPO_BASE2/m" init -q -b main
@@ -60,7 +82,7 @@ check "merge-test lines == object count" \
 rm -rf "$TMP2"
 
 # I1: per-repo failure isolation. A broken ".git" (empty dir) must not abort the
-# run; the good repo's commit is still emitted and state is still written.
+# collect run; the good repo's commit is still emitted.
 TMP3="$(mktemp -d)"; REPO_BASE3="$TMP3/repos"; VAULT3="$TMP3/vault"
 mkdir -p "$REPO_BASE3/good" "$REPO_BASE3/bad/.git" "$VAULT3/_career-log"
 git -C "$REPO_BASE3/good" init -q
@@ -69,7 +91,6 @@ git -C "$REPO_BASE3/good" config user.email "tim@example.com"
 echo g > "$REPO_BASE3/good/g.txt"; git -C "$REPO_BASE3/good" add .; git -C "$REPO_BASE3/good" commit -q -m "feat(good): survives bad repo"
 OUTI="$(MERLIN_REPO_BASE="$REPO_BASE3" MERLIN_VAULT="$VAULT3" MERLIN_AUTHOR="Tim" "$COLLECTOR" 2>/dev/null)"
 contains "good repo emitted despite broken sibling" "$OUTI" 'feat(good): survives bad repo'
-check "state written despite broken repo" "$([[ -f "$VAULT3/_career-log/.merlin-cv-tracker-state.json" ]] && echo yes)" "yes"
 rm -rf "$TMP3"
 
 # M2.1: hash is exactly 40 lowercase hex chars (the invariant dedupe relies on).
@@ -84,10 +105,11 @@ FIRST_HASH="$(echo "$OUTH" | jq -r .hash | head -n1)"
 check "hash is 40 chars" "${#FIRST_HASH}" "40"
 check "hash is full 40-hex" "$([[ "$FIRST_HASH" =~ ^[0-9a-f]{40}$ ]] && echo yes)" "yes"
 
-# M2.2: dedupe is driven by the HASH WATERMARK, not --since. A second run with a
-# WIDE since window (commit still in candidate range) must still NOT re-emit it.
+# M2.2: dedupe is driven by the HASH WATERMARK, not --since. After confirm, a second
+# collect with a WIDE since window (commit still in candidate range) must NOT re-emit.
+confirm_all "$OUTH" "$VAULT4"
 OUTH2="$(MERLIN_REPO_BASE="$REPO_BASE4" MERLIN_VAULT="$VAULT4" MERLIN_AUTHOR="Tim" MERLIN_BOOTSTRAP_SINCE='1 year ago' "$COLLECTOR")"
-check "wide since does not re-emit known hash" "$(echo -n "$OUTH2" | tr -d '[:space:]')" ""
+check "wide since does not re-emit confirmed hash" "$(echo -n "$OUTH2" | tr -d '[:space:]')" ""
 rm -rf "$TMP4"
 
 echo; echo "PASS=$PASS FAIL=$FAIL"

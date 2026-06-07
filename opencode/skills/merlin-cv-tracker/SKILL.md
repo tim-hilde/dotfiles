@@ -23,20 +23,32 @@ Zwei Modi. Der Aufruf-Prompt nennt den Modus explizit (`capture` oder `synthesiz
 ## Capture-Modus (Tier 1)
 
 Ziel: neue Commits klassifizieren und an die Monatsnotiz anhängen. **Determinismus
-liegt im Collector** — du klassifizierst nur.
+liegt in den Skripten** — du klassifizierst nur.
+
+**Kritische Reihenfolge (kein Datenverlust):** `collect` ist read-only und schreibt
+KEINEN State. Erst NACHDEM die Notiz persistiert ist, rufst du `confirm` auf, um die
+verarbeiteten Commits als erledigt zu markieren. Brichst du vor dem Notiz-Write ab,
+bleibt der State unverändert und dieselben Commits werden beim nächsten Lauf erneut
+angeboten.
 
 ### Ablauf
 
-1. Collector ausführen:
+1. **Collect** (read-only):
    `bash <skill-dir>/scripts/commit-collector.sh`
-   Er gibt newline-getrennte JSON-Objekte aus (`repo, hash, date, subject, stat`)
-   und schreibt den State selbst fort. Leere Ausgabe → nichts Neues → sauberer Exit,
-   keine Notiz-Änderung.
+   Gibt NDJSON aus (eine kompakte Zeile pro Commit: `repo, hash, date, subject, stat`).
+   **Bewahre diese exakte Ausgabe** für Schritt 5 auf. Leere Ausgabe → nichts Neues →
+   sauberer Exit, KEIN Notiz-Write, KEIN confirm.
 2. Die Commits nach **logischer Einheit** bündeln (zusammengehörige Commits eines
    Themas/Feature-Bereichs), NICHT 1:1 pro Commit.
 3. Pro Einheit einen Eintrag im Schema-Vertrag (unten) erzeugen.
 4. An `_career-log/YYYY-MM Commit-Log.md` anhängen (Monat aus dem jüngsten Commit-Datum).
    Existiert die Monatsnotiz nicht, mit Frontmatter-Header anlegen.
+   **Verifiziere, dass die Notiz wirklich geschrieben wurde, bevor du fortfährst.**
+5. **Confirm** (erst jetzt, State-Write): die in Schritt 1 erhaltene NDJSON-Ausgabe
+   unverändert in `confirm` pipen:
+   `printf '%s\n' "<NDJSON aus Schritt 1>" | bash <skill-dir>/scripts/commit-confirm.sh`
+   Das markiert genau die verarbeiteten Commits als erledigt (idempotent, atomar).
+   Confirme NUR die Commits, die tatsächlich in der Notiz gelandet sind.
 
 ### Schema-Vertrag (Pflichtfelder pro Einheit)
 
