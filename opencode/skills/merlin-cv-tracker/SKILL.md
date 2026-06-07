@@ -17,7 +17,7 @@ Zwei Modi. Der Aufruf-Prompt nennt den Modus explizit (`capture` oder `synthesiz
 - Vault: `/Users/tim/Zettelkasten`.
 - Tier-1-Log: `_career-log/YYYY-MM Commit-Log.md`.
 - State: `_career-log/.merlin-cv-tracker-state.json` (vom Collector verwaltet — NIE manuell editieren).
-- Tier-2-Notiz: `Merlin Tätigkeiten.md`.
+- Tier-2-Notiz: `_career-log/Merlin Tätigkeiten.md` (im erlaubten Unterordner, nicht im Vault-Root).
 - Collector: `scripts/commit-collector.sh` (relativ zu diesem Skill).
 
 ## Capture-Modus (Tier 1)
@@ -92,16 +92,24 @@ type: career-log
 ## Synthesize-Modus (Tier 2)
 
 Ziel: aus den erfassten Monats-Logs CV-taugliche Themen-Cluster bauen und
-`Merlin Tätigkeiten.md` aktualisieren.
+`_career-log/Merlin Tätigkeiten.md` aktualisieren.
 
 ### Lesevertrag
 
 - **Primärquelle sind `Rohdaten` + `Offene Deutung`** jedes Eintrags. Die tägliche
   `Zusammenfassung` ist nur Einstiegshilfe — sie darf das Endergebnis nicht determinieren.
-- Alle `_career-log/*.md` lesen (oder den vom Prompt genannten Zeitraum).
+- Alle Monats-Logs lesen (oder den vom Prompt genannten Zeitraum).
+- **Immer ABSOLUTE Pfade verwenden** (`/Users/tim/Zettelkasten/_career-log/*.md`), nie
+  vault-relative Globs. Grund: ein relativer Glob `_career-log/*.md` löst gegen das
+  Vault-Root `/Users/tim/Zettelkasten/*` auf und wird headless abgelehnt; der absolute
+  Pfad fällt unter die `_career-log/**`-Allow-Regel.
 - Über Tage/Wochen/Monate hinweg nach **Thema/Kompetenz** clustern, nicht nach Tag.
 
-### Ausgabeformat (CV-Stil, exakt wie `Berufliche Projekte.md`)
+### Ausgabeformat (CV-Stil)
+
+Der Stil ist hier vollständig spezifiziert — **lies KEINE externe Vorlage** (z.B.
+`Berufliche Projekte.md`); die liegt außerhalb der erlaubten Pfade und wird headless
+abgelehnt. Konkretes Muster:
 
 ```markdown
 # <Projekt-/Themen-Titel>
@@ -112,15 +120,27 @@ Ziel: aus den erfassten Monats-Logs CV-taugliche Themen-Cluster bauen und
 - Ergebnis: <messbarer/qualitativer Outcome>
 ```
 
+Referenz für den Ton (aus Tims bestehendem CV, hier eingebettet — nicht extern lesen):
+
+```markdown
+# End-to-End Entwicklung von RAG-Systemen
+## Verantwortung für Architektur und Umsetzung
+- Retrieval-Optimierung: Steigerung der Antwortpräzision durch hybride Suchstrategien, Re-Ranking und Advanced Prompting
+- MLOps & Observability: Etablierung von Evaluations-Pipelines und Tracing zur Qualitätssicherung im Produktivbetrieb
+- Ergebnis: Produktivsetzung eines internen Expertensystems mit signifikanter Reduktion von Recherchezeiten
+```
+
 Regeln:
 - Deutsch, actionable, Muster `Aspekt: Verb + Impact`, jeder Block endet mit `Ergebnis:`.
 - Jeder Cluster bekommt am Ende einen kleinen Quell-Verweis (Zeitraum + welche Repos/Logs),
   damit die Herkunft nachvollziehbar bleibt, z.B.:
   `> Quelle: _career-log/2026-05 … 2026-06, merlin-spricht/merlin-dashboard`
-- `Merlin Tätigkeiten.md` ist die kuratierte Quelle der Wahrheit. `Lebenslauf.md` wird
-  NICHT automatisch verändert — Tim portiert manuell.
+- `_career-log/Merlin Tätigkeiten.md` ist die kuratierte Quelle der Wahrheit.
+  `Lebenslauf.md` wird NICHT automatisch verändert — Tim portiert manuell.
 
 ### Schreiben
 
-- Bevorzugt `obsidian` CLI auf `Merlin Tätigkeiten.md`; sonst Datei-Write im Vault-Root.
+- Ziel ist der absolute Pfad `/Users/tim/Zettelkasten/_career-log/Merlin Tätigkeiten.md`.
+  Der Unterordner `_career-log/` ist headless beschreibbar; der Vault-Root NICHT (opencode
+  prüft external_directory auf Verzeichnis-Ebene). Direkter Datei-Write mit ABSOLUTEM Pfad.
 - Bestehende Cluster aktualisieren statt zu duplizieren, wenn das Thema schon existiert.
