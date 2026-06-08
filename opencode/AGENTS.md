@@ -33,7 +33,7 @@ Use a separate git worktree for every new feature, bugfix or refactor. This keep
 
 - ✅ One worktree per task. Reuse only when continuing the same branch.
 - ✅ Remove the worktree as soon as the PR is merged or abandoned.
-- ⚠️ Ask before branching off anything other than `origin/main` (e.g. `release/*`, another open feature branch).
+- ⚠️ Ask before branching off anything other than `origin/main/staging/dev` (e.g. `release/*`, another open feature branch).
 - 🚫 Never place worktrees inside the repo — they get picked up by globs, linters, and CI.
 - 🚫 Never `worktree remove --force` with uncommitted changes.
 
