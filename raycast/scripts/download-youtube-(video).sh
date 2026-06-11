@@ -67,6 +67,6 @@ if [ \${#FAILED[@]} -gt 0 ]; then
   read -n 1
 else
   sleep 2
+  tmux kill-window -t '"$SESSION:$WINDOW_NAME"'
 fi
-tmux kill-window -t '"$SESSION:$WINDOW_NAME"'
 '"
