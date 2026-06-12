@@ -1,6 +1,7 @@
 ---
 description: Tims Under-Review-Tickets aus der Notion-DB holen, gruppiert nach Municipality und User-Email
-model: opencode/big-pickle
+model: anthropic/haiku-4-5
+agent: build
 ---
 
 ## Problem
@@ -18,11 +19,14 @@ model: opencode/big-pickle
 
 ## Ausgabe
 
+Nutze den html skill.
+
 Gruppiere die Ergebnisse nach Municipality (erste Ebene) und User-Email (zweite Ebene).
 
 Gib für jedes Ticket einen Bullet-Point mit Link zur Seite und einer kurzen Zusammenfassung aus der Description aus.
 
 **Ausgabeformat:**
+
 ```
 ### {Municipality} → {User-Email}
 
