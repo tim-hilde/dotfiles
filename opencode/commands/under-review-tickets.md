@@ -1,6 +1,6 @@
 ---
 description: Tims Under-Review-Tickets aus der Notion-DB holen, gruppiert nach Municipality und User-Email
-model: anthropic/haiku-4-5
+model: anthropic/claude-haiku-4-5
 agent: build
 ---
 
