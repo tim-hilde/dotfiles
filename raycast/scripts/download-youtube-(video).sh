@@ -36,8 +36,18 @@ if ! tmux has-session -t "$SESSION" 2>/dev/null; then
   tmux new-session -d -s "$SESSION" -n "main"
 fi
 
-# URLs als newline-getrennter String für die Subshell
-URL_LIST=$(printf '%s\n' "${URLS[@]}")
+# YouTube URLs auf https://www.youtube.com/watch?v=ID normalisieren
+CLEAN_URLS=()
+for url in "${URLS[@]}"; do
+  vid="$(echo "$url" | grep -oE '[?&]v=([^&]+)' | head -1 | cut -d= -f2)"
+  if [ -n "$vid" ]; then
+    CLEAN_URLS+=("https://www.youtube.com/watch?v=$vid")
+  else
+    CLEAN_URLS+=("$url")
+  fi
+done
+
+URL_LIST=$(printf '%s\n' "${CLEAN_URLS[@]}")
 
 # Ein Window, sequenzielle Downloads, gemeinsame Erfolgs-/Fehlerlogik
 tmux new-window -t "$SESSION" -n "$WINDOW_NAME" "bash -c '
