@@ -4,6 +4,8 @@ Every artifact this skill produces should use this design system unless the user
 something else. It's a warm, light, editorial aesthetic: ivory paper, slate ink, a single clay
 accent, serif headings over a sans body. Restraint reads as quality — resist dark mode, neon
 accents, and heavy borders. Drop this `:root` block into every page and build from it.
+A fully rendered page using this system lives at `example.html` in this folder — open it to see
+the tokens, type, semantic colors, and layout applied; match it.
 
 ## Design tokens
 
@@ -71,7 +73,7 @@ button:hover{filter:brightness(.98)}
 - **Semantic colors are muted, not neon.** Use `--olive` for good/success, `--rust` for error/blocker/high-severity, `--clay` for "focus here / recommended". Render status as a small dot, a pill with a `1.5px` border, or a colored left-border — not large saturated fills.
 - **Borders over shadows.** `1.5px solid var(--g300)` on white panels against the ivory page. Shadows, if any, are barely-there. Radius 12px panels, 8px rows.
 - **Whitespace is the layout.** Generous body padding (`56px 24px 120px`), a readable `max-width`, real breathing room between sections. Don't crowd.
-- **Light only.** This system is light by design. Only go dark if the user explicitly asks.
+- **Light only.** This system is light by design. Only go dark if the user explicitly asks — and when they do, use the opt-in dark-mode recipe in `patterns.md` (FOUC-safe, warm token overrides, persisted), never a per-page palette.
 
 ## Quick semantic-color map
 

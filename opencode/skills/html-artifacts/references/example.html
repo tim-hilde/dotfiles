@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>House style — reference example</title>
+<script>
+  // apply-before-paint: no theme flash. Default is light (the house default); a saved choice wins.
+  try {
+    if ((localStorage.getItem('theme') || 'light') === 'dark')
+      document.documentElement.dataset.theme = 'dark';
+  } catch (e) {}
+</script>
+<style>
+:root{
+  /* surfaces */
+  --ivory:#FAF9F5; --paper:#FFFFFF; --g100:#F0EEE6; --g200:#E6E3DA; --g300:#D1CFC5;
+  --g500:#87867F; --g700:#3D3D3A;
+  /* ink + accent */
+  --slate:#141413; --clay:#D97757; --clay-d:#B85C3E; --rust:#B04A3F; --olive:#788C5D; --oat:#E3DACC;
+  /* type */
+  --serif:ui-serif,Georgia,"Times New Roman",Times,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Monaco,Consolas,monospace;
+  /* shape */
+  --radius-panel:12px; --radius-row:8px; --border:1.5px solid var(--g300);
+}
+/* opt-in dark: warm token overrides, accents unchanged */
+:root[data-theme="dark"]{
+  --ivory:#1A1917; --paper:#211F1C; --g100:#272521; --g200:#302D28; --g300:#3C3833;
+  --g500:#9A968C; --g700:#CFCABD; --slate:#F2EFE8; --oat:#3A332A;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:56px 24px 120px;
+  background:var(--ivory); color:var(--slate);
+  font-family:var(--sans); font-size:15px; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:920px;margin:0 auto}
+h1{font-family:var(--serif);font-weight:500;font-size:36px;letter-spacing:-.01em;line-height:1.2;margin:0 0 8px}
+h2{font-family:var(--serif);font-weight:500;font-size:24px;letter-spacing:-.01em;margin:34px 0 6px}
+h3{font-family:var(--serif);font-weight:500;font-size:18px;margin:0 0 4px}
+a{color:var(--clay);text-decoration:none}
+a:hover{color:var(--clay-d);text-decoration:underline}
+code,pre{font-family:var(--mono);background:var(--g100);border-radius:6px}
+code{padding:1px 5px;font-size:.86em}
+pre{padding:12px 14px;overflow:auto;border:var(--border);font-size:13px}
+.panel,.card{background:var(--paper);border:var(--border);border-radius:var(--radius-panel);padding:18px}
+.muted{color:var(--g500)}
+button{font:inherit;cursor:pointer;border:var(--border);background:var(--paper);color:var(--slate);
+  border-radius:9px;padding:8px 14px}
+button.primary{background:var(--clay);border-color:var(--clay);color:#fff;font-weight:600}
+button:hover{filter:brightness(.98)}
+
+/* layout helpers */
+.top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.lead{color:var(--g700);max-width:62ch;margin:0 0 6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+@media(max-width:680px){.grid2{grid-template-columns:1fr}}
+.card.chosen{border-color:var(--clay);box-shadow:0 0 0 1.5px var(--clay)}
+.card label{display:flex;align-items:center;gap:8px;font-family:var(--serif);font-size:18px;cursor:pointer}
+.pill{display:inline-block;font-size:12px;padding:1px 9px;border-radius:999px;border:1.5px solid var(--g300);
+  background:transparent;margin:2px 4px 2px 0}
+.pill.good{color:var(--olive);border-color:var(--olive)}
+.pill.bad{color:var(--rust);border-color:var(--rust)}
+.pill.focus{color:var(--clay);border-color:var(--clay)}
+.lbl{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--g500);margin:10px 0 4px}
+
+/* dependency-free bar chart */
+.bars{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+.bar{display:grid;grid-template-columns:120px 1fr 44px;align-items:center;gap:10px;font-size:13px}
+.track{background:var(--g100);border-radius:var(--radius-row);height:14px;overflow:hidden}
+.fill{height:100%;background:var(--clay);border-radius:var(--radius-row)}
+
+/* token-bound interactive SVG */
+svg .node{fill:var(--paper);stroke:var(--g300);stroke-width:1.5;transition:stroke .2s,fill .2s}
+svg .node.hot{stroke:var(--clay);fill:var(--oat)}
+svg .label{fill:var(--slate);font:13px var(--sans)}
+svg .edge{stroke:var(--g300);stroke-width:2;fill:none;stroke-dasharray:6 6;stroke-dashoffset:0;transition:stroke .2s}
+svg .edge.flow{stroke:var(--clay);animation:dash 1s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-24}}
+
+.exportbar{display:flex;align-items:center;gap:10px;margin-top:8px}
+textarea{width:100%;min-height:120px;margin-top:10px;font-family:var(--mono);font-size:13px;
+  background:var(--g100);color:var(--slate);border:var(--border);border-radius:var(--radius-row);padding:12px}
+#theme{border-radius:999px;width:38px;height:38px;padding:0;font-size:16px;line-height:1}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div>
+      <h1>Auth approaches — side by side</h1>
+      <p class="lead">A reference page showing the house style applied to a comparison artifact.
+      Pick an approach, then <strong>Export</strong> it as markdown. This file is the canonical
+      look the <code>html-artifacts</code> skill should match.</p>
+    </div>
+    <button id="theme" aria-label="Toggle theme" title="Toggle light / dark">◐</button>
+  </div>
+
+  <h2>Two options</h2>
+  <p class="muted">Click a card to choose. Trade-offs are inline, not cross-referenced.</p>
+
+  <div class="grid2">
+    <div class="card chosen" data-opt="Session cookies">
+      <label><input type="radio" name="opt" value="Session cookies" checked> Session cookies
+        <span class="pill focus">recommended</span></label>
+      <div class="lbl">Pros</div>
+      <span class="pill good">Revocable instantly</span><span class="pill good">Tiny client</span>
+      <div class="lbl">Cons</div>
+      <span class="pill bad">Server-side store</span><span class="pill bad">CSRF handling</span>
+    </div>
+    <div class="card" data-opt="Stateless JWT">
+      <label><input type="radio" name="opt" value="Stateless JWT"> Stateless JWT</label>
+      <div class="lbl">Pros</div>
+      <span class="pill good">No session store</span><span class="pill good">Scales flat</span>
+      <div class="lbl">Cons</div>
+      <span class="pill bad">Hard to revoke</span><span class="pill bad">Token sprawl</span>
+    </div>
+  </div>
+
+  <h2>One small chart, no dependency</h2>
+  <p class="muted">Bars are just <code>&lt;div&gt;</code>s with a percentage width.</p>
+  <div class="panel bars">
+    <div class="bar"><span>Setup cost</span><span class="track"><span class="fill" style="width:35%"></span></span><span class="muted">low</span></div>
+    <div class="bar"><span>Revocation</span><span class="track"><span class="fill" style="width:90%"></span></span><span class="muted">strong</span></div>
+    <div class="bar"><span>Scale-out ease</span><span class="track"><span class="fill" style="width:55%"></span></span><span class="muted">ok</span></div>
+  </div>
+
+  <h2>Token-themed interactive SVG</h2>
+  <p class="muted">Hit <em>Run flow</em> — the request path animates. All SVG color comes from CSS
+  variables, so it re-themes with the toggle (try dark).</p>
+  <div class="panel">
+    <button id="run">Run flow</button>
+    <svg viewBox="0 0 520 90" width="100%" height="110" role="img" aria-label="client to API to database flow">
+      <path class="edge" id="e1" d="M120 45 H230"></path>
+      <path class="edge" id="e2" d="M300 45 H410"></path>
+      <g class="node" id="n1"><rect x="20" y="22" width="100" height="46" rx="8"></rect></g>
+      <text class="label" x="70" y="50" text-anchor="middle">Client</text>
+      <g class="node" id="n2"><rect x="210" y="22" width="100" height="46" rx="8"></rect></g>
+      <text class="label" x="260" y="50" text-anchor="middle">API</text>
+      <g class="node" id="n3"><rect x="400" y="22" width="100" height="46" rx="8"></rect></g>
+      <text class="label" x="450" y="50" text-anchor="middle">DB</text>
+    </svg>
+  </div>
+
+  <h2>Detail on demand</h2>
+  <details class="panel">
+    <summary><strong>Why sessions are recommended here</strong></summary>
+    <p class="muted" style="margin-bottom:0">Instant revocation matters for this app's compliance
+    needs, and traffic fits a single region — so the stateless win doesn't pay for the revocation
+    pain. Native <code>&lt;details&gt;</code>: zero JS, accessible, works from <code>file://</code>.</p>
+  </details>
+
+  <pre><code>// the export below turns the chosen card back into text you paste to the agent
+buildMarkdown() =&gt; "## Decision: &lt;chosen approach&gt;"</code></pre>
+
+  <h2>Export</h2>
+  <div class="exportbar">
+    <button class="primary" id="export">Copy as markdown</button>
+    <span class="muted" id="status"></span>
+  </div>
+  <textarea id="out" readonly aria-label="Export fallback"></textarea>
+
+</div>
+
+<script>
+  const root = document.documentElement;
+
+  // theme toggle + persistence
+  const themeBtn = document.getElementById('theme');
+  themeBtn.onclick = () => {
+    const dark = root.dataset.theme === 'dark';
+    root.dataset.theme = dark ? '' : 'dark';
+    try { localStorage.setItem('theme', dark ? 'light' : 'dark'); } catch (e) {}
+  };
+
+  // choose-a-card
+  const cards = [...document.querySelectorAll('.card')];
+  cards.forEach(card => {
+    const radio = card.querySelector('input');
+    card.addEventListener('click', () => { radio.checked = true; sync(); });
+  });
+  function sync(){ cards.forEach(c => c.classList.toggle('chosen', c.querySelector('input').checked)); }
+
+  // animate the SVG request path
+  document.getElementById('run').onclick = () => {
+    const steps = [['n1','e1'],['n2','e2'],['n3',null]];
+    clear();
+    steps.forEach(([node, edge], i) => setTimeout(() => {
+      document.getElementById(node).classList.add('hot');
+      if (edge) document.getElementById(edge).classList.add('flow');
+    }, i * 600));
+    setTimeout(clear, steps.length * 600 + 800);
+  };
+  function clear(){
+    ['n1','n2','n3'].forEach(id => document.getElementById(id).classList.remove('hot'));
+    ['e1','e2'].forEach(id => document.getElementById(id).classList.remove('flow'));
+  }
+
+  // export the current state to markdown, with textarea fallback (file:// clipboard may be blocked)
+  const out = document.getElementById('out'), status = document.getElementById('status');
+  function buildMarkdown(){
+    const chosen = document.querySelector('input[name="opt"]:checked').value;
+    return `## Decision: ${chosen}\n\nChosen over the alternative for instant revocation and a `
+      + `single-region traffic profile. Generated from example.html.`;
+  }
+  document.getElementById('export').onclick = () => {
+    const text = buildMarkdown();
+    out.value = text;
+    navigator.clipboard?.writeText(text)
+      .then(() => flash('Copied!'))
+      .catch(() => flash('Copy from the box below'));
+    if (!navigator.clipboard) flash('Copy from the box below');
+  };
+  function flash(msg){ status.textContent = msg; setTimeout(() => status.textContent = '', 1500); }
+
+  sync();
+  out.value = buildMarkdown();
+</script>
+</body>
+</html>
