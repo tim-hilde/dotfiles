@@ -75,6 +75,13 @@ The artifact can be fed straight back into the next prompt as the source of trut
   tweak by hand or copy out one figure at a time.
 - **Annotated flowchart.** A pipeline or process as a real flowchart; make each step
   clickable to reveal what runs, timings, and failure paths.
+- **Interactive architecture diagram.** When the goal is "make the architecture click fast",
+  go past a static figure: a near full-bleed SVG stage with clickable nodes (click → highlight +
+  a side panel of detail) and "flow chips" that light up and animate a request path through the
+  system. Drive it with a tiny JS state machine that toggles CSS classes on `<g>` groups; animate
+  edges with `stroke-dasharray` / `stroke-dashoffset` transitions (or `<animate>` along a path).
+  Keep every stroke and fill in CSS classes bound to the design tokens — never hard-coded hex
+  inside the SVG — so the diagram re-themes for free, including opt-in dark mode.
 
 Hand-authored inline `<svg>` (paths, rects, text) beats an image — it's editable and crisp.
 
@@ -177,14 +184,67 @@ Author `<svg viewBox="0 0 W H">` with `<rect>`, `<line>`/`<path>` (use `marker` 
 and `<text>`. It stays editable and crisp, and the user can copy a single figure out. Reach for a
 JS diagram library only for genuinely dynamic graphs; static boxes-and-arrows are just SVG.
 
+For an *interactive* diagram (clickable nodes, an animated request path), keep each element as an
+addressable `<g id>` / `class` group and flip CSS classes from a small JS state machine instead of
+restyling inline. Animate edges by transitioning `stroke-dashoffset` (or a `<polyline>` `<animate>`)
+so a path appears to "flow". Crucially, set all SVG color through CSS classes that read the token
+variables — `.node{fill:var(--paper);stroke:var(--g300)} .node.hot{stroke:var(--clay)}` — so the
+figure follows the page theme (light by default, dark when opted in) with no extra work.
+
 ### Small charts without a dependency
 
 A bar chart is `<div>`s with percentage heights/widths; a sparkline or line chart is one inline
 `<svg>` `<polyline>`. Only pull in a charting library (single CDN `<script>`) when the chart is
 genuinely complex.
 
+### Opt-in dark mode (only when asked)
+
+The house style is light by design (`references/style.md`). Add dark mode **only when the user
+explicitly asks** — but when you do, do it right: no flash of the wrong theme on load, the choice
+persists, and the editorial feel survives (warm dark surfaces, the clay accent kept — never pure
+black with neon).
+
+Apply the saved theme *before first paint* to avoid a flash. Put this in `<head>`, ahead of the
+stylesheet. Note the default is `light` (the house default), so a user who never asked still gets
+light; only a stored choice flips it:
+
+```html
+<script>
+  try {
+    if ((localStorage.getItem('theme') || 'light') === 'dark')
+      document.documentElement.dataset.theme = 'dark';
+  } catch (e) {}
+</script>
+```
+
+Define dark as *token overrides* so every component re-themes automatically — keep it warm, don't
+invert to pure black, and leave the accents (`--clay` / `--olive` / `--rust`) untouched since they
+read well on warm dark too:
+
+```css
+:root[data-theme="dark"]{
+  --ivory:#1A1917; --paper:#211F1C; --g100:#272521; --g200:#302D28; --g300:#3C3833;
+  --g500:#9A968C; --g700:#CFCABD; --slate:#F2EFE8; --oat:#3A332A;
+}
+```
+
+Toggle button + persistence:
+
+```js
+const root = document.documentElement, btn = document.getElementById('theme');
+btn.onclick = () => {
+  const dark = root.dataset.theme === 'dark';
+  root.dataset.theme = dark ? '' : 'dark';
+  try { localStorage.setItem('theme', dark ? 'light' : 'dark'); } catch (e) {}
+};
+```
+
+`references/example.html` ships this exact recipe wired up — copy it from there. (Default stays
+light; this is purely opt-in.)
+
 ### Styling baseline
 
 Use the house style in `references/style.md` — paste its `:root` token block, then build with
 those variables (ivory page, white panels with `1.5px` `--g300` borders, serif headings, one clay
 accent). That file is the single source of truth for the look; don't hand-roll a palette here.
+A fully rendered page using it lives at `references/example.html` — match it.
