@@ -1,0 +1,6 @@
+{
+  "model": "anthropic/claude-haiku-4-5",
+  "days": 30,
+  "concurrency": 4,
+  "maxSessions": 200
+}
