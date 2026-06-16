@@ -65,6 +65,11 @@
         "chrome-devtools-mcp@latest"
       ],
       "enabled": false
+    },
+    "exa": {
+      "type": "remote",
+      "url": "https://mcp.exa.ai/mcp",
+      "enabled": false
     }
   },
   "provider": {
