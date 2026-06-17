@@ -1,16 +1,65 @@
 import { writeFileSync, renameSync, mkdirSync, rmSync } from "node:fs";
 import { join, basename } from "node:path";
 import { homedir } from "node:os";
-import {
-  sanitizePaneId,
-  reduceEvent,
-  stateForTool,
-  freshTracker,
-  INITIAL,
-} from "../lib/tmux-status-core.mjs";
 
 const STATE_DIR =
   process.env.OC_TMUX_STATE_DIR || join(homedir(), ".cache", "opencode-tmux");
+
+const INITIAL = "done";
+
+const sanitizePaneId = (pane) => String(pane).replace(/^%/, "");
+
+const freshTracker = () => ({
+  state: INITIAL,
+  title: "",
+  rootSessionId: null,
+  subagents: new Set(),
+});
+
+const stateForTool = (tool) =>
+  tool === "question" || tool === "plan_exit" ? "waiting" : null;
+
+// Updates tracker (title / rootSessionId / subagents / state) as a side effect
+// and returns the new state string, or null when the event changes no state.
+const reduceEvent = (tracker, event) => {
+  const type = event && event.type;
+  const props = (event && event.properties) || {};
+  let next = null;
+  switch (type) {
+    case "session.created":
+    case "session.updated": {
+      const info = props.info || {};
+      if (info.parentID) {
+        if (info.id) tracker.subagents.add(info.id);
+      } else {
+        if (info.id) tracker.rootSessionId = info.id;
+        if (typeof info.title === "string") tracker.title = info.title;
+      }
+      break;
+    }
+    case "session.deleted": {
+      const id = props.info && props.info.id;
+      if (id) tracker.subagents.delete(id);
+      break;
+    }
+    case "message.updated":
+      next = props.info && props.info.role === "user" ? "working" : null;
+      break;
+    case "session.status":
+      next = props.status && props.status.type === "busy" ? "working" : null;
+      break;
+    case "session.idle": {
+      const id = props.sessionID;
+      next = id && tracker.subagents.has(id) ? null : "done";
+      break;
+    }
+    case "session.error":
+      next = "done";
+      break;
+  }
+  if (next !== null) tracker.state = next;
+  return next;
+};
 
 const TmuxStatus = async ({ client, directory }) => {
   const pane = process.env.TMUX_PANE;
