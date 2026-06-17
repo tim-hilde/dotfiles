@@ -47,51 +47,54 @@ cleanup_stale() {
   done
 }
 
-# Emit one render line per live opencode pane, in tmux list-panes order.
-# Each line ends with a dim, ANSI-wrapped pane id used as the routing token.
+# Populate DISPLAY_LINES and PANE_IDS arrays in tmux list-panes order.
+DISPLAY_LINES=()
+PANE_IDS=()
 build_entries() {
-  local pane f state title project pid
+  local pane f state title project pid row
   while IFS= read -r pane; do
     [ -n "$pane" ] || continue
     f="$STATE_DIR/${pane#%}.json"
     [ -f "$f" ] || continue
-    local row
     row="$(jq -r '[.state, .title, .project, .pid] | @tsv' "$f" 2>/dev/null)" || continue
     IFS=$'\t' read -r state title project pid <<< "$row"
     if [ -z "$pid" ] || ! kill -0 "$pid" 2>/dev/null; then continue; fi
     [ -n "$title" ] || title="(kein Titel)"
-    # Pane id appended after a tab — invisible in gum but parsed after selection.
-    printf '%s  %s — %s\t%s\n' \
-      "$(icon_for "$state")" "$project" "$title" "$pane"
+    DISPLAY_LINES+=("$(printf '%s  %s — %s' "$(icon_for "$state")" "$project" "$title")")
+    PANE_IDS+=("$pane")
   done < <(tmux list-panes -a -F '#{pane_id}' 2>/dev/null || true)
 }
 
 main() {
   build_live
   cleanup_stale
-  local entries
-  entries="$(build_entries)"
+  build_entries
 
   if [ "${1:-}" = "--list" ]; then
-    [ -n "$entries" ] && printf '%s\n' "$entries"
+    for line in "${DISPLAY_LINES[@]}"; do printf '%s\n' "$line"; done
     return 0
   fi
 
-  if [ -z "$entries" ]; then
+  if [ "${#DISPLAY_LINES[@]}" -eq 0 ]; then
     gum style --foreground 244 "Keine laufenden opencode-Instanzen."
     sleep 1
     return 0
   fi
 
-  local selected
-  selected="$(printf '%s\n' "$entries" | gum filter \
-    --no-strip-ansi --no-sort --height 15 \
+  local selected idx pane sess win
+  selected="$(printf '%s\n' "${DISPLAY_LINES[@]}" | gum filter \
+    --no-strip-ansi --no-sort --height 50 \
     --placeholder 'opencode …' --prompt '🤖  ')" || return 0
   [ -n "$selected" ] || return 0
 
-  # Pane id is after the tab separator; display text is before it.
-  local clean pane sess win
-  pane="$(printf '%s' "$selected" | cut -f2)"
+  # Find index of selected line to look up corresponding pane id.
+  pane=""
+  for idx in "${!DISPLAY_LINES[@]}"; do
+    if [ "${DISPLAY_LINES[$idx]}" = "$selected" ]; then
+      pane="${PANE_IDS[$idx]}"
+      break
+    fi
+  done
   [ -n "$pane" ] || return 0
 
   IFS=$'\t' read -r sess win < <(
