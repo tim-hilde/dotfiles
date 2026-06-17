@@ -60,8 +60,9 @@ build_entries() {
     IFS=$'\t' read -r state title project pid <<< "$row"
     if [ -z "$pid" ] || ! kill -0 "$pid" 2>/dev/null; then continue; fi
     [ -n "$title" ] || title="(kein Titel)"
-    printf '%s  %s — %s  %s%s%s\n' \
-      "$(icon_for "$state")" "$project" "$title" "$C_DIM" "$pane" "$C_RST"
+    # Pane id appended after a tab — invisible in gum but parsed after selection.
+    printf '%s  %s — %s\t%s\n' \
+      "$(icon_for "$state")" "$project" "$title" "$pane"
   done < <(tmux list-panes -a -F '#{pane_id}' 2>/dev/null || true)
 }
 
@@ -84,14 +85,13 @@ main() {
 
   local selected
   selected="$(printf '%s\n' "$entries" | gum filter \
-    --no-strip-ansi --no-sort --height 50 \
+    --no-strip-ansi --no-sort --height 15 \
     --placeholder 'opencode …' --prompt '🤖  ')" || return 0
   [ -n "$selected" ] || return 0
 
-  # Strip ANSI, take the last whitespace token = pane id.
+  # Pane id is after the tab separator; display text is before it.
   local clean pane sess win
-  clean="$(printf '%s' "$selected" | sed -E 's/\x1b\[[0-9;]*m//g')"
-  pane="$(printf '%s' "$clean" | grep -oE '%[0-9]+$')"
+  pane="$(printf '%s' "$selected" | cut -f2)"
   [ -n "$pane" ] || return 0
 
   IFS=$'\t' read -r sess win < <(

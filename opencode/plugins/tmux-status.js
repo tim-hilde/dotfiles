@@ -22,6 +22,10 @@ const TmuxStatus = async ({ client, directory }) => {
   const project = directory ? basename(directory) : "";
   const tracker = freshTracker();
 
+  // "done" always wins immediately; "working" is debounced so a session.idle
+  // arriving slightly before a trailing busy event still lands as "done".
+  let workingTimer = null;
+
   try {
     mkdirSync(STATE_DIR, { recursive: true });
   } catch {}
@@ -42,11 +46,22 @@ const TmuxStatus = async ({ client, directory }) => {
     } catch {}
   };
 
+  const setWorking = () => {
+    if (workingTimer) clearTimeout(workingTimer);
+    workingTimer = setTimeout(() => {
+      workingTimer = null;
+      if (tracker.state !== "done" && tracker.state !== "waiting") write("working");
+    }, 300);
+  };
+
+  const setDone = () => {
+    if (workingTimer) { clearTimeout(workingTimer); workingTimer = null; }
+    write("done");
+  };
+
   // Register exit cleanup BEFORE first write (defensive ordering)
   process.once("exit", () => {
-    try {
-      rmSync(file);
-    } catch {}
+    try { rmSync(file); } catch {}
   });
 
   write(INITIAL);
@@ -74,15 +89,42 @@ const TmuxStatus = async ({ client, directory }) => {
   return {
     event: async ({ event }) => {
       const prevTitle = tracker.title;
+      const type = event && event.type;
+      const props = (event && event.properties) || {};
+
+      // Handle working/done transitions directly to use the debounce/immediate logic.
+      if (type === "message.updated" && props.info && props.info.role === "user") {
+        reduceEvent(tracker, event); // side-effects only (title etc)
+        setWorking();
+        return;
+      }
+      if (type === "session.status" && props.status && props.status.type === "busy") {
+        reduceEvent(tracker, event);
+        setWorking();
+        return;
+      }
+      if (type === "session.idle" || type === "session.error") {
+        const sid = props.sessionID;
+        if (sid && tracker.subagents.has(sid)) return; // subagent idle — ignore
+        setDone();
+        return;
+      }
+
+      // All other events (session.created/updated/deleted, etc.) — update tracker
+      // metadata and write if title changed.
       const next = reduceEvent(tracker, event);
       if (next !== null || tracker.title !== prevTitle) write(next);
     },
     "permission.ask": async () => {
+      if (workingTimer) { clearTimeout(workingTimer); workingTimer = null; }
       write("waiting");
     },
     "tool.execute.before": async (input) => {
       const s = stateForTool(input && input.tool);
-      if (s) write(s);
+      if (s) {
+        if (workingTimer) { clearTimeout(workingTimer); workingTimer = null; }
+        write(s);
+      }
     },
   };
 };
