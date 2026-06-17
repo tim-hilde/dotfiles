@@ -47,11 +47,22 @@ cleanup_stale() {
   done
 }
 
-# Populate DISPLAY_LINES and PANE_IDS arrays in tmux list-panes order.
+state_rank() {
+  case "$1" in
+    waiting) echo 0 ;;
+    working) echo 1 ;;
+    *)       echo 2 ;;
+  esac
+}
+
+# Populate DISPLAY_LINES and PANE_IDS sorted by: status (waiting→working→done),
+# then project alphabetically.
 DISPLAY_LINES=()
 PANE_IDS=()
 build_entries() {
-  local pane f state title project pid row
+  local pane f state title project pid row rank
+  local tmp
+  tmp="$(mktemp)"
   while IFS= read -r pane; do
     [ -n "$pane" ] || continue
     f="$STATE_DIR/${pane#%}.json"
@@ -60,9 +71,18 @@ build_entries() {
     IFS=$'\t' read -r state title project pid <<< "$row"
     if [ -z "$pid" ] || ! kill -0 "$pid" 2>/dev/null; then continue; fi
     [ -n "$title" ] || title="(kein Titel)"
-    DISPLAY_LINES+=("$(printf '%s  %s — %s' "$(icon_for "$state")" "$project" "$title")")
-    PANE_IDS+=("$pane")
+    rank="$(state_rank "$state")"
+    # Format: rank TAB project TAB pane TAB display (display has no TABs)
+    printf '%s\t%s\t%s\t%s\n' \
+      "$rank" "$project" "$pane" \
+      "$(printf '%s  %s — %s' "$(icon_for "$state")" "$project" "$title")" >> "$tmp"
   done < <(tmux list-panes -a -F '#{pane_id}' 2>/dev/null || true)
+
+  while IFS=$'\t' read -r _ _ pane display; do
+    DISPLAY_LINES+=("$display")
+    PANE_IDS+=("$pane")
+  done < <(sort -t$'\t' -k1,1n -k2,2 "$tmp")
+  rm -f "$tmp"
 }
 
 main() {
