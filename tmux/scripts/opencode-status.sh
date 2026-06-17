@@ -8,18 +8,33 @@ ICON_WAITING=$'\uf059'   # question circle
 ICON_WORKING=$'\uf110'   # spinner
 ICON_DONE=$'\uf058'      # check circle
 
-# ANSI colors (24x palette)
+# ANSI colors
 C_WAIT=$'\033[38;5;216m'
 C_WORK=$'\033[38;5;111m'
 C_DONE=$'\033[38;5;114m'
-C_DIM=$'\033[2;90m'
+C_HEAD=$'\033[1;38;5;147m'  # bold lavender for project headers
 C_RST=$'\033[0m'
+
+# Separator between visible text and hidden pane id (stripped by gum, stays in raw line)
+SEP=$'\x01'
 
 icon_for() {
   case "$1" in
     waiting) printf '%s%s%s' "$C_WAIT" "$ICON_WAITING" "$C_RST" ;;
     working) printf '%s%s%s' "$C_WORK" "$ICON_WORKING" "$C_RST" ;;
     *)       printf '%s%s%s' "$C_DONE" "$ICON_DONE" "$C_RST" ;;
+  esac
+}
+
+strip_ansi() {
+  printf '%s' "$1" | sed -E 's/\x1b\[[0-9;]*m//g'
+}
+
+state_rank() {
+  case "$1" in
+    waiting) echo 0 ;;
+    working) echo 1 ;;
+    *)       echo 2 ;;
   esac
 }
 
@@ -47,22 +62,15 @@ cleanup_stale() {
   done
 }
 
-state_rank() {
-  case "$1" in
-    waiting) echo 0 ;;
-    working) echo 1 ;;
-    *)       echo 2 ;;
-  esac
-}
-
-# Populate DISPLAY_LINES and PANE_IDS sorted by: status (waiting→working→done),
-# then project alphabetically.
-DISPLAY_LINES=()
-PANE_IDS=()
-build_entries() {
+# Output lines to gum: project headers + session lines, sorted by
+# status (waiting→working→done) then project.
+# Each session line embeds the pane id after SEP for routing.
+# Header lines have no SEP and will be ignored on selection.
+build_gum_input() {
   local pane f state title project pid row rank
   local tmp
   tmp="$(mktemp)"
+
   while IFS= read -r pane; do
     [ -n "$pane" ] || continue
     f="$STATE_DIR/${pane#%}.json"
@@ -72,15 +80,18 @@ build_entries() {
     if [ -z "$pid" ] || ! kill -0 "$pid" 2>/dev/null; then continue; fi
     [ -n "$title" ] || title="(kein Titel)"
     rank="$(state_rank "$state")"
-    # Format: rank TAB project TAB pane TAB display (display has no TABs)
-    printf '%s\t%s\t%s\t%s\n' \
-      "$rank" "$project" "$pane" \
-      "$(printf '%s  %s — %s' "$(icon_for "$state")" "$project" "$title")" >> "$tmp"
+    printf '%s\t%s\t%s\t%s\t%s\n' "$rank" "$project" "$pane" "$state" "$title" >> "$tmp"
   done < <(tmux list-panes -a -F '#{pane_id}' 2>/dev/null || true)
 
-  while IFS=$'\t' read -r _ _ pane display; do
-    DISPLAY_LINES+=("$display")
-    PANE_IDS+=("$pane")
+  local prev_project=""
+  while IFS=$'\t' read -r _ project pane state title; do
+    if [ "$project" != "$prev_project" ]; then
+      # Project header — no SEP, not selectable as a session
+      printf '%s%s%s\n' "$C_HEAD" "$project" "$C_RST"
+      prev_project="$project"
+    fi
+    # Session line: indent + icon + title + SEP + pane (pane id hidden after SEP)
+    printf '  %s  %s%s%s\n' "$(icon_for "$state")" "$title" "$SEP" "$pane"
   done < <(sort -t$'\t' -k1,1n -k2,2 "$tmp")
   rm -f "$tmp"
 }
@@ -88,34 +99,34 @@ build_entries() {
 main() {
   build_live
   cleanup_stale
-  build_entries
+
+  local gum_input
+  gum_input="$(build_gum_input)"
 
   if [ "${1:-}" = "--list" ]; then
-    for line in "${DISPLAY_LINES[@]}"; do printf '%s\n' "$line"; done
+    printf '%s\n' "$gum_input"
     return 0
   fi
 
-  if [ "${#DISPLAY_LINES[@]}" -eq 0 ]; then
+  if [ -z "$gum_input" ]; then
     gum style --foreground 244 "Keine laufenden opencode-Instanzen."
     sleep 1
     return 0
   fi
 
-  local selected idx pane sess win
-  selected="$(printf '%s\n' "${DISPLAY_LINES[@]}" | gum filter \
-    --no-strip-ansi --no-sort --height 50 \
-    --placeholder 'opencode …' --prompt '🤖  ')" || return 0
-  [ -n "$selected" ] || return 0
-
-  # Find index of selected line to look up corresponding pane id.
-  pane=""
-  for idx in "${!DISPLAY_LINES[@]}"; do
-    if [ "${DISPLAY_LINES[$idx]}" = "$selected" ]; then
-      pane="${PANE_IDS[$idx]}"
-      break
-    fi
+  local selected pane sess win
+  # Loop so header selections are silently skipped
+  while true; do
+    selected="$(printf '%s\n' "$gum_input" | gum filter \
+      --no-strip-ansi --no-sort --height 50 \
+      --placeholder 'opencode …' --prompt '🤖  ')" || return 0
+    [ -n "$selected" ] || return 0
+    # Extract pane id: everything after SEP in the raw selected string.
+    # gum strips ANSI but preserves \x01, so SEP is still present.
+    pane="${selected##*$'\x01'}"
+    [ -n "$pane" ] && [ "$pane" != "$selected" ] && break
+    # No SEP found = header line selected, let user pick again
   done
-  [ -n "$pane" ] || return 0
 
   IFS=$'\t' read -r sess win < <(
     tmux display-message -p -t "$pane" '#{session_name}'$'\t''#{window_index}'
