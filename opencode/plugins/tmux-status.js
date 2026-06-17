@@ -42,22 +42,6 @@ const TmuxStatus = async ({ client, directory }) => {
     } catch {}
   };
 
-  // Best-effort title seed from the most recently updated root session.
-  try {
-    const res = await client.session.list();
-    const sessions = (res && res.data) || [];
-    const root = sessions
-      .filter((s) => !s.parentID)
-      .sort(
-        (a, b) =>
-          ((b.time && b.time.updated) || 0) - ((a.time && a.time.updated) || 0)
-      )[0];
-    if (root) {
-      tracker.rootSessionId = root.id;
-      if (typeof root.title === "string") tracker.title = root.title;
-    }
-  } catch {}
-
   // Register exit cleanup BEFORE first write (defensive ordering)
   process.once("exit", () => {
     try {
@@ -66,6 +50,26 @@ const TmuxStatus = async ({ client, directory }) => {
   });
 
   write(INITIAL);
+
+  // Best-effort title seed — deferred so we don't block plugin init.
+  // client.session.list() may hang if called before the server is ready.
+  setTimeout(async () => {
+    try {
+      const res = await client.session.list();
+      const sessions = (res && res.data) || [];
+      const root = sessions
+        .filter((s) => !s.parentID)
+        .sort(
+          (a, b) =>
+            ((b.time && b.time.updated) || 0) - ((a.time && a.time.updated) || 0)
+        )[0];
+      if (root) {
+        tracker.rootSessionId = root.id;
+        if (typeof root.title === "string") tracker.title = root.title;
+        write(null);
+      }
+    } catch {}
+  }, 0);
 
   return {
     event: async ({ event }) => {
