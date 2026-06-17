@@ -15,9 +15,6 @@ C_DONE=$'\033[38;5;114m'
 C_HEAD=$'\033[1;38;5;147m'  # bold lavender for project headers
 C_RST=$'\033[0m'
 
-# Separator between visible text and hidden pane id (stripped by gum, stays in raw line)
-SEP=$'\x01'
-
 icon_for() {
   case "$1" in
     waiting) printf '%s%s%s' "$C_WAIT" "$ICON_WAITING" "$C_RST" ;;
@@ -62,15 +59,14 @@ cleanup_stale() {
   done
 }
 
-# Output lines to gum: project headers + session lines, sorted by
-# status (waiting→working→done) then project.
-# Each session line embeds the pane id after SEP for routing.
-# Header lines have no SEP and will be ignored on selection.
-build_gum_input() {
-  local pane f state title project pid row rank
-  local tmp
+# Parallel arrays in display order:
+#   MENU_LINES[i]  – the (ANSI-styled) line shown in gum
+#   PANE_MAP[i]    – pane id for a session line, or "" for a project header
+MENU_LINES=()
+PANE_MAP=()
+build_menu() {
+  local pane f state title project pid row rank tmp
   tmp="$(mktemp)"
-
   while IFS= read -r pane; do
     [ -n "$pane" ] || continue
     f="$STATE_DIR/${pane#%}.json"
@@ -86,46 +82,55 @@ build_gum_input() {
   local prev_project=""
   while IFS=$'\t' read -r _ project pane state title; do
     if [ "$project" != "$prev_project" ]; then
-      # Project header — no SEP, not selectable as a session
-      printf '%s%s%s\n' "$C_HEAD" "$project" "$C_RST"
+      MENU_LINES+=("$(printf '%s%s%s' "$C_HEAD" "$project" "$C_RST")")
+      PANE_MAP+=("")            # header: not selectable
       prev_project="$project"
     fi
-    # Session line: indent + icon + title + SEP + pane (pane id hidden after SEP)
-    printf '  %s  %s%s%s\n' "$(icon_for "$state")" "$title" "$SEP" "$pane"
+    MENU_LINES+=("$(printf '  %s  %s' "$(icon_for "$state")" "$title")")
+    PANE_MAP+=("$pane")
   done < <(sort -t$'\t' -k1,1n -k2,2 "$tmp")
   rm -f "$tmp"
+}
+
+# Resolve a gum selection (ANSI may be stripped by gum) back to a pane id.
+# Echoes the pane id, or nothing for a header / no match.
+resolve_pane() {
+  local sel sel_s i
+  sel="$1"
+  sel_s="$(strip_ansi "$sel")"
+  for i in "${!MENU_LINES[@]}"; do
+    if [ "$(strip_ansi "${MENU_LINES[$i]}")" = "$sel_s" ]; then
+      printf '%s' "${PANE_MAP[$i]}"
+      return 0
+    fi
+  done
 }
 
 main() {
   build_live
   cleanup_stale
-
-  local gum_input
-  gum_input="$(build_gum_input)"
+  build_menu
 
   if [ "${1:-}" = "--list" ]; then
-    printf '%s\n' "$gum_input"
+    [ "${#MENU_LINES[@]}" -gt 0 ] && printf '%s\n' "${MENU_LINES[@]}"
     return 0
   fi
 
-  if [ -z "$gum_input" ]; then
+  if [ "${#MENU_LINES[@]}" -eq 0 ]; then
     gum style --foreground 244 "Keine laufenden opencode-Instanzen."
     sleep 1
     return 0
   fi
 
   local selected pane sess win
-  # Loop so header selections are silently skipped
+  # Re-prompt if a header (no pane) is selected.
   while true; do
-    selected="$(printf '%s\n' "$gum_input" | gum filter \
+    selected="$(printf '%s\n' "${MENU_LINES[@]}" | gum filter \
       --no-strip-ansi --no-sort --height 50 \
       --placeholder 'opencode …' --prompt '🤖  ')" || return 0
     [ -n "$selected" ] || return 0
-    # Extract pane id: everything after SEP in the raw selected string.
-    # gum strips ANSI but preserves \x01, so SEP is still present.
-    pane="${selected##*$'\x01'}"
-    [ -n "$pane" ] && [ "$pane" != "$selected" ] && break
-    # No SEP found = header line selected, let user pick again
+    pane="$(resolve_pane "$selected")"
+    [ -n "$pane" ] && break
   done
 
   IFS=$'\t' read -r sess win < <(
