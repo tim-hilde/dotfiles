@@ -52,7 +52,7 @@ const TmuxStatus = async ({ client, directory }) => {
     inactivityTimer = setTimeout(() => {
       inactivityTimer = null;
       if (tracker.state === "working") write("done");
-    }, 2000);
+    }, 8000);
   };
 
   const setWorking = () => {
@@ -112,19 +112,22 @@ const TmuxStatus = async ({ client, directory }) => {
         return;
       }
       if (type === "session.status") {
-        reduceEvent(tracker, event);
         if (props.status && props.status.type === "busy") {
-          // Reset inactivity timer on every busy pulse
+          // Each busy pulse resets the inactivity timer.
           if (inactivityTimer) { clearTimeout(inactivityTimer); inactivityTimer = null; }
           setWorking();
-        } else if (props.status && props.status.type === "idle") {
-          setDone();
         }
+        // session.status idle has no sessionID — can't tell root from subagent, ignore.
         return;
       }
-      if (type === "session.idle" || type === "session.error") {
+      if (type === "session.idle") {
         const sid = props.sessionID;
-        if (sid && tracker.subagents.has(sid)) return; // subagent idle — ignore
+        // Only set done for the root session; subagent idle means root is still working.
+        if (sid && tracker.subagents.has(sid)) return;
+        setDone();
+        return;
+      }
+      if (type === "session.error") {
         setDone();
         return;
       }
