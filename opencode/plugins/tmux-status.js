@@ -22,8 +22,9 @@ const TmuxStatus = async ({ client, directory }) => {
   const project = directory ? basename(directory) : "";
   const tracker = freshTracker();
 
-  // "done" always wins immediately; "working" is debounced so a session.idle
-  // arriving slightly before a trailing busy event still lands as "done".
+  // Inactivity timer: if no busy event arrives for 2s after the last one,
+  // we consider the turn done. This handles both root idle and subagent patterns.
+  let inactivityTimer = null;
   let workingTimer = null;
 
   try {
@@ -46,16 +47,28 @@ const TmuxStatus = async ({ client, directory }) => {
     } catch {}
   };
 
+  const armInactivity = () => {
+    if (inactivityTimer) clearTimeout(inactivityTimer);
+    inactivityTimer = setTimeout(() => {
+      inactivityTimer = null;
+      if (tracker.state === "working") write("done");
+    }, 2000);
+  };
+
   const setWorking = () => {
     if (workingTimer) clearTimeout(workingTimer);
     workingTimer = setTimeout(() => {
       workingTimer = null;
-      if (tracker.state !== "done" && tracker.state !== "waiting") write("working");
+      if (tracker.state !== "done" && tracker.state !== "waiting") {
+        write("working");
+        armInactivity();
+      }
     }, 300);
   };
 
   const setDone = () => {
     if (workingTimer) { clearTimeout(workingTimer); workingTimer = null; }
+    if (inactivityTimer) { clearTimeout(inactivityTimer); inactivityTimer = null; }
     write("done");
   };
 
@@ -94,13 +107,19 @@ const TmuxStatus = async ({ client, directory }) => {
 
       // Handle working/done transitions directly to use the debounce/immediate logic.
       if (type === "message.updated" && props.info && props.info.role === "user") {
-        reduceEvent(tracker, event); // side-effects only (title etc)
+        reduceEvent(tracker, event);
         setWorking();
         return;
       }
-      if (type === "session.status" && props.status && props.status.type === "busy") {
+      if (type === "session.status") {
         reduceEvent(tracker, event);
-        setWorking();
+        if (props.status && props.status.type === "busy") {
+          // Reset inactivity timer on every busy pulse
+          if (inactivityTimer) { clearTimeout(inactivityTimer); inactivityTimer = null; }
+          setWorking();
+        } else if (props.status && props.status.type === "idle") {
+          setDone();
+        }
         return;
       }
       if (type === "session.idle" || type === "session.error") {
