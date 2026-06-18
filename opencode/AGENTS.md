@@ -16,26 +16,11 @@ Don't restate code, narrate decisions, or leave changelog comments ("switched fr
 
 # Worktrees
 
-Use a separate git worktree for every new feature, bugfix or refactor. This keeps the main branches clean and lets parallel agent sessions work without conflicts.
+The `using-git-worktrees` skill owns the worktree workflow. Project-specific conventions on top of it:
 
-## When to create one
-
-- Before the first commit of any task that will produce a PR.
-- Before long-running commands (tests, migrations, builds) that could collide with parallel work in the main checkout.
-
-## Layout & naming
-
-- Location: `../worktrees/<branch-name>/` (sibling of the repo, never inside it).
-- Branch name: `<type>/<kebab-slug>` where `<type>` ∈ `feat | fix | chore | refactor`.
-- Example: `feat/oauth-login`, `fix/null-pointer-checkout`.
-
-## Rules
-
-- ✅ One worktree per task. Reuse only when continuing the same branch.
-- ✅ Remove the worktree as soon as the PR is merged or abandoned.
-- ⚠️ Ask before branching off anything other than `origin/main/staging/dev` (e.g. `release/*`, another open feature branch).
-- 🚫 Never place worktrees inside the repo — they get picked up by globs, linters, and CI.
-- 🚫 Never `worktree remove --force` with uncommitted changes.
+- Location: `../worktrees/<branch-name>/`, sibling of the repo — never inside it (globs/linters/CI pick it up).
+- Branch name: `<type>/<kebab-slug>`, `<type>` ∈ `feat | fix | chore | refactor`.
+- Branch off `origin/main`, `staging`, or `dev` — ask before branching off anything else (`release/*`, another open feature branch).
 
 # Think Before Coding
 
@@ -88,15 +73,7 @@ Transform tasks into verifiable goals:
 - "Fix the bug" → "Write a test that reproduces it, then make it pass"
 - "Refactor X" → "Ensure tests pass before and after"
 
-For multi-step tasks, state a brief plan:
-
-```
-1. [Step] → verify: [check]
-2. [Step] → verify: [check]
-3. [Step] → verify: [check]
-```
-
-Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
+Strong, observable success criteria let you loop independently. Weak criteria ("make it work") require constant clarification. The `writing-plans` skill owns plan structure — don't reinvent it here.
 
 # Read to Edit, Code to Analyze
 
@@ -107,3 +84,24 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 - **Multiple related reads** → batch them in one script (`ctx_batch_execute`/`ctx_execute`) instead of N sequential `Read` calls.
 
 The test: if you will not edit the lines you are about to read, you are analyzing — process it in code.
+
+# Progress Updates
+
+Before a group of related tool calls, write one short sentence (≈8–12 words) naming what you're about to do. Group logically — don't narrate every single call or turn the transcript into a tool-call log.
+
+Skip it for trivial one-step actions. Don't pre-announce a full plan in prose before starting — state success criteria once, then act.
+
+# Tool Hierarchy
+
+Prefer the dedicated tools over shell commands — faster, safer, cleaner output:
+
+- Search content → `grep` tool, not `grep`/`cat` via `bash`.
+- Find files → `glob`, not `find`.
+- Read files → `read`/`list`, not `cat`/`head`/`tail`.
+- Edit files → `edit`, not `sed`/`echo >`.
+
+Reserve `bash` for what only a shell can do (tests, git, builds). Make independent tool calls in parallel, not one after another.
+
+# Final Answers
+
+Keep the closing summary short and natural. Reserve headings, tables, and bullets for genuinely complex results. Don't recap steps you already narrated — state the outcome and any next action the user needs.
