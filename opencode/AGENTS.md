@@ -97,3 +97,13 @@ For multi-step tasks, state a brief plan:
 ```
 
 Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
+
+# Read to Edit, Code to Analyze
+
+**Reading a file loads every byte into context. Only read what you will edit.**
+
+- Reading to **edit** → use `Read`. The edit tool needs the exact bytes in context to match against.
+- Reading to **analyze, count, search, summarize, or extract** → run code over it (e.g. `ctx_execute_file` if available, otherwise a sandboxed script). Print only the derived answer; the raw bytes stay out of context.
+- **Multiple related reads** → batch them in one script (`ctx_batch_execute`/`ctx_execute`) instead of N sequential `Read` calls.
+
+The test: if you will not edit the lines you are about to read, you are analyzing — process it in code.
