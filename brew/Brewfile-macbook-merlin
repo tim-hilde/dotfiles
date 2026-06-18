@@ -1,201 +1,368 @@
-tap "alienator88/cask"
-tap "anomalyco/tap"
-tap "asmvik/formulae"
-tap "buo/cask-upgrade"
-tap "candid82/brew"
-tap "charmbracelet/tap"
-tap "darrylmorley/whatcable"
-tap "farion1231/ccswitch"
-tap "federico-terzi/espanso"
-tap "felixkratz/formulae"
-tap "finnvoor/tools"
-tap "gechr/tap"
-tap "get-woke/tap"
+tap "alienator88/cask", trusted: true
+tap "anomalyco/tap", trusted: true
+tap "asmvik/formulae", trusted: true
+tap "buo/cask-upgrade", trusted: true
+tap "candid82/brew", trusted: true
+tap "charmbracelet/tap", trusted: true
+tap "darrylmorley/whatcable", trusted: true
+tap "farion1231/ccswitch", trusted: true
+tap "federico-terzi/espanso", trusted: true
+tap "felixkratz/formulae", trusted: true
+tap "finnvoor/tools", trusted: true
+tap "gechr/tap", trusted: true
+tap "get-woke/tap", trusted: true
 tap "homebrew/autoupdate"
-tap "infisical/get-cli"
-tap "j178/tap"
-tap "jackielii/tap"
-tap "jesseduffield/lazydocker"
-tap "joshmedeski/sesh"
-tap "localsend/localsend"
-tap "mgmeyers/pdfannots2json"
-tap "morantron/tmux-fingers"
-tap "nikitabobko/tap"
-tap "osx-cross/arm"
-tap "osx-cross/avr"
-tap "peak/tap"
-tap "qmk/qmk"
-tap "shihanng/gig"
-tap "supabase/tap"
-tap "tw93/tap"
-tap "typewhisper/tap"
-tap "yqrashawn/goku"
+tap "infisical/get-cli", trusted: true
+tap "j178/tap", trusted: true
+tap "jackielii/tap", trusted: true
+tap "jesseduffield/lazydocker", trusted: true
+tap "joshmedeski/sesh", trusted: true
+tap "localsend/localsend", trusted: true
+tap "mgmeyers/pdfannots2json", trusted: true
+tap "morantron/tmux-fingers", trusted: true
+tap "nikitabobko/tap", trusted: true
+tap "osx-cross/arm", trusted: true
+tap "osx-cross/avr", trusted: true
+tap "peak/tap", trusted: true
+tap "qmk/qmk", trusted: true
+tap "shihanng/gig", trusted: true
+tap "supabase/tap", trusted: true
+tap "tw93/tap", trusted: true
+tap "typewhisper/tap", trusted: true
+tap "yqrashawn/goku", trusted: true
+# Run your GitHub Actions locally
 brew "act"
+# Protocol buffers (Google's data interchange format)
 brew "protobuf"
+# Library for command-line editing
 brew "readline"
+# General-purpose data compression with high compression ratio
 brew "xz"
+# Spell checker with better logic than ispell
 brew "aspell"
+# Microsoft Azure CLI 2.0
 brew "azure-cli"
+# GNU internationalization (i18n) and localization (l10n) library
 brew "gettext"
+# Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
+# C library of Git core methods that is re-entrant and linkable
 brew "libgit2"
+# Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
+# Bash scripts that integrate bat with various command-line tools
 brew "bat-extras"
+# Core application library for C
 brew "glib"
+# Multi-shell multi-command argument completer
 brew "carapace"
+# OpenType text shaping engine
 brew "harfbuzz"
+# Framework for layout and rendering of i18n text
 brew "pango"
+# Library to render SVG files using Cairo
 brew "librsvg"
+# Tool for emulating mouse and keyboard events
 brew "cliclick"
+# Cross-platform make
 brew "cmake"
+# Utility that creates projects from templates
 brew "cookiecutter"
+# GNU File, Shell, and Text utilities
 brew "coreutils"
+# Securely send things from one computer to another
 brew "croc"
+# Package compiler and linker metadata toolkit
 brew "pkgconf"
+# Get a file from an HTTP, HTTPS or FTP server
 brew "curl"
+# Load/unload environment variables based on $PWD
 brew "direnv"
+# Isolated development environments using Docker
 brew "docker-compose"
+# Select default apps for documents and URL schemes on macOS
+brew "duti"
+# Modern, maintained replacement for ls
 brew "eza"
+# Like neofetch, but much faster because written mostly in C
 brew "fastfetch"
+# Simple, fast and user-friendly alternative to find
 brew "fd"
+# Play, record, convert, and stream select audio and video codecs
 brew "ffmpeg"
+# OCR (Optical Character Recognition) engine
 brew "tesseract"
+# Create thumbnails for your video files
 brew "ffmpegthumbnailer"
+# Banner-like program prints strings as ASCII art
 brew "figlet"
+# Command-line fuzzy finder written in Go
 brew "fzf"
+# WebDriver <-> Marionette proxy
 brew "geckodriver"
+# Open-source, cross-platform JavaScript runtime environment
 brew "node"
+# Interact with Google Gemini AI models from the command-line
 brew "gemini-cli"
+# GitHub command-line tool
 brew "gh"
+# Interpreter for PostScript and PDF
 brew "ghostscript"
+# Distributed revision control system
 brew "git"
+# Syntax-highlighting pager for git and diff output
 brew "git-delta"
+# Quickly rewrite git repository history
 brew "git-filter-repo"
+# Git extension for versioning large files
 brew "git-lfs"
+# Common error values for all GnuPG components
 brew "libgpg-error"
+# Generate introspection data for GObject libraries
 brew "gobject-introspection"
+# Graph visualization software from AT&T and Bell Labs
 brew "graphviz"
+# Tool for glamorous shell scripts
 brew "gum"
+# Postgres C API library
 brew "libpq", link: true
+# Easy, fast, and beautiful database client for the terminal
 brew "harlequin"
+# Convert source code to formatted text with syntax highlighting
 brew "highlight"
+# Tools and libraries to manipulate images in select formats
 brew "imagemagick"
+# Lightweight and flexible command-line JSON processor
 brew "jq"
+# Handy way to save and run project-specific commands
 brew "just"
+# Command-line music player
 brew "kew"
+# Simple terminal UI for git commands
 brew "lazygit"
+# Just-In-Time Compiler (JIT) for the Lua programming language
 brew "luajit"
+# Sudoless performance monitoring for Apple Silicon processors
 brew "macmon"
+# Apple Silicon Monitor Top written in Go Lang
 brew "mactop"
+# Polyglot runtime manager (asdf rust clone)
 brew "mise"
+# NCurses Disk Usage
 brew "ncdu"
+# Incremental parsing library
 brew "tree-sitter"
+# Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
+# Port scanning utility for large networks
 brew "nmap"
+# Tools for one-time password authentication systems
 brew "oath-toolkit"
+# Search tool like grep and The Silver Searcher
 brew "ripgrep"
+# AI coding agent, built for the terminal
 brew "opencode"
+# Development kit for the Java programming language
 brew "openjdk"
+# Swiss-army knife of markup format conversion
 brew "pandoc"
+# Pandoc filter for numbering and cross-referencing
 brew "pandoc-crossref"
+# General-purpose scripting language
 brew "php", restart_service: :changed
+# Pinentry for GPG on Mac
 brew "pinentry-mac"
+# Execute binaries from Python packages in isolated environments
 brew "pipx"
+# PDF rendering library (based on the xpdf-3.0 code base)
 brew "poppler"
+# Python version management
 brew "pyenv"
+# Pyenv plugin to manage virtualenv
 brew "pyenv-virtualenv"
+# Interpreted, interactive, object-oriented programming language
 brew "python@3.9"
+# Extremely fast Python linter, written in Rust
 brew "ruff"
+# Safe, concurrent, practical language
 brew "rust"
+# Software for mathematics, science, and engineering
 brew "scipy"
+# 7-Zip is a file archiver with a high compression ratio
 brew "sevenzip"
+# Create beautiful image of your source code
 brew "silicon"
+# Terminal based presentation tool
 brew "slides"
+# SMART hard drive monitoring
 brew "smartmontools"
+# Command-line interface for https://speedtest.net bandwidth tests
 brew "speedtest-cli"
+# Cross-shell prompt for astronauts
 brew "starship"
+# General purpose fuzzy finder TUI
 brew "television"
+# Send macOS User Notifications from the command-line
 brew "terminal-notifier"
+# Terminal multiplexer
 brew "tmux"
+# Display directories as trees (with optional color/HTML output)
 brew "tree"
+# Markup-based typesetting system
 brew "typst"
+# Syntax-aware linter for prose
 brew "vale"
+# Generator for LS_COLORS with support for multiple color themes
 brew "vivid"
+# Internet file retriever
 brew "wget"
+# LAN discovery tool with a modern TUI written in Go
 brew "whosthere"
+# Access X11 clipboards from the command-line
 brew "xclip"
+# JavaScript package manager
 brew "yarn"
+# Blazing fast terminal file manager written in Rust, based on async I/O
 brew "yazi"
+# Download YouTube videos from the command-line
 brew "youtube-dl"
+# Process YAML, JSON, XML, CSV and properties documents from the CLI
 brew "yq"
+# Feature-rich command-line audio/video downloader
 brew "yt-dlp"
+# Shell extension to navigate your filesystem faster
 brew "zoxide"
+# Fish-like fast/unobtrusive autosuggestions for zsh
 brew "zsh-autosuggestions"
+# A tiling window manager for macOS based on binary space partitioning.
 brew "asmvik/formulae/yabai"
+# Generate images of code and terminal output.
 brew "charmbracelet/tap/freeze"
+# A window border system for macOS
 brew "felixkratz/formulae/borders"
+# CLI for on-device speech transcription using Speech.framework
 brew "finnvoor/tools/yap"
+# Detect non-inclusive language in your source code.
 brew "get-woke/tap/woke"
+# The official Infisical CLI
 brew "infisical/get-cli/infisical"
+# A fast Git hook manager written in Rust, designed as a drop-in alternative to pre-commit, reimagined.
 brew "j178/tap/prek"
+# Simple hotkey daemon for macOS, written in Zig
 brew "jackielii/tap/skhd-zig"
+# A simple terminal UI for docker, written in Go
 brew "jesseduffield/lazydocker/lazydocker"
+# Smart terminal session manager
 brew "joshmedeski/sesh/sesh"
+# Extract annotations from PDFs and convert them to JSON
 brew "mgmeyers/pdfannots2json/pdfannots2json"
+# mouseless terminal interaction
 brew "morantron/tmux-fingers/tmux-fingers"
+# Parallel S3 and local filesystem execution tool
 brew "peak/tap/s5cmd"
+# Quantum Mechanical Keyboard (QMK) Firmware
 brew "qmk/qmk/qmk"
+# gitignore file generator
 brew "shihanng/gig/gig"
+# Supabase CLI
 brew "supabase/tap/supabase"
+# Comprehensive macOS cleanup and application uninstall tool
 brew "tw93/tap/mole"
+# karabiner configurator
 brew "yqrashawn/goku/goku"
+# AirPods companion app
 cask "airbuddy"
+# Application launcher and productivity software
 cask "alfred"
+# Enable Windows-like alt-tab
 cask "alt-tab"
+# Compact TeX distribution as alternative to the full TeX Live / MacTeX
 cask "basictex"
+# Configuration manager for AI coding agents
 cask "cc-switch"
+# Universal database tool and SQL client
 cask "dbeaver-community"
+# Voice and text chat software
 cask "discord"
+# Window peeking utility app
 cask "dockdoor"
+# Cross-platform Text Expander written in Rust
 cask "espanso"
+# Screen colour temperature controller
 cask "flux-app"
 cask "font-im-writing-nerd-font"
 cask "font-jetbrains-mono-nerd-font"
 cask "font-monaspace"
 cask "font-symbols-only-nerd-font"
+# Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
+# Desktop client for GitHub repositories
 cask "github"
+# Desktop automation application
 cask "hammerspoon"
+# Free and open-source media player
 cask "iina"
+# Desktop image minifier
 cask "imagemin"
+# Terminal emulator as alternative to Apple's Terminal app
 cask "iterm2"
+# Menu bar manager
 cask "jordanbaird-ice"
+# Utility to render Jupyter notebooks
 cask "jupyter-notebook-viewer"
+# Tool to prevent the system from going into sleep mode
 cask "keepingyouawake"
+# Open-source keystroke visualiser
 cask "keycastr"
+# GPU-based terminal emulator
 cask "kitty"
+# Grammar, spelling and style suggestions in all the writing apps
 cask "languagetool-desktop"
+# Application launcher
 cask "leader-key"
+# Open-source cross-platform alternative to AirDrop
 cask "localsend"
+# Email tracker, read receipt and spy pixel blocker plugin for Apple Mail
 cask "mailtrackerblocker"
+# Markdown editor
 cask "mark-text"
+# Reverse proxy, secure introspectable tunnels to localhost
 cask "ngrok"
+# Finder Toolbar app to open the current directory in Terminal
 cask "openinterminal-lite"
+# PDF reader, editor and annotator
 cask "pdf-expert"
+# Utility to uninstall apps and remove leftover files from old/uninstalled apps
 cask "pearcleaner"
+# Quick Look plug-in that renders source code with syntax highlighting
 cask "qlcolorcode"
+# Quick Look generator for Markdown files
 cask "qlmarkdown"
+# Quick Look plugin for plaintext files without an extension
 cask "qlstephen"
+# Toolbox companion for QMK Firmware
 cask "qmk-toolbox"
+# Control your tools with a few keystrokes
 cask "raycast"
+# Screenshot measurement and annotation tool
 cask "shottr"
+# Team communication and collaboration software
 cask "slack"
+# Video game digital distribution service
 cask "steam"
+# Quicklook extension for source files
 cask "syntax-highlight"
+# Menu bar manager
 cask "thaw"
+# To-do list
 cask "todoist-app"
+# Speech-to-text and AI text processing
 cask "typewhisper/tap/typewhisper"
+# Menu bar app for USB-C cable diagnostics
 cask "whatcable"
+# Active space menu bar icon
 cask "whichspace"
+# HTML to PDF renderer
 cask "wkhtmltopdf"
+# Video communication and virtual meeting platform
 cask "zoom"
