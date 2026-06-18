@@ -5,7 +5,7 @@
     "@mohak34/opencode-notifier@0.2.8",
     "superpowers@git+https://github.com/obra/superpowers.git#v6.0.0",
     "opencode-update-notifier",
-    "@tim_hilde/opencode-insights@1.1.1",
+    "@tim_hilde/opencode-insights@1.1.2",
     "@slkiser/opencode-quota@3.9",
     "context-mode@1.0.162",
     "@whisperopencode/push"

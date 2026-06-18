@@ -1,0 +1,73 @@
+  # yaml-language-server: $schema=https://raw.githubusercontent.com/ajmarkow/espanso-schema-json/master/schemas/Espanso_Matches_File_Schema.json
+  # official docs at: https://espanso.org/docs/
+---
+matches:
+  # pingouin
+  - trigger: "!pingo"
+    replace: pingouin
+
+  # Import pandas
+  - trigger: "!pd"
+    replace: |
+      import pandas as pd
+      pd.set_option("mode.copy_on_write", True)
+
+  # train_test_split
+  - trigger: "!train"
+    replace: "X_train, X_test, y_train, y_test = train_test_split({cursor})"
+
+  # __main__
+  - trigger: "!main"
+    replace: |
+      if __name__ == "__main__":
+
+
+  # import seaborn
+  - trigger: "!sns"
+    replace: |
+      import seaborn as sns
+      %config InlineBackend.figure_format = ""retina"""
+
+  # import matplotlib
+  - trigger: "!plt"
+    replace: |
+      import matplotlib.pyplot as plt
+      %config InlineBackend.figure_format = ""retina""
+      %matplotlib inline
+        plt.style.use(""default"")
+
+  # Import numpy
+  - trigger: "!np"
+    replace: "import numpy as np"
+
+  # Mypy
+  - trigger: "!mypy"
+    replace: "mypy . --ignore-missing-imports --install-types --non-interactive"
+
+  # update brew
+  - trigger: "!brew"
+    replace: "brew cu -a -y && brew upgrade"
+
+  # fzf bat
+  - trigger: "!fzf"
+    replace: fzf --preview "'bat --color=always {}'" --preview-window=right,60% --layout=reverse --height=80%
+
+  # Copier python
+  - trigger: "!copier python"
+    replace: "copier copy ~/dotfiles/copier/python . --trust"
+
+  # Cookiecutter minimal
+  # - trigger: "!cookie minimal"
+  #   replace: "cookiecutter ~/dotfiles/cookiecutter/python_minimal -o ."
+
+  # save brewfile
+  - trigger: "!savebrew"
+    replace: "brew bundle dump --force --file='~/dotfiles/brew/Brewfile'"
+
+  # dotfiles setup
+  - trigger: "!setup"
+    replace: "git clone https://github.com/tim-hilde/dotfiles.git ~/dotfiles && cd $_"
+
+  # langfuse
+  - trigger: "!lf"
+    replace: "langfuse"
