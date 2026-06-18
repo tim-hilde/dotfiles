@@ -9,57 +9,7 @@ const INITIAL = "done";
 
 const sanitizePaneId = (pane) => String(pane).replace(/^%/, "");
 
-const freshTracker = () => ({
-  state: INITIAL,
-  title: "",
-  rootSessionId: null,
-  subagents: new Set(),
-});
-
-const stateForTool = (tool) =>
-  tool === "question" || tool === "plan_exit" ? "waiting" : null;
-
-// Updates tracker (title / rootSessionId / subagents / state) as a side effect
-// and returns the new state string, or null when the event changes no state.
-const reduceEvent = (tracker, event) => {
-  const type = event && event.type;
-  const props = (event && event.properties) || {};
-  let next = null;
-  switch (type) {
-    case "session.created":
-    case "session.updated": {
-      const info = props.info || {};
-      if (info.parentID) {
-        if (info.id) tracker.subagents.add(info.id);
-      } else {
-        if (info.id) tracker.rootSessionId = info.id;
-        if (typeof info.title === "string") tracker.title = info.title;
-      }
-      break;
-    }
-    case "session.deleted": {
-      const id = props.info && props.info.id;
-      if (id) tracker.subagents.delete(id);
-      break;
-    }
-    case "message.updated":
-      next = props.info && props.info.role === "user" ? "working" : null;
-      break;
-    case "session.status":
-      next = props.status && props.status.type === "busy" ? "working" : null;
-      break;
-    case "session.idle": {
-      const id = props.sessionID;
-      next = id && tracker.subagents.has(id) ? null : "done";
-      break;
-    }
-    case "session.error":
-      next = "done";
-      break;
-  }
-  if (next !== null) tracker.state = next;
-  return next;
-};
+const isWaitingTool = (tool) => tool === "question" || tool === "plan_exit";
 
 const TmuxStatus = async ({ client, directory }) => {
   const pane = process.env.TMUX_PANE;
@@ -69,23 +19,28 @@ const TmuxStatus = async ({ client, directory }) => {
   const file = join(STATE_DIR, `${id}.json`);
   const tmpFile = join(STATE_DIR, `${id}.${process.pid}.tmp`);
   const project = directory ? basename(directory) : "";
-  const tracker = freshTracker();
 
-  // Inactivity timer: if no busy event arrives for 2s after the last one,
-  // we consider the turn done. This handles both root idle and subagent patterns.
-  let inactivityTimer = null;
+  let state = INITIAL;
+  let title = "";
+  let rootSessionId = null;
+  // Every session that is currently processing — the root AND any subagents.
+  // A subagent (or a long-running tool) keeps its session in here, so the pane
+  // no longer flips to "done" while work is still in flight.
+  const busy = new Set();
+  // Sticky while we're blocked on the user (permission / question / plan_exit);
+  // only cleared once work resumes or the whole turn ends.
+  let waiting = false;
   let workingTimer = null;
 
   try {
     mkdirSync(STATE_DIR, { recursive: true });
   } catch {}
 
-  const write = (nextState = null) => {
-    if (nextState !== null) tracker.state = nextState;
+  const write = () => {
     const payload = JSON.stringify({
       pane,
-      state: tracker.state,
-      title: tracker.title,
+      state,
+      title,
       project,
       pid: process.pid,
       updatedAt: Date.now(),
@@ -96,37 +51,63 @@ const TmuxStatus = async ({ client, directory }) => {
     } catch {}
   };
 
-  const armInactivity = () => {
-    if (inactivityTimer) clearTimeout(inactivityTimer);
-    inactivityTimer = setTimeout(() => {
-      inactivityTimer = null;
-      if (tracker.state === "working") write("done");
-    }, 8000);
+  const setState = (next) => {
+    if (next === state) return;
+    state = next;
+    write();
   };
 
-  const setWorking = () => {
-    if (workingTimer) clearTimeout(workingTimer);
-    workingTimer = setTimeout(() => {
+  const clearWorkingTimer = () => {
+    if (workingTimer) {
+      clearTimeout(workingTimer);
       workingTimer = null;
-      if (tracker.state !== "done" && tracker.state !== "waiting") {
-        write("working");
-        armInactivity();
-      }
-    }, 300);
+    }
   };
 
-  const setDone = () => {
-    if (workingTimer) { clearTimeout(workingTimer); workingTimer = null; }
-    if (inactivityTimer) { clearTimeout(inactivityTimer); inactivityTimer = null; }
-    write("done");
+  // Derive the pane state from what is actually running. Never overrides
+  // "waiting" — that stays until work resumes or the turn fully ends.
+  const refresh = () => {
+    if (waiting) return;
+    setState(busy.size > 0 ? "working" : "done");
+  };
+
+  const markBusy = (sid) => {
+    if (sid) busy.add(sid);
+    waiting = false;
+    if (state === "working") return;
+    // Debounce so sub-300ms blips don't churn the state file.
+    if (!workingTimer) {
+      workingTimer = setTimeout(() => {
+        workingTimer = null;
+        if (!waiting && busy.size > 0) setState("working");
+      }, 300);
+    }
+  };
+
+  const markIdle = (sid) => {
+    if (sid) busy.delete(sid);
+    // Once nothing is processing, the turn is over: drop any "waiting" hold.
+    if (busy.size === 0) {
+      waiting = false;
+      clearWorkingTimer();
+    }
+    refresh();
+  };
+
+  const setWaiting = () => {
+    waiting = true;
+    clearWorkingTimer();
+    setState("waiting");
   };
 
   // Register exit cleanup BEFORE first write (defensive ordering)
   process.once("exit", () => {
-    try { rmSync(file); } catch {}
+    try {
+      rmSync(file);
+    } catch {}
   });
 
-  write(INITIAL);
+  write();
 
   // Best-effort title seed — deferred so we don't block plugin init.
   // client.session.list() may hang if called before the server is ready.
@@ -141,61 +122,66 @@ const TmuxStatus = async ({ client, directory }) => {
             ((b.time && b.time.updated) || 0) - ((a.time && a.time.updated) || 0)
         )[0];
       if (root) {
-        tracker.rootSessionId = root.id;
-        if (typeof root.title === "string") tracker.title = root.title;
-        write(null);
+        rootSessionId = root.id;
+        if (typeof root.title === "string" && root.title !== title) {
+          title = root.title;
+          write();
+        }
       }
     } catch {}
   }, 0);
 
   return {
     event: async ({ event }) => {
-      const prevTitle = tracker.title;
       const type = event && event.type;
       const props = (event && event.properties) || {};
 
-      // Handle working/done transitions directly to use the debounce/immediate logic.
-      if (type === "message.updated" && props.info && props.info.role === "user") {
-        reduceEvent(tracker, event);
-        setWorking();
-        return;
-      }
-      if (type === "session.status") {
-        if (props.status && props.status.type === "busy") {
-          // Each busy pulse resets the inactivity timer.
-          if (inactivityTimer) { clearTimeout(inactivityTimer); inactivityTimer = null; }
-          setWorking();
+      switch (type) {
+        case "session.created":
+        case "session.updated": {
+          const info = props.info || {};
+          // Subagent metadata — its busy/idle is tracked via session.status.
+          if (info.parentID) break;
+          if (info.id) rootSessionId = info.id;
+          if (typeof info.title === "string" && info.title !== title) {
+            title = info.title;
+            write();
+          }
+          break;
         }
-        // session.status idle has no sessionID — can't tell root from subagent, ignore.
-        return;
+        case "session.status": {
+          const t = props.status && props.status.type;
+          if (t === "busy") markBusy(props.sessionID);
+          else if (t === "idle") markIdle(props.sessionID);
+          // "retry" — keep current state.
+          break;
+        }
+        case "session.idle":
+          markIdle(props.sessionID);
+          break;
+        case "session.deleted":
+          markIdle(props.info && props.info.id);
+          break;
+        case "session.error": {
+          if (props.sessionID) busy.delete(props.sessionID);
+          else busy.clear();
+          waiting = false;
+          clearWorkingTimer();
+          refresh();
+          break;
+        }
+        case "message.updated":
+          if (props.info && props.info.role === "user") {
+            markBusy(props.info.sessionID);
+          }
+          break;
       }
-      if (type === "session.idle") {
-        const sid = props.sessionID;
-        // Only set done for the root session; subagent idle means root is still working.
-        if (sid && tracker.subagents.has(sid)) return;
-        setDone();
-        return;
-      }
-      if (type === "session.error") {
-        setDone();
-        return;
-      }
-
-      // All other events (session.created/updated/deleted, etc.) — update tracker
-      // metadata and write if title changed.
-      const next = reduceEvent(tracker, event);
-      if (next !== null || tracker.title !== prevTitle) write(next);
     },
     "permission.ask": async () => {
-      if (workingTimer) { clearTimeout(workingTimer); workingTimer = null; }
-      write("waiting");
+      setWaiting();
     },
     "tool.execute.before": async (input) => {
-      const s = stateForTool(input && input.tool);
-      if (s) {
-        if (workingTimer) { clearTimeout(workingTimer); workingTimer = null; }
-        write(s);
-      }
+      if (isWaitingTool(input && input.tool)) setWaiting();
     },
   };
 };
