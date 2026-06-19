@@ -37,9 +37,17 @@ Extrahiere aus der CSV (gefilterte Under-Review-Ansicht):
 
 Verknüpfe CSV-Zeilen mit HTML-Dateien über den Issue-Titel (aus dem `--- Zur Erinnerung`-Block in der E-Mail-Vorlage).
 
-## Schritt 3: E-Mail-Vorlagen zusammenführen
+## Schritt 3: Antwortvorschlag generieren
 
-**Einzelnes Ticket** (1 Ticket pro Person+Gemeinde): originale Vorlage aus der HTML unverändert übernehmen.
+Generiere pro Person+Gemeinde einen Antwortvorschlag auf Basis der Ticket-Beschreibungen, der Seitenkommentare und des Kontexts aus dem Chat-Verlauf in der Ticket-HTML. Der Vorschlag soll:
+- auf alle Tickets der Person eingehen
+- den internen Kommentar (Seitenkommentar) als Hintergrundwissen verwenden, aber nicht wörtlich zitieren
+- professionell und knapp formuliert sein (1–3 Sätze pro Ticket)
+- auf Deutsch sein
+
+## Schritt 4: E-Mail-Vorlagen zusammenführen
+
+**Einzelnes Ticket** (1 Ticket pro Person+Gemeinde): originale Vorlage aus der HTML, mit dem Antwortvorschlag anstelle von `[ANTWORT HIER EINFÜGEN]`, ebenfalls mit dem Hinweis `⚠️ ANTWORTVORSCHLAG – bitte vor dem Versenden prüfen und anpassen:` davor.
 
 **Mehrere Tickets** (gleiche Person+Gemeinde): zusammengeführte Vorlage nach diesem Format:
 
@@ -52,7 +60,8 @@ Hallo Herr/Frau XXXX,
 
 vielen Dank für Ihre gemeldeten Tickets. Gerne möchten wir Ihnen hierzu gesammelt eine Rückmeldung geben.
 
-[ANTWORT HIER EINFÜGEN]
+⚠️ ANTWORTVORSCHLAG – bitte vor dem Versenden prüfen und anpassen:
+<Antwortvorschlag aus Schritt 3>
 
 Bei weiteren Fragen stehen wir Ihnen gerne zur Verfügung.
 
