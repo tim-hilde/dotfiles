@@ -23,12 +23,13 @@ const TmuxStatus = async ({ client, directory }) => {
   let state = INITIAL;
   let title = "";
   let rootSessionId = null;
-  // Every session that is currently processing — the root AND any subagents.
-  // A subagent (or a long-running tool) keeps its session in here, so the pane
-  // no longer flips to "done" while work is still in flight.
-  const busy = new Set();
-  // Sticky while we're blocked on the user (permission / question / plan_exit);
-  // only cleared once work resumes or the whole turn ends.
+  // Child (subagent) session ids. opencode keeps the ROOT session "busy" for
+  // the whole turn — through every tool call and subagent — and only emits its
+  // idle once everything has finished. So the root's idle is the authoritative
+  // "done" signal; a subagent's idle just means one subagent finished while the
+  // root keeps working, and must be ignored.
+  const subagents = new Set();
+  // Sticky while we're blocked on the user (permission / question / plan_exit).
   let waiting = false;
   let workingTimer = null;
 
@@ -64,40 +65,35 @@ const TmuxStatus = async ({ client, directory }) => {
     }
   };
 
-  // Derive the pane state from what is actually running. Never overrides
-  // "waiting" — that stays until work resumes or the turn fully ends.
-  const refresh = () => {
-    if (waiting) return;
-    setState(busy.size > 0 ? "working" : "done");
-  };
-
-  const markBusy = (sid) => {
-    if (sid) busy.add(sid);
+  const setWorking = () => {
     waiting = false;
     if (state === "working") return;
     // Debounce so sub-300ms blips don't churn the state file.
     if (!workingTimer) {
       workingTimer = setTimeout(() => {
         workingTimer = null;
-        if (!waiting && busy.size > 0) setState("working");
+        if (!waiting) setState("working");
       }, 300);
     }
   };
 
-  const markIdle = (sid) => {
-    if (sid) busy.delete(sid);
-    // Once nothing is processing, the turn is over: drop any "waiting" hold.
-    if (busy.size === 0) {
-      waiting = false;
-      clearWorkingTimer();
-    }
-    refresh();
+  const setDone = () => {
+    clearWorkingTimer();
+    waiting = false;
+    setState("done");
   };
 
   const setWaiting = () => {
-    waiting = true;
     clearWorkingTimer();
+    waiting = true;
     setState("waiting");
+  };
+
+  // A subagent going idle means the root is still working -> ignore it.
+  // Any other (root) idle ends the whole turn.
+  const onIdle = (sid) => {
+    if (sid && subagents.has(sid)) return;
+    setDone();
   };
 
   // Register exit cleanup BEFORE first write (defensive ordering)
@@ -140,8 +136,10 @@ const TmuxStatus = async ({ client, directory }) => {
         case "session.created":
         case "session.updated": {
           const info = props.info || {};
-          // Subagent metadata — its busy/idle is tracked via session.status.
-          if (info.parentID) break;
+          if (info.parentID) {
+            if (info.id) subagents.add(info.id);
+            break;
+          }
           if (info.id) rootSessionId = info.id;
           if (typeof info.title === "string" && info.title !== title) {
             title = info.title;
@@ -151,29 +149,24 @@ const TmuxStatus = async ({ client, directory }) => {
         }
         case "session.status": {
           const t = props.status && props.status.type;
-          if (t === "busy") markBusy(props.sessionID);
-          else if (t === "idle") markIdle(props.sessionID);
+          if (t === "busy") setWorking();
+          else if (t === "idle") onIdle(props.sessionID);
           // "retry" — keep current state.
           break;
         }
         case "session.idle":
-          markIdle(props.sessionID);
+          onIdle(props.sessionID);
           break;
-        case "session.deleted":
-          markIdle(props.info && props.info.id);
+        case "session.error":
+          onIdle(props.sessionID);
           break;
-        case "session.error": {
-          if (props.sessionID) busy.delete(props.sessionID);
-          else busy.clear();
-          waiting = false;
-          clearWorkingTimer();
-          refresh();
+        case "session.deleted": {
+          const sid = props.info && props.info.id;
+          if (sid) subagents.delete(sid);
           break;
         }
         case "message.updated":
-          if (props.info && props.info.role === "user") {
-            markBusy(props.info.sessionID);
-          }
+          if (props.info && props.info.role === "user") setWorking();
           break;
       }
     },
