@@ -30,6 +30,7 @@ ExportBlock-*.zip
 Extrahiere aus jeder Ticket-HTML:
 - **E-Mail-Vorlage**: aus dem `<code>`-Block der `EMAIL:` enthält
 - **Notion-URL**: aus der Page-ID im Dateinamen (`<hex32>.html` → `https://app.notion.com/p/<hex32>`)
+- **Seitenkommentare**: aus dem Abschnitt `Seitenkommentare` in der HTML – enthält interne Kommentare von Tim mit Datum und Text
 
 Extrahiere aus der CSV (gefilterte Under-Review-Ansicht):
 - `Issue` (Titel), `Municipality`, `User-Email`, `Description`, `Variant`, `Status`
@@ -77,6 +78,7 @@ Gruppiere nach **Municipality** (erste Ebene) und **User-Email** (zweite Ebene).
 
 Pro Nutzergruppe:
 - Ticket-Liste: Titel als Link zur Notion-Seite, kurze Beschreibung, Variant-Badge (Bug/Feature)
+- Seitenkommentare je Ticket als hervorgehobener interner Hinweisblock (Autor + Datum + Text), direkt unter der Ticket-Beschreibung – immer anzeigen, sofern vorhanden
 - Zusammengeführte E-Mail-Vorlage als kopierbare `<textarea>` mit Kopieren-Button
 
 Zusammenfassungsleiste oben: Anzahl Tickets, Gemeinden, Nutzer.
