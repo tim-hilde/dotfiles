@@ -165,6 +165,17 @@ const TmuxStatus = async ({ client, directory }) => {
           if (sid) subagents.delete(sid);
           break;
         }
+        // A permission prompt is published as a bus event (the plugin
+        // "permission.ask" hook is unreliable across versions). The session
+        // stays busy meanwhile, so without this it would just read "working".
+        case "permission.asked":
+        case "permission.updated":
+          setWaiting();
+          break;
+        case "permission.replied":
+          // User answered -> work resumes; a later idle settles it to done.
+          setWorking();
+          break;
         case "message.updated":
           if (props.info && props.info.role === "user") setWorking();
           break;
