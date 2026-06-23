@@ -6,8 +6,8 @@
     "superpowers@git+https://github.com/obra/superpowers.git#v6.0.3",
     "opencode-update-notifier",
     "@tim_hilde/opencode-insights",
-    "@slkiser/opencode-quota@3.9",
-    "context-mode@1.0.162",
+    "@slkiser/opencode-quota@3.10.1",
+    "context-mode@1.0.166",
     "@whisperopencode/push"
   ],
   "experimental": {
