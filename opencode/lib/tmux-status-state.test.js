@@ -54,7 +54,7 @@ const subagentCreated = (id) => ev("session.created", { info: { id, parentID: "s
 const rootUpdated = (title) => ev("session.updated", { info: { id: "ses_root", title } });
 
 function toWorking(h) {
-  h.m.handleEvent(userMsg());
+  h.m.handleEvent(busy());
   h.advance(WORKING_DEBOUNCE_MS);
   assert.equal(h.state(), "working");
 }
@@ -157,16 +157,39 @@ test("title update from root session triggers a write", () => {
   assert.equal(h.writes.some((w) => w.title === "Fix idle detection"), true);
 });
 
-test("user message resumes work after done", () => {
+test("session.status busy resumes work after done", () => {
   const h = harness();
   toWorking(h);
   h.m.handleEvent(sessionIdle());
   h.advance(IDLE_SETTLE_MS);
   assert.equal(h.state(), "done");
 
-  h.m.handleEvent(userMsg());
+  h.m.handleEvent(busy());
   h.advance(WORKING_DEBOUNCE_MS);
   assert.equal(h.state(), "working");
+});
+
+// REGRESSION (opencode 1.17.x): after a turn goes idle, opencode re-emits a
+// message.updated for the SAME user prompt. That must NOT cancel the settle or
+// revert the pane to working — otherwise finished sessions stay stuck on
+// "working" forever. session.status busy is the only "working" trigger.
+test("user message.updated re-emitted after idle does not revert to working", () => {
+  const h = harness();
+  toWorking(h);
+  h.m.handleEvent(sessionIdle());     // turn ends
+  h.advance(50);
+  h.m.handleEvent(userMsg());         // 1.17.x post-turn re-emit of the prompt
+  h.advance(IDLE_SETTLE_MS);
+  assert.equal(h.state(), "done");
+  assert.equal(h.writes.some((w) => w.state === "done"), true);
+});
+
+test("message.updated role=user does not by itself set working", () => {
+  const h = harness();
+  assert.equal(h.state(), "done");
+  h.m.handleEvent(userMsg());
+  h.advance(WORKING_DEBOUNCE_MS * 2);
+  assert.equal(h.state(), "done", "only session.status busy drives working");
 });
 
 test("rapid idle/busy/idle only the final idle settles to done", () => {

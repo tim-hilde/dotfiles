@@ -139,9 +139,10 @@ export function createStatusMachine({
         // User answered -> work resumes; a later idle settles it to done.
         setWorking();
         break;
-      case "message.updated":
-        if (props.info && props.info.role === "user") setWorking();
-        break;
+      // NB: message.updated is intentionally NOT a "working" trigger. opencode
+      // 1.17.x re-emits the user prompt's message.updated AFTER the turn goes
+      // idle, which previously reverted the pane to "working" and left finished
+      // sessions stuck. session.status busy is the authoritative working signal.
     }
   };
 
