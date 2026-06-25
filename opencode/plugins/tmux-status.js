@@ -1,10 +1,14 @@
-import { writeFileSync, renameSync, mkdirSync, rmSync } from "node:fs";
+import { writeFileSync, renameSync, mkdirSync, rmSync, appendFileSync } from "node:fs";
 import { join, basename } from "node:path";
 import { homedir } from "node:os";
 import { createStatusMachine } from "../lib/tmux-status-state.js";
 
 const STATE_DIR =
   process.env.OC_TMUX_STATE_DIR || join(homedir(), ".cache", "opencode-tmux");
+
+// Temporary diagnostics: set OC_TMUX_DEBUG=1 to log every event + state write
+// to ~/.cache/opencode-tmux/debug-<pane>.log. Off by default.
+const DEBUG = process.env.OC_TMUX_DEBUG === "1";
 
 const sanitizePaneId = (pane) => String(pane).replace(/^%/, "");
 
@@ -23,8 +27,20 @@ const TmuxStatus = async ({ client, directory }) => {
     mkdirSync(STATE_DIR, { recursive: true });
   } catch {}
 
+  const dbg = DEBUG
+    ? (line) => {
+        try {
+          appendFileSync(
+            join(STATE_DIR, `debug-${id}.log`),
+            `${new Date().toISOString()} ${line}\n`
+          );
+        } catch {}
+      }
+    : () => {};
+
   // Atomic write: write to <file>.tmp, then rename() over <file>.
   const writeState = (snapshot) => {
+    dbg(`WRITE state=${snapshot.state} title=${JSON.stringify(snapshot.title)}`);
     const payload = JSON.stringify({
       pane,
       state: snapshot.state,
@@ -76,13 +92,29 @@ const TmuxStatus = async ({ client, directory }) => {
 
   return {
     event: async ({ event }) => {
+      if (DEBUG) {
+        const p = (event && event.properties) || {};
+        dbg(
+          `EVENT ${event && event.type}` +
+            ` sid=${p.sessionID ?? ""}` +
+            ` id=${(p.info && p.info.id) ?? ""}` +
+            ` parent=${(p.info && p.info.parentID) ?? ""}` +
+            ` status=${(p.status && p.status.type) ?? ""}` +
+            ` role=${(p.info && p.info.role) ?? ""}`
+        );
+      }
       machine.handleEvent(event);
     },
     "permission.ask": async () => {
+      dbg("HOOK permission.ask");
       machine.markWaiting();
     },
     "tool.execute.before": async (input) => {
-      if (isWaitingTool(input && input.tool)) machine.markWaiting();
+      const tool = input && input.tool;
+      if (isWaitingTool(tool)) {
+        dbg(`HOOK tool.execute.before tool=${tool}`);
+        machine.markWaiting();
+      }
     },
   };
 };
