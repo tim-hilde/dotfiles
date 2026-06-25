@@ -5,13 +5,14 @@ tap "buo/cask-upgrade", trusted: true
 tap "candid82/brew", trusted: true
 tap "charmbracelet/tap", trusted: true
 tap "darrylmorley/whatcable", trusted: true
+tap "domt4/autoupdate", "https://github.com/DomT4/homebrew-autoupdate.git"
+tap "duongductrong/snapzy", "https://github.com/duongductrong/Snapzy", trusted: true
 tap "farion1231/ccswitch", trusted: true
 tap "federico-terzi/espanso", trusted: true
-tap "felixkratz/formulae", trusted: true
+tap "felixkratz/formulae", "https://github.com/FelixKratz/homebrew-formulae", trusted: true
 tap "finnvoor/tools", trusted: true
 tap "gechr/tap", trusted: true
 tap "get-woke/tap", trusted: true
-tap "homebrew/autoupdate"
 tap "infisical/get-cli", trusted: true
 tap "j178/tap", trusted: true
 tap "jackielii/tap", trusted: true
@@ -94,6 +95,8 @@ brew "ffmpeg"
 brew "tesseract"
 # Create thumbnails for your video files
 brew "ffmpegthumbnailer"
+# LLVM's OpenMP runtime library
+brew "libomp"
 # Banner-like program prints strings as ASCII art
 brew "figlet"
 # Command-line fuzzy finder written in Go
@@ -348,6 +351,8 @@ cask "raycast"
 cask "shottr"
 # Team communication and collaboration software
 cask "slack"
+# Native macOS screenshots, recording, annotation, and editing from the menu bar
+cask "duongductrong/snapzy/snapzy"
 # Video game digital distribution service
 cask "steam"
 # Quicklook extension for source files
