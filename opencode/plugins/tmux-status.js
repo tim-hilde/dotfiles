@@ -1,11 +1,10 @@
 import { writeFileSync, renameSync, mkdirSync, rmSync } from "node:fs";
 import { join, basename } from "node:path";
 import { homedir } from "node:os";
+import { createStatusMachine } from "../lib/tmux-status-state.js";
 
 const STATE_DIR =
   process.env.OC_TMUX_STATE_DIR || join(homedir(), ".cache", "opencode-tmux");
-
-const INITIAL = "done";
 
 const sanitizePaneId = (pane) => String(pane).replace(/^%/, "");
 
@@ -20,28 +19,16 @@ const TmuxStatus = async ({ client, directory }) => {
   const tmpFile = join(STATE_DIR, `${id}.${process.pid}.tmp`);
   const project = directory ? basename(directory) : "";
 
-  let state = INITIAL;
-  let title = "";
-  let rootSessionId = null;
-  // Child (subagent) session ids. opencode keeps the ROOT session "busy" for
-  // the whole turn — through every tool call and subagent — and only emits its
-  // idle once everything has finished. So the root's idle is the authoritative
-  // "done" signal; a subagent's idle just means one subagent finished while the
-  // root keeps working, and must be ignored.
-  const subagents = new Set();
-  // Sticky while we're blocked on the user (permission / question / plan_exit).
-  let waiting = false;
-  let workingTimer = null;
-
   try {
     mkdirSync(STATE_DIR, { recursive: true });
   } catch {}
 
-  const write = () => {
+  // Atomic write: write to <file>.tmp, then rename() over <file>.
+  const writeState = (snapshot) => {
     const payload = JSON.stringify({
       pane,
-      state,
-      title,
+      state: snapshot.state,
+      title: snapshot.title,
       project,
       pid: process.pid,
       updatedAt: Date.now(),
@@ -52,49 +39,9 @@ const TmuxStatus = async ({ client, directory }) => {
     } catch {}
   };
 
-  const setState = (next) => {
-    if (next === state) return;
-    state = next;
-    write();
-  };
-
-  const clearWorkingTimer = () => {
-    if (workingTimer) {
-      clearTimeout(workingTimer);
-      workingTimer = null;
-    }
-  };
-
-  const setWorking = () => {
-    waiting = false;
-    if (state === "working") return;
-    // Debounce so sub-300ms blips don't churn the state file.
-    if (!workingTimer) {
-      workingTimer = setTimeout(() => {
-        workingTimer = null;
-        if (!waiting) setState("working");
-      }, 300);
-    }
-  };
-
-  const setDone = () => {
-    clearWorkingTimer();
-    waiting = false;
-    setState("done");
-  };
-
-  const setWaiting = () => {
-    clearWorkingTimer();
-    waiting = true;
-    setState("waiting");
-  };
-
-  // A subagent going idle means the root is still working -> ignore it.
-  // Any other (root) idle ends the whole turn.
-  const onIdle = (sid) => {
-    if (sid && subagents.has(sid)) return;
-    setDone();
-  };
+  // All state transitions (working debounce, idle settle, subagent filtering,
+  // waiting stickiness) live in the pure, tested machine.
+  const machine = createStatusMachine({ onChange: writeState });
 
   // Register exit cleanup BEFORE first write (defensive ordering)
   process.once("exit", () => {
@@ -103,7 +50,7 @@ const TmuxStatus = async ({ client, directory }) => {
     } catch {}
   });
 
-  write();
+  writeState(machine.getSnapshot());
 
   // Best-effort title seed — deferred so we don't block plugin init.
   // client.session.list() may hang if called before the server is ready.
@@ -118,74 +65,24 @@ const TmuxStatus = async ({ client, directory }) => {
             ((b.time && b.time.updated) || 0) - ((a.time && a.time.updated) || 0)
         )[0];
       if (root) {
-        rootSessionId = root.id;
-        if (typeof root.title === "string" && root.title !== title) {
-          title = root.title;
-          write();
-        }
+        // Feed it as a session.updated so the machine tracks the root id + title.
+        machine.handleEvent({
+          type: "session.updated",
+          properties: { info: { id: root.id, title: root.title } },
+        });
       }
     } catch {}
   }, 0);
 
   return {
     event: async ({ event }) => {
-      const type = event && event.type;
-      const props = (event && event.properties) || {};
-
-      switch (type) {
-        case "session.created":
-        case "session.updated": {
-          const info = props.info || {};
-          if (info.parentID) {
-            if (info.id) subagents.add(info.id);
-            break;
-          }
-          if (info.id) rootSessionId = info.id;
-          if (typeof info.title === "string" && info.title !== title) {
-            title = info.title;
-            write();
-          }
-          break;
-        }
-        case "session.status": {
-          const t = props.status && props.status.type;
-          if (t === "busy") setWorking();
-          else if (t === "idle") onIdle(props.sessionID);
-          // "retry" — keep current state.
-          break;
-        }
-        case "session.idle":
-          onIdle(props.sessionID);
-          break;
-        case "session.error":
-          onIdle(props.sessionID);
-          break;
-        case "session.deleted": {
-          const sid = props.info && props.info.id;
-          if (sid) subagents.delete(sid);
-          break;
-        }
-        // A permission prompt is published as a bus event (the plugin
-        // "permission.ask" hook is unreliable across versions). The session
-        // stays busy meanwhile, so without this it would just read "working".
-        case "permission.asked":
-        case "permission.updated":
-          setWaiting();
-          break;
-        case "permission.replied":
-          // User answered -> work resumes; a later idle settles it to done.
-          setWorking();
-          break;
-        case "message.updated":
-          if (props.info && props.info.role === "user") setWorking();
-          break;
-      }
+      machine.handleEvent(event);
     },
     "permission.ask": async () => {
-      setWaiting();
+      machine.markWaiting();
     },
     "tool.execute.before": async (input) => {
-      if (isWaitingTool(input && input.tool)) setWaiting();
+      if (isWaitingTool(input && input.tool)) machine.markWaiting();
     },
   };
 };
