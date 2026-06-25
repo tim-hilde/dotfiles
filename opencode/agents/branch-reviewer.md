@@ -1,6 +1,6 @@
 ---
 description: Read-only code reviewer for a branch diff. Invoked programmatically by the /review-branch flow. Loads the requesting-code-review / code-review-skill, reviews a passed diff plus test results, and returns prioritized findings with a machine-parsable STATUS line.
-mode: subagent
+mode: all
 hidden: true
 model: anthropic/claude-opus-4-8
 reasoningEffort: xhigh
