@@ -52,3 +52,11 @@ Rules:
 - Omit empty sections. If there are no findings at all and tests are green, output a one-line "No issues found." above `STATUS: CLEAN`.
 - Cite `file:line` for every finding. No vague feedback.
 - Do not propose to make the edits yourself — you are read-only.
+
+## Research via Subagents
+
+You MAY dispatch subagents via the Task tool to fetch context you need:
+- Files referenced in the diff but not part of it (e.g. types, interfaces, base classes)
+- Adjacent modules to check for duplication or coupling
+
+Only do this when the diff alone is insufficient to assess correctness. Synthesize findings into your report — do not include raw subagent output.
