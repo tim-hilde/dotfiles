@@ -27,7 +27,7 @@ Repeat until `STATUS: CLEAN`, or stop after 5 rounds:
 
 1. Build the diff: `git diff origin/<target>..<source> -- . ':(exclude)*.lock'`.
 2. Run the detected test command. Capture pass/fail and the relevant output.
-3. Dispatch the `branch-reviewer` subagent via the Task tool, passing it: the target/source refs, the diff (or the diff command), and the test result.
+3. Dispatch the `branch-reviewer` subagent via the Task tool, passing it: the target/source refs, the diff (or the diff command), and the test result. Not more. Do not instruct the reviewer how do review or what to focus on and give no additional context. The reviewer will not what to do.
 4. Read the subagent's reply and the final `STATUS:` line.
    - `STATUS: CLEAN` → stop the loop, go to Report.
    - `STATUS: BLOCKERS` → fix the listed blockers yourself (follow `receiving-code-review` and `verification-before-completion`), then start the next round with a fresh diff and a fresh test run.
