@@ -14,6 +14,7 @@ Run a review-fix-reverify loop on the branch `$ARGUMENTS` (default: the current 
 ## Detect the test command (generic)
 
 Find how this project runs its tests, in this order:
+
 1. A "Commands" / "Test" section in the project's `AGENTS.md` or `CLAUDE.md`.
 2. Common markers: `package.json` (`scripts.test`), `Makefile` (`test` target), `pyproject.toml` / `pytest.ini` (pytest), `Cargo.toml` (`cargo test`), `go.mod` (`go test ./...`).
 3. If nothing is unambiguous, ask the user for the test command.
@@ -35,9 +36,10 @@ Repeat until `STATUS: CLEAN`, or stop after 5 rounds:
 ## Report
 
 Output a short summary:
+
 - final status (clean / stopped with N blockers remaining)
 - rounds used
 - the latest findings (Blockers / Should fix / Nice to have)
 - the test command and its last result
 
-This loop is best-effort, not a guarantee. After a clean result you can run `/pr-summary <branch>` to produce the PR description.
+This loop is best-effort, not a guarantee. After a clean result you can run `/pr <branch>` to produce the PR description.
