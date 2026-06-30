@@ -1,0 +1,37 @@
+kannst du mal ein lookup dieser ips machen?
+
+
+
+-- 3) ROHZEILEN fuer eine konkrete verdaechtige IP (Detail-Drilldown)
+--    <VERDAECHTIGE_IP> ersetzen. Klein, weil nach IP gefiltert.
+select
+  format_timestamp('%Y-%m-%d %H:%M:%S', timestamp, 'Europe/Berlin') as zeit_lokal,
+  h.cf_connecting_ip,                          -- IP mit ausgeben, da mehrere
+  r.method,
+  r.path,
+  r.search,
+  resp.status_code,
+  h.user_agent,
+  h.referer
+from edge_logs
+cross join unnest(metadata)   as m
+cross join unnest(m.request)  as r
+cross join unnest(r.headers)  as h
+cross join unnest(m.response) as resp
+where (
+  h.cf_connecting_ip like '193.32.248.%'
+  or h.cf_connecting_ip like '135.119.73.164'
+  or h.cf_connecting_ip like '194.8.199.29'
+  or h.cf_connecting_ip like '212.114.197.130'
+  or h.cf_connecting_ip like '212.184.216.254'
+  or h.cf_connecting_ip like '47.79.%'
+  or h.cf_connecting_ip like '63.33.67.191'
+  or h.cf_connecting_ip like '77.244.107.50'
+  or h.cf_connecting_ip like '87.130.56.211'
+  or h.cf_connecting_ip like '91.102.141.32'
+  or h.cf_connecting_ip like '92.79.22.46'
+)order by timestamp desc
+limit 500;
+
+
+
