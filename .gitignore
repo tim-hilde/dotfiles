@@ -35,6 +35,9 @@ alfred/Alfred.alfredpreferences/workflows/user.workflow.9F1A82EF-EA61-4C1C-91BE-
 # tmux plugins
 tmux/plugins
 
+# tmux scratch / decision aids
+tmux/agent-status-proposals.html
+
 .repro
 .vectorcode
 /opencode/opencode-notifier-state.json
