@@ -10,6 +10,9 @@ Run a review-fix-reverify loop on the branch `$ARGUMENTS` (default: the current 
 1. `git fetch origin`.
 2. Determine the target branch: use `origin/staging` if it exists, else `origin/dev`. If neither exists, ask the user.
 3. Determine the source ref: `$ARGUMENTS` if given, else current `HEAD`.
+4. Resolve `SOURCE_SHA=$(git rev-parse <source>)` and `HEAD_SHA=$(git rev-parse HEAD)`. If they differ, run `git worktree list` and look for a worktree already checked out at `<source>` / `SOURCE_SHA`.
+   - Found → stop and tell the user to re-run `/review-branch` from that worktree path. The reviewer reads file context from the current working tree, so it must match the branch under review.
+   - Not found → warn the user that context reads (beyond the diff itself) will reflect the currently checked-out branch, not `<source>`, before proceeding.
 
 ## Detect the test command (generic)
 
@@ -25,12 +28,12 @@ Preserve any required prefix/wrapper exactly as documented (env loaders, runners
 
 Repeat until `STATUS: CLEAN`, or stop after 5 rounds:
 
-1. Build the diff: `git diff origin/<target>..<source> -- . ':(exclude)*.lock'`.
+1. Build the diff once: `git diff origin/<target>..<source> -- . ':(exclude)*.lock'`. Capture the output as text.
 2. Run the detected test command. Capture pass/fail and the relevant output.
-3. Dispatch the `branch-reviewer` subagent via the Task tool, passing it: the target/source refs, the diff (or the diff command), and the test result. Not more. Do not instruct the reviewer how do review or what to focus on and give no additional context. The reviewer will not what to do.
+3. Dispatch the `branch-reviewer` subagent via the Task tool, passing it: the target/source refs, the resolved source SHA, the diff **text** (not the diff command), and the test result. Not more. Do not instruct the reviewer how do review or what to focus on and give no additional context. The reviewer will not what to do.
 4. Read the subagent's reply and the final `STATUS:` line.
    - `STATUS: CLEAN` → stop the loop, go to Report.
-   - `STATUS: BLOCKERS` → fix the listed blockers yourself (follow `receiving-code-review` and `verification-before-completion`), then start the next round with a fresh diff and a fresh test run.
+   - `STATUS: BLOCKERS` → fix the listed 🔴 Blocking findings yourself (follow `receiving-code-review` and `verification-before-completion`). Best-effort fix any 🟡 Important findings too if straightforward. Then start the next round with a fresh diff and a fresh test run.
 5. If round 5 ends still on `STATUS: BLOCKERS`, stop and report the remaining blockers — do not loop forever.
 
 ## Report
@@ -39,7 +42,7 @@ Output a short summary:
 
 - final status (clean / stopped with N blockers remaining)
 - rounds used
-- the latest findings (Blockers / Should fix / Nice to have)
+- the latest findings in full: 🔴 Blocking / 🟡 Important / 🟢 Nit — include 🟡 and 🟢 even when the status is clean, they may still be relevant
 - the test command and its last result
 
 This loop is best-effort, not a guarantee. After a clean result you can run `/pr <branch>` to produce the PR description.
