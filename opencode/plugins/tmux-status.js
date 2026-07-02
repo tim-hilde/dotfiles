@@ -1,7 +1,15 @@
-import { writeFileSync, renameSync, mkdirSync, rmSync } from "node:fs";
+import {
+  writeFileSync,
+  readFileSync,
+  readdirSync,
+  renameSync,
+  mkdirSync,
+  rmSync,
+} from "node:fs";
 import { join, basename } from "node:path";
 import { homedir } from "node:os";
 import { createStatusMachine } from "../lib/tmux-status-state.js";
+import { reapStale, isProcessAlive } from "../lib/tmux-status-reap.js";
 
 const STATE_DIR =
   process.env.OC_TMUX_STATE_DIR || join(homedir(), ".cache", "opencode-tmux");
@@ -21,6 +29,18 @@ const TmuxStatus = async ({ client, directory }) => {
 
   try {
     mkdirSync(STATE_DIR, { recursive: true });
+  } catch {}
+
+  // Reap files left behind by crashed/killed sessions (no clean exit means
+  // the process.once("exit") cleanup below never ran for them).
+  try {
+    reapStale({
+      dir: STATE_DIR,
+      readdir: readdirSync,
+      readFile: (f) => readFileSync(f, "utf8"),
+      rm: rmSync,
+      isAlive: isProcessAlive,
+    });
   } catch {}
 
   // Atomic write: write to <file>.tmp, then rename() over <file>.
