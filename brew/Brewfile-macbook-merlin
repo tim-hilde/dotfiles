@@ -161,10 +161,6 @@ brew "neovim"
 brew "nmap"
 # Tools for one-time password authentication systems
 brew "oath-toolkit"
-# Search tool like grep and The Silver Searcher
-brew "ripgrep"
-# AI coding agent, built for the terminal
-brew "opencode"
 # Development kit for the Java programming language
 brew "openjdk"
 # Swiss-army knife of markup format conversion
@@ -185,6 +181,8 @@ brew "pyenv"
 brew "pyenv-virtualenv"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.9"
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
 # Extremely fast Python linter, written in Rust
 brew "ruff"
 # Safe, concurrent, practical language
@@ -237,6 +235,8 @@ brew "yt-dlp"
 brew "zoxide"
 # Fish-like fast/unobtrusive autosuggestions for zsh
 brew "zsh-autosuggestions"
+# The AI coding agent built for the terminal.
+brew "anomalyco/tap/opencode", trusted: true
 # A tiling window manager for macOS based on binary space partitioning.
 brew "asmvik/formulae/yabai"
 # Generate images of code and terminal output.
@@ -351,8 +351,8 @@ cask "raycast"
 cask "shottr"
 # Team communication and collaboration software
 cask "slack"
-# Native macOS screenshots, recording, annotation, and editing from the menu bar
-cask "duongductrong/snapzy/snapzy"
+# Native screenshots, recording, annotation, and editing from the menu bar
+cask "snapzy"
 # Video game digital distribution service
 cask "steam"
 # Quicklook extension for source files
