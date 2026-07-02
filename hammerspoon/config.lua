@@ -5,7 +5,7 @@ local config = {
 		hotkeyMods = { "cmd", "alt", "ctrl" },
 		hotkeyKey = "o",
 		pollIntervalSecs = 2,
-		stateDir = os.getenv("HOME") .. "/.cache/opencode-tmux",
+		stateDir = os.getenv("OC_TMUX_STATE_DIR") or (os.getenv("HOME") .. "/.cache/opencode-tmux"),
 	},
 }
 

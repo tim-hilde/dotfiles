@@ -19,8 +19,8 @@ while IFS=' ' read -r pane session window pane_idx; do
   pid=$(sed -n 's/.*"pid":\([0-9]*\).*/\1/p' "$f")
   kill -0 "$pid" 2>/dev/null || continue
   state=$(sed -n 's/.*"state":"\([a-z]*\)".*/\1/p' "$f")
-  title=$(sed -n 's/.*"title":"\([^"]*\)".*/\1/p' "$f")
-  project=$(sed -n 's/.*"project":"\([^"]*\)".*/\1/p' "$f")
+  title=$(sed -n 's/.*"title":"\([^"]*\)".*/\1/p' "$f" | tr -d '\t')
+  project=$(sed -n 's/.*"project":"\([^"]*\)".*/\1/p' "$f" | tr -d '\t')
   updated_at=$(sed -n 's/.*"updatedAt":\([0-9]*\).*/\1/p' "$f")
   printf '%s\t%s\t%s:%s.%s\t%s\t%s\t%s\t%s\n' \
     "$state" "$pane" "$session" "$window" "$pane_idx" "$session" "$project" "$title" "$updated_at"
