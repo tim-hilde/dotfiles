@@ -37,7 +37,10 @@ local function hasAttachedClient()
 end
 
 local function runTmux(args)
-	hs.task.new(TMUX_PATH, nil, args):start()
+	local task = hs.task.new(TMUX_PATH, nil, args)
+	if task then
+		task:start()
+	end
 end
 
 -- Bring the given agent's pane to the foreground: select it within tmux,
@@ -52,9 +55,14 @@ local function jumpTo(record)
 		end
 		runTmux({ "select-pane", "-t", record.pane })
 	else
-		hs.task
-			.new("/usr/bin/open", nil, { "-na", "Ghostty", "--args", "-e", TMUX_PATH, "attach", "-t", record.session })
-			:start()
+		local task = hs.task.new(
+			"/usr/bin/open",
+			nil,
+			{ "-na", "Ghostty", "--args", "-e", TMUX_PATH, "attach", "-t", record.session }
+		)
+		if task then
+			task:start()
+		end
 	end
 	hs.application.launchOrFocus("Ghostty")
 end
@@ -129,22 +137,23 @@ local function openPicker()
 end
 
 local function refresh()
-	hs.task
-		.new(SCRIPT_PATH, function(exitCode, stdout)
-			if exitCode ~= 0 then
-				return
-			end
-			local records = parse.sortRecords(parse.parseRecords(stdout or ""))
-			lastRecords = records
-			renderMenubar(records)
+	local task = hs.task.new(SCRIPT_PATH, function(exitCode, stdout)
+		if exitCode ~= 0 then
+			return
+		end
+		local records = parse.sortRecords(parse.parseRecords(stdout or ""))
+		lastRecords = records
+		renderMenubar(records)
 
-			local transitions, currentByPane = parse.diffTransitions(lastByPane, records)
-			for _, transition in ipairs(transitions) do
-				notifyTransition(transition)
-			end
-			lastByPane = currentByPane
-		end, {})
-		:start()
+		local transitions, currentByPane = parse.diffTransitions(lastByPane, records)
+		for _, transition in ipairs(transitions) do
+			notifyTransition(transition)
+		end
+		lastByPane = currentByPane
+	end, {})
+	if task then
+		task:start()
+	end
 end
 
 chooser = hs.chooser.new(chooserSelected)
