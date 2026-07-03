@@ -1,7 +1,7 @@
 ---
 description: Erstellt eine PR-Zusammenfassung von einem angegebenen Branch gegen staging oder dev (je nachdem, was existiert). Nutzt den pr-summary Skill.
 mode: subagent
-model: anthropic/claude-sonnet-4-6
+model: anthropic/claude-sonnet-5
 ---
 
 Du erstellst PR-Zusammenfassungen mit dem pr-summary Skill.

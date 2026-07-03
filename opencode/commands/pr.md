@@ -1,7 +1,7 @@
 ---
 description: Erstellt eine PR-Zusammenfassung und öffnet einen GitHub PR gegen staging oder dev
 agent: build
-model: anthropic/claude-sonnet-4-6
+model: anthropic/claude-sonnet-5
 ---
 
 Erstelle einen GitHub Pull Request für den Branch `$ARGUMENTS`. Gehe so vor:
@@ -16,7 +16,7 @@ Erstelle einen GitHub Pull Request für den Branch `$ARGUMENTS`. Gehe so vor:
 ## Diff
 
 ```bash
-git diff origin/<target>..origin/$ARGUMENTS -- . ':(exclude)*.lock'
+git diff origin/<target>...origin/$ARGUMENTS -- . ':(exclude)*.lock'
 ```
 
 Lock-Files (`*.lock`, `package-lock.json`, `yarn.lock`, `Gemfile.lock`) immer ausschließen.
@@ -35,8 +35,6 @@ Bevor du schreibst, kläre mental:
 Schreibe die Beschreibung in dieser Struktur (auf Englisch):
 
 ```
-<conventional-commit-title>
-
 ## Summary
 One concise paragraph: what problem was solved, what solution was implemented.
 
@@ -75,3 +73,6 @@ One concise paragraph: what this changes for users/the system; any side effects,
 
 ```bash
 gh pr create --base <target> --head $ARGUMENTS --title "<conventional-commit-title>" --body "<pr-beschreibung>"
+```
+
+Anschließend den PR im Browser öffnen

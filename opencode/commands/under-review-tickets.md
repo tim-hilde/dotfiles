@@ -1,6 +1,6 @@
 ---
 description: Under-Review-Tickets aus dem Notion-ZIP-Export verarbeiten und als HTML mit E-Mail-Vorlagen ausgeben
-model: anthropic/claude-sonnet-4-6
+model: anthropic/claude-sonnet-5
 variant: max
 agent: build
 ---
@@ -28,11 +28,13 @@ ExportBlock-*.zip
 ```
 
 Extrahiere aus jeder Ticket-HTML:
+
 - **E-Mail-Vorlage**: aus dem `<code>`-Block der `EMAIL:` enthält
 - **Notion-URL**: aus der Page-ID im Dateinamen (`<hex32>.html` → `https://app.notion.com/p/<hex32>`)
 - **Seitenkommentare**: aus dem Abschnitt `Seitenkommentare` in der HTML – enthält interne Kommentare von Tim mit Datum und Text
 
 Extrahiere aus der CSV (gefilterte Under-Review-Ansicht):
+
 - `Issue` (Titel), `Municipality`, `User-Email`, `Description`, `Variant`, `Status`
 
 Verknüpfe CSV-Zeilen mit HTML-Dateien über den Issue-Titel (aus dem `--- Zur Erinnerung`-Block in der E-Mail-Vorlage).
@@ -40,6 +42,7 @@ Verknüpfe CSV-Zeilen mit HTML-Dateien über den Issue-Titel (aus dem `--- Zur E
 ## Schritt 3: Antwortvorschlag generieren
 
 Generiere pro Person+Gemeinde einen Antwortvorschlag auf Basis der Ticket-Beschreibungen, der Seitenkommentare und des Kontexts aus dem Chat-Verlauf in der Ticket-HTML. Der Vorschlag soll:
+
 - auf alle Tickets der Person eingehen
 - den internen Kommentar (Seitenkommentar) als Hintergrundwissen verwenden, aber nicht wörtlich zitieren
 - professionell und knapp formuliert sein (1–3 Sätze pro Ticket)
@@ -86,6 +89,7 @@ Speichere die Datei als `ticket-email-overview.html` im aktuellen Arbeitsverzeic
 Gruppiere nach **Municipality** (erste Ebene) und **User-Email** (zweite Ebene).
 
 Pro Nutzergruppe:
+
 - Ticket-Liste: Titel als Link zur Notion-Seite, kurze Beschreibung, Variant-Badge (Bug/Feature)
 - Seitenkommentare je Ticket als hervorgehobener interner Hinweisblock (Autor + Datum + Text), direkt unter der Ticket-Beschreibung – immer anzeigen, sofern vorhanden
 - Zusammengeführte E-Mail-Vorlage als kopierbare `<textarea>` mit Kopieren-Button
