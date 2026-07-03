@@ -28,7 +28,7 @@ Preserve any required prefix/wrapper exactly as documented (env loaders, runners
 
 Repeat until `STATUS: CLEAN`, or stop after 5 rounds:
 
-1. Build the diff once: `git diff origin/<target>..<source> -- . ':(exclude)*.lock'`. Capture the output as text.
+1. Build the diff once: `git diff origin/<target>...<source> -- . ':(exclude)*.lock'`. Capture the output as text.
 2. Run the detected test command. Capture pass/fail and the relevant output.
 3. Dispatch the `branch-reviewer` subagent via the Task tool, passing it: the target/source refs, the resolved source SHA, the diff **text** (not the diff command), and the test result. Not more. Do not instruct the reviewer how do review or what to focus on and give no additional context. The reviewer will not what to do.
 4. Read the subagent's reply and the final `STATUS:` line.

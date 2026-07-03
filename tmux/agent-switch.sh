@@ -5,99 +5,184 @@
 # pane's snapshot only counts if the pane still exists AND its opencode pid
 # is still alive), so crashed/stale sessions never show up.
 #
-# Sort: work status first (waiting -> done -> working), then most recently
-# updated within each status. Two columns: name (title + dimmed session in
-# parens) on the left, status right-aligned to the popup's actual width.
+# Sort: tmux session first (alphabetical), then work status within each
+# session (waiting -> done -> working), then most recently updated.
 #
-# The pane id is needed to jump after selection, but gum has no --with-nth
-# to hide a field from display (unlike fzf), so it's kept out of the piped
-# text entirely and looked up afterwards from a temp mapping file instead.
+# There is no separate, unselectable "header" row - a bold session name is
+# printed as a left-hand prefix on that session's first row, and blank-
+# padded to the same width on subsequent rows in the group. Every visible
+# row is therefore a real, selectable entry, so arrow-key navigation can
+# never land on something that isn't a jump target: no fzf-side
+# skip/block/redirect logic is needed. (An earlier design used a genuine
+# separator row plus a fzf keybind to skip or redirect off it; that bind
+# could not be reliably verified to fire on a real Enter/arrow keypress in
+# this tmux popup pty, so this simpler structural fix replaces it.)
 
 state_dir="${OC_TMUX_STATE_DIR:-$HOME/.cache/opencode-tmux}"
 US=$'\x1f' # unit separator: safe delimiter for tmux format fields
 
 command -v tmux >/dev/null 2>&1 || exit 0
-command -v gum >/dev/null 2>&1 || exit 0
+command -v fzf >/dev/null 2>&1 || exit 0
 [ -d "$state_dir" ] || exit 0
+
+# display-popup's -h doesn't accept a #() shell expression - it needs a
+# literal number at bind time, so a fixed popup height was always either
+# too tall (whitespace below a short list) or too short. This script runs
+# itself twice: the outer pass builds the FULL row data once (not just a
+# count - the inner pass used to redo that same scan from scratch, doubling
+# every state-file read and pid check), sizes the popup from the row count,
+# and hands the already-built data to the inner pass via a temp file so it
+# only has to sort/render/pick, not re-scan every tmux pane again.
+if [ -z "$AGENT_SWITCH_INNER" ]; then
+  # The window the user is actually sitting in when the shortcut fires -
+  # excluded below so the picker never offers to "switch" to where you
+  # already are.
+  current_window=$(tmux display -p '#{window_id}' 2>/dev/null)
+
+  raw_rows=()
+
+  while IFS="$US" read -r pane_id session_name window_name window_id; do
+    [ "$window_id" = "$current_window" ] && continue
+
+    f="$state_dir/${pane_id#%}.json"
+    [ -f "$f" ] || continue
+
+    # `read` reports failure at EOF even when it successfully read content
+    # if the file has no trailing newline (true here - the plugin writes
+    # JSON.stringify output as-is), so its exit code can't gate this; check
+    # the content itself instead.
+    IFS= read -r content <"$f" 2>/dev/null
+    [ -n "$content" ] || continue
+
+    # bash's own =~ (no subprocess) instead of four `sed` spawns per file -
+    # sed forking per pane, times every live pane, was the main cost here.
+    [[ "$content" =~ \"pid\":([0-9]+) ]] || continue
+    pid="${BASH_REMATCH[1]}"
+    kill -0 "$pid" 2>/dev/null || continue
+
+    [[ "$content" =~ \"state\":\"([a-z]+)\" ]] || continue
+    state="${BASH_REMATCH[1]}"
+    case "$state" in waiting | done | working) ;; *) continue ;; esac
+
+    [[ "$content" =~ \"updatedAt\":([0-9]+) ]] || continue
+    updated_at="${BASH_REMATCH[1]}"
+
+    title=""
+    [[ "$content" =~ \"title\":\"([^\"]*)\" ]] && title="${BASH_REMATCH[1]}"
+    title="${title:-$window_name}"
+    [ -n "$title" ] || title="(untitled)"
+
+    case "$state" in
+      waiting) prio=0 ;;
+      done) prio=1 ;;
+      working) prio=2 ;;
+    esac
+
+    raw_rows+=("${session_name}"$'\t'"${prio}"$'\t'"${updated_at}"$'\t'"${title}"$'\t'"${state}"$'\t'"${pane_id}")
+  done < <(tmux list-panes -a -F "#{pane_id}${US}#{session_name}${US}#{window_name}${US}#{window_id}" 2>/dev/null)
+
+  if [ "${#raw_rows[@]}" -eq 0 ]; then
+    tmux display-popup -E -h 4 -w 40% "echo 'No active agents'; sleep 1"
+    exit 0
+  fi
+
+  # +2 for tmux's own popup border (measured empirically - requesting -h N
+  # always leaves exactly N-2 usable lines inside) + 2 for fzf's own chrome
+  # (--info=hidden collapses its match-count line, but it still needs more
+  # than just the bare prompt row - confirmed by user testing: +3 total
+  # clipped the last row, +5 left one blank row spare, so +4 is exact).
+  count=${#raw_rows[@]}
+  popup_height=$((count + 4))
+  [ "$popup_height" -lt 6 ] && popup_height=6
+  [ "$popup_height" -gt 24 ] && popup_height=24
+
+  data_file=$(mktemp)
+  printf '%s\n' "${raw_rows[@]}" >"$data_file"
+
+  # A plain "VAR=1 tmux display-popup ..." only sets VAR for the tmux CLI
+  # invocation, not for the process display-popup spawns inside the popup -
+  # that needs tmux's own -e flag.
+  tmux display-popup -E -e AGENT_SWITCH_INNER=1 -e AGENT_SWITCH_DATA="$data_file" \
+    -h "$popup_height" -w 40% "$0"
+  rm -f "$data_file"
+  exit 0
+fi
 
 icon_working=$'\uf04b'
 icon_waiting=$'\uf04c'
 icon_done=$'\uf00c'
 
 c_reset=$'\033[0m'
+c_bold=$'\033[1m'
 c_red=$'\033[31m'
 c_yellow=$'\033[33m'
 c_green=$'\033[32m'
-c_gray=$'\033[90m'
 
-# Right-align the status column to the popup's actual width (its own pty,
-# sized from the -w/-h the keybind passed to display-popup), minus a small
-# margin for gum's own selection indicator/padding.
 term_width=$(tput cols 2>/dev/null)
 [[ "$term_width" =~ ^[0-9]+$ ]] || term_width=80
 usable_width=$((term_width - 4))
 [ "$usable_width" -lt 20 ] && usable_width=20
 
-final_lines=()
+raw_rows=()
+[ -n "$AGENT_SWITCH_DATA" ] && [ -f "$AGENT_SWITCH_DATA" ] && mapfile -t raw_rows <"$AGENT_SWITCH_DATA"
 
-while IFS="$US" read -r pane_id session_name window_name; do
-  f="$state_dir/${pane_id#%}.json"
-  [ -f "$f" ] || continue
-
-  pid=$(sed -n 's/.*"pid":\([0-9]*\).*/\1/p' "$f")
-  kill -0 "$pid" 2>/dev/null || continue
-
-  state=$(sed -n 's/.*"state":"\([a-z]*\)".*/\1/p' "$f")
-  title=$(sed -n 's/.*"title":"\([^"]*\)".*/\1/p' "$f")
-  updated_at=$(sed -n 's/.*"updatedAt":\([0-9]*\).*/\1/p' "$f")
-  [ -n "$updated_at" ] || continue
-
-  case "$state" in
-    waiting) prio=0; plain_status="${icon_waiting} waiting"; status="${c_red}${plain_status}${c_reset}" ;;
-    done) prio=1; plain_status="${icon_done} done"; status="${c_green}${plain_status}${c_reset}" ;;
-    working) prio=2; plain_status="${icon_working} working"; status="${c_yellow}${plain_status}${c_reset}" ;;
-    *) continue ;;
-  esac
-
-  title="${title:-$window_name}"
-  [ -n "$title" ] || title="(untitled)"
-
-  plain_name="${title} (${session_name})"
-  pad=$((usable_width - ${#plain_name} - ${#plain_status}))
-  [ "$pad" -lt 2 ] && pad=2
-
-  display="${title} ${c_gray}(${session_name})${c_reset}$(printf '%*s' "$pad" '')${status}"
-  final_lines+=("${prio}"$'\t'"${updated_at}"$'\t'"${display}"$'\t'"${pane_id}")
-done < <(tmux list-panes -a -F "#{pane_id}${US}#{session_name}${US}#{window_name}" 2>/dev/null)
-
-if [ "${#final_lines[@]}" -eq 0 ]; then
-  gum style --foreground 240 --padding "1 2" "No active agents"
+if [ "${#raw_rows[@]}" -eq 0 ]; then
+  echo "No active agents"
   read -r -n 1 -s -t 5
   exit 0
 fi
 
 sorted_file=$(mktemp)
-trap 'rm -f "$sorted_file"' EXIT
+trap 'rm -f "$sorted_file" "$fzf_input"' EXIT
 
-printf '%s\n' "${final_lines[@]}" | sort -t $'\t' -k1,1n -k2,2nr > "$sorted_file"
+printf '%s\n' "${raw_rows[@]}" | sort -t $'\t' -k1,1 -k2,2n -k3,3nr >"$sorted_file"
 
-# Cap the list viewport to the entry count (plus a little headroom) so gum
-# doesn't reserve a fixed block of blank rows for short lists.
-rows=${#final_lines[@]}
-height=$((rows < 12 ? rows + 1 : 12))
+# Left column width: the longest session name, so the title column starts
+# at the same position on every row regardless of group.
+prefix_width=0
+while IFS=$'\t' read -r sess _; do
+  [ "${#sess}" -gt "$prefix_width" ] && prefix_width="${#sess}"
+done <"$sorted_file"
+prefix_width=$((prefix_width + 2))
 
-selection=$(cut -f3 "$sorted_file" |
-  gum filter --no-fuzzy-sort --no-strip-ansi --height "$height" \
-    --prompt '🤖 ' --placeholder 'Pick an agent')
+fzf_input=$(mktemp)
+last_session=""
+while IFS=$'\t' read -r sess _ _ title state pane_id; do
+  case "$state" in
+    waiting) plain_status="${icon_waiting} waiting"; status="${c_red}${plain_status}${c_reset}" ;;
+    done) plain_status="${icon_done} done"; status="${c_green}${plain_status}${c_reset}" ;;
+    working) plain_status="${icon_working} working"; status="${c_yellow}${plain_status}${c_reset}" ;;
+  esac
+
+  if [ "$sess" != "$last_session" ]; then
+    prefix="${c_bold}${sess}${c_reset}$(printf '%*s' "$((prefix_width - ${#sess}))" '')"
+    last_session="$sess"
+  else
+    prefix="$(printf '%*s' "$prefix_width" '')"
+  fi
+
+  plain_name="$(printf '%*s' "$prefix_width" '')${title}"
+  pad=$((usable_width - ${#plain_name} - ${#plain_status}))
+  [ "$pad" -lt 2 ] && pad=2
+
+  display="${prefix}${title}$(printf '%*s' "$pad" '')${status}"
+  printf '%s\t%s\n' "$display" "$pane_id" >>"$fzf_input"
+done <"$sorted_file"
+
+# Matches the outer popup_height's margin (count+4, minus the 2 lines tmux's
+# border eats) so fzf's own requested height and the space the surrounding
+# popup actually gives it agree - otherwise fzf just renders within a
+# smaller viewport than the popup provides, still clipping the last rows.
+rows=${#raw_rows[@]}
+height=$((rows + 2))
+
+selection=$(fzf --delimiter=$'\t' --with-nth=1 --no-sort --exact --ansi \
+  --info=hidden --height="$height" --reverse \
+  <"$fzf_input")
 
 [ -n "$selection" ] || exit 0
 
-# gum strips ANSI codes from the value it returns even with --no-strip-ansi
-# (that flag only affects how it reads/renders stdin), so matching the raw
-# selection against the still-colored sorted_file never hits. Strip the same
-# codes from sorted_file before comparing.
-esc=$'\033'
-pane=$(sed -E "s/${esc}\[[0-9;]*m//g" "$sorted_file" | grep -F -- "$selection" | head -1 | cut -f4)
+pane="${selection##*$'\t'}"
 [ -n "$pane" ] || exit 0
 
 session=$(tmux display -p -t "$pane" '#{session_name}' 2>/dev/null)
