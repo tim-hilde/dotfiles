@@ -19,7 +19,7 @@ echo "[$(ts)] run-capture start (skill: $SKILL_DIR)" >> "$OUT_LOG"
 AGENT="${MERLIN_CV_AGENT:-build}"
 # Pin the model so the daily cron run is reproducible regardless of opencode's
 # interactive default; overridable via MERLIN_CV_MODEL.
-MODEL="${MERLIN_CV_MODEL:-anthropic/claude-sonnet-4-6}"
+MODEL="${MERLIN_CV_MODEL:-opencode/deepseek-v4-flash-free}"
 
 PROMPT="Aktiviere den Skill 'merlin-cv-tracker' im capture-Modus und folge dem Ablauf EXAKT \
 (alle Schritte im SKILL.md). Repo-Basis: /Users/tim/code/Merlin. Vault: /Users/tim/Zettelkasten. \
