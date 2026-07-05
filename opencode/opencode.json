@@ -15,7 +15,8 @@
   },
   "permission": {
     "external_directory": {
-      "~/Zettelkasten/_career-log/**": "allow"
+      "~/Zettelkasten/_career-log/**": "allow",
+      "~/code/Merlin/**": "allow"
     }
   },
   "compaction": {
