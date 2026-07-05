@@ -143,6 +143,8 @@ brew "just"
 brew "kew"
 # Simple terminal UI for git commands
 brew "lazygit"
+# Command-line interface to LiveKit
+brew "livekit-cli"
 # Just-In-Time Compiler (JIT) for the Lua programming language
 brew "luajit"
 # Sudoless performance monitoring for Apple Silicon processors
@@ -362,7 +364,7 @@ cask "thaw"
 # To-do list
 cask "todoist-app"
 # Speech-to-text and AI text processing
-cask "typewhisper/tap/typewhisper"
+cask "typewhisper"
 # Menu bar app for USB-C cable diagnostics
 cask "whatcable"
 # Active space menu bar icon

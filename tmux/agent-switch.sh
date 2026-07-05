@@ -137,12 +137,15 @@ trap 'rm -f "$sorted_file" "$fzf_input"' EXIT
 
 printf '%s\n' "${raw_rows[@]}" | sort -t $'\t' -k1,1 -k2,2n -k3,3nr >"$sorted_file"
 
-# Left column width: the longest session name, so the title column starts
-# at the same position on every row regardless of group.
+# Left column width: the longest session name, capped so one long name
+# doesn't push the title column (and everyone else's rows) far to the
+# right - names over the cap get truncated with "..." instead.
+max_session_len=12
 prefix_width=0
 while IFS=$'\t' read -r sess _; do
   [ "${#sess}" -gt "$prefix_width" ] && prefix_width="${#sess}"
 done <"$sorted_file"
+[ "$prefix_width" -gt "$max_session_len" ] && prefix_width="$max_session_len"
 prefix_width=$((prefix_width + 2))
 
 fzf_input=$(mktemp)
@@ -155,17 +158,29 @@ while IFS=$'\t' read -r sess _ _ title state pane_id; do
   esac
 
   if [ "$sess" != "$last_session" ]; then
-    prefix="${c_bold}${sess}${c_reset}$(printf '%*s' "$((prefix_width - ${#sess}))" '')"
+    sess_shown="$sess"
+    [ "${#sess_shown}" -gt "$max_session_len" ] && sess_shown="${sess_shown:0:$((max_session_len - 3))}..."
+    prefix="${c_bold}${sess_shown}${c_reset}$(printf '%*s' "$((prefix_width - ${#sess_shown}))" '')"
     last_session="$sess"
   else
     prefix="$(printf '%*s' "$prefix_width" '')"
   fi
 
-  plain_name="$(printf '%*s' "$prefix_width" '')${title}"
+  # A long AI-generated title could otherwise push the row wider than the
+  # popup, forcing pad to its 2-char floor and letting the whole line (with
+  # the status now past the visible edge) wrap or get mangled by the
+  # terminal - truncate the title itself before that can happen.
+  title_shown="$title"
+  max_title_len=$((usable_width - prefix_width - ${#plain_status} - 2))
+  if [ "$max_title_len" -gt 3 ] && [ "${#title_shown}" -gt "$max_title_len" ]; then
+    title_shown="${title_shown:0:$((max_title_len - 3))}..."
+  fi
+
+  plain_name="$(printf '%*s' "$prefix_width" '')${title_shown}"
   pad=$((usable_width - ${#plain_name} - ${#plain_status}))
   [ "$pad" -lt 2 ] && pad=2
 
-  display="${prefix}${title}$(printf '%*s' "$pad" '')${status}"
+  display="${prefix}${title_shown}$(printf '%*s' "$pad" '')${status}"
   printf '%s\t%s\n' "$display" "$pane_id" >>"$fzf_input"
 done <"$sorted_file"
 

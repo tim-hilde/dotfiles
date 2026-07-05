@@ -1,0 +1,13 @@
+{
+  "$schema": "https://raw.githubusercontent.com/cortexkit/magic-context/master/assets/magic-context.schema.json",
+  "historian": {
+    "model": "anthropic/claude-sonnet-5"
+  },
+  "dreamer": {
+    "model": "anthropic/claude-sonnet-5"
+  },
+  "sidekick": {},
+  "cache_ttl": {
+    "default": "5m"
+  }
+}
