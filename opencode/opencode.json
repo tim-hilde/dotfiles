@@ -7,8 +7,7 @@
     "opencode-update-notifier",
     "@tim_hilde/opencode-insights",
     "@slkiser/opencode-quota@3.10.1",
-    "@cortexkit/opencode-magic-context@latest",
-    "@whisperopencode/push"
+    "@cortexkit/opencode-magic-context@latest"
   ],
   "experimental": {
     "disable_paste_summary": true
