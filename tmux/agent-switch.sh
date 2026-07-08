@@ -198,8 +198,14 @@ done <"$sorted_file"
 rows=${#raw_rows[@]}
 height=$((rows + 2))
 
+# Catppuccin Mocha hex values (mirrors the @thm_* vars tmux.conf uses for the
+# status bar) - fzf runs as its own process so it can't read tmux's #{@thm_*}
+# format variables, only literal colors.
+fzf_colors="bg:#1e1e2e,bg+:#313244,fg:#cdd6f4,fg+:#cdd6f4"
+fzf_colors+=",pointer:#cba6f7,border:#6c7086,prompt:#89b4fa"
+
 selection=$(fzf --delimiter=$'\t' --with-nth=1 --no-sort --exact --ansi --cycle \
-  --info=hidden --height="$height" --reverse \
+  --info=hidden --height="$height" --reverse --color="$fzf_colors" \
   <"$fzf_input")
 
 [ -n "$selection" ] || exit 0
