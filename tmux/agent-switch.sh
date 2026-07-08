@@ -166,18 +166,25 @@ while IFS=$'\t' read -r sess _ _ title state pane_id; do
     prefix="$(printf '%*s' "$prefix_width" '')"
   fi
 
+  # fzf's own width math (go-runewidth) treats our Nerd Font icons - Private
+  # Use Area codepoints - as "ambiguous width" and renders them as 2 columns,
+  # while bash's ${#...} and the terminal both count them as 1. Padding
+  # against fzf's inflated width keeps a real row from tripping its own
+  # right-edge truncation (its "..") and eating into the status text.
+  status_width=$((${#plain_status} + 1))
+
   # A long AI-generated title could otherwise push the row wider than the
   # popup, forcing pad to its 2-char floor and letting the whole line (with
   # the status now past the visible edge) wrap or get mangled by the
   # terminal - truncate the title itself before that can happen.
   title_shown="$title"
-  max_title_len=$((usable_width - prefix_width - ${#plain_status} - 2))
+  max_title_len=$((usable_width - prefix_width - status_width - 2))
   if [ "$max_title_len" -gt 3 ] && [ "${#title_shown}" -gt "$max_title_len" ]; then
     title_shown="${title_shown:0:$((max_title_len - 3))}..."
   fi
 
   plain_name="$(printf '%*s' "$prefix_width" '')${title_shown}"
-  pad=$((usable_width - ${#plain_name} - ${#plain_status}))
+  pad=$((usable_width - ${#plain_name} - status_width))
   [ "$pad" -lt 2 ] && pad=2
 
   display="${prefix}${title_shown}$(printf '%*s' "$pad" '')${status}"
@@ -190,14 +197,6 @@ done <"$sorted_file"
 # smaller viewport than the popup provides, still clipping the last rows.
 rows=${#raw_rows[@]}
 height=$((rows + 2))
-
-{
-  esc=$'\033'
-  echo "DEBUG term_width=$term_width usable_width=$usable_width prefix_width=$prefix_width"
-  cut -f1 "$fzf_input" | sed -E "s/${esc}\[[0-9;]*m//g" | while IFS= read -r l; do
-    printf 'DEBUG [len=%d] %s|\n' "${#l}" "$l"
-  done
-} >> /tmp/agent_switch_debug.log 2>&1
 
 selection=$(fzf --delimiter=$'\t' --with-nth=1 --no-sort --exact --ansi --cycle \
   --info=hidden --height="$height" --reverse \
