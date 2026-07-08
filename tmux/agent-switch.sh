@@ -82,7 +82,7 @@ if [ -z "$AGENT_SWITCH_INNER" ]; then
   done < <(tmux list-panes -a -F "#{pane_id}${US}#{session_name}${US}#{window_name}${US}#{window_id}" 2>/dev/null)
 
   if [ "${#raw_rows[@]}" -eq 0 ]; then
-    tmux display-popup -E -h 4 -w 80 "echo 'No active agents'; sleep 1"
+    tmux display-popup -E -h 4 -w 80 -b rounded -S "fg=#cba6f7" -T " Agents " "echo 'No active agents'; sleep 1"
     exit 0
   fi
 
@@ -103,7 +103,7 @@ if [ -z "$AGENT_SWITCH_INNER" ]; then
   # invocation, not for the process display-popup spawns inside the popup -
   # that needs tmux's own -e flag.
   tmux display-popup -E -e AGENT_SWITCH_INNER=1 -e AGENT_SWITCH_DATA="$data_file" \
-    -h "$popup_height" -w 80 "$0"
+    -h "$popup_height" -w 80 -b rounded -S "fg=#cba6f7" -T " Agents " "$0"
   rm -f "$data_file"
   exit 0
 fi
