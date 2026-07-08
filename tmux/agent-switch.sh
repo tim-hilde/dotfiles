@@ -191,7 +191,7 @@ done <"$sorted_file"
 rows=${#raw_rows[@]}
 height=$((rows + 2))
 
-selection=$(fzf --delimiter=$'\t' --with-nth=1 --no-sort --exact --ansi \
+selection=$(fzf --delimiter=$'\t' --with-nth=1 --no-sort --exact --ansi --cycle \
   --info=hidden --height="$height" --reverse \
   <"$fzf_input")
 
