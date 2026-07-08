@@ -191,6 +191,14 @@ done <"$sorted_file"
 rows=${#raw_rows[@]}
 height=$((rows + 2))
 
+{
+  esc=$'\033'
+  echo "DEBUG term_width=$term_width usable_width=$usable_width prefix_width=$prefix_width"
+  cut -f1 "$fzf_input" | sed -E "s/${esc}\[[0-9;]*m//g" | while IFS= read -r l; do
+    printf 'DEBUG [len=%d] %s|\n' "${#l}" "$l"
+  done
+} >> /tmp/agent_switch_debug.log 2>&1
+
 selection=$(fzf --delimiter=$'\t' --with-nth=1 --no-sort --exact --ansi --cycle \
   --info=hidden --height="$height" --reverse \
   <"$fzf_input")
