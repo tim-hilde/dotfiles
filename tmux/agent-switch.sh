@@ -82,7 +82,7 @@ if [ -z "$AGENT_SWITCH_INNER" ]; then
   done < <(tmux list-panes -a -F "#{pane_id}${US}#{session_name}${US}#{window_name}${US}#{window_id}" 2>/dev/null)
 
   if [ "${#raw_rows[@]}" -eq 0 ]; then
-    tmux display-popup -E -h 4 -w 80 -b rounded -S "fg=#cba6f7" -T " Agents " "echo 'No active agents'; sleep 1"
+    tmux display-popup -E -h 4 -w 80 -b rounded -S "fg=#cba6f7" "echo 'No active agents'; sleep 1"
     exit 0
   fi
 
