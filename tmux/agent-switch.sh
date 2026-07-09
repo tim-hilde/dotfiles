@@ -87,16 +87,16 @@ if [ -z "$AGENT_SWITCH_INNER" ]; then
     exit 0
   fi
 
-  # fzf draws its own rounded border + centred " Agents " label (tmux's
-  # pane-border title can't be centred reliably and isn't even capturable to
-  # verify). That border costs 2 interior lines (top+bottom) on top of fzf's
-  # prompt row, so pane_h = count + 4. Width: fzf's border+gutter eat 6
-  # columns of the interior (measured), so pane_w 82 leaves ~76 usable.
+  # fzf runs borderless inside the floating pane; tmux draws the pane's own
+  # 1-cell border (clean, no grey frame) and carries the " Agents " title on
+  # it. fzf's interior chrome is just a prompt row + separator row, so the
+  # pane needs count + 2 interior lines. pane-border-status top was verified
+  # not to steal an interior line from a floating pane.
   count=${#raw_rows[@]}
-  pane_h=$((count + 4))
-  [ "$pane_h" -lt 6 ] && pane_h=6
-  [ "$pane_h" -gt 24 ] && pane_h=24
-  pane_w=82
+  pane_h=$((count + 2))
+  [ "$pane_h" -lt 4 ] && pane_h=4
+  [ "$pane_h" -gt 22 ] && pane_h=22
+  pane_w=80
 
   # new-pane takes an absolute X/Y, not a percentage like display-popup's
   # auto-centre, so centre it in the window ourselves.
@@ -116,15 +116,25 @@ if [ -z "$AGENT_SWITCH_INNER" ]; then
   # path that doesn't. new-pane is non-blocking so the inner pass removes the
   # data file itself; no -d, so the pane becomes active and fzf gets the keys.
   # (-e sets env for the spawned process, like display-popup's -e did.)
-  # tmux always frames a floating pane with a 1-cell border (unavoidable, and
-  # it can't be rounded - only single/double/etc). fzf draws the real rounded
-  # border inside, so hide tmux's frame by painting it in the base bg for BOTH
-  # fg and bg (fg alone left the glyph cell's default bg showing as grey).
+  # -S/-R colour the pane's own border mauve (active & inactive the same, so it
+  # stays mauve even as focus shifts); the title is set per-pane by the inner
+  # pass. No bg override - that painted a solid grey rectangle over the backdrop.
   tmux new-pane -t "$current_window" \
     -x "$pane_w" -y "$pane_h" -X "$pos_x" -Y "$pos_y" \
-    -S "fg=#1e1e2e,bg=#1e1e2e" -R "fg=#1e1e2e,bg=#1e1e2e" \
+    -S "fg=#cba6f7" -R "fg=#cba6f7" \
     -e AGENT_SWITCH_INNER=1 -e AGENT_SWITCH_DATA="$data_file" "$0"
   exit 0
+fi
+
+# Put the " Agents " title on this floating pane's own border. tmux's
+# #[align=centre] doesn't centre reliably on a floating pane border, so this
+# is left-aligned by choice (a plain default-style title). Set per-pane so it
+# never touches the tiled panes' borders. tmux.conf already has
+# pane-border-status top globally; setting it per-pane too is harmless and
+# keeps this self-contained.
+if [ -n "$TMUX_PANE" ]; then
+  tmux set -p -t "$TMUX_PANE" pane-border-status top 2>/dev/null
+  tmux set -p -t "$TMUX_PANE" pane-border-format " Agents " 2>/dev/null
 fi
 
 icon_working=$'\uf04b'
@@ -138,14 +148,12 @@ c_yellow=$'\033[33m'
 c_green=$'\033[32m'
 
 term_width=$(tput cols 2>/dev/null)
-[[ "$term_width" =~ ^[0-9]+$ ]] || term_width=82
-# fzf draws its own rounded border + a left pointer gutter inside the pane.
-# Rows are built to usable_width plain columns; the status carries a Nerd Font
-# icon fzf's width math counts as 2 cols, so the effective rendered width runs
-# a touch wider. Measured against real rows (icons + padding), term_width-3 is
-# the tight fit: status lands one cell shy of fzf's right border, no scrollbar
-# gap and no ".." truncation (term_width-2 truncates).
-usable_width=$((term_width - 3))
+[[ "$term_width" =~ ^[0-9]+$ ]] || term_width=80
+# fzf runs borderless here; it only reserves a left pointer gutter. tput cols
+# is the pane's full interior width; term_width-2 lands the status one cell shy
+# of the right edge without tripping fzf's line-wrap/".." truncation (measured:
+# -1 wraps and mangles the status, -2 is the tight fit).
+usable_width=$((term_width - 2))
 [ "$usable_width" -lt 20 ] && usable_width=20
 
 raw_rows=()
@@ -218,20 +226,20 @@ while IFS=$'\t' read -r sess _ _ title state pane_id; do
   printf '%s\t%s\n' "$display" "$pane_id" >>"$fzf_input"
 done <"$sorted_file"
 
-# fzf's own border costs 2 rows (top+bottom) on top of its prompt row, so it
-# needs count+4 - matching the pane_h the outer pass created.
+# Borderless fzf: prompt row + separator row + the item rows = count+2, which
+# matches the pane_h the outer pass created.
 rows=${#raw_rows[@]}
-height=$((rows + 4))
+height=$((rows + 2))
 
 # Catppuccin Mocha hex values (mirrors the @thm_* vars tmux.conf uses for the
 # status bar) - fzf runs as its own process so it can't read tmux's #{@thm_*}
 # format variables, only literal colors.
 fzf_colors="bg:#1e1e2e,bg+:#313244,fg:#cdd6f4,fg+:#cdd6f4"
-fzf_colors+=",pointer:#cba6f7,border:#cba6f7,label:#cba6f7,prompt:#89b4fa,separator:#6D7085"
+fzf_colors+=",pointer:#cba6f7,prompt:#89b4fa,separator:#6D7085"
 
 selection=$(fzf --delimiter=$'\t' --with-nth=1 --no-sort --exact --ansi --cycle \
   --info=hidden --height="$height" --reverse --color="$fzf_colors" \
-  --no-scrollbar --border=rounded --border-label=' Agents ' \
+  --no-scrollbar \
   <"$fzf_input")
 
 [ -n "$selection" ] || exit 0
