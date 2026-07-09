@@ -82,57 +82,23 @@ if [ -z "$AGENT_SWITCH_INNER" ]; then
   done < <(tmux list-panes -a -F "#{pane_id}${US}#{session_name}${US}#{window_name}${US}#{window_id}" 2>/dev/null)
 
   if [ "${#raw_rows[@]}" -eq 0 ]; then
-    tmux new-pane -t "$current_window" -x 40 -y 3 -X 5 -Y 3 -S "fg=#cba6f7" \
+    tmux display-popup -E -h 4 -w 80 -b single -S "fg=#cba6f7" \
       "echo 'No active agents'; sleep 1"
     exit 0
   fi
 
-  # fzf runs borderless inside the floating pane; tmux draws the pane's own
-  # 1-cell border (clean, no grey frame) and carries the " Agents " title on
-  # it. fzf's interior chrome is just a prompt row + separator row, so the
-  # pane needs count + 2 interior lines. pane-border-status top was verified
-  # not to steal an interior line from a floating pane.
   count=${#raw_rows[@]}
-  pane_h=$((count + 2))
-  [ "$pane_h" -lt 4 ] && pane_h=4
-  [ "$pane_h" -gt 22 ] && pane_h=22
-  pane_w=80
-
-  # new-pane takes an absolute X/Y, not a percentage like display-popup's
-  # auto-centre, so centre it in the window ourselves.
-  read -r win_w win_h < <(tmux display -p -t "$current_window" '#{window_width} #{window_height}' 2>/dev/null)
-  [[ "$win_w" =~ ^[0-9]+$ ]] || win_w=$pane_w
-  [[ "$win_h" =~ ^[0-9]+$ ]] || win_h=$((pane_h + 4))
-  [ "$pane_w" -gt "$win_w" ] && pane_w=$win_w
-  pos_x=$(((win_w - pane_w) / 2)); [ "$pos_x" -lt 0 ] && pos_x=0
-  pos_y=$(((win_h - pane_h) / 2)); [ "$pos_y" -lt 0 ] && pos_y=0
+  popup_height=$((count + 4))
+  [ "$popup_height" -lt 4 ] && popup_height=4
+  [ "$popup_height" -gt 22 ] && popup_height=22
 
   data_file=$(mktemp)
   printf '%s\n' "${raw_rows[@]}" >"$data_file"
 
-  # A floating pane (tmux 3.7+) instead of display-popup: the popup overlay
-  # compositing path flickers when a 60fps opentui pane (opencode) redraws
-  # behind it - a tmux 3.7 regression; floating panes use a different render
-  # path that doesn't. new-pane is non-blocking so the inner pass removes the
-  # data file itself; no -d, so the pane becomes active and fzf gets the keys.
-  # (-e sets env for the spawned process, like display-popup's -e did.)
-  # -S/-R colour the pane's own border mauve (active & inactive the same, so it
-  # stays mauve even as focus shifts); the title is set per-pane by the inner
-  # pass. No bg override - that painted a solid grey rectangle over the backdrop.
-  tmux new-pane -t "$current_window" \
-    -x "$pane_w" -y "$pane_h" -X "$pos_x" -Y "$pos_y" \
-    -S "fg=#cba6f7" -R "fg=#cba6f7" \
+  tmux display-popup -E \
+    -h "$popup_height" -w 80 -b rounded -S "fg=#cba6f7"  \
     -e AGENT_SWITCH_INNER=1 -e AGENT_SWITCH_DATA="$data_file" "$0"
   exit 0
-fi
-
-# Title the picker via this pane's own pane_title, which tmux.conf's
-# pane-border-format shows for floating panes. A pane_title dies with the pane,
-# so nothing leaks - unlike `set -p pane-border-status/format`, which are
-# WINDOW options and leak onto the window after the pane closes (that left
-# windows border-less during development).
-if [ -n "$TMUX_PANE" ]; then
-  tmux select-pane -t "$TMUX_PANE" -T "" 2>/dev/null
 fi
 
 icon_working=$'\uf04b'
@@ -163,8 +129,7 @@ if [ "${#raw_rows[@]}" -eq 0 ]; then
   exit 0
 fi
 
-# new-pane is non-blocking, so the outer pass exits before the picker is
-# done and can't clean up its data file - the inner pass owns it now.
+# The inner pass cleans up its own data file via the trap below.
 sorted_file=$(mktemp)
 trap 'rm -f "$sorted_file" "$fzf_input" "$AGENT_SWITCH_DATA"' EXIT
 
@@ -204,7 +169,7 @@ while IFS=$'\t' read -r sess _ _ title state pane_id; do
   # while bash's ${#...} and the terminal both count them as 1. Padding
   # against fzf's inflated width keeps a real row from tripping its own
   # right-edge truncation (its "..") and eating into the status text.
-  status_width=$((${#plain_status} + 1))
+  status_width=$((${#plain_status} + 3))
 
   # A long AI-generated title could otherwise push the row wider than the
   # popup, forcing pad to its 2-char floor and letting the whole line (with
@@ -229,15 +194,19 @@ done <"$sorted_file"
 rows=${#raw_rows[@]}
 height=$((rows + 2))
 
-# Catppuccin Mocha hex values (mirrors the @thm_* vars tmux.conf uses for the
-# status bar) - fzf runs as its own process so it can't read tmux's #{@thm_*}
-# format variables, only literal colors.
-fzf_colors="bg:#1e1e2e,bg+:#313244,fg:#cdd6f4,fg+:#cdd6f4"
-fzf_colors+=",pointer:#cba6f7,prompt:#89b4fa,separator:#6D7085"
-
-selection=$(fzf --delimiter=$'\t' --with-nth=1 --no-sort --exact --ansi --cycle \
-  --info=hidden --height="$height" --reverse --color="$fzf_colors" \
+selection=$(fzf --delimiter=$'\t' --with-nth=1 \
+  --no-sort \
+  --ansi \
+  --border-label ' Agents ' \
+  --border-label-pos=3 \
+  --info=hidden \
+  --exact \
+  --reverse \
+  --cycle \
   --no-scrollbar \
+  --height="$height" \
+  --color='bg:#1e1e2e,bg+:#313244,fg:#cdd6f4,fg+:#cdd6f4,pointer:#cba6f7,label:#cba6f7,border:#cba6f7,separator:#6D7085,prompt:#89b4fa' \
+  --bind 'tab:down,btab:up' \
   <"$fzf_input")
 
 [ -n "$selection" ] || exit 0
