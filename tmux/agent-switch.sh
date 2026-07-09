@@ -133,7 +133,12 @@ c_green=$'\033[32m'
 
 term_width=$(tput cols 2>/dev/null)
 [[ "$term_width" =~ ^[0-9]+$ ]] || term_width=80
-usable_width=$((term_width - 4))
+# A floating pane's `tput cols` reports its full interior width (display-popup
+# used to eat 2 columns for its border, so the old margin was -4). fzf still
+# takes 1 column on the left for its pointer gutter, so -2 lands the status one
+# cell short of the right edge without tripping fzf's line-wrap/".." truncation
+# (measured: -1 wraps and mangles the status, -2 is the tight fit).
+usable_width=$((term_width - 2))
 [ "$usable_width" -lt 20 ] && usable_width=20
 
 raw_rows=()
