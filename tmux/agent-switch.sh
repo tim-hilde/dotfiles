@@ -1,103 +1,57 @@
 #!/usr/bin/env bash
 
 # Agent picker for tmux: lists opencode agents across all LIVE panes and
-# switches to the one you pick. Same truth-filtering as agent-fleet.sh (a
-# pane's snapshot only counts if the pane still exists AND its opencode pid
-# is still alive), so crashed/stale sessions never show up.
-#
-# Sort: tmux session first (alphabetical), then work status within each
-# session (waiting -> done -> working), then most recently updated.
-#
-# There is no separate, unselectable "header" row - a bold session name is
-# printed as a left-hand prefix on that session's first row, and blank-
-# padded to the same width on subsequent rows in the group. Every visible
-# row is therefore a real, selectable entry, so arrow-key navigation can
-# never land on something that isn't a jump target: no fzf-side
-# skip/block/redirect logic is needed. (An earlier design used a genuine
-# separator row plus a fzf keybind to skip or redirect off it; that bind
-# could not be reliably verified to fire on a real Enter/arrow keypress in
-# this tmux popup pty, so this simpler structural fix replaces it.)
+# switches to the one you pick. Same truth-filtering as agent-fleet.sh.
+# Sort: tmux session (alphabetical) -> work status (waiting/done/working)
+# -> most recently updated. fzf-tmux handles the popup.
 
 state_dir="${OC_TMUX_STATE_DIR:-$HOME/.cache/opencode-tmux}"
-US=$'\x1f' # unit separator: safe delimiter for tmux format fields
+US=$'\x1f'
 
 command -v tmux >/dev/null 2>&1 || exit 0
-command -v fzf >/dev/null 2>&1 || exit 0
+command -v fzf-tmux >/dev/null 2>&1 || exit 0
 [ -d "$state_dir" ] || exit 0
 
-# display-popup's -h doesn't accept a #() shell expression - it needs a
-# literal number at bind time, so a fixed popup height was always either
-# too tall (whitespace below a short list) or too short. This script runs
-# itself twice: the outer pass builds the FULL row data once (not just a
-# count - the inner pass used to redo that same scan from scratch, doubling
-# every state-file read and pid check), sizes the popup from the row count,
-# and hands the already-built data to the inner pass via a temp file so it
-# only has to sort/render/pick, not re-scan every tmux pane again.
-if [ -z "$AGENT_SWITCH_INNER" ]; then
-  # The window the user is actually sitting in when the shortcut fires -
-  # excluded below so the picker never offers to "switch" to where you
-  # already are.
-  current_window=$(tmux display -p '#{window_id}' 2>/dev/null)
+current_window=$(tmux display -p '#{window_id}' 2>/dev/null)
 
-  raw_rows=()
+raw_rows=()
 
-  while IFS="$US" read -r pane_id session_name window_name window_id; do
-    [ "$window_id" = "$current_window" ] && continue
+while IFS="$US" read -r pane_id session_name window_name window_id; do
+  [ "$window_id" = "$current_window" ] && continue
 
-    f="$state_dir/${pane_id#%}.json"
-    [ -f "$f" ] || continue
+  f="$state_dir/${pane_id#%}.json"
+  [ -f "$f" ] || continue
 
-    # `read` reports failure at EOF even when it successfully read content
-    # if the file has no trailing newline (true here - the plugin writes
-    # JSON.stringify output as-is), so its exit code can't gate this; check
-    # the content itself instead.
-    IFS= read -r content <"$f" 2>/dev/null
-    [ -n "$content" ] || continue
+  IFS= read -r content <"$f" 2>/dev/null
+  [ -n "$content" ] || continue
 
-    # bash's own =~ (no subprocess) instead of four `sed` spawns per file -
-    # sed forking per pane, times every live pane, was the main cost here.
-    [[ "$content" =~ \"pid\":([0-9]+) ]] || continue
-    pid="${BASH_REMATCH[1]}"
-    kill -0 "$pid" 2>/dev/null || continue
+  [[ "$content" =~ \"pid\":([0-9]+) ]] || continue
+  pid="${BASH_REMATCH[1]}"
+  kill -0 "$pid" 2>/dev/null || continue
 
-    [[ "$content" =~ \"state\":\"([a-z]+)\" ]] || continue
-    state="${BASH_REMATCH[1]}"
-    case "$state" in waiting | done | working) ;; *) continue ;; esac
+  [[ "$content" =~ \"state\":\"([a-z]+)\" ]] || continue
+  state="${BASH_REMATCH[1]}"
+  case "$state" in waiting | done | working) ;; *) continue ;; esac
 
-    [[ "$content" =~ \"updatedAt\":([0-9]+) ]] || continue
-    updated_at="${BASH_REMATCH[1]}"
+  [[ "$content" =~ \"updatedAt\":([0-9]+) ]] || continue
+  updated_at="${BASH_REMATCH[1]}"
 
-    title=""
-    [[ "$content" =~ \"title\":\"([^\"]*)\" ]] && title="${BASH_REMATCH[1]}"
-    title="${title:-$window_name}"
-    [ -n "$title" ] || title="(untitled)"
+  title=""
+  [[ "$content" =~ \"title\":\"([^\"]*)\" ]] && title="${BASH_REMATCH[1]}"
+  title="${title:-$window_name}"
+  [ -n "$title" ] || title="(untitled)"
 
-    case "$state" in
-      waiting) prio=0 ;;
-      done) prio=1 ;;
-      working) prio=2 ;;
-    esac
+  case "$state" in
+    waiting) prio=0 ;;
+    done) prio=1 ;;
+    working) prio=2 ;;
+  esac
 
-    raw_rows+=("${session_name}"$'\t'"${prio}"$'\t'"${updated_at}"$'\t'"${title}"$'\t'"${state}"$'\t'"${pane_id}")
-  done < <(tmux list-panes -a -F "#{pane_id}${US}#{session_name}${US}#{window_name}${US}#{window_id}" 2>/dev/null)
+  raw_rows+=("${session_name}"$'\t'"${prio}"$'\t'"${updated_at}"$'\t'"${title}"$'\t'"${state}"$'\t'"${pane_id}")
+done < <(tmux list-panes -a -F "#{pane_id}${US}#{session_name}${US}#{window_name}${US}#{window_id}" 2>/dev/null)
 
-  if [ "${#raw_rows[@]}" -eq 0 ]; then
-    tmux display-popup -E -h 6 -w 80 -B \
-      "echo 'No active agents'; sleep 1"
-    exit 0
-  fi
-
-  count=${#raw_rows[@]}
-  popup_height=$((count + 4))
-  [ "$popup_height" -lt 4 ] && popup_height=4
-  [ "$popup_height" -gt 22 ] && popup_height=22
-
-  data_file=$(mktemp)
-  printf '%s\n' "${raw_rows[@]}" >"$data_file"
-
-  tmux display-popup -E \
-    -h "$popup_height" -w 80 -B \
-    -e AGENT_SWITCH_INNER=1 -e AGENT_SWITCH_DATA="$data_file" "$0"
+if [ "${#raw_rows[@]}" -eq 0 ]; then
+  tmux display-message "No active agents"
   exit 0
 fi
 
@@ -111,33 +65,12 @@ c_red=$'\033[31m'
 c_yellow=$'\033[33m'
 c_green=$'\033[32m'
 
-term_width=$(tput cols 2>/dev/null)
-[[ "$term_width" =~ ^[0-9]+$ ]] || term_width=80
-# fzf draws its own border (--border=rounded) which consumes 2 columns, plus a
-# 2-column pointer gutter, plus a 1-column safety margin because fzf counts
-# our Nerd Font status icons as 2 wide (ambiguous-width PUA codepoints) while
-# bash and the terminal both render them as 1; term_width-6 is the tight fit.
-usable_width=$((term_width - 6))
-[ "$usable_width" -lt 20 ] && usable_width=20
-
-raw_rows=()
-[ -n "$AGENT_SWITCH_DATA" ] && [ -f "$AGENT_SWITCH_DATA" ] && mapfile -t raw_rows <"$AGENT_SWITCH_DATA"
-
-if [ "${#raw_rows[@]}" -eq 0 ]; then
-  echo "No active agents"
-  read -r -n 1 -s -t 5
-  exit 0
-fi
-
-# The inner pass cleans up its own data file via the trap below.
 sorted_file=$(mktemp)
-trap 'rm -f "$sorted_file" "$fzf_input" "$AGENT_SWITCH_DATA"' EXIT
+fzf_input=$(mktemp)
+trap 'rm -f "$sorted_file" "$fzf_input"' EXIT
 
 printf '%s\n' "${raw_rows[@]}" | sort -t $'\t' -k1,1 -k2,2n -k3,3nr >"$sorted_file"
 
-# Left column width: the longest session name, capped so one long name
-# doesn't push the title column (and everyone else's rows) far to the
-# right - names over the cap get truncated with "..." instead.
 max_session_len=12
 prefix_width=0
 while IFS=$'\t' read -r sess _; do
@@ -146,7 +79,13 @@ done <"$sorted_file"
 [ "$prefix_width" -gt "$max_session_len" ] && prefix_width="$max_session_len"
 prefix_width=$((prefix_width + 2))
 
-fzf_input=$(mktemp)
+# usable_width can only be computed once inside the popup. fzf-tmux -B
+# popups have no tmux border, so tput cols = popup width.
+term_width=$(tput cols 2>/dev/null)
+[[ "$term_width" =~ ^[0-9]+$ ]] || term_width=80
+usable_width=$((term_width - 6))
+[ "$usable_width" -lt 20 ] && usable_width=20
+
 last_session=""
 while IFS=$'\t' read -r sess _ _ title state pane_id; do
   case "$state" in
@@ -165,11 +104,6 @@ while IFS=$'\t' read -r sess _ _ title state pane_id; do
   fi
 
   status_width=$((${#plain_status}))
-
-  # A long AI-generated title could otherwise push the row wider than the
-  # popup, forcing pad to its 2-char floor and letting the whole line (with
-  # the status now past the visible edge) wrap or get mangled by the
-  # terminal - truncate the title itself before that can happen.
   title_shown="$title"
   max_title_len=$((usable_width - prefix_width - status_width - 2))
   if [ "$max_title_len" -gt 3 ] && [ "${#title_shown}" -gt "$max_title_len" ]; then
@@ -180,26 +114,20 @@ while IFS=$'\t' read -r sess _ _ title state pane_id; do
   pad=$((usable_width - ${#plain_name} - status_width))
   [ "$pad" -lt 2 ] && pad=2
 
-  display="${prefix}${title_shown}$(printf '%*s' "$pad" '')${status}"
-  printf '%s\t%s\n' "$display" "$pane_id" >>"$fzf_input"
-done <"$sorted_file"
+  printf '%s\t%s\n' "${prefix}${title_shown}$(printf '%*s' "$pad" '')${status}" "$pane_id"
+done <"$sorted_file" >"$fzf_input"
 
-# fzf with --border=rounded: 2 border lines + 1 prompt + 1 separator + N items.
 rows=${#raw_rows[@]}
 height=$((rows + 4))
+[ "$height" -lt 4 ] && height=4
 
-selection=$(fzf --delimiter=$'\t' --with-nth=1 \
-  --no-sort \
-  --ansi \
-  --border=rounded \
-  --border-label ' Agents ' \
-  --border-label-pos=3 \
-  --info=hidden \
-  --exact \
-  --reverse \
-  --cycle \
-  --no-scrollbar \
+selection=$(fzf-tmux -p -w 80 -h "$height" -- \
+  --delimiter=$'\t' --with-nth=1 \
+  --no-sort --exact --ansi \
+  --info=hidden --reverse --cycle \
   --height="$height" \
+  --border=rounded \
+  --no-scrollbar \
   --color='bg:#1e1e2e,bg+:#313244,fg:#cdd6f4,fg+:#cdd6f4,pointer:#cba6f7,label:#cba6f7,border:#cba6f7,separator:#6D7085,prompt:#89b4fa' \
   --bind 'tab:down,btab:up' \
   <"$fzf_input")
@@ -212,8 +140,6 @@ pane="${selection##*$'\t'}"
 session=$(tmux display -p -t "$pane" '#{session_name}' 2>/dev/null)
 [ -n "$session" ] || exit 0
 
-# switch-client without -c doesn't reliably target the client that actually
-# opened this popup; resolving its tty explicitly and passing -c fixes that.
 client_tty=$(tmux display -p '#{client_tty}' 2>/dev/null)
 if [ -n "$client_tty" ]; then
   tmux switch-client -c "$client_tty" -t "$session"
