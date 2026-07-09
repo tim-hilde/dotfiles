@@ -145,8 +145,10 @@ if [ "${#raw_rows[@]}" -eq 0 ]; then
   exit 0
 fi
 
+# new-pane is non-blocking, so the outer pass exits before the picker is
+# done and can't clean up its data file - the inner pass owns it now.
 sorted_file=$(mktemp)
-trap 'rm -f "$sorted_file" "$fzf_input"' EXIT
+trap 'rm -f "$sorted_file" "$fzf_input" "$AGENT_SWITCH_DATA"' EXIT
 
 printf '%s\n' "${raw_rows[@]}" | sort -t $'\t' -k1,1 -k2,2n -k3,3nr >"$sorted_file"
 
