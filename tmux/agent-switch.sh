@@ -88,8 +88,8 @@ if [ -z "$AGENT_SWITCH_INNER" ]; then
   fi
 
   count=${#raw_rows[@]}
-  popup_height=$((count + 6))
-  [ "$popup_height" -lt 6 ] && popup_height=6
+  popup_height=$((count + 4))
+  [ "$popup_height" -lt 4 ] && popup_height=4
   [ "$popup_height" -gt 22 ] && popup_height=22
 
   data_file=$(mktemp)
