@@ -132,7 +132,7 @@ fi
 # WINDOW options and leak onto the window after the pane closes (that left
 # windows border-less during development).
 if [ -n "$TMUX_PANE" ]; then
-  tmux select-pane -t "$TMUX_PANE" -T " Agents " 2>/dev/null
+  tmux select-pane -t "$TMUX_PANE" -T "" 2>/dev/null
 fi
 
 icon_working=$'\uf04b'
