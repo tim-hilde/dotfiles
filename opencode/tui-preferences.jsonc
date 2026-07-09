@@ -5,5 +5,13 @@
 {
   "magic-context": {
     "collapsed": false
+  },
+  "sections":
+  {
+  "historian": false,
+  "memory": false,
+  "status": false,
+  "dreamer": false,
+  "stats" : false,
   }
 }

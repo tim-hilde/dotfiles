@@ -1,5 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/cortexkit/magic-context/master/assets/magic-context.schema.json",
+  "toast_duration_ms": 0,
   "historian": {
     "model": "anthropic/claude-sonnet-4-6"
   },
