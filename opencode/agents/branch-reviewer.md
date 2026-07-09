@@ -1,5 +1,5 @@
 ---
-description: Read-only code reviewer for a branch diff. Invoked programmatically by the /review-branch flow. Loads the code-review-skill, reviews a passed diff plus test results, and returns findings in the skill's severity taxonomy with a Verdict and a machine-parsable STATUS line.
+description: Read-only code reviewer for a branch diff. Invoked programmatically by the /review-loop flow. Loads the code-review-skill, reviews a passed diff plus test results, and returns findings in the skill's severity taxonomy with a Verdict and a machine-parsable STATUS line.
 hidden: true
 model: anthropic/claude-opus-4-8
 reasoningEffort: xhigh
@@ -19,13 +19,15 @@ The dispatching agent passes you:
 - the target branch and source ref (e.g. `origin/staging..HEAD`), plus the resolved source SHA
 - the diff to review, as diff text
 - the test command that was run and its result (pass/fail + relevant output)
+- optionally, a `SOURCE_WORKTREE` path — an absolute path to a working tree already checked out at the source SHA
 
 ## Procedure
 
 1. Load and follow the `code-review-skill`. Use its severity taxonomy (🔴 Blocking / 🟡 Important / 🟢 Nit, plus the non-blocking 💡/📚/🎉 annotations) — do not invent your own.
 2. Factor in the test result. Failing tests are always at least a 🔴 Blocking concern.
 3. Keep every changed line traceable to an intended purpose; flag scope creep and orphaned code.
-4. Use subagents if needed.
+4. If `SOURCE_WORKTREE` was provided, root every file-context read (reading full files beyond the diff hunks, checking surrounding code, following imports, etc.) at that path instead of the session's current working tree — it reflects the source SHA, the session's own tree may not. If it was not provided, judge from the diff text alone and do not read surrounding files, since the current working tree may not match the source ref.
+5. Use subagents if needed.
 
 ## Output format
 
