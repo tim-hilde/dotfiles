@@ -82,29 +82,42 @@ if [ -z "$AGENT_SWITCH_INNER" ]; then
   done < <(tmux list-panes -a -F "#{pane_id}${US}#{session_name}${US}#{window_name}${US}#{window_id}" 2>/dev/null)
 
   if [ "${#raw_rows[@]}" -eq 0 ]; then
-    tmux display-popup -E -h 4 -w 80 -b rounded -S "fg=#cba6f7" "echo 'No active agents'; sleep 1"
+    tmux new-pane -t "$current_window" -x 40 -y 3 -X 5 -Y 3 -S "fg=#cba6f7" \
+      "echo 'No active agents'; sleep 1"
     exit 0
   fi
 
-  # +2 for tmux's own popup border (measured empirically - requesting -h N
-  # always leaves exactly N-2 usable lines inside) + 2 for fzf's own chrome
-  # (--info=hidden collapses its match-count line, but it still needs more
-  # than just the bare prompt row - confirmed by user testing: +3 total
-  # clipped the last row, +5 left one blank row spare, so +4 is exact).
+  # new-pane -y N gives exactly N usable interior lines (verified: no border
+  # rows are subtracted, unlike display-popup which ate 2), so height is just
+  # count + 2 (one fzf prompt row + one spare) - the same interior the old
+  # popup_height of count+4 produced after tmux's 2-line popup border.
   count=${#raw_rows[@]}
-  popup_height=$((count + 4))
-  [ "$popup_height" -lt 6 ] && popup_height=6
-  [ "$popup_height" -gt 24 ] && popup_height=24
+  pane_h=$((count + 2))
+  [ "$pane_h" -lt 4 ] && pane_h=4
+  [ "$pane_h" -gt 22 ] && pane_h=22
+  pane_w=80
+
+  # new-pane takes an absolute X/Y, not a percentage like display-popup's
+  # auto-centre, so centre it in the window ourselves.
+  read -r win_w win_h < <(tmux display -p -t "$current_window" '#{window_width} #{window_height}' 2>/dev/null)
+  [[ "$win_w" =~ ^[0-9]+$ ]] || win_w=$pane_w
+  [[ "$win_h" =~ ^[0-9]+$ ]] || win_h=$((pane_h + 4))
+  [ "$pane_w" -gt "$win_w" ] && pane_w=$win_w
+  pos_x=$(((win_w - pane_w) / 2)); [ "$pos_x" -lt 0 ] && pos_x=0
+  pos_y=$(((win_h - pane_h) / 2)); [ "$pos_y" -lt 0 ] && pos_y=0
 
   data_file=$(mktemp)
   printf '%s\n' "${raw_rows[@]}" >"$data_file"
 
-  # A plain "VAR=1 tmux display-popup ..." only sets VAR for the tmux CLI
-  # invocation, not for the process display-popup spawns inside the popup -
-  # that needs tmux's own -e flag.
-  tmux display-popup -E -e AGENT_SWITCH_INNER=1 -e AGENT_SWITCH_DATA="$data_file" \
-    -h "$popup_height" -w 80 -b rounded -S "fg=#cba6f7" -T " Agents " "$0"
-  rm -f "$data_file"
+  # A floating pane (tmux 3.7+) instead of display-popup: the popup overlay
+  # compositing path flickers when a 60fps opentui pane (opencode) redraws
+  # behind it - a tmux 3.7 regression; floating panes use a different render
+  # path that doesn't. new-pane is non-blocking so the inner pass removes the
+  # data file itself; no -d, so the pane becomes active and fzf gets the keys.
+  # (-e sets env for the spawned process, like display-popup's -e did.)
+  tmux new-pane -t "$current_window" \
+    -x "$pane_w" -y "$pane_h" -X "$pos_x" -Y "$pos_y" -S "fg=#cba6f7" \
+    -e AGENT_SWITCH_INNER=1 -e AGENT_SWITCH_DATA="$data_file" "$0"
   exit 0
 fi
 
