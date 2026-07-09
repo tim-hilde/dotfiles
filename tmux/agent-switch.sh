@@ -82,21 +82,21 @@ if [ -z "$AGENT_SWITCH_INNER" ]; then
   done < <(tmux list-panes -a -F "#{pane_id}${US}#{session_name}${US}#{window_name}${US}#{window_id}" 2>/dev/null)
 
   if [ "${#raw_rows[@]}" -eq 0 ]; then
-    tmux display-popup -E -h 4 -w 80 -b single -S "fg=#cba6f7" \
+    tmux display-popup -E -h 6 -w 80 -B \
       "echo 'No active agents'; sleep 1"
     exit 0
   fi
 
   count=${#raw_rows[@]}
-  popup_height=$((count + 4))
-  [ "$popup_height" -lt 4 ] && popup_height=4
+  popup_height=$((count + 6))
+  [ "$popup_height" -lt 6 ] && popup_height=6
   [ "$popup_height" -gt 22 ] && popup_height=22
 
   data_file=$(mktemp)
   printf '%s\n' "${raw_rows[@]}" >"$data_file"
 
   tmux display-popup -E \
-    -h "$popup_height" -w 80 -b rounded -S "fg=#cba6f7"  \
+    -h "$popup_height" -w 80 -B \
     -e AGENT_SWITCH_INNER=1 -e AGENT_SWITCH_DATA="$data_file" "$0"
   exit 0
 fi
@@ -113,11 +113,11 @@ c_green=$'\033[32m'
 
 term_width=$(tput cols 2>/dev/null)
 [[ "$term_width" =~ ^[0-9]+$ ]] || term_width=80
-# fzf runs borderless here; it only reserves a left pointer gutter. tput cols
-# is the pane's full interior width; term_width-2 lands the status one cell shy
-# of the right edge without tripping fzf's line-wrap/".." truncation (measured:
-# -1 wraps and mangles the status, -2 is the tight fit).
-usable_width=$((term_width - 2))
+# fzf draws its own border (--border=rounded) which consumes 2 columns, plus a
+# 2-column pointer gutter, plus a 1-column safety margin because fzf counts
+# our Nerd Font status icons as 2 wide (ambiguous-width PUA codepoints) while
+# bash and the terminal both render them as 1; term_width-6 is the tight fit.
+usable_width=$((term_width - 6))
 [ "$usable_width" -lt 20 ] && usable_width=20
 
 raw_rows=()
@@ -164,12 +164,7 @@ while IFS=$'\t' read -r sess _ _ title state pane_id; do
     prefix="$(printf '%*s' "$prefix_width" '')"
   fi
 
-  # fzf's own width math (go-runewidth) treats our Nerd Font icons - Private
-  # Use Area codepoints - as "ambiguous width" and renders them as 2 columns,
-  # while bash's ${#...} and the terminal both count them as 1. Padding
-  # against fzf's inflated width keeps a real row from tripping its own
-  # right-edge truncation (its "..") and eating into the status text.
-  status_width=$((${#plain_status} + 3))
+  status_width=$((${#plain_status}))
 
   # A long AI-generated title could otherwise push the row wider than the
   # popup, forcing pad to its 2-char floor and letting the whole line (with
@@ -189,14 +184,14 @@ while IFS=$'\t' read -r sess _ _ title state pane_id; do
   printf '%s\t%s\n' "$display" "$pane_id" >>"$fzf_input"
 done <"$sorted_file"
 
-# Borderless fzf: prompt row + separator row + the item rows = count+2, which
-# matches the pane_h the outer pass created.
+# fzf with --border=rounded: 2 border lines + 1 prompt + 1 separator + N items.
 rows=${#raw_rows[@]}
-height=$((rows + 2))
+height=$((rows + 4))
 
 selection=$(fzf --delimiter=$'\t' --with-nth=1 \
   --no-sort \
   --ansi \
+  --border=rounded \
   --border-label ' Agents ' \
   --border-label-pos=3 \
   --info=hidden \
