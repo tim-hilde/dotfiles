@@ -146,6 +146,7 @@ function sesh-sessions() {
     --no-sort \
     --ansi \
     --info=hidden \
+    --no-separator \
     --reverse \
     --cycle \
     --no-scrollbar \
