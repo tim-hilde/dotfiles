@@ -121,6 +121,16 @@ if [ -z "$AGENT_SWITCH_INNER" ]; then
   exit 0
 fi
 
+# new-pane has no -T title flag like display-popup did, but a floating pane
+# draws a real tmux border that can carry a title via pane-border-format.
+# Set it per-pane on ourselves (this floating pane) so it doesn't touch the
+# tiled panes' borders. tmux.conf already enables pane-border-status top, and
+# it was verified not to steal an interior line from the floating pane.
+if [ -n "$TMUX_PANE" ]; then
+  tmux set -p -t "$TMUX_PANE" pane-border-status top 2>/dev/null
+  tmux set -p -t "$TMUX_PANE" pane-border-format "#[align=centre] Agents " 2>/dev/null
+fi
+
 icon_working=$'\uf04b'
 icon_waiting=$'\uf04c'
 icon_done=$'\uf00c'
