@@ -126,15 +126,13 @@ if [ -z "$AGENT_SWITCH_INNER" ]; then
   exit 0
 fi
 
-# Put the " Agents " title on this floating pane's own border. tmux's
-# #[align=centre] doesn't centre reliably on a floating pane border, so this
-# is left-aligned by choice (a plain default-style title). Set per-pane so it
-# never touches the tiled panes' borders. tmux.conf already has
-# pane-border-status top globally; setting it per-pane too is harmless and
-# keeps this self-contained.
+# Title the picker via this pane's own pane_title, which tmux.conf's
+# pane-border-format shows for floating panes. A pane_title dies with the pane,
+# so nothing leaks - unlike `set -p pane-border-status/format`, which are
+# WINDOW options and leak onto the window after the pane closes (that left
+# windows border-less during development).
 if [ -n "$TMUX_PANE" ]; then
-  tmux set -p -t "$TMUX_PANE" pane-border-status top 2>/dev/null
-  tmux set -p -t "$TMUX_PANE" pane-border-format " Agents " 2>/dev/null
+  tmux select-pane -t "$TMUX_PANE" -T " Agents " 2>/dev/null
 fi
 
 icon_working=$'\uf04b'
