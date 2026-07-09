@@ -41,6 +41,8 @@ brew "readline"
 brew "xz"
 # Spell checker with better logic than ispell
 brew "aspell"
+# Tool for generating GNU Standards-compliant Makefiles
+brew "automake"
 # Microsoft Azure CLI 2.0
 brew "azure-cli"
 # GNU internationalization (i18n) and localization (l10n) library
