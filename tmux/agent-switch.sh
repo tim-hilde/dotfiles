@@ -116,10 +116,13 @@ if [ -z "$AGENT_SWITCH_INNER" ]; then
   # path that doesn't. new-pane is non-blocking so the inner pass removes the
   # data file itself; no -d, so the pane becomes active and fzf gets the keys.
   # (-e sets env for the spawned process, like display-popup's -e did.)
-  # tmux's own pane border is hidden (bg-coloured) so only fzf's border shows.
+  # tmux always frames a floating pane with a 1-cell border (unavoidable, and
+  # it can't be rounded - only single/double/etc). fzf draws the real rounded
+  # border inside, so hide tmux's frame by painting it in the base bg for BOTH
+  # fg and bg (fg alone left the glyph cell's default bg showing as grey).
   tmux new-pane -t "$current_window" \
     -x "$pane_w" -y "$pane_h" -X "$pos_x" -Y "$pos_y" \
-    -S "fg=#1e1e2e" -R "fg=#1e1e2e" \
+    -S "fg=#1e1e2e,bg=#1e1e2e" -R "fg=#1e1e2e,bg=#1e1e2e" \
     -e AGENT_SWITCH_INNER=1 -e AGENT_SWITCH_DATA="$data_file" "$0"
   exit 0
 fi
