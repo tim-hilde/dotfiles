@@ -8,5 +8,6 @@ spoon.ReloadConfiguration:start()
 -- Load modules
 require("dotfiles")
 require("clipboard")
+require("agent-fleet")
 
 utils.notify("Hammerspoon configuration loaded")
