@@ -23,7 +23,7 @@ local function isDark()
 end
 
 local function renderText(text)
-	local w = math.ceil(utf8.len(text) * 7)
+	local w = math.ceil(utf8.len(text) * 6)
 	local c = hs.canvas.new({ x = 0, y = 0, w = w, h = 22 })
 	local color = isDark() and { white = 1.0 } or { white = 0.0 }
 	c:appendElements({
@@ -32,7 +32,7 @@ local function renderText(text)
 		textFont = "SF Pro Text",
 		textSize = FONT_SIZE,
 		textColor = color,
-		frame = { x = 0, y = 3, w = w, h = 17 },
+		frame = { x = 0, y = 4, w = w, h = 17 },
 		textAlignment = "left",
 	})
 	return c:imageFromCanvas()
