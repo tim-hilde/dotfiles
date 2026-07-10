@@ -4,6 +4,7 @@
 // keys and preserve the rest (values and comments).
 {
   "magic-context": {
+    "toast_duration_ms": 0,
     "collapsed": false,
     "sections": {
       "historian": false,

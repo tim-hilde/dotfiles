@@ -93,9 +93,16 @@ local function update()
 	menubar:setTitle(table.concat(parts, "  "))
 end
 
+local function schedule()
+	local ok, err = pcall(update)
+	if not ok then
+		print("[agent-fleet] " .. tostring(err))
+	end
+	hs.timer.doAfter(5, schedule)
+end
+
 function module.start()
-	update()
-	hs.timer.doEvery(5, update):start()
+	schedule()
 end
 
 module.start()
