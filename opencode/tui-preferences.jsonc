@@ -4,14 +4,13 @@
 // keys and preserve the rest (values and comments).
 {
   "magic-context": {
-    "collapsed": false
-  },
-  "sections":
-  {
-  "historian": false,
-  "memory": false,
-  "status": false,
-  "dreamer": false,
-  "stats" : false,
+    "collapsed": false,
+    "sections": {
+      "historian": false,
+      "memory": false,
+      "status": false,
+      "dreamer": false,
+      "stats": false
+    }
   }
 }
