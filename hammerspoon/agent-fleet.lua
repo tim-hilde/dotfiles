@@ -24,7 +24,7 @@ end
 
 local function renderText(text)
 	local charCount = utf8.len(text)
-	local w = math.ceil(charCount * 7 + 4)
+	local w = math.ceil(charCount * 6)
 	local c = hs.canvas.new({x = 0, y = 0, w = w, h = MENU_H})
 	local color = isDark() and {white = 1.0} or {white = 0.0}
 	c:appendElements({
