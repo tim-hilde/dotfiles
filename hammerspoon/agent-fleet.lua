@@ -32,7 +32,7 @@ local function renderText(text)
 		textFont = "SF Pro Text",
 		textSize = FONT_SIZE,
 		textColor = color,
-		frame = { x = 0, y = 1, w = w, h = 17 },
+		frame = { x = 0, y = 4, w = w, h = 17 },
 		textAlignment = "left",
 	})
 	return c:imageFromCanvas()
