@@ -14,42 +14,6 @@ end
 
 local menubar = hs.menubar.new()
 
-local FONT_SIZE = 14
-
-local function isDark()
-	local _, ok = hs.execute("defaults read -g AppleInterfaceStyle 2>/dev/null")
-	return ok
-end
-
-local function renderGroups(groups)
-	local h = math.ceil(FONT_SIZE + 4)
-	local totalW = 4
-	local gap = 6
-	local color = isDark() and { white = 1.0 } or { white = 0.0 }
-
-	local elements = {}
-	for i, g in ipairs(groups) do
-		local gw = math.ceil(#g.text * FONT_SIZE * 0.58)
-		table.insert(elements, {
-			type = "text",
-			text = g.text,
-			textFont = "SF Pro Text",
-			textSize = FONT_SIZE,
-			textColor = color,
-			frame = { x = totalW, y = 2, w = gw, h = h - 4 },
-			textAlignment = "left",
-		})
-		totalW = totalW + gw + gap
-	end
-
-	totalW = totalW - gap + 4
-	local c = hs.canvas.new({ x = 0, y = 0, w = totalW, h = h })
-	for _, el in ipairs(elements) do
-		c:appendElements(el)
-	end
-	return c:imageFromCanvas()
-end
-
 local function update()
 	local tmux = tmuxPath()
 	if not tmux then
