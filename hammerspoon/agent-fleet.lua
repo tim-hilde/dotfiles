@@ -23,7 +23,7 @@ local function isDark()
 end
 
 local function renderText(text)
-	local w = math.ceil(#text * (FONT_SIZE / 2) + 4)
+	local w = math.ceil(#text * (FONT_SIZE / 2.2))
 	local c = hs.canvas.new({ x = 0, y = 0, w = w, h = MENU_H })
 	local color = isDark() and { white = 1.0 } or { white = 0.0 }
 	c:appendElements({
