@@ -116,7 +116,6 @@ local function update()
 	end
 
 	local title = table.concat(parts, "   ")
-	local title = "DAS IST EIN LANGER TEXT"
 
 	if title == "" then
 		menubar:setIcon(nil)
