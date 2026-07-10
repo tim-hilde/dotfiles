@@ -122,7 +122,7 @@ local function update()
 		menubar:removeFromMenuBar()
 	else
 		menubar:returnToMenuBar()
-		menubar:setIcon(renderText("DEBUG"))
+		menubar:setIcon(renderText(title))
 	end
 end
 
