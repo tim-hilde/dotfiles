@@ -24,7 +24,7 @@ end
 local function renderGroups(groups)
 	local h = math.ceil(FONT_SIZE + 4)
 	local totalW = 4
-	local gap = 2
+	local gap = 0
 	local color = isDark() and { white = 1.0 } or { white = 0.0 }
 
 	local elements = {}
