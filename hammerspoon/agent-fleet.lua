@@ -104,13 +104,13 @@ local function update()
 
   local groups = {}
   if counts.working > 0 then
-    table.insert(groups, {text = "\u{25B6} " .. counts.working, color = YELLOW})
+    table.insert(groups, {text = "\u{25B6} " .. counts.working})
   end
   if counts.waiting > 0 then
-    table.insert(groups, {text = "\u{23F8} " .. counts.waiting, color = RED})
+    table.insert(groups, {text = "\u{23F8} " .. counts.waiting})
   end
   if counts.done > 0 then
-    table.insert(groups, {text = "\u{2713} " .. counts.done, color = GREEN})
+    table.insert(groups, {text = "\u{2713} " .. counts.done})
   end
 
   if #groups == 0 then
