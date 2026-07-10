@@ -15,6 +15,29 @@ end
 local menubar = hs.menubar.new()
 menubar:returnToMenuBar()
 
+local FONT_SIZE = 14
+
+local function isDark()
+	local _, ok = hs.execute("defaults read -g AppleInterfaceStyle 2>/dev/null")
+	return ok
+end
+
+local function renderText(text)
+	local w = math.ceil(utf8.len(text) * 7)
+	local c = hs.canvas.new({x = 0, y = 0, w = w, h = 22})
+	local color = isDark() and {white = 1.0} or {white = 0.0}
+	c:appendElements({
+		type = "text",
+		text = text,
+		textFont = "SF Pro Text",
+		textSize = FONT_SIZE,
+		textColor = color,
+		frame = {x = 0, y = 5, w = w, h = 17},
+		textAlignment = "left",
+	})
+	return c:imageFromCanvas()
+end
+
 local function update()
 	local tmux = tmuxPath()
 	if not tmux then
@@ -90,7 +113,13 @@ local function update()
 		table.insert(parts, "\u{2713} " .. counts.done)
 	end
 
-	menubar:setTitle(table.concat(parts, "  "))
+	local title = table.concat(parts, "  ")
+
+	if title == "" then
+		menubar:setIcon(nil)
+	else
+		menubar:setIcon(renderText(title))
+	end
 end
 
 function module.start()
