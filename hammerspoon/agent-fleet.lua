@@ -3,7 +3,7 @@ local module = {}
 local STATE_DIR = os.getenv("HOME") .. "/.cache/opencode-tmux"
 
 local function tmuxPath()
-	local candidates = { "/opt/homebrew/bin/tmux", "/usr/local/bin/tmux" }
+	local candidates = {"/opt/homebrew/bin/tmux", "/usr/local/bin/tmux"}
 	for _, p in ipairs(candidates) do
 		if hs.fs.attributes(p) then
 			return p
@@ -14,29 +14,6 @@ end
 
 local menubar = hs.menubar.new()
 menubar:returnToMenuBar()
-
-local FONT_SIZE = 13
-
-local function isDark()
-	local _, ok = hs.execute("defaults read -g AppleInterfaceStyle 2>/dev/null")
-	return ok
-end
-
-local function renderText(text)
-	local w = math.ceil(utf8.len(text) * 7)
-	local c = hs.canvas.new({ x = 0, y = 0, w = w - 1, h = 22 })
-	local color = isDark() and { white = 1.0 } or { white = 0.0 }
-	c:appendElements({
-		type = "text",
-		text = text,
-		textFont = "SF Pro Text",
-		textSize = FONT_SIZE,
-		textColor = color,
-		frame = { x = 0, y = 4, w = w, h = 17 },
-		textAlignment = "left",
-	})
-	return c:imageFromCanvas()
-end
 
 local function update()
 	local tmux = tmuxPath()
@@ -54,7 +31,7 @@ local function update()
 		live[pane:gsub("^%%", "")] = true
 	end
 
-	local counts = { working = 0, waiting = 0, done = 0 }
+	local counts = {working = 0, waiting = 0, done = 0}
 	local attr = hs.fs.attributes(STATE_DIR)
 
 	if attr and attr.mode == "directory" then
@@ -113,13 +90,7 @@ local function update()
 		table.insert(parts, "\u{2713} " .. counts.done)
 	end
 
-	local title = table.concat(parts, "  ")
-
-	if title == "" then
-		menubar:setIcon(nil)
-	else
-		menubar:setIcon(renderText(title))
-	end
+	menubar:setTitle(table.concat(parts, "  "))
 end
 
 function module.start()
