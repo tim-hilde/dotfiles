@@ -55,6 +55,8 @@ brew "libgit2"
 brew "bat"
 # Bash scripts that integrate bat with various command-line tools
 brew "bat-extras"
+# Resource monitor. C++ version and continuation of bashtop and bpytop
+brew "btop"
 # Core application library for C
 brew "glib"
 # Multi-shell multi-command argument completer
@@ -135,6 +137,8 @@ brew "libpq", link: true
 brew "harlequin"
 # Convert source code to formatted text with syntax highlighting
 brew "highlight"
+# Improved top (interactive process viewer)
+brew "htop"
 # Tools and libraries to manipulate images in select formats
 brew "imagemagick"
 # Lightweight and flexible command-line JSON processor
