@@ -72,28 +72,6 @@ const TmuxStatus = async ({ client, directory }) => {
 
   writeState(machine.getSnapshot());
 
-  // Best-effort title seed — deferred so we don't block plugin init.
-  // client.session.list() may hang if called before the server is ready.
-  setTimeout(async () => {
-    try {
-      const res = await client.session.list();
-      const sessions = (res && res.data) || [];
-      const root = sessions
-        .filter((s) => !s.parentID)
-        .sort(
-          (a, b) =>
-            ((b.time && b.time.updated) || 0) - ((a.time && a.time.updated) || 0)
-        )[0];
-      if (root) {
-        // Feed it as a session.updated so the machine tracks the root id + title.
-        machine.handleEvent({
-          type: "session.updated",
-          properties: { info: { id: root.id, title: root.title } },
-        });
-      }
-    } catch {}
-  }, 0);
-
   return {
     event: async ({ event }) => {
       machine.handleEvent(event);
