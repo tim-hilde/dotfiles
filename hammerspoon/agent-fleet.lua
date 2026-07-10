@@ -120,9 +120,8 @@ local function update()
 	local title = table.concat(parts, "   ")
 
 	if title == "" then
-		menubar:removeFromMenuBar()
+		menubar:setIcon(nil)
 	else
-		menubar:returnToMenuBar()
 		menubar:setIcon(renderText(title))
 	end
 end
