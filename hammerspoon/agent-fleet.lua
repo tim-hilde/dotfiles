@@ -116,7 +116,7 @@ local function update()
 		table.insert(parts, "\u{2713} " .. counts.done)
 	end
 
-	local title = table.concat(parts, "   ")
+	local title = table.concat(parts, "")
 
 	if title == "" then
 		menubar:setIcon(nil)
