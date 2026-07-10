@@ -43,13 +43,11 @@ end
 local function update()
 	local tmux = tmuxPath()
 	if not tmux then
-		menubar:removeFromMenuBar()
 		return
 	end
 
 	local out, ok = hs.execute(tmux .. " list-panes -a -F '#{pane_id}'")
 	if not ok then
-		menubar:removeFromMenuBar()
 		return
 	end
 
