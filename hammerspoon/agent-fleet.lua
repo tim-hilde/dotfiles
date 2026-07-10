@@ -42,7 +42,7 @@ local function renderGroups(groups)
 		totalW = totalW + gw + gap
 	end
 
-	totalW = totalW - gap + 4
+	totalW = totalW - gap + 0
 	local c = hs.canvas.new({ x = 0, y = 0, w = totalW, h = h })
 	for _, el in ipairs(elements) do
 		c:appendElements(el)
