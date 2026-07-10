@@ -26,15 +26,15 @@ end
 local function renderText(text)
 	local charCount = utf8.len(text)
 	local w = math.ceil(charCount * 8)
-	local c = hs.canvas.new({x = 0, y = 0, w = w, h = MENU_H})
-	local color = isDark() and {white = 1.0} or {white = 0.0}
+	local c = hs.canvas.new({ x = 0, y = 0, w = w, h = MENU_H })
+	local color = isDark() and { white = 1.0 } or { white = 0.0 }
 	c:appendElements({
 		type = "text",
 		text = text,
 		textFont = "SF Pro Text",
 		textSize = FONT_SIZE,
 		textColor = color,
-		frame = {x = 0, y = 4, w = w, h = MENU_H - 4},
+		frame = { x = 0, y = 4, w = w, h = MENU_H - 4 },
 		textAlignment = "left",
 	})
 	return c:imageFromCanvas()
@@ -116,6 +116,7 @@ local function update()
 	end
 
 	local title = table.concat(parts, "   ")
+	local title = "DAS IST EIN LANGER TEXT"
 
 	if title == "" then
 		menubar:setIcon(nil)
