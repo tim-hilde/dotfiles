@@ -15,7 +15,7 @@ end
 local menubar = hs.menubar.new()
 menubar:returnToMenuBar()
 
-local FONT_SIZE = 14
+local FONT_SIZE = 13
 
 local function isDark()
 	local _, ok = hs.execute("defaults read -g AppleInterfaceStyle 2>/dev/null")
