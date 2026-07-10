@@ -24,7 +24,7 @@ end
 
 local function renderText(text)
 	local w = math.ceil(utf8.len(text) * 7)
-	local c = hs.canvas.new({ x = 0, y = 0, w = w, h = 22 })
+	local c = hs.canvas.new({ x = 0, y = 0, w = w - 1, h = 22 })
 	local color = isDark() and { white = 1.0 } or { white = 0.0 }
 	c:appendElements({
 		type = "text",
