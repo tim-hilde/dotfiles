@@ -103,25 +103,22 @@ local function update()
     end
   end
 
-  local parts = {}
+  local groups = {}
   if counts.working > 0 then
-    table.insert(parts, "\u{25B6} " .. counts.working)
+    table.insert(groups, {text = "\u{25B6} " .. counts.working, color = YELLOW})
   end
   if counts.waiting > 0 then
-    table.insert(parts, "\u{23F8} " .. counts.waiting)
+    table.insert(groups, {text = "\u{23F8} " .. counts.waiting, color = RED})
   end
   if counts.done > 0 then
-    table.insert(parts, "\u{2713} " .. counts.done)
+    table.insert(groups, {text = "\u{2713} " .. counts.done, color = GREEN})
   end
 
-  local title = table.concat(parts, "  ")
-
-  if title == "" then
+  if #groups == 0 then
     menubar:removeFromMenuBar()
   else
     menubar:returnToMenuBar()
-    menubar:setTitle("")
-    menubar:setIcon(renderText(title))
+    menubar:setIcon(renderGroups(groups))
   end
 end
 
