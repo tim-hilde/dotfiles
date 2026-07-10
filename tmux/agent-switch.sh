@@ -12,6 +12,23 @@ command -v tmux >/dev/null 2>&1 || exit 0
 command -v fzf-tmux >/dev/null 2>&1 || exit 0
 [ -d "$state_dir" ] || exit 0
 
+# --jump <pane>: switch to a pane without opening the picker (used by
+# ctrl-space inside fzf for preview-only jumps that leave the popup open).
+if [ "$1" = "--jump" ] && [ -n "$2" ]; then
+  pane="$2"
+  session=$(tmux display -p -t "$pane" '#{session_name}' 2>/dev/null)
+  [ -n "$session" ] || exit 0
+  client_tty=$(tmux display -p '#{client_tty}' 2>/dev/null)
+  if [ -n "$client_tty" ]; then
+    tmux switch-client -c "$client_tty" -t "$session"
+  else
+    tmux switch-client -t "$session"
+  fi
+  tmux select-window -t "$pane"
+  tmux select-pane -t "$pane"
+  exit 0
+fi
+
 current_window=$(tmux display -p '#{window_id}' 2>/dev/null)
 
 raw_rows=()
@@ -129,7 +146,7 @@ selection=$(fzf-tmux -p -w 80 -h "$height" -- \
   --border=rounded \
   --no-scrollbar \
   --color='bg:#1e1e2e,bg+:#313244,fg:#cdd6f4,fg+:#cdd6f4,pointer:#cba6f7,label:#cba6f7,border:#cba6f7,separator:#6D7085,prompt:#89b4fa' \
-  --bind 'tab:down,btab:up' \
+  --bind 'ctrl-space:execute-silent(~/.config/tmux/agent-switch.sh --jump {2}),tab:down,btab:up' \
   <"$fzf_input")
 
 [ -n "$selection" ] || exit 0
