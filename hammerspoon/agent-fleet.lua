@@ -110,8 +110,8 @@ local function update()
 	end
 	if counts.waiting > 0 then
 		table.insert(parts, "\u{23F8} " .. counts.waiting)
-		table.insert(parts, "\u{23F8} " .. "7")
 	end
+	table.insert(parts, "\u{23F8} " .. "7")
 	if counts.done > 0 then
 		table.insert(parts, "\u{2713} " .. counts.done)
 	end
