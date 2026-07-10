@@ -13,6 +13,7 @@ local function tmuxPath()
 end
 
 local menubar = hs.menubar.new()
+menubar:returnToMenuBar()
 
 local FONT_SIZE = 14
 local MENU_H = 22
