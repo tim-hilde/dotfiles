@@ -16,34 +16,33 @@ local menubar = hs.menubar.new()
 
 local FONT_SIZE = 14
 
-local YELLOW = {red = 0.976, green = 0.886, blue = 0.686}
-local RED = {red = 0.953, green = 0.545, blue = 0.659}
-local GREEN = {red = 0.651, green = 0.890, blue = 0.631}
+local function isDark()
+  local _, ok = hs.execute("defaults read -g AppleInterfaceStyle 2>/dev/null")
+  return ok
+end
 
 local function renderGroups(groups)
   local h = math.ceil(FONT_SIZE + 4)
   local totalW = 4
+  local gap = 6
+  local color = isDark() and {white = 1.0} or {white = 0.0}
 
   local elements = {}
   for i, g in ipairs(groups) do
-    local displayText = g.text
-    if i < #groups then
-      displayText = displayText .. "  "
-    end
-    local gw = math.ceil(#displayText * FONT_SIZE * 0.58)
+    local gw = math.ceil(#g.text * FONT_SIZE * 0.58)
     table.insert(elements, {
       type = "text",
-      text = displayText,
+      text = g.text,
       textFont = "SF Pro Text",
       textSize = FONT_SIZE,
-      textColor = g.color,
+      textColor = color,
       frame = {x = totalW, y = 2, w = gw, h = h - 4},
       textAlignment = "left",
     })
-    totalW = totalW + gw
+    totalW = totalW + gw + gap
   end
 
-  totalW = totalW + 4
+  totalW = totalW - gap + 4
   local c = hs.canvas.new({x = 0, y = 0, w = totalW, h = h})
   for _, el in ipairs(elements) do
     c:appendElements(el)
