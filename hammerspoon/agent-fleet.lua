@@ -24,7 +24,7 @@ end
 local function renderGroups(groups)
 	local h = math.ceil(FONT_SIZE + 4)
 	local totalW = 4
-	local gap = 0
+	local gap = 6
 	local color = isDark() and { white = 1.0 } or { white = 0.0 }
 
 	local elements = {}
@@ -42,7 +42,7 @@ local function renderGroups(groups)
 		totalW = totalW + gw + gap
 	end
 
-	totalW = totalW - gap + 0
+	totalW = totalW - gap + 4
 	local c = hs.canvas.new({ x = 0, y = 0, w = totalW, h = h })
 	for _, el in ipairs(elements) do
 		c:appendElements(el)
