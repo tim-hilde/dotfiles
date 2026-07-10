@@ -122,7 +122,6 @@ local function update()
 		menubar:removeFromMenuBar()
 	else
 		menubar:returnToMenuBar()
-		menubar:setTitle("")
 		menubar:setIcon(renderText(title))
 	end
 end
