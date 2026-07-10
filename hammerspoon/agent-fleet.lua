@@ -14,6 +14,30 @@ end
 
 local menubar = hs.menubar.new()
 
+local FONT_SIZE = 14
+
+local function isDark()
+  local out, ok = hs.execute("defaults read -g AppleInterfaceStyle 2>/dev/null")
+  return ok and out:match("Dark")
+end
+
+local function renderText(text)
+  local w = math.ceil(#text * FONT_SIZE * 0.58 + 8)
+  local h = math.ceil(FONT_SIZE + 4)
+  local c = hs.canvas.new({x = 0, y = 0, w = w, h = h})
+  local color = isDark() and {white = 1.0} or {white = 0.0}
+  c:appendElements({
+    type = "text",
+    text = text,
+    textFont = "SF Pro Text",
+    textSize = FONT_SIZE,
+    textColor = color,
+    frame = {x = 4, y = 2, w = w - 8, h = h - 4},
+    textAlignment = "left",
+  })
+  return c:imageFromCanvas()
+end
+
 local function update()
   local tmux = tmuxPath()
   if not tmux then
