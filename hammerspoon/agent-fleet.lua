@@ -16,25 +16,38 @@ local menubar = hs.menubar.new()
 
 local FONT_SIZE = 14
 
-local function isDark()
-  local out, ok = hs.execute("defaults read -g AppleInterfaceStyle 2>/dev/null")
-  return ok and out:match("Dark")
-end
+local YELLOW = {red = 0.976, green = 0.886, blue = 0.686}
+local RED = {red = 0.953, green = 0.545, blue = 0.659}
+local GREEN = {red = 0.651, green = 0.890, blue = 0.631}
 
-local function renderText(text)
-  local w = math.ceil(#text * FONT_SIZE * 0.58 + 8)
+local function renderGroups(groups)
   local h = math.ceil(FONT_SIZE + 4)
-  local c = hs.canvas.new({x = 0, y = 0, w = w, h = h})
-  local color = isDark() and {white = 1.0} or {white = 0.0}
-  c:appendElements({
-    type = "text",
-    text = text,
-    textFont = "SF Pro Text",
-    textSize = FONT_SIZE,
-    textColor = color,
-    frame = {x = 4, y = 2, w = w - 8, h = h - 4},
-    textAlignment = "left",
-  })
+  local totalW = 4
+
+  local elements = {}
+  for i, g in ipairs(groups) do
+    local displayText = g.text
+    if i < #groups then
+      displayText = displayText .. "  "
+    end
+    local gw = math.ceil(#displayText * FONT_SIZE * 0.58)
+    table.insert(elements, {
+      type = "text",
+      text = displayText,
+      textFont = "SF Pro Text",
+      textSize = FONT_SIZE,
+      textColor = g.color,
+      frame = {x = totalW, y = 2, w = gw, h = h - 4},
+      textAlignment = "left",
+    })
+    totalW = totalW + gw
+  end
+
+  totalW = totalW + 4
+  local c = hs.canvas.new({x = 0, y = 0, w = totalW, h = h})
+  for _, el in ipairs(elements) do
+    c:appendElements(el)
+  end
   return c:imageFromCanvas()
 end
 
