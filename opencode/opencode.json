@@ -6,7 +6,7 @@
     "superpowers@git+https://github.com/obra/superpowers.git#v6.1.1",
     "opencode-update-notifier",
     "@tim_hilde/opencode-insights",
-    "@slkiser/opencode-quota@3.11.2",
+    "@slkiser/opencode-quota@3.11.3",
     "@cortexkit/opencode-magic-context@latest"
   ],
   "experimental": {
@@ -67,9 +67,9 @@
         "npx",
         "-y",
         "@mozilla/firefox-devtools-mcp@latest",
-        "--headless",
         "--viewport",
-        "1280x720"
+        "1280x720",
+        "--enable-script"
       ],
       "environment": {
         "START_URL": "about:blank"
