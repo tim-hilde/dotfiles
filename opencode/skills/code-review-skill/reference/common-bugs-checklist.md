@@ -153,15 +153,28 @@ Quick-reference bug patterns organized by category. For detailed code examples, 
 
 ## Java / Spring Boot
 
-- [ ] POJO/DTO with manual boilerplate instead of `record`
-- [ ] Traditional switch missing `break` (use switch expressions)
+- [ ] POJO/DTO with manual boilerplate instead of `record` *(Java 17+)*
+- [ ] Traditional switch missing `break` (use switch expressions) *(Java 14+)*
 - [ ] Field injection instead of constructor injection
 - [ ] JPA N+1 query (missing `fetch join` or `@EntityGraph`)
-- [ ] Incorrect `equals`/`hashCode` on JPA entities (use business key, not ID)
+- [ ] Incorrect `equals`/`hashCode` on JPA entities (avoid `@Data`; prefer stable business key or null-safe id — never all lazy fields)
 - [ ] `Optional.get()` without `isPresent()` check
 - [ ] Stream operations with side effects
 
-**Full guide:** [Java Review Guide](java.md)
+**Full guide:** [Java Review Guide](java.md) (17/21 + Boot 3)
+
+## Java 8 / Spring Boot 2 (Legacy)
+
+- [ ] Shared `SimpleDateFormat` / legacy `Date` instead of `java.time`
+- [ ] `Collectors.toMap` with null values or missing merge function
+- [ ] `Optional` used as field/parameter, or `isPresent()`+`get()` as null-check
+- [ ] `CompletableFuture.supplyAsync` I/O on `commonPool` (no explicit executor)
+- [ ] `RestTemplate` without connect/read timeouts
+- [ ] `@Transactional` on private method or same-class self-invocation
+- [ ] `parallelStream` with shared mutable state
+- [ ] Mixing `javax.*` and `jakarta.*` on Boot 2
+
+**Full guide:** [Java 8 Review Guide](java8.md)
 
 ## PHP
 

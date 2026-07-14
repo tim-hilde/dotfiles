@@ -26,6 +26,7 @@ code-review-skill/
 │   ├── django.md               # Django / DRF, N+1, serializers, async views
 │   ├── fastapi.md              # FastAPI, Depends, Pydantic v2, async
 │   ├── java.md                 # Java 17/21, Spring Boot 3, virtual threads
+│   ├── java8.md                # Java 8, Spring Boot 2, javax.*, legacy stack
 │   ├── kotlin.md               # Kotlin / Android, coroutines, Flow, Compose
 │   ├── swift.md                # Swift 5.9+/6, SwiftUI, concurrency, optionals
 │   ├── go.md                   # Error handling, goroutines, context

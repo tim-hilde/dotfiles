@@ -96,10 +96,15 @@ It covers **20+ languages and frameworks** with over **21,000 lines** of careful
       <td>~1,020</td>
     </tr>
     <tr>
-      <td rowspan="9"><strong>Backend</strong></td>
+      <td rowspan="10"><strong>Backend</strong></td>
       <td>&#9749; Java 17/21 + Spring Boot 3</td>
       <td><code>reference/java.md</code></td>
       <td>~410</td>
+    </tr>
+    <tr>
+      <td>&#9749; Java 8 + Spring Boot 2</td>
+      <td><code>reference/java8.md</code></td>
+      <td>~580</td>
     </tr>
     <tr>
       <td>&#9889; FastAPI</td>
@@ -276,6 +281,7 @@ code-review-skill/
 |   +-- typescript.md                     # TypeScript strict mode, generics, ESLint
 |   +-- nestjs.md                         # NestJS DI, Guards, Interceptors, DTOs
 |   +-- java.md                           # Java 17/21 & Spring Boot 3
+|   +-- java8.md                          # Java 8 & Spring Boot 2 (legacy)
 |   +-- php.md                            # PHP 8.x types, PDO, security, Composer
 |   +-- python.md                         # Python async, typing, pytest
 |   +-- django.md                         # Django / DRF security, serializers, async
@@ -357,6 +363,7 @@ Focus on: security, performance, and maintainability.
 |--------|-------------|
 | `Review this React component` | Loads `react.md` - checks hooks, Server Components, Suspense patterns |
 | `Review this Java PR` | Loads `java.md` - checks virtual threads, JPA, Spring Boot 3 patterns |
+| `Review this Java 8 / Spring Boot 2 PR` | Loads `java8.md` - Stream/Optional, java.time, RestTemplate timeouts, javax.* |
 | `Security review of this Go service` | Loads `go.md` + `security-review-guide.md` |
 | `Architecture review` | Loads `architecture-review-guide.md` - SOLID, anti-patterns, coupling |
 | `Performance review` | Loads `performance-review-guide.md` - Web Vitals, N+1, complexity |
@@ -384,6 +391,16 @@ Focus on: security, performance, and maintainability.
 - **Virtual Threads** (Project Loom): High-throughput I/O patterns
 - **Spring Boot 3**: Constructor injection, `@ConfigurationProperties`, `ProblemDetail`
 - **JPA Performance**: Solving N+1, correct `equals`/`hashCode` on Entities
+
+</details>
+
+<details>
+<summary><strong>&#9749; Java 8 & Spring Boot 2 (Legacy)</strong></summary>
+
+- **Java 8**: Lambda, Stream/`Collectors`, Optional, `java.time` (no Records / virtual threads)
+- **Concurrency**: bounded thread pools, `CompletableFuture` + explicit executors
+- **Spring Boot 2**: `javax.*`, constructor injection, `RestTemplate` timeouts
+- **JPA / Hibernate 5**: N+1, Entity `equals`/`hashCode`, UTC time mapping pitfalls
 
 </details>
 
@@ -471,6 +488,7 @@ MIT &copy; [awesome-skills](https://github.com/awesome-skills)
 | | &#127912; CSS / Less / Sass | `reference/css-less-sass.md` | ~660 |
 | | &#128311; TypeScript | `reference/typescript.md` | ~1,020 |
 | **后端** | &#9749; Java 17/21 + Spring Boot 3 | `reference/java.md` | ~410 |
+| | &#9749; Java 8 + Spring Boot 2 | `reference/java8.md` | ~580 |
 | | &#9889; FastAPI | `reference/fastapi.md` | ~590 |
 | | PHP 8.x | `reference/php.md` | ~700 |
 | | &#128230; NestJS | `reference/nestjs.md` | ~590 |
@@ -550,6 +568,7 @@ code-review-skill/
 |   +-- typescript.md                     # TypeScript strict 模式、泛型、ESLint
 |   +-- nestjs.md                         # NestJS 依赖注入、Guard、Interceptor、DTO
 |   +-- java.md                           # Java 17/21 & Spring Boot 3
+|   +-- java8.md                          # Java 8 & Spring Boot 2（遗留栈）
 |   +-- php.md                            # PHP 8.x 类型、PDO、安全、Composer
 |   +-- python.md                         # Python async、类型注解、pytest
 |   +-- django.md                         # Django / DRF 安全、Serializer、异步视图
@@ -631,6 +650,7 @@ Use code-review-skill to review this PR
 |--------|------|
 | `审查这个 React 组件` | 加载 `react.md`，检查 Hooks、Server Components、Suspense |
 | `审查这个 Java PR` | 加载 `java.md`，检查虚拟线程、JPA、Spring Boot 3 |
+| `审查这个 Java 8 / Spring Boot 2 PR` | 加载 `java8.md`，检查 Stream/Optional、java.time、RestTemplate 超时、javax.* |
 | `对这个 Go 服务进行安全审查` | 加载 `go.md` + `security-review-guide.md` |
 | `架构审查` | 加载 `architecture-review-guide.md`，检查 SOLID 与反模式 |
 | `性能审查` | 加载 `performance-review-guide.md`，分析 Web Vitals、N+1 等 |
@@ -658,6 +678,16 @@ Use code-review-skill to review this PR
 - **虚拟线程**（Project Loom）：高吞吐量 I/O 模式
 - **Spring Boot 3**：构造器注入、`@ConfigurationProperties`、`ProblemDetail`
 - **JPA 性能**：解决 N+1、Entity 正确的 `equals`/`hashCode` 实现
+
+</details>
+
+<details>
+<summary><strong>&#9749; Java 8 & Spring Boot 2（遗留栈）</strong></summary>
+
+- **Java 8**：Lambda、Stream/`Collectors`、Optional、`java.time`（无 Records / 虚拟线程）
+- **并发**：有界线程池、`CompletableFuture` + 显式 Executor
+- **Spring Boot 2**：`javax.*`、构造器注入、`RestTemplate` 超时
+- **JPA / Hibernate 5**：N+1、Entity `equals`/`hashCode`、UTC 时间映射陷阱
 
 </details>
 
