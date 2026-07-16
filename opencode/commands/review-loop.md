@@ -1,18 +1,15 @@
 ---
-description: Review the current branch against staging/dev with the branch-reviewer subagent, fix blockers, and re-review until clean. Best-effort review loop — not a hard merge gate.
+description: Review the current branch with the branch-reviewer subagent, fix blockers, and re-review until clean; then triage remaining Important/Nit findings and surface anything left open. Best-effort review loop — not a hard merge gate.
 agent: build
 ---
 
-Run a review-fix-reverify loop on the branch `$ARGUMENTS` (default: the current `HEAD`). This is a best-effort loop driven by you, the agent — it is NOT a deterministic gate. Be honest in the summary about anything left unresolved.
+Run a review-fix-reverify loop on the branch `$ARGUMENTS` (default: the current branch). This is a best-effort loop driven by you, the agent — it is NOT a deterministic gate. Be honest in the summary about anything left unresolved.
+
+The `branch-reviewer` subagent is dispatched with nothing but a branch name — it determines the target branch, diff, worktree, and tests itself, the same as an unscoped "Code review `<branch>`" chat would. All interpretation of its reply — whether it's blocking, what to fix, what to leave open — is your job as the dispatching agent, not something the subagent signals for you.
 
 ## Setup
 
-1. `git fetch origin`.
-2. Determine the target branch: use `origin/staging` if it exists, else `origin/dev`. If neither exists, ask the user.
-3. Determine the source ref: `$ARGUMENTS` if given, else current `HEAD`.
-4. Resolve `SOURCE_SHA=$(git rev-parse <source>)` and `HEAD_SHA=$(git rev-parse HEAD)`. If they differ, run `git worktree list` and look for a worktree already checked out at `<source>` / `SOURCE_SHA`.
-   - Found → record its absolute path as `SOURCE_WORKTREE` and proceed. Pass `SOURCE_WORKTREE` to the reviewer every round (see Loop step 3) so it roots its own file context reads there instead of the session's working tree.
-   - Not found → warn the user that context reads (beyond the diff itself) will reflect the currently checked-out branch, not `<source>`, before proceeding. Leave `SOURCE_WORKTREE` unset.
+1. Determine the branch name: `$ARGUMENTS` if given, else the current branch (`git branch --show-current`). If detached HEAD and no `$ARGUMENTS`, ask the user for the branch name.
 
 ## Detect the test command (generic)
 
@@ -22,19 +19,25 @@ Find how this project runs its tests, in this order:
 2. Common markers: `package.json` (`scripts.test`), `Makefile` (`test` target), `pyproject.toml` / `pytest.ini` (pytest), `Cargo.toml` (`cargo test`), `go.mod` (`go test ./...`).
 3. If nothing is unambiguous, ask the user for the test command.
 
-Preserve any required prefix/wrapper exactly as documented (env loaders, runners, etc.).
+Preserve any required prefix/wrapper exactly as documented (env loaders, runners, etc.). This is for verifying your own fixes below — it is never passed to the reviewer.
 
 ## Loop (max 5 rounds)
 
-Repeat until `STATUS: CLEAN`, or stop after 5 rounds:
+Repeat until a round comes back clean, or stop after 5 rounds:
 
-1. Build the diff once: `git diff origin/<target>...<source> -- . ':(exclude)*.lock'`. Capture the output as text.
-2. Run the detected test command. Capture pass/fail and the relevant output.
-3. Dispatch the `branch-reviewer` subagent via the Task tool, passing it: the target/source refs, the resolved source SHA, the diff **text** (not the diff command), the test result, and — if set — `SOURCE_WORKTREE` as the path to root any file context reads in. Not more. Do not instruct the reviewer how do review or what to focus on and give no additional context beyond that. The reviewer will not what to do.
-4. Read the subagent's reply and the final `STATUS:` line.
-   - `STATUS: CLEAN` → stop the loop, go to Report.
-   - `STATUS: BLOCKERS` → fix the listed 🔴 Blocking findings yourself (follow `receiving-code-review` and `verification-before-completion`). Best-effort fix any 🟡 Important findings too if straightforward. Then start the next round with a fresh diff and a fresh test run.
-5. If round 5 ends still on `STATUS: BLOCKERS`, stop and report the remaining blockers — do not loop forever.
+1. Dispatch the `branch-reviewer` subagent via the Task tool with exactly this prompt: `Code review <branch-name>`. Nothing else — no diff, no test results, no target ref, no worktree path. Do not instruct it how to review or what to focus on.
+2. Read its reply yourself. Treat the round as blocked if it contains any 🔴 Blocking finding, its Verdict is 🔄 Request Changes, or it reports a failing test run.
+3. Add this round's 🟡 Important / 🟢 Nit findings to a running backlog, deduped by file:line + issue (do this every round, blocked or not — a later round's fresh review has no memory of earlier rounds and may not resurface the same non-blocking findings).
+4. If blocked: fix the 🔴 Blocking findings yourself (follow `receiving-code-review` and `verification-before-completion`), best-effort fixing straightforward 🟡 Important findings too. Verify with the detected test command. Start the next round with a fresh dispatch.
+5. If round 5 ends still blocked, stop the loop and report the remaining blockers as unresolved — do not loop forever, but still run Triage below on the accumulated backlog before reporting.
+
+## Triage
+
+Once a round comes back non-blocked (or round 5 is exhausted):
+
+1. Take the accumulated 🟡 Important / 🟢 Nit backlog from every round.
+2. Decide independently, per item: fix now (quick, localized, low-risk) or leave open (broad refactor, risky, subjective/style, out of scope) — one-line reason for anything left open.
+3. Apply the chosen fixes (`receiving-code-review` + `verification-before-completion`), then re-run the detected test command once to confirm nothing broke.
 
 ## Report
 
@@ -42,7 +45,7 @@ Output a short summary:
 
 - final status (clean / stopped with N blockers remaining)
 - rounds used
-- the latest findings in full: 🔴 Blocking / 🟡 Important / 🟢 Nit — include 🟡 and 🟢 even when the status is clean, they may still be relevant
+- Triage outcome: Fixed (what changed) / Left Open (with reasons)
 - the test command and its last result
 
 This loop is best-effort, not a guarantee. After a clean result you can run `/pr <branch>` to produce the PR description.

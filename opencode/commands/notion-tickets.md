@@ -1,7 +1,6 @@
 ---
 description: Under-Review-Tickets aus dem Notion-ZIP-Export verarbeiten und als HTML mit E-Mail-Vorlagen ausgeben
 model: anthropic/claude-sonnet-5
-variant: max
 agent: build
 ---
 

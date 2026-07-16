@@ -6,7 +6,7 @@
     "superpowers@git+https://github.com/obra/superpowers.git#v6.1.1",
     "opencode-update-notifier",
     "@tim_hilde/opencode-insights",
-    "@slkiser/opencode-quota@3.11.3",
+    "@slkiser/opencode-quota@3.11.2",
     "@cortexkit/opencode-magic-context@latest"
   ],
   "experimental": {
@@ -15,7 +15,8 @@
   "permission": {
     "external_directory": {
       "~/Zettelkasten/_career-log/**": "allow",
-      "~/code/Merlin/**": "allow"
+      "~/code/Merlin/**": "allow",
+      "/tmp/**": "allow"
     }
   },
   "compaction": {

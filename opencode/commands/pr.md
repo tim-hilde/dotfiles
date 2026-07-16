@@ -59,6 +59,7 @@ One concise paragraph: what this changes for users/the system; any side effects,
 - Jeder Paragraph/Bullet als eine durchgehende Zeile — keine manuellen Zeilenumbrüche.
 - Keine leeren Sections.
 - Keine Filler-Phrasen wie "this PR aims to..." oder "we have updated...".
+- Keine Signatur/Footer anhängen (z.B. "Generated with...", "🤖", "Co-Authored-By"). Der Body enthält ausschließlich Title, Summary, Impact, Changes.
 
 ## Qualitäts-Check (vor dem Erstellen)
 
@@ -68,6 +69,7 @@ One concise paragraph: what this changes for users/the system; any side effects,
 - [ ] Bullets erklären *warum*, nicht nur *was*
 - [ ] Keine leeren Sections
 - [ ] Keine manuellen Zeilenumbrüche innerhalb von Paragraphen/Bullets
+- [ ] Keine Signatur/Footer im Body (z.B. "Generated with...", "🤖", "Co-Authored-By")
 
 ## PR erstellen
 
