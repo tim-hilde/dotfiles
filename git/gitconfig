@@ -45,6 +45,39 @@
   # Removes a file from the index
   unstage = reset HEAD --
 
+  cleanup = "!f() { \
+    set -e; \
+    git fetch --all --prune --quiet; \
+    current=$(git branch --show-current); \
+    gone=$(git branch -vv | grep ': gone]' | sed 's/^\\* //' | awk '{print $1}' | grep -vFx \"$current\" || true); \
+    if [ -z \"$gone\" ]; then \
+      echo 'Keine verwaisten Branches gefunden.'; \
+      exit 0; \
+    fi; \
+    echo 'Folgende lokale Branches haben keinen Remote-Branch mehr:'; \
+    echo \"$gone\" | sed 's/^/  - /'; \
+    printf 'Diese Branches loeschen? [y/N] '; \
+    read -r reply </dev/tty; \
+    if [ \"$reply\" != 'y' ] && [ \"$reply\" != 'Y' ]; then \
+      echo 'Abgebrochen.'; \
+      exit 0; \
+    fi; \
+    deleted=0; \
+    skipped=''; \
+    for b in $gone; do \
+      if git branch -d \"$b\" >/dev/null 2>&1; then \
+        echo \"Geloescht: $b\"; \
+        deleted=$((deleted+1)); \
+      else \
+        skipped=\"$skipped $b\"; \
+      fi; \
+    done; \
+    echo \"$deleted Branch(es) geloescht.\"; \
+    if [ -n \"$skipped\" ]; then \
+      echo \"Uebersprungen (ungemergt):$skipped\"; \
+      echo 'Zum Erzwingen: git branch -D <name>'; \
+    fi; \
+  }; f"
 [help]
   autocorrect = 1
 

@@ -9,6 +9,7 @@
     "@slkiser/opencode-quota@3.11.2",
     "@cortexkit/opencode-magic-context@latest"
   ],
+  "subagent_depth": 2,
   "experimental": {
     "disable_paste_summary": true
   },

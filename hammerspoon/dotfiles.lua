@@ -57,7 +57,10 @@ end
 
 -- Initialize dotfiles sync
 syncDotfiles()
-hs.timer
+-- NOTE: the timer object MUST be kept referenced (here on the module table,
+-- which `require` caches in package.loaded) or Lua's GC will collect it and
+-- the timer silently stops firing. See Hammerspoon issues #1713/#3300.
+dotfiles.syncTimer = hs.timer
 	.doEvery(config.syncIntervalMins * 30, function()
 		local idleMins = hs.host.idleTime() / 30
 		if idleMins < config.syncIntervalMins then
@@ -70,7 +73,7 @@ hs.timer
 runBrewBundleDump()
 
 -- Schedule weekly brew dump (every 7 days = 604800 seconds)
-hs.timer
+dotfiles.brewTimer = hs.timer
 	.doEvery(604800, function()
 		runBrewBundleDump()
 	end)

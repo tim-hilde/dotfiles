@@ -144,7 +144,6 @@ selection=$(fzf-tmux -p -w 80 -h "$height" -- \
   --info=hidden --reverse --cycle \
   --height="$height" \
   --border=rounded \
-  --no-scrollbar \
   --color='bg:#1e1e2e,bg+:#313244,fg:#cdd6f4,fg+:#cdd6f4,pointer:#cba6f7,label:#cba6f7,border:#cba6f7,separator:#6D7085,prompt:#89b4fa' \
   --bind 'ctrl-space:execute-silent(~/.config/tmux/agent-switch.sh --jump {2}),tab:down,btab:up' \
   <"$fzf_input")
