@@ -183,6 +183,8 @@ brew "pinentry-mac"
 brew "pipx"
 # PDF rendering library (based on the xpdf-3.0 code base)
 brew "poppler"
+# Object-relational database system
+brew "postgresql@17"
 # Python version management
 brew "pyenv"
 # Pyenv plugin to manage virtualenv
@@ -313,7 +315,6 @@ cask "github"
 cask "hammerspoon"
 # Free and open-source media player
 cask "iina"
-# Desktop image minifier
 cask "imagemin"
 # Terminal emulator as alternative to Apple's Terminal app
 cask "iterm2"
@@ -373,7 +374,6 @@ cask "typewhisper"
 cask "whatcable"
 # Menu bar utility for viewing and switching Spaces
 cask "whichspace"
-# HTML to PDF renderer
 cask "wkhtmltopdf"
 # Video communication and virtual meeting platform
 cask "zoom"
