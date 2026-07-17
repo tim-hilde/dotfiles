@@ -2,8 +2,8 @@
 -- - auto-convert strings to f-strings when typing `{}` in a string
 -- - also auto-converts f-strings back to regular strings when removing `{}`
 return {
-	{
-		"chrisgrieser/nvim-puppeteer",
-		lazy = false,
-	},
+	-- {
+	-- 	"chrisgrieser/nvim-puppeteer",
+	-- 	lazy = false,
+	-- },
 }
