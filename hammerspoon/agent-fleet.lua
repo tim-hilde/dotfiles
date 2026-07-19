@@ -14,6 +14,9 @@ end
 
 local menubar = hs.menubar.new()
 menubar:returnToMenuBar()
+-- Keep a persistent reference (module is cached in package.loaded) so Lua's GC
+-- cannot collect the menubar item. See Hammerspoon issues #1713/#3300.
+module.menubar = menubar
 
 local function update()
 	local tmux = tmuxPath()
