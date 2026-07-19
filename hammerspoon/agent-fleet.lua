@@ -101,7 +101,10 @@ local function schedule()
 	if not ok then
 		print("[agent-fleet] " .. tostring(err))
 	end
-	hs.timer.doAfter(5, schedule)
+	-- The timer object MUST stay referenced or Lua's GC collects it and the
+	-- reschedule loop dies after one tick (a forced collectgarbage() makes this
+	-- deterministic). See Hammerspoon issues #1713/#3300.
+	module.timer = hs.timer.doAfter(5, schedule)
 end
 
 function module.start()
