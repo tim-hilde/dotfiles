@@ -295,8 +295,6 @@ cask "basictex"
 cask "cc-switch"
 # Universal database tool and SQL client
 cask "dbeaver-community"
-# Voice and text chat software
-cask "discord"
 # Window peeking utility app
 cask "dockdoor"
 # Cross-platform Text Expander written in Rust
@@ -309,15 +307,11 @@ cask "font-monaspace"
 cask "font-symbols-only-nerd-font"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
-# Desktop client for GitHub repositories
-cask "github"
 # Desktop automation application
 cask "hammerspoon"
 # Free and open-source media player
 cask "iina"
 cask "imagemin"
-# Terminal emulator as alternative to Apple's Terminal app
-cask "iterm2"
 # Menu bar manager
 cask "jordanbaird-ice"
 # Utility to render Jupyter notebooks
@@ -336,8 +330,6 @@ cask "leader-key"
 cask "localsend"
 # Email tracker, read receipt and spy pixel blocker plugin for Apple Mail
 cask "mailtrackerblocker"
-# Markdown editor
-cask "mark-text"
 # Reverse proxy, secure introspectable tunnels to localhost
 cask "ngrok"
 # Finder Toolbar app to open the current directory in Terminal
