@@ -22,6 +22,10 @@ The `using-git-worktrees` skill owns the worktree workflow. Project-specific con
 - Branch name: `<type>/<kebab-slug>`, `<type>` ∈ `feat | fix | chore | refactor`.
 - Branch off `origin/main`, `staging`, or `dev` — ask before branching off anything else (`release/*`, another open feature branch).
 
+# Debugging
+
+- Vor JEDEM Bugfix: systematic-debugging-Skill. Erst Call-Chain, Logs und Root-Cause mappen — dann Code anfassen. Keine Fixes vor der Diagnose.
+
 # Think Before Coding
 
 **Don't assume. Don't hide confusion. Surface tradeoffs.**
@@ -189,7 +193,7 @@ If search returns 0 results, proceed as a fresh session.
 ## ctx commands
 
 | Command | Action |
-|---------|--------|
+| --------- | -------- |
 | `ctx stats` | Call `stats` MCP tool, display full output verbatim |
 | `ctx doctor` | Call `doctor` MCP tool, run returned shell command, display as checklist |
 | `ctx upgrade` | Call `upgrade` MCP tool, run returned shell command, display as checklist |
