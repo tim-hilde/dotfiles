@@ -159,6 +159,8 @@ brew "macmon"
 brew "mactop"
 # Polyglot runtime manager (asdf rust clone)
 brew "mise"
+# Deep clean and optimize your Mac
+brew "mole"
 # NCurses Disk Usage
 brew "ncdu"
 # Incremental parsing library
@@ -279,8 +281,6 @@ brew "qmk/qmk/qmk"
 brew "shihanng/gig/gig"
 # Supabase CLI
 brew "supabase/tap/supabase"
-# Comprehensive macOS cleanup and application uninstall tool
-brew "tw93/tap/mole"
 # karabiner configurator
 brew "yqrashawn/goku/goku"
 # AirPods companion app
