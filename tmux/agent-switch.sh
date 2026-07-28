@@ -88,7 +88,7 @@ trap 'rm -f "$sorted_file" "$fzf_input"' EXIT
 
 printf '%s\n' "${raw_rows[@]}" | sort -t $'\t' -k1,1 -k2,2n -k3,3nr >"$sorted_file"
 
-max_session_len=12
+max_session_len=18
 prefix_width=0
 while IFS=$'\t' read -r sess _; do
   [ "${#sess}" -gt "$prefix_width" ] && prefix_width="${#sess}"
