@@ -25,6 +25,15 @@
     "prune": false
   },
   "mcp": {
+    "ris": {
+      "type": "remote",
+      "url": "https://staging-ris.hallomerlin.de/mcp",
+      "enabled": false,
+      "oauth": false,
+      "headers": {
+        "Authorization": "Bearer {env:RIS_BEARER}"
+      }
+    },
     "livekit-docs": {
       "type": "remote",
       "url": "https://docs.livekit.io/mcp",
