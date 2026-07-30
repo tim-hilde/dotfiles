@@ -1,3 +1,7 @@
+# Commit messages
+
+Commit messages should always be English.
+
 # Skills
 
 **Skills aren't optional. Before creating any file, writing any code, or running any tool, check `<available_skills>` and read every plausibly relevant SKILL.md first.**
