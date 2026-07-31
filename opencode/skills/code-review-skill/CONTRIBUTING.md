@@ -32,6 +32,7 @@ code-review-skill/
 │   ├── go.md                   # Error handling, goroutines, context
 │   ├── csharp.md               # C# / .NET 8, async, EF Core, ASP.NET Core
 │   ├── php.md                  # PHP 8.x, types, PDO, security, Composer
+│   ├── ruby.md                 # Ruby 3.4+/4.0, Rails 8.x, Active Record/Job
 │   ├── c.md                    # Memory safety, UB, error handling
 │   ├── cpp.md                  # RAII, move semantics, exception safety
 │   ├── zig.md                  # Allocators, error unions, comptime, C interop
