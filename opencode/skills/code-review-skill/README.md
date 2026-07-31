@@ -96,7 +96,7 @@ It covers **20+ languages and frameworks** with over **21,000 lines** of careful
       <td>~1,020</td>
     </tr>
     <tr>
-      <td rowspan="10"><strong>Backend</strong></td>
+      <td rowspan="11"><strong>Backend</strong></td>
       <td>&#9749; Java 17/21 + Spring Boot 3</td>
       <td><code>reference/java.md</code></td>
       <td>~410</td>
@@ -115,6 +115,11 @@ It covers **20+ languages and frameworks** with over **21,000 lines** of careful
       <td>PHP 8.x</td>
       <td><code>reference/php.md</code></td>
       <td>~700</td>
+    </tr>
+    <tr>
+      <td>&#128142; Ruby 3.4+/4.0 + Rails 8.x</td>
+      <td><code>reference/ruby.md</code></td>
+      <td>~960</td>
     </tr>
     <tr>
       <td>&#128230; NestJS</td>
@@ -283,6 +288,7 @@ code-review-skill/
 |   +-- java.md                           # Java 17/21 & Spring Boot 3
 |   +-- java8.md                          # Java 8 & Spring Boot 2 (legacy)
 |   +-- php.md                            # PHP 8.x types, PDO, security, Composer
+|   +-- ruby.md                           # Ruby 3.4+/4.0, Rails 8.x, Active Record/Job
 |   +-- python.md                         # Python async, typing, pytest
 |   +-- django.md                         # Django / DRF security, serializers, async
 |   +-- fastapi.md                        # FastAPI Depends, Pydantic v2, async, test-driven verification
@@ -441,7 +447,7 @@ Focus on: security, performance, and maintainability.
 Contributions are welcome! See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
 
 **Ideas:**
-- New language guides (Ruby, Elixir, Scala...)
+- New language guides (Elixir, Scala, Lua...)
 - Framework-specific guides (Laravel, Spring WebFlux...)
 - Additional checklists and templates
 - Translations of core documentation
@@ -491,6 +497,7 @@ MIT &copy; [awesome-skills](https://github.com/awesome-skills)
 | | &#9749; Java 8 + Spring Boot 2 | `reference/java8.md` | ~580 |
 | | &#9889; FastAPI | `reference/fastapi.md` | ~590 |
 | | PHP 8.x | `reference/php.md` | ~700 |
+| | &#128142; Ruby 3.4+/4.0 + Rails 8.x | `reference/ruby.md` | ~960 |
 | | &#128230; NestJS | `reference/nestjs.md` | ~590 |
 | | &#128013; Django / DRF | `reference/django.md` | ~1,030 |
 | | &#128013; Python | `reference/python.md` | ~1,070 |
@@ -570,6 +577,7 @@ code-review-skill/
 |   +-- java.md                           # Java 17/21 & Spring Boot 3
 |   +-- java8.md                          # Java 8 & Spring Boot 2（遗留栈）
 |   +-- php.md                            # PHP 8.x 类型、PDO、安全、Composer
+|   +-- ruby.md                           # Ruby 3.4+/4.0、Rails 8.x、Active Record/Job
 |   +-- python.md                         # Python async、类型注解、pytest
 |   +-- django.md                         # Django / DRF 安全、Serializer、异步视图
 |   +-- fastapi.md                        # FastAPI Depends、Pydantic v2、异步、测试驱动验证
@@ -728,7 +736,7 @@ Use code-review-skill to review this PR
 欢迎贡献！请查阅 [CONTRIBUTING.md](./CONTRIBUTING.md) 了解规范。
 
 **可贡献方向：**
-- 新增语言指南（Ruby、Elixir、Scala...）
+- 新增语言指南（Elixir、Scala、Lua...）
 - 框架专属指南（Laravel、Spring WebFlux...）
 - 补充检查清单和审查模板
 - 核心文档的多语言翻译
