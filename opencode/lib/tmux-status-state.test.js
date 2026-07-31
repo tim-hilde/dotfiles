@@ -59,9 +59,11 @@ function toWorking(h) {
   assert.equal(h.state(), "working");
 }
 
-// THE BUG REPRODUCTION: a transient root idle mid-turn must NOT flip the pane
-// to "done". opencode emits idle between steps; a busy resumes shortly after.
-test("transient idle followed by busy within settle window never reports done", () => {
+// A transient root idle mid-turn must NOT flip the pane to "done" while
+// sustained activity follows. opencode emits idle between steps; a busy resumes
+// shortly after. With the settle-restart fix, each busy restarts the clock, so
+// the settle fires only after genuine sustained silence.
+test("transient idle followed by busy within settle window restarts the settle clock", () => {
   const h = harness();
   toWorking(h);
 
@@ -69,15 +71,15 @@ test("transient idle followed by busy within settle window never reports done", 
   h.advance(IDLE_SETTLE_MS - 100); // not yet settled
   assert.equal(h.state(), "working", "must stay working until settled");
 
-  h.m.handleEvent(busy()); // work resumes -> cancels pending settle
-  h.advance(IDLE_SETTLE_MS * 2); // plenty of time
+  h.m.handleEvent(busy()); // work resumes — restarts settle instead of killing it
 
-  assert.equal(h.state(), "working");
-  assert.equal(
-    h.writes.some((w) => w.state === "done"),
-    false,
-    "no done flash may ever be written",
-  );
+  // The settle clock restarted at the busy point. Advance to just before
+  // the restarted settle fires.
+  h.advance(IDLE_SETTLE_MS - 1);
+  assert.equal(h.state(), "working", "not yet settled from restarted clock");
+
+  h.advance(1);
+  assert.equal(h.state(), "done", "settle fires after sustained silence following busy");
 });
 
 test("idle with no following busy settles to done after IDLE_SETTLE_MS", () => {
@@ -204,4 +206,23 @@ test("rapid idle/busy/idle only the final idle settles to done", () => {
   assert.equal(h.state(), "working");
   h.advance(1);
   assert.equal(h.state(), "done");
+});
+
+// FIXED: a spurious session.status busy arriving inside the idle settle
+// window now restarts the clock instead of killing it. Without a follow-up
+// idle, the restarted settle fires → done after IDLE_SETTLE_MS.
+test("spurious busy inside settle window restarts the clock, then settles to done", () => {
+  const h = harness();
+  toWorking(h);
+
+  h.m.handleEvent(sessionIdle());           // turn ends, settle timer starts (1000ms)
+  h.advance(500);                            // half-way through settle
+  assert.equal(h.state(), "working", "settle not yet fired");
+
+  h.m.handleEvent(busy());                   // spurious re-emission of busy
+  h.advance(WORKING_DEBOUNCE_MS);            // busy debounce fires (no-op, state already working)
+  assert.equal(h.state(), "working");
+
+  h.advance(IDLE_SETTLE_MS - WORKING_DEBOUNCE_MS); // settle clock has restarted at busy point
+  assert.equal(h.state(), "done", "restarted settle fired → done");
 });

@@ -50,7 +50,19 @@ export function createStatusMachine({
 
   const setWorking = () => {
     waiting = false;
-    clearIdleTimer(); // any busy pulse cancels a pending settle-to-done
+    if (idleTimer !== null) {
+      clearIdleTimer();
+      // Restart the settle instead of killing it. A spurious busy just resets
+      // the clock; genuine sustained work triggers repeated busies that each
+      // restart it. Eventually idle arrives, scheduleDone clears everything and
+      // starts a fresh settle. Without this, a single spurious busy inside the
+      // settle window cancels the settle permanently → state stuck at "working".
+      idleTimer = setTimer(() => {
+        idleTimer = null;
+        waiting = false;
+        commit("done");
+      }, IDLE_SETTLE_MS);
+    }
     if (state === "working") return;
     if (workingTimer === null) {
       // Debounce so sub-300ms blips don't churn the state file.
