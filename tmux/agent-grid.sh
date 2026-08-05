@@ -102,6 +102,17 @@ done <"$sorted"
 
 N=${#agents_pane[@]}
 
+count_working=0
+count_waiting=0
+count_done=0
+for st in "${agents_state[@]}"; do
+  case "$st" in
+    working) count_working=$((count_working + 1)) ;;
+    waiting) count_waiting=$((count_waiting + 1)) ;;
+    done) count_done=$((count_done + 1)) ;;
+  esac
+done
+
 stty -echo
 printf '\e[?25l\e[2J'
 cleanup() {
@@ -167,10 +178,35 @@ state_icon() {
   esac
 }
 
+# Title bar: full-width line with the fleet summary, same counters/colors as the
+# tmux status border (agent-fleet.sh). Drawn at row 1, grid starts below it.
+draw_title() {
+  local plain=" Fleet "
+  local colored="${c_bold} Fleet ${c_reset}"
+
+  if [ "$count_working" -gt 0 ]; then
+    plain+="${icon_working} ${count_working} "
+    colored+="${c_yellow}${icon_working} ${count_working}${c_reset} "
+  fi
+  if [ "$count_waiting" -gt 0 ]; then
+    plain+="${icon_waiting} ${count_waiting} "
+    colored+="${c_red}${icon_waiting} ${count_waiting}${c_reset} "
+  fi
+  if [ "$count_done" -gt 0 ]; then
+    plain+="${icon_done} ${count_done} "
+    colored+="${c_green}${icon_done} ${count_done}${c_reset} "
+  fi
+
+  local x=$(( (term_w - ${#plain}) / 2 + 1 ))
+  [ "$x" -lt 1 ] && x=1
+  printf '\e[1;%dH%s' "$x" "$colored"
+}
+
 # x/y are 1-based. Each cell is a bordered box: top border embeds a header
 # (selection, number, state icon, session | window title), then CONTENT_H rows
 # of the pane capture (colors preserved, no whitespace trimming), then a bottom
-# border. Content is cropped to inner_w = CELL_W - 2 visible columns.
+# border. Border color encodes the state (working/waiting/done).
+# Content is cropped to inner_w = CELL_W - 2 visible columns.
 draw_cell() {
   local idx=$1 x=$2 y=$3
   local state="${agents_state[$idx]}"
@@ -189,7 +225,7 @@ draw_cell() {
 
   local num=$((idx + 1))
   local lead="${selmark}${num} "
-  local st="${icon} ${state}"
+  local st="${icon}"
   local body="${session}: ${title}"
 
   # header region is CELL_W - 3 (┌─ at start, ┐ at end); truncate the body part
@@ -205,7 +241,7 @@ draw_cell() {
   [ "$hpad" -lt 0 ] && hpad=0
   local dashes
   dashes=$(printf '%*s' "$hpad" '' | tr ' ' '─')
-  printf '\e[%d;%dH┌─%s%s┐' "$y" "$x" "$hdr_colored" "$dashes"
+  printf '\e[%d;%dH%s┌─%s%s%s%s┐%s' "$y" "$x" "$state_color_code" "$hdr_colored" "$state_color_code" "$dashes" "$state_color_code" "$c_reset"
 
   local -a lines=()
   local line
@@ -251,13 +287,13 @@ draw_cell() {
   for ((j = 0; j < CONTENT_H; j++)); do
     line="${lines[$((start + j))]:-}"
     [ -n "$line" ] || line="$(printf '%*s' "$inner_w" '')"
-    printf '\e[%d;%dH│\e[0m%s\e[0m│' "$((y + 1 + j))" "$x" "$line"
+    printf '\e[%d;%dH%s│%s%s│%s' "$((y + 1 + j))" "$x" "$state_color_code" "$line" "$state_color_code" "$c_reset"
   done
 
   local bpad=$((CELL_W - 2))
   local bdashes
   bdashes=$(printf '%*s' "$bpad" '' | tr ' ' '─')
-  printf '\e[%d;%dH└%s┘' "$((y + CONTENT_H + 1))" "$x" "$bdashes"
+  printf '\e[%d;%dH%s└%s┘%s' "$((y + CONTENT_H + 1))" "$x" "$state_color_code" "$bdashes" "$c_reset"
 }
 
 jump_to() {
@@ -292,6 +328,8 @@ while :; do
     prev_cols=$COLS
     prev_rows=$ROWS
   fi
+
+  draw_title
 
   for ((i = 0; i < N; i++)); do
     row=$((i / COLS))
