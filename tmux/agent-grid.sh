@@ -14,10 +14,16 @@ command -v tmux >/dev/null 2>&1 || exit 0
 # Outer pass: resolve the real attached client (popup context can't), then
 # reopen ourselves inside a display-popup. Flag and tty are passed as ARGS,
 # not env: display-popup -E drops the caller's environment. #101: switch-client
-# needs -c tty.
+# needs -c tty. Popup size is computed from the client dimensions so the grid
+# uses as much screen as possible; display-popup adds a border on each side.
 if [ "${1:-}" != "--inner" ]; then
   client_tty=$(tmux display -p '#{client_tty}' 2>/dev/null)
-  exec tmux display-popup -w 85% -h 85% -E "$0 --inner $client_tty"
+  read -r client_w client_h < <(tmux display -p '#{client_width} #{client_height}' 2>/dev/null)
+  [[ "$client_w" =~ ^[0-9]+$ ]] || client_w=120
+  [[ "$client_h" =~ ^[0-9]+$ ]] || client_h=40
+  pw=$((client_w - 6))
+  ph=$((client_h - 3))
+  exec tmux display-popup -w "$pw" -h "$ph" -E "$0 --inner $client_tty"
 fi
 
 client_tty="${2:-}"
@@ -102,19 +108,34 @@ cleanup() {
 }
 trap 'cleanup' EXIT INT TERM
 
-# Pick cols/rows so cells are as square as the terminal allows.
+# Pick cols/rows to maximize cell area; relax min cell size in tiers when the
+# screen is small, so a grid always fits every agent.
 grid_dims() {
   local n=$1 w=$2 h=$3
-  local c r cw ch score
-  local best=999999 best_c=1
-  for ((c = 1; c <= n; c++)); do
-    r=$(((n + c - 1) / c))
-    cw=$(((w - 2 - (c - 1)) / c))
-    ch=$(((h - 2 - (r - 1)) / r))
-    [ "$cw" -lt 10 ] && continue
-    [ "$ch" -lt 3 ] && continue
-    score=$((cw > ch ? cw - ch : ch - cw))
-    if [ "$score" -lt "$best" ]; then best=$score; best_c=$c; fi
+  local tier min_w min_h
+  local c r cw ch area best_area best_c best_cw found
+  for tier in 0 1 2; do
+    case $tier in
+      0) min_w=28; min_h=6 ;;
+      1) min_w=18; min_h=4 ;;
+      2) min_w=10; min_h=2 ;;
+    esac
+    best_area=-1; best_c=1; best_cw=0; found=0
+    for ((c = 1; c <= n; c++)); do
+      r=$(((n + c - 1) / c))
+      cw=$(((w - 2 - (c - 1)) / c))
+      ch=$(((h - 2 - (r - 1)) / r))
+      [ "$cw" -lt "$min_w" ] && continue
+      [ "$ch" -lt "$min_h" ] && continue
+      found=1
+      area=$((cw * ch))
+      if [ "$area" -gt "$best_area" ] || { [ "$area" -eq "$best_area" ] && [ "$cw" -gt "$best_cw" ]; }; then
+        best_area=$area
+        best_c=$c
+        best_cw=$cw
+      fi
+    done
+    [ "$found" -eq 1 ] && break
   done
   COLS=$best_c
   ROWS=$(((n + COLS - 1) / COLS))
