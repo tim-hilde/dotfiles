@@ -12,14 +12,15 @@ US=$'\x1f'
 command -v tmux >/dev/null 2>&1 || exit 0
 
 # Outer pass: resolve the real attached client (popup context can't), then
-# reopen ourselves inside a display-popup. #101: switch-client needs -c tty.
-if [ "${AGENT_GRID_INNER:-}" != "1" ]; then
+# reopen ourselves inside a display-popup. Flag and tty are passed as ARGS,
+# not env: display-popup -E drops the caller's environment. #101: switch-client
+# needs -c tty.
+if [ "${1:-}" != "--inner" ]; then
   client_tty=$(tmux display -p '#{client_tty}' 2>/dev/null)
-  exec env AGENT_GRID_INNER=1 AGENT_GRID_CLIENT_TTY="$client_tty" \
-    tmux display-popup -w 85% -h 85% -E "$0"
+  exec tmux display-popup -w 85% -h 85% -E "$0 --inner $client_tty"
 fi
 
-client_tty="${AGENT_GRID_CLIENT_TTY:-}"
+client_tty="${2:-}"
 [ -d "$state_dir" ] || exit 0
 
 icon_working=$'\uf04b'
