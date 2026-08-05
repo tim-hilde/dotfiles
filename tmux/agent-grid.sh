@@ -85,17 +85,19 @@ agents_pane=()
 agents_state=()
 agents_title=()
 agents_project=()
+agents_session=()
 
 sorted=$(mktemp)
 trap 'rm -f "$sorted"' EXIT
 
 printf '%s\n' "${rows[@]}" | sort -t $'\t' -k1,1 -k2,2n -k3,3nr >"$sorted"
 
-while IFS=$'\t' read -r _ _ _ state title project pane_id; do
+while IFS=$'\t' read -r session _ _ state title project pane_id; do
   agents_pane+=("$pane_id")
   agents_state+=("$state")
   agents_title+=("$title")
   agents_project+=("$project")
+  agents_session+=("$session")
 done <"$sorted"
 
 N=${#agents_pane[@]}
@@ -141,7 +143,8 @@ grid_dims() {
   ROWS=$(((n + COLS - 1) / COLS))
   CELL_W=$(((w - 2 - (COLS - 1)) / COLS))
   CELL_H=$(((h - 2 - (ROWS - 1)) / ROWS))
-  CONTENT_H=$((CELL_H - 1))
+  # cell = top border+header line + content + bottom border line
+  CONTENT_H=$((CELL_H - 2))
   [ "$CONTENT_H" -lt 1 ] && CONTENT_H=1
 }
 
@@ -164,13 +167,18 @@ state_icon() {
   esac
 }
 
-# x/y are 1-based; header is one colored line, content is plain truncated text.
+# x/y are 1-based. Each cell is a bordered box: top border embeds a header
+# (selection, number, state icon, session | window title), then CONTENT_H rows
+# of the pane capture (colors preserved, no whitespace trimming), then a bottom
+# border. Content is cropped to inner_w = CELL_W - 2 visible columns.
 draw_cell() {
   local idx=$1 x=$2 y=$3
   local state="${agents_state[$idx]}"
   local title="${agents_title[$idx]}"
-  local project="${agents_project[$idx]}"
+  local session="${agents_session[$idx]}"
   local pane="${agents_pane[$idx]}"
+
+  local inner_w=$((CELL_W - 2))
 
   local selmark=" "
   [ "$idx" = "$selected" ] && selmark="▸"
@@ -180,33 +188,36 @@ draw_cell() {
   state_color_code=$(state_color "$state")
 
   local num=$((idx + 1))
-  local plain="${selmark} ${num} ${icon} ${state}"
-  local colored="${c_bold}${selmark}${c_reset} ${num} ${state_color_code}${icon} ${state}${c_reset}"
+  local lead="${selmark}${num} "
+  local st="${icon} ${state}"
+  local body="${session}: ${title}"
 
-  local rest="$project: $title"
-  local max_rest=$((CELL_W - ${#plain} - 1))
-  [ "$max_rest" -lt 1 ] && max_rest=1
-  if [ "${#rest}" -gt "$max_rest" ]; then
-    rest="${rest:0:$((max_rest - 1))}…"
+  # header region is CELL_W - 3 (┌─ at start, ┐ at end); truncate the body part
+  local hdr_max=$((CELL_W - 3))
+  local max_body=$((hdr_max - ${#lead} - ${#st} - 1))
+  [ "$max_body" -lt 1 ] && max_body=1
+  if [ "${#body}" -gt "$max_body" ]; then
+    body="${body:0:$((max_body - 1))}…"
   fi
-
-  plain="$plain $rest"
-  local pad=$((CELL_W - ${#plain}))
-  [ "$pad" -lt 0 ] && pad=0
-
-  printf '\e[%d;%dH%s %s%s' "$y" "$x" "$colored" "$rest" "$(printf '%*s' "$pad" '')"
+  local hdr_plain="${lead}${st} ${body}"
+  local hdr_colored="${c_bold}${selmark}${c_reset}${num} ${state_color_code}${st}${c_reset} ${body}"
+  local hpad=$((hdr_max - ${#hdr_plain}))
+  [ "$hpad" -lt 0 ] && hpad=0
+  local dashes
+  dashes=$(printf '%*s' "$hpad" '' | tr ' ' '─')
+  printf '\e[%d;%dH┌─%s%s┐' "$y" "$x" "$hdr_colored" "$dashes"
 
   local -a lines=()
   local line
-  # -e keeps the pane's colors; crop() trims leading space and truncates to
-  # CELL_W visible columns while preserving SGR codes (openCode renders its TUI
-  # centered in wide panes, so without the trim a cell shows only empty margin).
+  # -e keeps the pane's colors; crop() truncates to inner_w visible columns
+  # while preserving SGR codes. No whitespace trimming: the frame stays as the
+  # pane renders it, only cropped to fit the cell.
   while IFS= read -r line; do lines+=("$line"); done \
     < <(tmux capture-pane -p -e -t "$pane" 2>/dev/null | perl -e '
         my $max = shift;
         while (<STDIN>) {
           chomp;
-          my ($out,$vis,$skip,$i,$n) = ("",0,1,0,length($_));
+          my ($out,$vis,$i,$n) = ("",0,0,length($_));
           while ($i < $n) {
             my $b = ord(substr($_,$i,1));
             if ($b == 27) {
@@ -219,8 +230,6 @@ draw_cell() {
               $out .= $esc;
               next;
             }
-            if ($skip && $b == 32) { $i++; next; }
-            $skip = 0;
             if ($vis < $max) {
               my $ch = substr($_,$i,1);
               if ($b >= 0xC0) {
@@ -234,16 +243,21 @@ draw_cell() {
           }
           print $out, (" " x ($max - $vis)), "\e[0m\n";
         }
-      ' "$CELL_W")
+      ' "$inner_w")
   local start=$(( ${#lines[@]} - CONTENT_H ))
   [ "$start" -lt 0 ] && start=0
 
   local j
   for ((j = 0; j < CONTENT_H; j++)); do
     line="${lines[$((start + j))]:-}"
-    [ -n "$line" ] || line="$(printf '%*s' "$CELL_W" '')"
-    printf '\e[%d;%dH%s' "$((y + 1 + j))" "$x" "$line"
+    [ -n "$line" ] || line="$(printf '%*s' "$inner_w" '')"
+    printf '\e[%d;%dH│\e[0m%s\e[0m│' "$((y + 1 + j))" "$x" "$line"
   done
+
+  local bpad=$((CELL_W - 2))
+  local bdashes
+  bdashes=$(printf '%*s' "$bpad" '' | tr ' ' '─')
+  printf '\e[%d;%dH└%s┘' "$((y + CONTENT_H + 1))" "$x" "$bdashes"
 }
 
 jump_to() {
