@@ -232,8 +232,9 @@ jump_to() {
 selected=0
 
 while :; do
-  term_w=$(tput cols 2>/dev/null); term_w=${term_w:-80}
-  term_h=$(tput lines 2>/dev/null); term_h=${term_h:-24}
+  # tput cols/lines fall back to terminfo defaults (80x24) inside a popup;
+  # stty size reads the real winsize: "rows cols".
+  read -r term_h term_w < <(stty size 2>/dev/null)
   [[ "$term_w" =~ ^[0-9]+$ ]] || term_w=80
   [[ "$term_h" =~ ^[0-9]+$ ]] || term_h=24
 
