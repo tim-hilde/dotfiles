@@ -198,18 +198,51 @@ draw_cell() {
 
   local -a lines=()
   local line
+  # -e keeps the pane's colors; crop() trims leading space and truncates to
+  # CELL_W visible columns while preserving SGR codes (openCode renders its TUI
+  # centered in wide panes, so without the trim a cell shows only empty margin).
   while IFS= read -r line; do lines+=("$line"); done \
-    < <(tmux capture-pane -p -t "$pane" 2>/dev/null)
+    < <(tmux capture-pane -p -e -t "$pane" 2>/dev/null | perl -e '
+        my $max = shift;
+        while (<STDIN>) {
+          chomp;
+          my ($out,$vis,$skip,$i,$n) = ("",0,1,0,length($_));
+          while ($i < $n) {
+            my $b = ord(substr($_,$i,1));
+            if ($b == 27) {
+              my $esc = "\x1b"; $i++;
+              while ($i < $n) {
+                my $c2 = substr($_,$i,1);
+                $esc .= $c2; $i++;
+                last if $c2 =~ /[a-zA-Z]/;
+              }
+              $out .= $esc;
+              next;
+            }
+            if ($skip && $b == 32) { $i++; next; }
+            $skip = 0;
+            if ($vis < $max) {
+              my $ch = substr($_,$i,1);
+              if ($b >= 0xC0) {
+                my $len = 1;
+                while ($i+$len < $n && (ord(substr($_,$i+$len,1)) & 0xC0) == 0x80) { $len++; }
+                $ch = substr($_,$i,$len);
+                $i += $len;
+              } else { $i++; }
+              $out .= $ch; $vis++;
+            } else { $i++; }
+          }
+          print $out, (" " x ($max - $vis)), "\e[0m\n";
+        }
+      ' "$CELL_W")
   local start=$(( ${#lines[@]} - CONTENT_H ))
   [ "$start" -lt 0 ] && start=0
 
   local j
   for ((j = 0; j < CONTENT_H; j++)); do
     line="${lines[$((start + j))]:-}"
-    line="${line:0:CELL_W}"
-    local lpad=$((CELL_W - ${#line}))
-    [ "$lpad" -lt 0 ] && lpad=0
-    printf '\e[%d;%dH%s%s' "$((y + 1 + j))" "$x" "$line" "$(printf '%*s' "$lpad" '')"
+    [ -n "$line" ] || line="$(printf '%*s' "$CELL_W" '')"
+    printf '\e[%d;%dH%s' "$((y + 1 + j))" "$x" "$line"
   done
 }
 
