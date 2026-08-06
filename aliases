@@ -64,4 +64,10 @@ alias youtube="open ~/YouTube/"
 
 alias oc=opencode
 
+# Pi Agent: always start in Plan mode (@narumitw/pi-plan-mode)
+# Use `command pi` to bypass and start without Plan mode.
+function pi() {
+    command pi --plan "$@"
+}
+
 alias tt=taskwarrior-tui
