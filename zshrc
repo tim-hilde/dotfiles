@@ -260,3 +260,6 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 eval "$(mise activate zsh)"
 
 export CLAUDE_CODE_NO_FLICKER=1
+
+# Pi
+export PATH="/Users/tim/.local/share/mise/installs/node/22.22.2/bin:$PATH"
