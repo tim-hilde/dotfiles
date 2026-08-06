@@ -205,7 +205,6 @@ return {
 				"pyrefly",
 				"ruff",
 				"shellcheck",
-				"sonarlint-language-server",
 				"stylua",
 				"taplo",
 				"ty",
@@ -262,12 +261,6 @@ return {
 				mode = { "v" },
 			},
 		},
-	},
-	{
-		"iamkarasik/sonarqube.nvim",
-		config = function()
-			require("sonarqube").setup {}
-		end,
 	},
 	{
 		"rachartier/tiny-inline-diagnostic.nvim",
