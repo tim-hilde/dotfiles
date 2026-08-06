@@ -7,9 +7,15 @@
   "dreamer": {
     "model": "anthropic/claude-sonnet-4-6"
   },
-  "sidekick": {},
+  "sidekick": {
+    "disable": true
+  },
   "cache_ttl": {
     "default": "5m",
     "anthropic/claude-sonnet-4-6": "59m"
+  },
+  "embedding": {
+    "provider": "local",
+    "model": "Xenova/all-MiniLM-L6-v2"
   }
 }
