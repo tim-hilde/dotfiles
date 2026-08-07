@@ -7,8 +7,8 @@
     "messages_page_down": "pagedown,ctrl+f"
   },
   "plugin": [
-    "@slkiser/opencode-quota@4.5.0",
+    "@slkiser/opencode-quota@4.5.1",
     "opencode-sidechat",
-    "@cortexkit/opencode-magic-context@0.33.1"
+    "@cortexkit/opencode-magic-context@0.34.0"
   ]
 }
