@@ -121,19 +121,20 @@ cleanup() {
 }
 trap 'cleanup' EXIT INT TERM
 
-# Pick cols/rows to maximize cell area; relax min cell size in tiers when the
-# screen is small, so a grid always fits every agent.
+# Pick cols/rows so the grid is as close to square as the screen allows
+# (rows ≈ cols → tile layout, e.g. 4 agents = 2x2, not a single row). Min cell
+# size is relaxed in tiers on small screens so every agent still fits.
 grid_dims() {
   local n=$1 w=$2 h=$3
   local tier min_w min_h
-  local c r cw ch area best_area best_c best_cw found
+  local c r cw ch area bal best_bal best_c best_area best_cw found
   for tier in 0 1 2; do
     case $tier in
       0) min_w=28; min_h=6 ;;
       1) min_w=18; min_h=4 ;;
       2) min_w=10; min_h=2 ;;
     esac
-    best_area=-1; best_c=1; best_cw=0; found=0
+    best_bal=99999; best_c=1; best_area=-1; best_cw=0; found=0
     for ((c = 1; c <= n; c++)); do
       r=$(((n + c - 1) / c))
       cw=$(((w - 2 - (c - 1)) / c))
@@ -142,9 +143,11 @@ grid_dims() {
       [ "$ch" -lt "$min_h" ] && continue
       found=1
       area=$((cw * ch))
-      if [ "$area" -gt "$best_area" ] || { [ "$area" -eq "$best_area" ] && [ "$cw" -gt "$best_cw" ]; }; then
-        best_area=$area
+      bal=$((r > c ? r - c : c - r))
+      if [ "$bal" -lt "$best_bal" ] || { [ "$bal" -eq "$best_bal" ] && { [ "$area" -gt "$best_area" ] || { [ "$area" -eq "$best_area" ] && [ "$cw" -gt "$best_cw" ]; }; }; }; then
+        best_bal=$bal
         best_c=$c
+        best_area=$area
         best_cw=$cw
       fi
     done
