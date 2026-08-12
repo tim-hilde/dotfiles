@@ -6,7 +6,7 @@
     "superpowers@git+https://github.com/obra/superpowers.git#v6.2.0",
     "opencode-update-notifier",
     "@tim_hilde/opencode-insights",
-    "@slkiser/opencode-quota@4.6.1",
+    "@slkiser/opencode-quota@4.8.0",
     "@cortexkit/opencode-magic-context@0.33.1"
   ],
   "subagent_depth": 2,
