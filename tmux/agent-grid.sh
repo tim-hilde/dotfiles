@@ -206,10 +206,10 @@ draw_title() {
   printf '\e[1;%dH%s' "$x" "$colored"
 }
 
-# x/y are 1-based. Each cell is a bordered box: top border embeds a header
-# (selection, number, state icon, session | window title), then CONTENT_H rows
-# of the pane capture (colors preserved, no whitespace trimming), then a bottom
-# border. Border color encodes the state (working/waiting/done).
+# x/y are 1-based. Each cell is a bordered box: a plain top border, CONTENT_H
+# rows of the pane capture (colors preserved, no whitespace trimming), then a
+# bottom border embedding the header (selection, number, state icon, title,
+# session). Border color encodes the state (working/waiting/done).
 # Content is cropped to inner_w = CELL_W - 2 visible columns.
 draw_cell() {
   local idx=$1 x=$2 y=$3
@@ -230,8 +230,8 @@ draw_cell() {
   local num=$((idx + 1))
   local trail="${session}"
 
-  # header region is CELL_W - 3 (┌─ at start, ┐ at end). The title is the
-  # dominant bold element; lead+icon open the line, the session trails it dim.
+  # header region is CELL_W - 3 (└─ at start, ┘ at end). Lead+icon then the dim
+  # session open the line; the bold title trails it as the dominant element.
   local hdr_max=$((CELL_W - 3))
   local left_plain="${selmark}${num} ${icon} "
   local title_budget=$((hdr_max - ${#left_plain} - ${#trail} - 1))
@@ -242,13 +242,16 @@ draw_cell() {
     title_shown="${title_shown:0:$((title_budget - 1))}…"
   fi
 
-  local hdr_plain="${left_plain}${title_shown} ${trail}"
-  local hdr_colored="${c_bold}${selmark}${c_reset}${c_dim}${num}${c_reset} ${state_color_code}${icon}${c_reset} ${c_bold}${title_shown}${c_reset} ${c_dim}${trail}${c_reset}"
+  local hdr_plain="${left_plain}${trail} ${title_shown}"
+  local hdr_colored="${c_bold}${selmark}${c_reset}${c_dim}${num}${c_reset} ${state_color_code}${icon}${c_reset} ${c_dim}${trail}${c_reset} ${c_bold}${title_shown}${c_reset}"
   local hpad=$((hdr_max - ${#hdr_plain}))
   [ "$hpad" -lt 0 ] && hpad=0
   local dashes
   dashes=$(printf '%*s' "$hpad" '' | tr ' ' '─')
-  printf '\e[%d;%dH%s┌─%s%s%s%s┐%s' "$y" "$x" "$state_color_code" "$hdr_colored" "$state_color_code" "$dashes" "$state_color_code" "$c_reset"
+  local tpad=$((CELL_W - 3))
+  local tdashes
+  tdashes=$(printf '%*s' "$tpad" '' | tr ' ' '─')
+  printf '\e[%d;%dH%s┌─%s┐%s' "$y" "$x" "$state_color_code" "$tdashes" "$c_reset"
 
   local -a lines=()
   local line
@@ -297,10 +300,7 @@ draw_cell() {
     printf '\e[%d;%dH%s│%s%s│%s' "$((y + 1 + j))" "$x" "$state_color_code" "$line" "$state_color_code" "$c_reset"
   done
 
-  local bpad=$((CELL_W - 2))
-  local bdashes
-  bdashes=$(printf '%*s' "$bpad" '' | tr ' ' '─')
-  printf '\e[%d;%dH%s└%s┘%s' "$((y + CONTENT_H + 1))" "$x" "$state_color_code" "$bdashes" "$c_reset"
+  printf '\e[%d;%dH%s└─%s%s%s%s┘%s' "$((y + CONTENT_H + 1))" "$x" "$state_color_code" "$hdr_colored" "$state_color_code" "$dashes" "$state_color_code" "$c_reset"
 }
 
 jump_to() {
