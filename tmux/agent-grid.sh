@@ -35,6 +35,7 @@ icon_done=$'\uf00c'
 
 c_reset=$'\033[0m'
 c_bold=$'\033[1m'
+c_dim=$'\033[2m'
 c_red=$'\033[31m'
 c_yellow=$'\033[33m'
 c_green=$'\033[32m'
@@ -227,19 +228,31 @@ draw_cell() {
   state_color_code=$(state_color "$state")
 
   local num=$((idx + 1))
-  local lead="${selmark}${num} "
-  local st="${icon}"
-  local body="${session}: ${title}"
 
-  # header region is CELL_W - 3 (┌─ at start, ┐ at end); truncate the body part
-  local hdr_max=$((CELL_W - 3))
-  local max_body=$((hdr_max - ${#lead} - ${#st} - 1))
-  [ "$max_body" -lt 1 ] && max_body=1
-  if [ "${#body}" -gt "$max_body" ]; then
-    body="${body:0:$((max_body - 1))}…"
+  local project="${agents_project[$idx]}"
+  local trail=""
+  if [ -n "$project" ] && [ -n "$session" ]; then
+    trail="${project}·${session}"
+  elif [ -n "$project" ]; then
+    trail="${project}"
+  else
+    trail="${session}"
   fi
-  local hdr_plain="${lead}${st} ${body}"
-  local hdr_colored="${c_bold}${selmark}${c_reset}${num} ${state_color_code}${st}${c_reset} ${body}"
+
+  # header region is CELL_W - 3 (┌─ at start, ┐ at end). The title is the
+  # dominant bold element; lead+icon open the line, project·session trail it dim.
+  local hdr_max=$((CELL_W - 3))
+  local left_plain="${selmark}${num} ${icon} "
+  local title_budget=$((hdr_max - ${#left_plain} - ${#trail} - 1))
+  [ "$title_budget" -lt 1 ] && title_budget=1
+
+  local title_shown="$title"
+  if [ "${#title_shown}" -gt "$title_budget" ]; then
+    title_shown="${title_shown:0:$((title_budget - 1))}…"
+  fi
+
+  local hdr_plain="${left_plain}${title_shown} ${trail}"
+  local hdr_colored="${c_bold}${selmark}${c_reset}${c_dim}${num}${c_reset} ${state_color_code}${icon}${c_reset} ${c_bold}${title_shown}${c_reset} ${c_dim}${trail}${c_reset}"
   local hpad=$((hdr_max - ${#hdr_plain}))
   [ "$hpad" -lt 0 ] && hpad=0
   local dashes
