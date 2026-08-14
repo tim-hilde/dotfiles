@@ -228,19 +228,10 @@ draw_cell() {
   state_color_code=$(state_color "$state")
 
   local num=$((idx + 1))
-
-  local project="${agents_project[$idx]}"
-  local trail=""
-  if [ -n "$project" ] && [ -n "$session" ]; then
-    trail="${project}·${session}"
-  elif [ -n "$project" ]; then
-    trail="${project}"
-  else
-    trail="${session}"
-  fi
+  local trail="${session}"
 
   # header region is CELL_W - 3 (┌─ at start, ┐ at end). The title is the
-  # dominant bold element; lead+icon open the line, project·session trail it dim.
+  # dominant bold element; lead+icon open the line, the session trails it dim.
   local hdr_max=$((CELL_W - 3))
   local left_plain="${selmark}${num} ${icon} "
   local title_budget=$((hdr_max - ${#left_plain} - ${#trail} - 1))
