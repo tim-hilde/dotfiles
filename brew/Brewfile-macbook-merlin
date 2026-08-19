@@ -35,14 +35,14 @@ tap "yqrashawn/goku", trusted: true
 brew "act"
 # Protocol buffers (Google's data interchange format)
 brew "protobuf"
-# Library for command-line editing
-brew "readline"
 # General-purpose data compression with high compression ratio
 brew "xz"
 # Spell checker with better logic than ispell
 brew "aspell"
 # Tool for generating GNU Standards-compliant Makefiles
 brew "automake"
+# Library for command-line editing
+brew "readline"
 # Microsoft Azure CLI 2.0
 brew "azure-cli"
 # GNU internationalization (i18n) and localization (l10n) library
@@ -95,8 +95,6 @@ brew "fastfetch"
 brew "fd"
 # Play, record, convert, and stream select audio and video codecs
 brew "ffmpeg"
-# OCR (Optical Character Recognition) engine
-brew "tesseract"
 # Create thumbnails for your video files
 brew "ffmpegthumbnailer"
 # LLVM's OpenMP runtime library
@@ -113,6 +111,8 @@ brew "node"
 brew "gemini-cli"
 # GitHub command-line tool
 brew "gh"
+# OCR (Optical Character Recognition) engine
+brew "tesseract"
 # Interpreter for PostScript and PDF
 brew "ghostscript"
 # Distributed revision control system
