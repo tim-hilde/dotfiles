@@ -7,7 +7,7 @@
     "opencode-update-notifier",
     "@tim_hilde/opencode-insights",
     "@slkiser/opencode-quota@4.8.2",
-    "@cortexkit/opencode-magic-context@0.38.1"
+    "@cortexkit/opencode-magic-context@0.38.0"
   ],
   "subagent_depth": 2,
   "experimental": {
