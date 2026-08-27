@@ -9,6 +9,6 @@
   "plugin": [
     "@slkiser/opencode-quota@4.8.2",
     "opencode-sidechat",
-    "@cortexkit/opencode-magic-context@0.39.0"
+    "@cortexkit/opencode-magic-context@0.40.1"
   ]
 }
