@@ -1,169 +1,69 @@
-// Pure, timer-injectable state machine for the tmux-status plugin.
+// Derives the tmux pane status from opencode's authoritative session status.
 //
 // Lives outside plugins/ on purpose: opencode loads every export of a
-// plugins/*.js file as a plugin factory, so the reducer is kept here and
-// imported by the plugin. This module has no IO and no real timers — all
-// side effects are injected, which makes the idle-settle timing testable.
+// plugins/*.js file as a plugin factory, so the pure logic is kept here and
+// imported by the plugin. This module has no IO and no timers.
 //
-// Why a settle delay: opencode emits a transient `idle` between steps within
-// a single turn, then resumes with `busy`. Marking the pane "done" on the
-// first idle made it flip idle -> working repeatedly. We instead debounce the
-// idle: a busy arriving inside the window cancels the pending "done".
+// There is no debounce. `busy` mirrors GET /session/status, which the plugin
+// re-reads on every status event, so a missed event self-heals on the next one.
+// `waiting` mirrors the pending question/permission requests; those cannot
+// outlive a busy session, hence the clear in setBusy(false) — it recovers from
+// a reply event we never saw.
 
-export const IDLE_SETTLE_MS = 1000;
-export const WORKING_DEBOUNCE_MS = 300;
+const RANK = { done: 1, working: 2, waiting: 3 };
 
-export function createStatusMachine({
-  now = () => Date.now(),
-  setTimer = (fn, ms) => setTimeout(fn, ms),
-  clearTimer = (h) => clearTimeout(h),
-  onChange = () => {},
-  initialState = "done",
-} = {}) {
-  let state = initialState;
+export function mergeSnapshots(snapshots) {
+  let best = null;
+  for (const snapshot of snapshots) {
+    if (!best || RANK[snapshot.state] > RANK[best.state]) best = snapshot;
+  }
+  return best ?? { state: "done", title: "", project: "" };
+}
+
+export function createStatusStore({ onChange = () => {} } = {}) {
+  let busy = false;
+  let state = "done";
   let title = "";
-  let waiting = false; // sticky: blocked on the user (permission / question / plan_exit)
-  let workingTimer = null;
-  let idleTimer = null;
-  const subagents = new Set();
-  let rootSessionId = null;
+  const questions = new Set();
+  const permissions = new Set();
 
-  const clearWorkingTimer = () => {
-    if (workingTimer !== null) {
-      clearTimer(workingTimer);
-      workingTimer = null;
-    }
-  };
-
-  const clearIdleTimer = () => {
-    if (idleTimer !== null) {
-      clearTimer(idleTimer);
-      idleTimer = null;
-    }
-  };
-
-  const commit = (next) => {
+  const commit = () => {
+    const next =
+      questions.size || permissions.size
+        ? "waiting"
+        : busy
+          ? "working"
+          : "done";
     if (next === state) return;
     state = next;
     onChange({ state, title });
   };
 
-  const setWorking = () => {
-    waiting = false;
-    if (idleTimer !== null) {
-      clearIdleTimer();
-      // Restart the settle instead of killing it. A spurious busy just resets
-      // the clock; genuine sustained work triggers repeated busies that each
-      // restart it. Eventually idle arrives, scheduleDone clears everything and
-      // starts a fresh settle. Without this, a single spurious busy inside the
-      // settle window cancels the settle permanently → state stuck at "working".
-      idleTimer = setTimer(() => {
-        idleTimer = null;
-        waiting = false;
-        commit("done");
-      }, IDLE_SETTLE_MS);
-    }
-    if (state === "working") return;
-    if (workingTimer === null) {
-      // Debounce so sub-300ms blips don't churn the state file.
-      workingTimer = setTimer(() => {
-        workingTimer = null;
-        if (!waiting) commit("working");
-      }, WORKING_DEBOUNCE_MS);
-    }
-  };
-
-  const setWaiting = () => {
-    clearWorkingTimer();
-    clearIdleTimer();
-    waiting = true;
-    commit("waiting");
-  };
-
-  // Schedule "done" instead of committing immediately. A later busy/working or
-  // waiting transition clears this timer, so transient mid-turn idles are
-  // absorbed. Only a sustained idle (no busy for IDLE_SETTLE_MS) settles.
-  const scheduleDone = () => {
-    clearWorkingTimer();
-    clearIdleTimer();
-    idleTimer = setTimer(() => {
-      idleTimer = null;
-      waiting = false;
-      commit("done");
-    }, IDLE_SETTLE_MS);
-  };
-
-  // A subagent going idle means the root is still working -> ignore it.
-  // Any other (root) idle starts the settle countdown.
-  const onIdle = (sid) => {
-    if (sid && subagents.has(sid)) return;
-    scheduleDone();
-  };
-
-  const setTitle = (next) => {
-    if (typeof next !== "string" || next === title) return;
-    title = next;
-    onChange({ state, title });
-  };
-
-  const handleEvent = (event) => {
-    const type = event && event.type;
-    const props = (event && event.properties) || {};
-
-    switch (type) {
-      case "session.created":
-      case "session.updated": {
-        const info = props.info || {};
-        if (info.parentID) {
-          if (info.id) subagents.add(info.id);
-          break;
-        }
-        if (info.id) rootSessionId = info.id;
-        setTitle(info.title);
-        break;
-      }
-      case "session.status": {
-        const t = props.status && props.status.type;
-        if (t === "busy") setWorking();
-        else if (t === "idle") onIdle(props.sessionID);
-        // "retry" — keep current state.
-        break;
-      }
-      case "session.idle":
-        onIdle(props.sessionID);
-        break;
-      case "session.error":
-        onIdle(props.sessionID);
-        break;
-      case "session.deleted": {
-        const sid = props.info && props.info.id;
-        if (sid) subagents.delete(sid);
-        break;
-      }
-      // A permission prompt is published as a bus event (the plugin
-      // "permission.ask" hook is unreliable across versions). The session
-      // stays busy meanwhile, so without this it would just read "working".
-      case "permission.asked":
-      case "permission.updated":
-        setWaiting();
-        break;
-      case "permission.replied":
-        // User answered -> work resumes; a later idle settles it to done.
-        setWorking();
-        break;
-      // NB: message.updated is intentionally NOT a "working" trigger. opencode
-      // 1.17.x re-emits the user prompt's message.updated AFTER the turn goes
-      // idle, which previously reverted the pane to "working" and left finished
-      // sessions stuck. session.status busy is the authoritative working signal.
-    }
+  const track = (set, id, add) => {
+    if (!id) return;
+    if (add) set.add(id);
+    else set.delete(id);
+    commit();
   };
 
   return {
-    handleEvent,
-    markWaiting: setWaiting, // for the permission.ask hook & tool.execute.before
-    getState: () => state,
-    getTitle: () => title,
-    getRootSessionId: () => rootSessionId,
+    setBusy(next) {
+      busy = Boolean(next);
+      if (!busy) {
+        questions.clear();
+        permissions.clear();
+      }
+      commit();
+    },
+    askQuestion: (id) => track(questions, id, true),
+    replyQuestion: (id) => track(questions, id, false),
+    askPermission: (id) => track(permissions, id, true),
+    replyPermission: (id) => track(permissions, id, false),
+    setTitle(next) {
+      if (typeof next !== "string" || next === title) return;
+      title = next;
+      onChange({ state, title });
+    },
     getSnapshot: () => ({ state, title }),
   };
 }

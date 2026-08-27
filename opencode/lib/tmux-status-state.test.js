@@ -1,228 +1,136 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import {
-  createStatusMachine,
-  IDLE_SETTLE_MS,
-  WORKING_DEBOUNCE_MS,
-} from "./tmux-status-state.js";
+import { createStatusStore, mergeSnapshots } from "./tmux-status-state.js";
 
-// Deterministic fake-timer harness: time only advances when we tell it to.
-function harness(opts = {}) {
-  let time = 0;
-  let nextId = 1;
-  let timers = [];
+const harness = () => {
   const writes = [];
-  const m = createStatusMachine({
-    now: () => time,
-    setTimer: (fn, ms) => {
-      const id = nextId++;
-      timers.push({ id, fn, at: time + ms });
-      return id;
-    },
-    clearTimer: (id) => {
-      timers = timers.filter((t) => t.id !== id);
-    },
-    onChange: (snap) => writes.push({ ...snap, at: time }),
-    ...opts,
+  const store = createStatusStore({ onChange: (s) => writes.push({ ...s }) });
+  return { store, writes };
+};
+
+test("starts done with an empty title", () => {
+  const { store } = harness();
+  assert.deepEqual(store.getSnapshot(), { state: "done", title: "" });
+});
+
+test("a busy session makes the pane working", () => {
+  const { store, writes } = harness();
+  store.setBusy(true);
+  assert.equal(store.getSnapshot().state, "working");
+  assert.equal(writes.length, 1);
+});
+
+test("repeated setBusy does not rewrite", () => {
+  const { store, writes } = harness();
+  store.setBusy(true);
+  store.setBusy(true);
+  assert.equal(writes.length, 1);
+});
+
+test("losing the last busy session settles to done immediately", () => {
+  const { store } = harness();
+  store.setBusy(true);
+  store.setBusy(false);
+  assert.equal(store.getSnapshot().state, "done");
+});
+
+test("a pending question outranks working", () => {
+  const { store } = harness();
+  store.setBusy(true);
+  store.askQuestion("q1");
+  assert.equal(store.getSnapshot().state, "waiting");
+  store.replyQuestion("q1");
+  assert.equal(store.getSnapshot().state, "working");
+});
+
+test("a pending permission outranks working", () => {
+  const { store } = harness();
+  store.setBusy(true);
+  store.askPermission("p1");
+  assert.equal(store.getSnapshot().state, "waiting");
+  store.replyPermission("p1");
+  assert.equal(store.getSnapshot().state, "working");
+});
+
+test("waiting holds until every pending request is resolved", () => {
+  const { store } = harness();
+  store.setBusy(true);
+  store.askQuestion("q1");
+  store.askPermission("p1");
+  store.replyQuestion("q1");
+  assert.equal(store.getSnapshot().state, "waiting");
+  store.replyPermission("p1");
+  assert.equal(store.getSnapshot().state, "working");
+});
+
+test("an idle workspace drops request ids whose reply was never seen", () => {
+  const { store } = harness();
+  store.setBusy(true);
+  store.askQuestion("q1");
+  store.setBusy(false);
+  assert.equal(store.getSnapshot().state, "done");
+});
+
+test("a question asked before the status pull still wins", () => {
+  const { store } = harness();
+  store.askQuestion("q1");
+  assert.equal(store.getSnapshot().state, "waiting");
+  store.setBusy(true);
+  assert.equal(store.getSnapshot().state, "waiting");
+});
+
+test("missing request ids are ignored", () => {
+  const { store, writes } = harness();
+  store.setBusy(true);
+  store.askQuestion(undefined);
+  store.askPermission("");
+  assert.equal(store.getSnapshot().state, "working");
+  assert.equal(writes.length, 1);
+});
+
+test("title changes are published without touching state", () => {
+  const { store, writes } = harness();
+  store.setTitle("Refactor the reducer");
+  assert.deepEqual(writes, [{ state: "done", title: "Refactor the reducer" }]);
+  store.setTitle("Refactor the reducer");
+  assert.equal(writes.length, 1);
+});
+
+test("non-string titles are ignored", () => {
+  const { store, writes } = harness();
+  store.setTitle(undefined);
+  assert.equal(writes.length, 0);
+  assert.equal(store.getSnapshot().title, "");
+});
+
+test("mergeSnapshots returns done for an empty registry", () => {
+  assert.deepEqual(mergeSnapshots([]), {
+    state: "done",
+    title: "",
+    project: "",
   });
-  return {
-    m,
-    writes,
-    state: () => m.getState(),
-    advance(ms) {
-      time += ms;
-      // fire due timers in order; tolerate timers scheduled during firing
-      for (;;) {
-        const due = timers
-          .filter((t) => t.at <= time)
-          .sort((a, b) => a.at - b.at);
-        if (due.length === 0) break;
-        const t = due[0];
-        timers = timers.filter((x) => x !== t);
-        t.fn();
-      }
-    },
-  };
-}
-
-const ev = (type, properties = {}) => ({ type, properties });
-const busy = (sid = "ses_root") => ev("session.status", { sessionID: sid, status: { type: "busy" } });
-const statusIdle = (sid = "ses_root") => ev("session.status", { sessionID: sid, status: { type: "idle" } });
-const sessionIdle = (sid = "ses_root") => ev("session.idle", { sessionID: sid });
-const userMsg = (sid = "ses_root") => ev("message.updated", { info: { role: "user", id: "msg_1", sessionID: sid } });
-const subagentCreated = (id) => ev("session.created", { info: { id, parentID: "ses_root" } });
-const rootUpdated = (title) => ev("session.updated", { info: { id: "ses_root", title } });
-
-function toWorking(h) {
-  h.m.handleEvent(busy());
-  h.advance(WORKING_DEBOUNCE_MS);
-  assert.equal(h.state(), "working");
-}
-
-// A transient root idle mid-turn must NOT flip the pane to "done" while
-// sustained activity follows. opencode emits idle between steps; a busy resumes
-// shortly after. With the settle-restart fix, each busy restarts the clock, so
-// the settle fires only after genuine sustained silence.
-test("transient idle followed by busy within settle window restarts the settle clock", () => {
-  const h = harness();
-  toWorking(h);
-
-  h.m.handleEvent(sessionIdle()); // transient idle
-  h.advance(IDLE_SETTLE_MS - 100); // not yet settled
-  assert.equal(h.state(), "working", "must stay working until settled");
-
-  h.m.handleEvent(busy()); // work resumes — restarts settle instead of killing it
-
-  // The settle clock restarted at the busy point. Advance to just before
-  // the restarted settle fires.
-  h.advance(IDLE_SETTLE_MS - 1);
-  assert.equal(h.state(), "working", "not yet settled from restarted clock");
-
-  h.advance(1);
-  assert.equal(h.state(), "done", "settle fires after sustained silence following busy");
 });
 
-test("idle with no following busy settles to done after IDLE_SETTLE_MS", () => {
-  const h = harness();
-  toWorking(h);
-
-  h.m.handleEvent(sessionIdle());
-  h.advance(IDLE_SETTLE_MS - 1);
-  assert.equal(h.state(), "working", "not settled one tick early");
-
-  h.advance(1);
-  assert.equal(h.state(), "done");
+test("mergeSnapshots ranks working over done", () => {
+  const merged = mergeSnapshots([
+    { state: "done", title: "a", project: "a" },
+    { state: "working", title: "b", project: "b" },
+  ]);
+  assert.equal(merged.project, "b");
 });
 
-test("session.status idle also settles (carries sessionID in 1.17.x)", () => {
-  const h = harness();
-  toWorking(h);
-  h.m.handleEvent(statusIdle());
-  h.advance(IDLE_SETTLE_MS);
-  assert.equal(h.state(), "done");
+test("mergeSnapshots ranks waiting over working", () => {
+  const merged = mergeSnapshots([
+    { state: "working", title: "b", project: "b" },
+    { state: "waiting", title: "c", project: "c" },
+  ]);
+  assert.equal(merged.project, "c");
 });
 
-test("subagent idle is ignored: pane keeps working", () => {
-  const h = harness();
-  toWorking(h);
-  h.m.handleEvent(subagentCreated("ses_sub"));
-
-  h.m.handleEvent(sessionIdle("ses_sub")); // subagent finished, root still working
-  h.advance(IDLE_SETTLE_MS * 2);
-
-  assert.equal(h.state(), "working");
-  assert.equal(h.writes.some((w) => w.state === "done"), false);
-});
-
-test("root idle after a subagent idle still settles to done", () => {
-  const h = harness();
-  toWorking(h);
-  h.m.handleEvent(subagentCreated("ses_sub"));
-  h.m.handleEvent(sessionIdle("ses_sub")); // ignored
-  h.advance(50);
-  h.m.handleEvent(sessionIdle("ses_root")); // real completion
-  h.advance(IDLE_SETTLE_MS);
-  assert.equal(h.state(), "done");
-});
-
-test("permission.updated sets waiting immediately and blocks a settle", () => {
-  const h = harness();
-  toWorking(h);
-  h.m.handleEvent(ev("permission.updated", { sessionID: "ses_root" }));
-  assert.equal(h.state(), "waiting");
-});
-
-test("markWaiting (question/plan_exit hook) sets waiting and survives idle settle window", () => {
-  const h = harness();
-  toWorking(h);
-  h.m.markWaiting();
-  assert.equal(h.state(), "waiting");
-  h.advance(IDLE_SETTLE_MS * 2);
-  assert.equal(h.state(), "waiting", "waiting is sticky until work resumes or turn ends");
-});
-
-test("a pending settle is cancelled when waiting begins", () => {
-  const h = harness();
-  toWorking(h);
-  h.m.handleEvent(sessionIdle());
-  h.advance(IDLE_SETTLE_MS - 100);
-  h.m.markWaiting(); // user is asked something before settle fires
-  h.advance(IDLE_SETTLE_MS * 2);
-  assert.equal(h.state(), "waiting");
-  assert.equal(h.writes.some((w) => w.state === "done"), false);
-});
-
-test("title update from root session triggers a write", () => {
-  const h = harness();
-  h.m.handleEvent(rootUpdated("Fix idle detection"));
-  assert.equal(h.m.getTitle(), "Fix idle detection");
-  assert.equal(h.writes.some((w) => w.title === "Fix idle detection"), true);
-});
-
-test("session.status busy resumes work after done", () => {
-  const h = harness();
-  toWorking(h);
-  h.m.handleEvent(sessionIdle());
-  h.advance(IDLE_SETTLE_MS);
-  assert.equal(h.state(), "done");
-
-  h.m.handleEvent(busy());
-  h.advance(WORKING_DEBOUNCE_MS);
-  assert.equal(h.state(), "working");
-});
-
-// REGRESSION (opencode 1.17.x): after a turn goes idle, opencode re-emits a
-// message.updated for the SAME user prompt. That must NOT cancel the settle or
-// revert the pane to working — otherwise finished sessions stay stuck on
-// "working" forever. session.status busy is the only "working" trigger.
-test("user message.updated re-emitted after idle does not revert to working", () => {
-  const h = harness();
-  toWorking(h);
-  h.m.handleEvent(sessionIdle());     // turn ends
-  h.advance(50);
-  h.m.handleEvent(userMsg());         // 1.17.x post-turn re-emit of the prompt
-  h.advance(IDLE_SETTLE_MS);
-  assert.equal(h.state(), "done");
-  assert.equal(h.writes.some((w) => w.state === "done"), true);
-});
-
-test("message.updated role=user does not by itself set working", () => {
-  const h = harness();
-  assert.equal(h.state(), "done");
-  h.m.handleEvent(userMsg());
-  h.advance(WORKING_DEBOUNCE_MS * 2);
-  assert.equal(h.state(), "done", "only session.status busy drives working");
-});
-
-test("rapid idle/busy/idle only the final idle settles to done", () => {
-  const h = harness();
-  toWorking(h);
-  h.m.handleEvent(sessionIdle());
-  h.advance(200);
-  h.m.handleEvent(busy());
-  h.advance(200);
-  h.m.handleEvent(sessionIdle());
-  h.advance(IDLE_SETTLE_MS - 1);
-  assert.equal(h.state(), "working");
-  h.advance(1);
-  assert.equal(h.state(), "done");
-});
-
-// FIXED: a spurious session.status busy arriving inside the idle settle
-// window now restarts the clock instead of killing it. Without a follow-up
-// idle, the restarted settle fires → done after IDLE_SETTLE_MS.
-test("spurious busy inside settle window restarts the clock, then settles to done", () => {
-  const h = harness();
-  toWorking(h);
-
-  h.m.handleEvent(sessionIdle());           // turn ends, settle timer starts (1000ms)
-  h.advance(500);                            // half-way through settle
-  assert.equal(h.state(), "working", "settle not yet fired");
-
-  h.m.handleEvent(busy());                   // spurious re-emission of busy
-  h.advance(WORKING_DEBOUNCE_MS);            // busy debounce fires (no-op, state already working)
-  assert.equal(h.state(), "working");
-
-  h.advance(IDLE_SETTLE_MS - WORKING_DEBOUNCE_MS); // settle clock has restarted at busy point
-  assert.equal(h.state(), "done", "restarted settle fired → done");
+test("mergeSnapshots keeps the first of equally ranked workspaces", () => {
+  const merged = mergeSnapshots([
+    { state: "working", title: "b", project: "b" },
+    { state: "working", title: "c", project: "c" },
+  ]);
+  assert.equal(merged.project, "b");
 });
