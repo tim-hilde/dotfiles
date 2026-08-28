@@ -91,7 +91,7 @@ agents_session=()
 sorted=$(mktemp)
 trap 'rm -f "$sorted"' EXIT
 
-printf '%s\n' "${rows[@]}" | sort -t $'\t' -k1,1 -k2,2n -k3,3nr >"$sorted"
+printf '%s\n' "${rows[@]}" | sort -t $'\t' -k1,1 -k5,5 -k7,7 >"$sorted"
 
 while IFS=$'\t' read -r session _ _ state title project pane_id; do
   agents_pane+=("$pane_id")
