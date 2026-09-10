@@ -1,13 +1,13 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "plugin": [
-    "@cortexkit/opencode-anthropic-auth@1.20.0",
+    "@cortexkit/opencode-anthropic-auth@1.22.0",
     "@mohak34/opencode-notifier@0.2.8",
     "superpowers@git+https://github.com/obra/superpowers.git#v6.3.0",
     "opencode-update-notifier",
     "@tim_hilde/opencode-insights",
-    "@slkiser/opencode-quota@4.8.2",
-    "@cortexkit/opencode-magic-context@0.40.1",
+    "@slkiser/opencode-quota@4.9.0",
+    "@cortexkit/opencode-magic-context@0.41.4",
     "~/code/opencode-keepalive"
   ],
   "subagent_depth": 2,
