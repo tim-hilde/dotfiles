@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "mainAccountId": "4854d081-c714-4dc7-9760-7664f38b3459",
+  "main": {
+    "type": "opencode",
+    "provider": "anthropic"
+  },
+  "refresh": {},
+  "quota": {},
+  "accounts": []
+}
