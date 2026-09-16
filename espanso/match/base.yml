@@ -184,3 +184,6 @@ matches:
 
   - trigger: "!mun"
     replace: municipality
+
+  - trigger: "!gh"
+    replace: https://github.com/tim-hilde
