@@ -17,15 +17,14 @@ local function apply()
 	end
 	lastDark = dark
 
-	local task, err = hs.task
-		.new(binaryPath, function(exitCode, _, stderr)
-			if exitCode ~= 0 then
-				print(("[keyboard-backlight] exit %d: %s"):format(exitCode, (stderr or ""):gsub("%s+$", "")))
-			end
-		end, { dark and tostring(level) or "off" })
-		:start()
-	if not task then
-		print("[keyboard-backlight] failed to start helper: " .. tostring(err))
+	local task = hs.task.new(binaryPath, function(exitCode, _, stderr)
+		if exitCode ~= 0 then
+			print(("[keyboard-backlight] exit %d: %s"):format(exitCode, (stderr or ""):gsub("%s+$", "")))
+		end
+	end, { dark and tostring(level) or "off" })
+
+	if not (task and task:start()) then
+		print("[keyboard-backlight] failed to start " .. binaryPath .. " (build: swiftc -O -o ~/.local/bin/keychron-backlight ~/dotfiles/hammerspoon/bin/keychron-backlight.swift)")
 	end
 end
 
