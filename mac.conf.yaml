@@ -96,6 +96,10 @@
       path: cortexkit
       relative: true
       create: true
+    $XDG_CONFIG_HOME/k9s:
+      path: k9s
+      relative: true
+      create: true
 
 - shell:
     - command: sudo chsh -s $(which zsh) $USER
