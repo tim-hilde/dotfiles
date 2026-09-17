@@ -96,7 +96,7 @@
       path: cortexkit
       relative: true
       create: true
-    $XDG_CONFIG_HOME/k9s:
+    "$HOME/Library/Application Support/k9s":
       path: k9s
       relative: true
       create: true
