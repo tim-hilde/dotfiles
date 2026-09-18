@@ -39,6 +39,13 @@ end
 keyboardBacklight.watcher = hs.distributednotifications.new(apply, "AppleInterfaceThemeChangedNotification")
 keyboardBacklight.watcher:start()
 
+keyboardBacklight.lockWatcher = hs.caffeinate.watcher.new(function(event)
+	if event == hs.caffeinate.watcher.screensDidUnlock then
+		apply()
+	end
+end)
+keyboardBacklight.lockWatcher:start()
+
 apply()
 
 return keyboardBacklight
