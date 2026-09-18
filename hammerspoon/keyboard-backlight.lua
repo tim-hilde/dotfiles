@@ -10,7 +10,15 @@ local function isDarkMode()
 	return hs.execute("defaults read -g AppleInterfaceStyle 2>/dev/null"):gsub("%s+", "") == "Dark"
 end
 
+local function isLocked()
+	local props = hs.caffeinate.sessionProperties()
+	return props ~= nil and props.CGSSessionScreenIsLocked == true
+end
+
 local function apply()
+	if isLocked() then
+		return
+	end
 	local dark = isDarkMode()
 	if dark == lastDark then
 		return
