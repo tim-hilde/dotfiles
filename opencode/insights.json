@@ -1,5 +1,5 @@
 {
-  "model": "muse-spark-1.3-contributor",
+  "model": "opencode-go/mimo-v2.5",
   "days": 30,
   "concurrency": 20,
   "maxSessions": 400
