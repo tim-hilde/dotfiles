@@ -8,7 +8,6 @@
   },
   "plugin": [
     "@slkiser/opencode-quota@4.9.0",
-    "opencode-sidechat",
     "@cortexkit/opencode-magic-context@0.41.4"
   ]
 }
