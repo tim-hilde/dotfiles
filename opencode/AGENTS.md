@@ -1,5 +1,3 @@
-When using subagents deploy them in parallel where possible.
-
 # Commit messages
 
 Commit messages should always be English.
