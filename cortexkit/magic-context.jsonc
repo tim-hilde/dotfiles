@@ -2,13 +2,20 @@
   "$schema": "https://raw.githubusercontent.com/cortexkit/magic-context/master/assets/magic-context.schema.json",
   "toast_duration_ms": 0,
   "historian": {
-    "opencode": {"model":"anthropic/claude-sonnet-4-6"},"pi": {"model":"anthropic/claude-sonnet-4-6"}
+    "opencode": {
+      "model": "anthropic/claude-sonnet-4-6"
+    },
+    "pi": {
+      "model": "anthropic/claude-sonnet-4-6"
+    }
   },
   "dreamer": {
-    "opencode": {"model":"anthropic/claude-sonnet-4-6"},"pi": {"model":"anthropic/claude-sonnet-4-6"}
-  },
-  "sidekick": {
-    "disable": true
+    "opencode": {
+      "model": "anthropic/claude-sonnet-4-6"
+    },
+    "pi": {
+      "model": "anthropic/claude-sonnet-4-6"
+    }
   },
   "cache_ttl": {
     "default": "5m",
