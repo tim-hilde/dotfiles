@@ -7,7 +7,7 @@
     "messages_page_down": "pagedown,ctrl+f"
   },
   "plugin": [
-    "@slkiser/opencode-quota@4.10.0",
+    "@slkiser/opencode-quota@4.10.1",
     "@cortexkit/opencode-magic-context@0.41.4"
   ]
 }
