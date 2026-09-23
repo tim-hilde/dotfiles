@@ -191,6 +191,8 @@ brew "pipx"
 brew "poppler"
 # Object-relational database system
 brew "postgresql@17"
+# Fast Git hook manager written in Rust, drop-in alternative to pre-commit
+brew "prek"
 # Python version management
 brew "pyenv"
 # Pyenv plugin to manage virtualenv
@@ -265,8 +267,6 @@ brew "finnvoor/tools/yap"
 brew "get-woke/tap/woke"
 # The official Infisical CLI
 brew "infisical/get-cli/infisical"
-# A fast Git hook manager written in Rust, designed as a drop-in alternative to pre-commit, reimagined.
-brew "j178/tap/prek"
 # Simple hotkey daemon for macOS, written in Zig
 brew "jackielii/tap/skhd-zig"
 # A simple terminal UI for docker, written in Go
@@ -297,6 +297,8 @@ cask "alt-tab"
 cask "basictex"
 # Configuration manager for AI coding agents
 cask "cc-switch"
+# OpenAI's coding agent that runs in your terminal
+cask "codex"
 # Universal database tool and SQL client
 cask "dbeaver-community"
 # Window peeking utility app
