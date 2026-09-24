@@ -263,3 +263,6 @@ export CLAUDE_CODE_NO_FLICKER=1
 
 # Pi
 export PATH="/Users/tim/.local/share/mise/installs/node/22.22.2/bin:$PATH"
+
+# opencode increase max token output to solve write errors
+export OPENCODE_EXPERIMENTAL_OUTPUT_TOKEN_MAX=64000
