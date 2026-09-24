@@ -209,6 +209,8 @@ brew "rust"
 brew "scipy"
 # 7-Zip is a file archiver with a high compression ratio
 brew "sevenzip"
+# Static analysis and lint tool, for (ba)sh scripts
+brew "shellcheck"
 # Create beautiful image of your source code
 brew "silicon"
 # Terminal based presentation tool
