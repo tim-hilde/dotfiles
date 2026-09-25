@@ -150,4 +150,5 @@ const TmuxStatus = async ({ client, directory }) => {
   };
 };
 
-export default TmuxStatus;
+export { TmuxStatus };
+export default { server: TmuxStatus };
