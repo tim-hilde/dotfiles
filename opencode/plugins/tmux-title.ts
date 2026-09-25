@@ -1,4 +1,4 @@
-import type { Plugin } from "@opencode-ai/plugin"
+import type { Plugin, PluginModule } from "@opencode-ai/plugin"
 
 const MAX_LEN = 64
 
@@ -45,4 +45,4 @@ export const TmuxTitle: Plugin = async ({ $ }) => {
   }
 }
 
-export default TmuxTitle
+export default { server: TmuxTitle } satisfies PluginModule
