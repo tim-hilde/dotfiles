@@ -72,6 +72,14 @@ for (const file of files) {
       `${file} default export regressed to a bare function; use { server }`,
     );
     assert.equal(typeof mod.default, "object", `${file} default must be an object`);
+    // File-source (auto-discovered) plugins must declare an id: the loader
+    // throws "Path plugin <path> must export id" otherwise.
+    assert.equal(
+      typeof mod.default.id,
+      "string",
+      `${file} must export a string id`,
+    );
+    assert.ok(mod.default.id.trim().length > 0, `${file} id must be non-empty`);
     assert.equal(
       typeof mod.default.server,
       "function",

@@ -45,4 +45,4 @@ export const TmuxTitle: Plugin = async ({ $ }) => {
   }
 }
 
-export default { server: TmuxTitle } satisfies PluginModule
+export default { id: "tmux-title", server: TmuxTitle } satisfies PluginModule

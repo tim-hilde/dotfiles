@@ -8,4 +8,4 @@ export const EnvProtection = async ({ project, client, $, directory, worktree })
     }
 }
 
-export default { server: EnvProtection }
+export default { id: "env-protection", server: EnvProtection }
