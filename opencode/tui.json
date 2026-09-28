@@ -8,6 +8,6 @@
   },
   "plugin": [
     "@slkiser/opencode-quota@4.10.6",
-    "@cortexkit/opencode-magic-context@0.43.2"
+    "@cortexkit/opencode-magic-context@0.42.6"
   ]
 }
