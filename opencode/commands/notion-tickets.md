@@ -30,6 +30,7 @@ ExportBlock-*.zip
 Extrahiere aus jeder Ticket-HTML:
 
 - **E-Mail-Vorlage**: aus dem `<code>`-Block der `EMAIL:` enthält
+- **Name der einsendenden Person**: aus dem 📋-Callout am Seitenanfang (`data-notion-callout-icon="📋"`), Format `<Name> (<E-Mail>)` – z. B. `Anna Peter (Anna.Peter@velbert.de)` oder `Wagemann, Jan-Erik (j.wagemann@hoexter.de)`
 - **Notion-URL**: aus der Page-ID im Dateinamen (`<hex32>.html` → `https://app.notion.com/p/<hex32>`)
 - **Seitenkommentare**: aus dem Abschnitt `Seitenkommentare` in der HTML – enthält interne Kommentare von Tim mit Datum und Text
 
@@ -48,18 +49,26 @@ Generiere pro Person+Gemeinde einen Antwortvorschlag auf Basis der Ticket-Beschr
 - professionell und knapp formuliert sein (1–3 Sätze pro Ticket)
 - auf Deutsch sein
 
+**Persönliche Anrede ermitteln** (pro Person+Gemeinde, aus dem Callout-Namen):
+
+- Name normalisieren: „Nachname, Vorname“ → „Vorname Nachname“.
+- Anrede aus dem Vornamen ableiten (deutsche Namenskenntnis): z. B. Anna → Frau, Jan-Erik → Herr. Titel wie „Dr.“ oder „Prof.“ dabei ignorieren.
+- Begrüßungszeile: `Hallo Frau <Nachname>,` bzw. `Hallo Herr <Nachname>,` – bei mehrteiligen Nachnamen (z. B. „van der Berg“, „Müller-Lüdenscheidt“) den vollständigen Nachnamen verwenden.
+- Ist das Geschlecht nicht sicher ableitbar (z. B. ausländische oder unbekannte Vornamen), geschlechtsneutral formulieren: `Guten Tag <Vorname Nachname>,`.
+- Kein Name ermittelbar: `Guten Tag,`.
+
 ## Schritt 4: E-Mail-Vorlagen zusammenführen
 
-**Einzelnes Ticket** (1 Ticket pro Person+Gemeinde): originale Vorlage aus der HTML, mit dem Antwortvorschlag anstelle von `[ANTWORT HIER EINFÜGEN]`, ebenfalls mit dem Hinweis `⚠️ ANTWORTVORSCHLAG – bitte vor dem Versenden prüfen und anpassen:` davor.
+**Einzelnes Ticket** (1 Ticket pro Person+Gemeinde): originale Vorlage aus der HTML, mit dem Antwortvorschlag anstelle von `[ANTWORT HIER EINFÜGEN]`, ebenfalls mit dem Hinweis `⚠️ ANTWORTVORSCHLAG – bitte vor dem Versenden prüfen und anpassen:` davor. Ersetze außerdem `Hallo Herr/Frau XXXX,` durch die ermittelte Begrüßungszeile (Schritt 3).
 
-**Mehrere Tickets** (gleiche Person+Gemeinde): zusammengeführte Vorlage nach diesem Format:
+**Mehrere Tickets** (gleiche Person+Gemeinde): zusammengeführte Vorlage nach diesem Format (Begrüßungszeile = persönliche Anrede aus Schritt 3):
 
 ```
 EMAIL: <user-email>
 BETREFF: Ihre Tickets zu Merlin Schreibt
 (Bitte oben stehende Zeilen vor dem Versenden entfernen)
 
-Hallo Herr/Frau XXXX,
+Hallo <Begrüßung aus Schritt 3>,
 
 vielen Dank für Ihre gemeldeten Tickets. Gerne möchten wir Ihnen hierzu gesammelt eine Rückmeldung geben.
 
