@@ -1,7 +1,7 @@
 ---
 description: Erstellt eine PR-Zusammenfassung und öffnet einen GitHub PR gegen staging oder dev
 agent: build
-model: anthropic/claude-sonnet-5
+model: anthropic/claude-sonnet-5-5
 ---
 
 Erstelle einen GitHub Pull Request für den Branch `$ARGUMENTS`. Gehe so vor:
