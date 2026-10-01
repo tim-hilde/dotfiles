@@ -8,7 +8,7 @@ Erstelle einen GitHub Pull Request für den Branch `$ARGUMENTS`. Gehe so vor:
 
 ## Setup
 
-1. Falls `$ARGUMENTS` leer ist oder der Branch nicht existiert, brich ab und melde einen Fehler.
+1. Falls `$ARGUMENTS` leer ist, nicht aus dem Kontext klar ersichtlich ist oder der Branch nicht existiert, brich ab und melde einen Fehler.
 2. Führe `git fetch origin` aus.
 3. Prüfe ob `origin/staging` oder `origin/dev` existiert — nimm den ersten, der vorhanden ist, als Target. Falls beide fehlen, frage den User. Verwende **niemals** `main` als Target.
 4. Falls der Diff leer ist, melde dass es keine Änderungen gibt und erstelle keinen PR.
