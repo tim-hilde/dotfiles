@@ -17,7 +17,8 @@ Find how this project runs its tests, in this order:
 
 1. A "Commands" / "Test" section in the project's `AGENTS.md` or `CLAUDE.md`.
 2. Common markers: `package.json` (`scripts.test`), `Makefile` (`test` target), `pyproject.toml` / `pytest.ini` (pytest), `Cargo.toml` (`cargo test`), `go.mod` (`go test ./...`).
-3. If nothing is unambiguous, ask the user for the test command.
+3. A LLM-driven Role-Play Harness like LARP.
+4. If nothing is unambiguous, ask the user for the test command.
 
 Preserve any required prefix/wrapper exactly as documented (env loaders, runners, etc.). This is for verifying your own fixes below — it is never passed to the reviewer.
 
