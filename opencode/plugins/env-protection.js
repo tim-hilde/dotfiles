@@ -8,4 +8,14 @@ export const EnvProtection = async ({ project, client, $, directory, worktree })
     }
 }
 
-export default { id: "env-protection", server: EnvProtection }
+export default {
+    id: "env-protection",
+    server: EnvProtection,
+    setup: async (ctx) => {
+        await ctx.tool.hook("execute.before", (event) => {
+            if (event.tool === "read" && event.input?.filePath?.includes(".env")) {
+                throw new Error("Do not read .env files")
+            }
+        })
+    },
+}

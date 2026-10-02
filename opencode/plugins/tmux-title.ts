@@ -45,4 +45,10 @@ export const TmuxTitle: Plugin = async ({ $ }) => {
   }
 }
 
-export default { id: "tmux-title", server: TmuxTitle } satisfies PluginModule
+export default {
+  id: "tmux-title",
+  server: TmuxTitle,
+  // V2 runs server plugins in a shared background service that belongs to no
+  // pane; plugins/tmux/tui.js names the window there instead.
+  setup() {},
+} satisfies PluginModule & { setup(): void }
