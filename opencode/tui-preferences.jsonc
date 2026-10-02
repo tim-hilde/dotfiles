@@ -5,7 +5,7 @@
 {
   "magic-context": {
     "toast_duration_ms": 0,
-    "collapsed": false,
+    "collapsed": true,
     "sections": {
       "historian": false,
       "memory": false,
