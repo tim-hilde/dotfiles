@@ -151,4 +151,10 @@ const TmuxStatus = async ({ client, directory }) => {
 };
 
 export { TmuxStatus };
-export default { id: "tmux-status", server: TmuxStatus };
+export default {
+  id: "tmux-status",
+  server: TmuxStatus,
+  // V2 runs server plugins in a shared background service that belongs to no
+  // pane; plugins/tmux/tui.js publishes the pane state there instead.
+  setup() {},
+};

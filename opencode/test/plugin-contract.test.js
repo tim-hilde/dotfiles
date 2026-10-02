@@ -1,12 +1,15 @@
 // Run: node --experimental-strip-types --test test/*.test.js lib/*.test.js
 // (opencode/package.json is gitignored, so the npm script lives only locally.)
 //
-// Pins the module-entry contract opencode's plugin loader enforces. The loader
-// is identical in 1.18.x and v2: it prefers a default `{ server }` object and
-// otherwise iterates every export, throwing on any non-function export.
+// Pins the module-entry contract both opencode loaders enforce on plugins/:
+// - V1 (1.18.x) loads top-level files only. It prefers a default `{ server }`
+//   object and otherwise iterates every export, throwing on any non-function.
+// - V2 loads top-level files plus directories with a server entry (index.js),
+//   and requires a default `{ id, setup }`. A directory's tui.js is loaded by
+//   the CLI only once that server entry registered successfully.
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readdirSync, mkdtempSync } from "node:fs";
+import { readdirSync, mkdtempSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -90,6 +93,11 @@ for (const file of files) {
       undefined,
       `${file} must not export tui() and server() together`,
     );
+    assert.equal(
+      typeof mod.default.setup,
+      "function",
+      `${file} must also export a V2 setup(); OpenCode 2 rejects server-only modules`,
+    );
 
     const hooks = await mod.default.server(
       {
@@ -112,6 +120,66 @@ for (const file of files) {
     }
     if ("dispose" in hooks) {
       assert.equal(typeof hooks.dispose, "function", `${file} dispose must be a function`);
+    }
+
+    const cleanup = await mod.default.setup(fakeServerContext().ctx);
+    assert.ok(
+      cleanup === undefined || typeof cleanup === "function",
+      `${file} setup() may only return a cleanup function`,
+    );
+  });
+}
+
+function fakeServerContext() {
+  const hooks = new Map();
+  const ctx = {
+    location: { directory: process.cwd() },
+    tool: {
+      hook: async (name, callback) => {
+        hooks.set(`tool.${name}`, callback);
+        return { dispose: async () => hooks.delete(`tool.${name}`) };
+      },
+    },
+  };
+  return { ctx, hooks };
+}
+
+test("env-protection blocks .env reads in V2", async () => {
+  const { default: plugin } = await import(join(pluginsDir, "env-protection.js"));
+  const { ctx, hooks } = fakeServerContext();
+  await plugin.setup(ctx);
+  const before = hooks.get("tool.execute.before");
+
+  await assert.rejects(
+    async () => before({ tool: "read", input: { filePath: "/repo/.env.local" } }),
+    /Do not read \.env files/,
+  );
+  await assert.doesNotReject(async () =>
+    before({ tool: "read", input: { filePath: "/repo/README.md" } }),
+  );
+  await assert.doesNotReject(async () => before({ tool: "bash", input: { command: "cat .env" } }));
+});
+
+const assertV2Definition = (value, label) => {
+  assert.equal(typeof value, "object", `${label} default must be an object`);
+  assert.equal(typeof value.id, "string", `${label} must export a string id`);
+  assert.ok(value.id.trim().length > 0, `${label} id must be non-empty`);
+  assert.equal(typeof value.setup, "function", `${label} must export setup()`);
+};
+
+const pluginDirs = readdirSync(pluginsDir, { withFileTypes: true })
+  .filter((entry) => entry.isDirectory())
+  .map((entry) => entry.name);
+
+for (const dir of pluginDirs) {
+  test(`${dir}/ is a loadable OpenCode 2 plugin directory`, async () => {
+    const serverPath = join(pluginsDir, dir, "index.js");
+    assert.ok(existsSync(serverPath), `${dir}/ needs an index.js server entry`);
+    assertV2Definition((await import(serverPath)).default, `${dir}/index.js`);
+
+    const tuiPath = join(pluginsDir, dir, "tui.js");
+    if (existsSync(tuiPath)) {
+      assertV2Definition((await import(tuiPath)).default, `${dir}/tui.js`);
     }
   });
 }
