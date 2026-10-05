@@ -16,14 +16,12 @@
   "diffs": {
     "wrap": "word"
   },
-  "compaction": {
-    "auto": false
-  },
   "terminal": {
     "title": true
   },
   "prompt": {
-    "editor": true
+    "editor": true,
+    "paste": "full"
   },
   "session": {
     "sidebar": "auto",
