@@ -23,6 +23,7 @@ const ctx = {
   },
   data: {
     location: { default: () => ({ directory: "/Users/tim/dotfiles" }) },
+    shell: { list: () => [] },
     session: {
       get: (id) =>
         id === "a" ? { id, title: "Fix login", location: { directory: "/Users/tim/dotfiles" } } : undefined,
