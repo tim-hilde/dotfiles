@@ -10,8 +10,11 @@
     "agent.cycle": "tab"
   },
   "plugins": [
+    "-opencode.sidebar.context",
+    "-opencode.sidebar.mcp",
     "@slkiser/opencode-quota@5.0.1",
-    "@cortexkit/opencode-magic-context@0.45.0"
+    "@cortexkit/opencode-magic-context@0.45.0",
+    "./tui-plugins/mcp-sidebar"
   ],
   "diffs": {
     "wrap": "word"

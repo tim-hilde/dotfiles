@@ -48,3 +48,4 @@ tmux/agent-status-proposals.html
 /docs/superpowers
 /opencode/anthropic-auth-state.json
 /opencode/service.json
+/opencode/anthropic-auth.json.config-write.lock.evicting/
