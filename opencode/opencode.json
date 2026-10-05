@@ -12,7 +12,8 @@
   ],
   "subagent_depth": 2,
   "experimental": {
-    "disable_paste_summary": true
+    "disable_paste_summary": true,
+    "subagent_depth": 2
   },
   "permission": {
     "external_directory": {
