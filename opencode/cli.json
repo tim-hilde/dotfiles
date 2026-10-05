@@ -19,10 +19,12 @@
     "./tui-plugins/mcp-sidebar"
   ],
   "diffs": {
-    "wrap": "word"
+    "wrap": "word",
+    "view": "auto"
   },
   "terminal": {
-    "title": true
+    "title": true,
+    "copy": "select"
   },
   "prompt": {
     "editor": true,

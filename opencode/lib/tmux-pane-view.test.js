@@ -4,8 +4,18 @@ import assert from "node:assert/strict";
 import { derivePaneView } from "./tmux-pane-view.js";
 
 // Mirrors the slice of the V2 TUI plugin context the view reads. `sessions`
-// maps id → { parentID?, title?, location?, running?, permissions?, forms? }.
-function view({ route = { type: "home" }, sessions = {}, tabs, familyIndex = true } = {}) {
+// maps id → { parentID?, title?, location?, running?, permissions?, forms? };
+// `shells` lists { sessionID, status?, directory? } (directory defaults to the
+// TUI's).
+const DEFAULT_DIRECTORY = "/Users/tim/dotfiles";
+
+function view({
+  route = { type: "home" },
+  sessions = {},
+  tabs,
+  familyIndex = true,
+  shells = [],
+} = {}) {
   const rootOf = (id) => {
     let current = id;
     while (sessions[current]?.parentID) current = sessions[current].parentID;
@@ -21,7 +31,21 @@ function view({ route = { type: "home" }, sessions = {}, tabs, familyIndex = tru
       },
     },
     data: {
-      location: { default: () => ({ directory: "/Users/tim/dotfiles" }) },
+      location: { default: () => ({ directory: DEFAULT_DIRECTORY }) },
+      shell: {
+        list: (location) =>
+          shells
+            .filter(
+              (shell) =>
+                (shell.directory ?? DEFAULT_DIRECTORY) ===
+                (location?.directory ?? DEFAULT_DIRECTORY),
+            )
+            .map((shell, index) => ({
+              id: `sh_${index}`,
+              status: shell.status ?? "running",
+              metadata: { sessionID: shell.sessionID },
+            })),
+      },
       session: {
         get: (id) => (sessions[id] ? { id, ...sessions[id] } : undefined),
         root: rootOf,
@@ -90,4 +114,41 @@ test("project comes from the shown session's directory", () => {
 test("without a family index the root session itself still counts", () => {
   const sessions = { a: { running: true } };
   assert.equal(view({ route: at("a"), sessions, familyIndex: false }).state, "working");
+});
+
+test("a running background shell keeps an idle session working", () => {
+  const sessions = { a: {} };
+  const shells = [{ sessionID: "a" }];
+  assert.equal(view({ route: at("a"), sessions, shells }).state, "working");
+});
+
+test("a subagent's running shell keeps the family working", () => {
+  const sessions = { a: {}, b: { parentID: "a" } };
+  const shells = [{ sessionID: "b" }];
+  assert.equal(view({ route: at("a"), sessions, shells }).state, "working");
+});
+
+test("a finished shell leaves the session done", () => {
+  const sessions = { a: {} };
+  const shells = [{ sessionID: "a", status: "exited" }];
+  assert.equal(view({ route: at("a"), sessions, shells }).state, "done");
+});
+
+test("another session's shell in the same directory does not count", () => {
+  const sessions = { a: {}, x: {} };
+  const shells = [{ sessionID: "x" }];
+  assert.equal(view({ route: at("a"), sessions, shells }).state, "done");
+});
+
+test("a pending permission wins over a running shell", () => {
+  const sessions = { a: { permissions: [{ id: "per_1" }] } };
+  const shells = [{ sessionID: "a" }];
+  assert.equal(view({ route: at("a"), sessions, shells }).state, "waiting");
+});
+
+test("a tab's shell is found in that session's own directory", () => {
+  const directory = "/Users/tim/code/ris-mvp";
+  const sessions = { a: {}, c: { location: { directory } } };
+  const shells = [{ sessionID: "c", directory }];
+  assert.equal(view({ route: at("a"), sessions, tabs: ["a", "c"], shells }).state, "working");
 });

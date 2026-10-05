@@ -2,7 +2,8 @@
 //
 // Mirrors the TUI's own session-tab badge: a session counts with its whole
 // family (root plus subagents); a pending permission or form means "waiting",
-// a running member means "working".
+// a running member means "working". So does a member's running shell: an idle
+// agent with a background command is resumed once that command finishes.
 import { basename } from "node:path";
 
 export function derivePaneView({ data, ui, location }) {
@@ -19,9 +20,16 @@ export function derivePaneView({ data, ui, location }) {
   const pending = (id) =>
     (data.session.permission.list(id)?.length ?? 0) > 0 ||
     (data.session.form.list(id)?.length ?? 0) > 0;
+  const hasRunningShell = (root) =>
+    data.shell
+      .list(data.session.get(root)?.location)
+      .some(
+        (shell) => shell.status === "running" && members.includes(shell.metadata.sessionID),
+      );
   const state = members.some(pending)
     ? "waiting"
-    : members.some((id) => data.session.status(id) === "running")
+    : members.some((id) => data.session.status(id) === "running") ||
+        [...roots].some(hasRunningShell)
       ? "working"
       : "done";
 
