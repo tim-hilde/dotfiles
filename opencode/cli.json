@@ -6,14 +6,18 @@
   "keybinds": {
     "prompt.editor": "<leader>o",
     "session.page.up": "pageup,ctrl+b",
-    "session.page.down": "pagedown,ctrl+f"
+    "session.page.down": "pagedown,ctrl+f",
+    "agent.cycle": "tab"
   },
   "plugins": [
-    "@slkiser/opencode-quota@4.10.6",
-    "@cortexkit/opencode-magic-context@0.44.4"
+    "@slkiser/opencode-quota@5.0.1",
+    "@cortexkit/opencode-magic-context@0.45.0"
   ],
   "diffs": {
     "wrap": "word"
+  },
+  "compaction": {
+    "auto": false
   },
   "terminal": {
     "title": true
@@ -26,5 +30,8 @@
     "scrollbar": true,
     "thinking": "hide"
   },
-  "animations": true
+  "animations": true,
+  "tabs": {
+    "mode": "off"
+  }
 }
