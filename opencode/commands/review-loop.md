@@ -22,19 +22,19 @@ Find how this project runs its tests, in this order:
 
 Preserve any required prefix/wrapper exactly as documented (env loaders, runners, etc.). This is for verifying your own fixes below — it is never passed to the reviewer.
 
-## Loop (max 5 rounds)
+## Loop (max 6 rounds)
 
-Repeat until a round comes back clean, or stop after 5 rounds:
+Repeat until a round comes back clean, or stop after 6 rounds:
 
 1. Dispatch the `branch-reviewer` subagent via the Task tool with exactly this prompt: `Code review <branch-name>`. Nothing else — no diff, no test results, no target ref, no worktree path. Do not instruct it how to review or what to focus on.
 2. Read its reply yourself. Treat the round as blocked if it contains any 🔴 Blocking finding, its Verdict is 🔄 Request Changes, or it reports a failing test run.
 3. Add this round's 🟡 Important / 🟢 Nit findings to a running backlog, deduped by file:line + issue (do this every round, blocked or not — a later round's fresh review has no memory of earlier rounds and may not resurface the same non-blocking findings).
 4. If blocked: fix the 🔴 Blocking findings yourself (follow `receiving-code-review` and `verification-before-completion`), best-effort fixing straightforward 🟡 Important findings too. Verify with the detected test command. Start the next round with a fresh dispatch.
-5. If round 5 ends still blocked, stop the loop and report the remaining blockers as unresolved — do not loop forever, but still run Triage below on the accumulated backlog before reporting.
+5. If round 6 ends still blocked, stop the loop and report the remaining blockers as unresolved — do not loop forever, but still run Triage below on the accumulated backlog before reporting.
 
 ## Triage
 
-Once a round comes back non-blocked (or round 5 is exhausted):
+Once a round comes back non-blocked (or round 6 is exhausted):
 
 1. Take the accumulated 🟡 Important / 🟢 Nit backlog from every round.
 2. Decide independently, per item: fix now (quick, localized, low-risk) or leave open (broad refactor, risky, subjective/style, out of scope) — one-line reason for anything left open.
