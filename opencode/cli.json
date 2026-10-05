@@ -34,5 +34,11 @@
   "animations": true,
   "tabs": {
     "mode": "off"
+  },
+  "mini": {
+    "mono": false,
+    "work_spinner": "block-soft-sweep",
+    "splash": "show",
+    "footer": "show"
   }
 }
