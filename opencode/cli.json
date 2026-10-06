@@ -15,7 +15,7 @@
     "-opencode.sidebar.context",
     "-opencode.sidebar.mcp",
     "-opencode.prompt.footer",
-    "@slkiser/opencode-quota@5.0.1",
+    "@slkiser/opencode-quota@5.0.2",
     "@cortexkit/opencode-magic-context@0.45.0",
     "./tui-plugins/mcp-sidebar"
   ],
