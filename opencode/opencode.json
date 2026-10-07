@@ -2,7 +2,7 @@
   "$schema": "https://opencode.ai/config.json",
   "plugin": [
     "@ex-machina/opencode-anthropic-auth@next",
-    "@mohak34/opencode-notifier@0.7.0",
+    "@mohak34/opencode-notifier@0.8.0",
     "superpowers@git+https://github.com/obra/superpowers.git#v6.4.2",
     "~/code/opencode-update-notifier",
     "~/code/opencode-insights",
