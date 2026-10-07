@@ -9,7 +9,8 @@
     "session.page.up": "pageup,ctrl+b",
     "session.page.down": "pagedown,ctrl+f",
     "agent.cycle": "tab",
-    "session.background": "<leader>b"
+    "session.background": "<leader>b",
+    "session.sidebar.toggle": false
   },
   "plugins": [
     "-opencode.sidebar.context",
