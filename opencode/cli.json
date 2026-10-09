@@ -17,7 +17,7 @@
     "-opencode.sidebar.mcp",
     "-opencode.prompt.footer",
     "@slkiser/opencode-quota@5.0.2",
-    "@cortexkit/opencode-magic-context@0.45.0",
+    "@cortexkit/opencode-magic-context@0.46.1",
     "./tui-plugins/mcp-sidebar"
   ],
   "diffs": {
