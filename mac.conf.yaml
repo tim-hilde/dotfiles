@@ -100,6 +100,10 @@
       path: k9s
       relative: true
       create: true
+    $HOME/.local/bin/k9s:
+      path: k9s/bin/k9s
+      relative: true
+      create: true
 
 - shell:
     - command: sudo chsh -s $(which zsh) $USER

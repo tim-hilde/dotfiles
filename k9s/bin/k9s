@@ -1,0 +1,12 @@
+#!/bin/sh
+# k9s 0.51 pins derailed/tcell v2.3.1-rc.4, which has no builtin tmux-256color
+# entry and then ignores COLORTERM, so skins drop to 256 colors. A shim instead
+# of an alias so wrapper scripts that `exec k9s` get it too.
+# Drop once k9s moves to tcell v3: https://github.com/derailed/k9s/pull/4272
+case "$TERM" in
+  tmux | tmux-256color)
+    TERM=xterm-256color
+    export TERM
+    ;;
+esac
+exec /opt/homebrew/bin/k9s "$@"
