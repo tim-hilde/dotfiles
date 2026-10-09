@@ -3,10 +3,17 @@ k9s:
     fgColor: '#cdd6f4'
     bgColor: '#1e1e2e'
     logoColor: '#cba6f7'
+    logoColorMsg: '#1e1e2e'
+    logoColorInfo: '#a6e3a1'
+    logoColorWarn: '#f9e2af'
+    logoColorError: '#f38ba8'
   prompt:
     fgColor: '#cdd6f4'
     bgColor: '#181825'
     suggestColor: '#89b4fa'
+    border:
+      command: '#89b4fa'
+      default: '#a6e3a1'
   help:
     fgColor: '#cdd6f4'
     bgColor: '#1e1e2e'
@@ -43,6 +50,9 @@ k9s:
   info:
     fgColor: '#fab387'
     sectionColor: '#cdd6f4'
+    cpuColor: '#a6e3a1'
+    memColor: '#94e2d5'
+    k9sRevColor: '#89dceb'
   views:
     table:
       fgColor: '#cdd6f4'
@@ -54,6 +64,7 @@ k9s:
         fgColor: '#f9e2af'
         bgColor: '#1e1e2e'
         sorterColor: '#89dceb'
+        selectedSortColumnColor: '#89dceb'
     xray:
       fgColor: '#cdd6f4'
       bgColor: '#1e1e2e'
@@ -64,6 +75,8 @@ k9s:
       bgColor: '#1e1e2e'
       chartBgColor: '#1e1e2e'
       dialBgColor: '#1e1e2e'
+      focusFgColor: '#1e1e2e'
+      focusBgColor: '#f5c2e7'
       defaultDialColors:
         - '#a6e3a1'
         - '#f38ba8'
@@ -81,6 +94,10 @@ k9s:
       keyColor: '#89b4fa'
       valueColor: '#cdd6f4'
       colonColor: '#a6adc8'
+    picker:
+      mainColor: '#cdd6f4'
+      focusColor: '#f5c2e7'
+      shortcutColor: '#89b4fa'
     logs:
       fgColor: '#cdd6f4'
       bgColor: '#1e1e2e'
