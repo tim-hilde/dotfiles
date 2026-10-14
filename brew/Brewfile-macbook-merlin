@@ -155,6 +155,10 @@ brew "just"
 brew "k9s"
 # Command-line music player
 brew "kew"
+# FAST Kubernetes manifests validator, with support for Custom Resources!
+brew "kubeconform"
+# Template-free customization of Kubernetes YAML manifests
+brew "kustomize"
 # Simple terminal UI for git commands
 brew "lazygit"
 # Command-line interface to LiveKit
@@ -203,6 +207,8 @@ brew "pyenv"
 brew "pyenv-virtualenv"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.9"
+# Rsync for cloud storage
+brew "rclone"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # Extremely fast Python linter, written in Rust
