@@ -6,7 +6,7 @@ import {
   mkdirSync,
   rmSync,
 } from "node:fs";
-import { execFile, execFileSync } from "node:child_process";
+import { execFile } from "node:child_process";
 import { join } from "node:path";
 import { homedir } from "node:os";
 import { derivePaneView } from "../../lib/tmux-pane-view.js";
@@ -87,11 +87,6 @@ export default {
       process.off("exit", cleanup);
       try {
         rmSync(file);
-      } catch {}
-      try {
-        execFileSync("tmux", ["set", "-w", "-t", pane, "automatic-rename", "on"], {
-          stdio: "ignore",
-        });
       } catch {}
     };
     process.once("exit", cleanup);

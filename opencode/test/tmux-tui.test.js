@@ -4,7 +4,7 @@
 // fast and never touch a real tmux server.
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { mkdtempSync, readFileSync, existsSync } from "node:fs";
+import { mkdtempSync, readFileSync, writeFileSync, chmodSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -51,4 +51,26 @@ test("publishes the pane state file and removes it on cleanup", async () => {
 
   await cleanup();
   assert.equal(existsSync(file), false);
+});
+
+test("keeps the window title after cleanup by leaving automatic-rename off", async () => {
+  const binDir = mkdtempSync(join(tmpdir(), "oc-tmux-bin-"));
+  const log = join(binDir, "calls.log");
+  writeFileSync(join(binDir, "tmux"), `#!/bin/sh\necho "$@" >> "${log}"\n`);
+  chmodSync(join(binDir, "tmux"), 0o755);
+  const originalPath = process.env.PATH;
+  process.env.PATH = `${binDir}:${originalPath}`;
+
+  try {
+    const cleanup = await plugin.setup(ctx);
+    await new Promise((resolve) => setTimeout(resolve, 300));
+    await cleanup();
+    await new Promise((resolve) => setTimeout(resolve, 300));
+  } finally {
+    process.env.PATH = originalPath;
+  }
+
+  const calls = readFileSync(log, "utf8");
+  assert.match(calls, /rename-window -t %990001 Fix login/);
+  assert.doesNotMatch(calls, /automatic-rename/);
 });
