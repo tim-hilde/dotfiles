@@ -46,11 +46,9 @@ tmux/agent-status-proposals.html
 /opencode/opencode-quota/opencode-go.json
 /opencode/context-mode
 /docs/superpowers
-/opencode/anthropic-auth-state.json
 /opencode/service.json
-/opencode/anthropic-auth.json.config-write.lock.evicting/
 /docs/
-/opencode/anthropic-auth-migration.json
-/opencode/anthropic-auth-native-state.json
-/opencode/anthropic-auth-pool-state.json
-/opencode/anthropic-auth-pool.json
+
+# @cortexkit/opencode-anthropic-auth: state, *.lock and *.lock.evicting/ (files or dirs), *.partial, *.tmp
+/opencode/anthropic-auth*
+/opencode/.anthropic-auth*
