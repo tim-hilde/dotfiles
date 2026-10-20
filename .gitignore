@@ -50,3 +50,7 @@ tmux/agent-status-proposals.html
 /opencode/service.json
 /opencode/anthropic-auth.json.config-write.lock.evicting/
 /docs/
+/opencode/anthropic-auth-migration.json
+/opencode/anthropic-auth-native-state.json
+/opencode/anthropic-auth-pool-state.json
+/opencode/anthropic-auth-pool.json
