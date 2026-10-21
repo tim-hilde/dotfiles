@@ -2,8 +2,9 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
-  findPullRequestUrl,
-  findPullRequestUrlInHistory,
+  findPullRequestUrls,
+  findPullRequestUrlsInHistory,
+  mergePullRequestUrls,
   parsePullRequest,
   pullRequestFetcher,
   pullRequestSymbol,
@@ -12,8 +13,10 @@ import {
 const gh = (overrides) =>
   JSON.stringify({ number: 482, state: "OPEN", isDraft: false, url: "https://github.com/o/r/pull/482", ...overrides });
 
+const url = (number) => `https://github.com/o/r/pull/${number}`;
 const text = (value) => ({ type: "text", text: value });
 const assistant = (...content) => ({ type: "assistant", content });
+const named = (number) => assistant(text(`PR: ${url(number)}`));
 const shell = (command, output) => ({
   type: "tool",
   name: "shell",
@@ -21,31 +24,32 @@ const shell = (command, output) => ({
 });
 
 test("finds a pull request URL named in an assistant text", () => {
-  const messages = [assistant(text("Der PR ist offen: https://github.com/o/r/pull/842 gegen staging."))];
-  assert.equal(findPullRequestUrl(messages), "https://github.com/o/r/pull/842");
+  const messages = [assistant(text(`Der PR ist offen: ${url(842)} gegen staging.`))];
+  assert.deepEqual(findPullRequestUrls(messages), [url(842)]);
 });
 
 test("finds the pull request URL printed by gh pr create", () => {
-  const messages = [assistant(shell("gh pr create --base staging 2>&1 | tail -2", "https://github.com/o/r/pull/7\n"))];
-  assert.equal(findPullRequestUrl(messages), "https://github.com/o/r/pull/7");
+  const messages = [assistant(shell("gh pr create --base staging 2>&1 | tail -2", `${url(7)}\n`))];
+  assert.deepEqual(findPullRequestUrls(messages), [url(7)]);
 });
 
-test("the most recently named pull request wins", () => {
-  const messages = [
-    assistant(text("Siehe https://github.com/o/r/pull/1")),
-    assistant(text("Neu: https://github.com/o/r/pull/2")),
-    assistant(text("Fertig.")),
-  ];
-  assert.equal(findPullRequestUrl(messages), "https://github.com/o/r/pull/2");
+test("finds several pull requests in the order of their last mention", () => {
+  const messages = [named(1), assistant(text(`Neu: ${url(2)} und ${url(3)}`)), named(1), assistant(text("Fertig."))];
+  assert.deepEqual(findPullRequestUrls(messages), [url(2), url(3), url(1)]);
+});
+
+test("keeps only the most recently named pull requests up to the limit", () => {
+  const messages = [1, 2, 3, 4].map(named);
+  assert.deepEqual(findPullRequestUrls(messages, 2), [url(3), url(4)]);
 });
 
 test("ignores user messages, tool input, and output of other commands", () => {
   const messages = [
-    { type: "user", text: "Schau auf https://github.com/o/r/pull/3" },
-    assistant(shell("gh pr list", "https://github.com/o/r/pull/4")),
-    assistant(shell("echo https://github.com/o/r/pull/5", "ok")),
+    { type: "user", text: `Schau auf ${url(3)}` },
+    assistant(shell("gh pr list", url(4))),
+    assistant(shell(`echo ${url(5)}`, "ok")),
   ];
-  assert.equal(findPullRequestUrl(messages), undefined);
+  assert.deepEqual(findPullRequestUrls(messages), []);
 });
 
 test("ignores URLs that are not pull requests and messages without content", () => {
@@ -54,7 +58,12 @@ test("ignores URLs that are not pull requests and messages without content", () 
     { type: "assistant" },
     { type: "compaction" },
   ];
-  assert.equal(findPullRequestUrl(messages), undefined);
+  assert.deepEqual(findPullRequestUrls(messages), []);
+});
+
+test("merging keeps the last mention of each URL and the newest ones up to the limit", () => {
+  assert.deepEqual(mergePullRequestUrls([url(1), url(2), url(1), url(3)], 2), [url(1), url(3)]);
+  assert.deepEqual(mergePullRequestUrls([url(1), url(2), url(1)]), [url(2), url(1)]);
 });
 
 const pager = (pages) => {
@@ -62,43 +71,34 @@ const pager = (pages) => {
   const listPage = async (cursor) => {
     requests.push(cursor);
     const index = cursor ? Number(cursor) : 0;
-    return { data: pages[index], cursor: { next: index + 1 < pages.length ? String(index + 1) : undefined } };
+    return { data: pages[index].toReversed(), cursor: { next: index + 1 < pages.length ? String(index + 1) : undefined } };
   };
   return { listPage, requests };
 };
-const named = (url) => assistant(text(`PR: ${url}`));
 
-test("history search reads pages newest first and stops at the first match", async () => {
-  const { listPage, requests } = pager([
-    [named("https://github.com/o/r/pull/3"), assistant(text("ok"))].toReversed(),
-    [named("https://github.com/o/r/pull/2")].toReversed(),
-    [named("https://github.com/o/r/pull/1")],
-  ]);
-  assert.equal(await findPullRequestUrlInHistory(listPage), "https://github.com/o/r/pull/3");
-  assert.deepEqual(requests, [undefined]);
-});
-
-test("history search continues to older pages when a page has no match", async () => {
-  const { listPage, requests } = pager([[assistant(text("ok"))], [named("https://github.com/o/r/pull/1")], []]);
-  assert.equal(await findPullRequestUrlInHistory(listPage), "https://github.com/o/r/pull/1");
+test("history search collects pull requests across pages in chronological order", async () => {
+  const { listPage, requests } = pager([[named(3), named(4)], [named(2)], [named(1)]]);
+  assert.deepEqual(await findPullRequestUrlsInHistory(listPage, 3), [url(2), url(3), url(4)]);
   assert.deepEqual(requests, [undefined, "1"]);
 });
 
 test("history search gives up after the page limit and at the end of the history", async () => {
   const empty = [assistant(text("ok"))];
   const limited = pager([empty, empty, empty, empty]);
-  assert.equal(await findPullRequestUrlInHistory(limited.listPage, 2), undefined);
+  assert.deepEqual(await findPullRequestUrlsInHistory(limited.listPage, 5, 2), []);
   assert.equal(limited.requests.length, 2);
-  const short = pager([empty]);
-  assert.equal(await findPullRequestUrlInHistory(short.listPage), undefined);
+  const short = pager([[named(1)]]);
+  assert.deepEqual(await findPullRequestUrlsInHistory(short.listPage), [url(1)]);
   assert.equal(short.requests.length, 1);
 });
 
-test("history search returns undefined when reading a page fails", async () => {
+test("history search returns what it found when reading a page fails", async () => {
+  let calls = 0;
   const listPage = async () => {
+    if (calls++ === 0) return { data: [named(1)], cursor: { next: "1" } };
     throw new Error("offline");
   };
-  assert.equal(await findPullRequestUrlInHistory(listPage), undefined);
+  assert.deepEqual(await findPullRequestUrlsInHistory(listPage), [url(1)]);
 });
 
 test("parses an open pull request", () => {
@@ -130,7 +130,7 @@ test("symbols distinguish the four kinds", () => {
 test("fetcher runs gh once per URL within the cache time", async () => {
   let now = 0;
   const calls = [];
-  const fetchPr = pullRequestFetcher(async (url) => (calls.push(url), gh()), 60_000, () => now);
+  const fetchPr = pullRequestFetcher(async (target) => (calls.push(target), gh()), 60_000, () => now);
   const first = await fetchPr("/a");
   now = 59_000;
   const second = await fetchPr("/a");

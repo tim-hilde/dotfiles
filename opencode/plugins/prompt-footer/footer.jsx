@@ -1,8 +1,8 @@
 /** @jsxImportSource @opentui/solid */
-import { createEffect, createMemo, createSignal, Match, onCleanup, Show, Switch } from "solid-js";
+import { createEffect, createMemo, createSignal, For, Match, onCleanup, Show, Switch } from "solid-js";
 import { useTerminalDimensions } from "@opentui/solid";
 import { activityLabel, contextUsage, footerLayout, usageLabel } from "../../lib/prompt-footer.js";
-import { findPullRequestUrl, pullRequestSymbol } from "../../lib/pull-request.js";
+import { findPullRequestUrls, mergePullRequestUrls, pullRequestSymbol } from "../../lib/pull-request.js";
 
 const TICK_MS = 1000;
 const PR_POLL_MS = 30_000;
@@ -48,28 +48,31 @@ function PromptFooter(props) {
     return [context ? usageLabel(context) : undefined, cost > 0 ? currency.format(cost) : undefined].filter(Boolean);
   });
 
-  const [historyUrl, setHistoryUrl] = createSignal();
+  const [historyUrls, setHistoryUrls] = createSignal([]);
   createEffect(() => {
     const sessionID = props.sessionID;
-    setHistoryUrl(undefined);
+    setHistoryUrls([]);
     if (!sessionID) return;
     let live = true;
-    props.historyUrl(sessionID).then((url) => {
-      if (live) setHistoryUrl(url);
+    props.historyUrls(sessionID).then((urls) => {
+      if (live) setHistoryUrls(urls);
     });
     onCleanup(() => (live = false));
   });
-  const prUrl = createMemo(
-    () => (props.sessionID ? findPullRequestUrl(data.session.message.list(props.sessionID)) : undefined) ?? historyUrl(),
+  const prUrls = createMemo(() =>
+    mergePullRequestUrls([
+      ...historyUrls(),
+      ...(props.sessionID ? findPullRequestUrls(data.session.message.list(props.sessionID)) : []),
+    ]),
   );
-  const [pr, setPr] = createSignal();
+  const [prs, setPrs] = createSignal([]);
   createEffect(() => {
-    const url = prUrl();
-    if (!url) return setPr(undefined);
+    const urls = prUrls();
+    if (urls.length === 0) return setPrs([]);
     let live = true;
     const load = () =>
-      props.pullRequest(url).then((value) => {
-        if (live) setPr(value);
+      Promise.all(urls.map(props.pullRequest)).then((list) => {
+        if (live) setPrs(list.filter(Boolean));
       });
     load();
     const poll = setInterval(load, PR_POLL_MS);
@@ -78,25 +81,25 @@ function PromptFooter(props) {
       clearInterval(poll);
     });
   });
-  const [prHover, setPrHover] = createSignal(false);
-  const prText = () => (pr() ? `${GITHUB_ICON} #${pr().number} ${pullRequestSymbol(pr().kind)}` : undefined);
+  const [prHover, setPrHover] = createSignal();
+  const prText = (pr) => `${GITHUB_ICON} #${pr.number} ${pullRequestSymbol(pr.kind)}`;
 
   const active = () => Boolean(subagents() || shells());
   const layout = createMemo(() =>
     footerLayout({
       width: dimensions().width,
-      usage: [...usage(), prText()].filter(Boolean),
+      usage: [...usage(), ...prs().map(prText)],
       commands: shortcut("command.palette.show"),
     }),
   );
   const showUsage = () => props.showDetails && layout().usage && usage().length > 0;
-  const showPr = () => props.showDetails && layout().usage && Boolean(pr());
+  const showPrs = () => props.showDetails && layout().usage && prs().length > 0;
 
   return (
     <Switch>
       <Match when={props.mode === "normal"}>
         <Switch>
-          <Match when={active() || usage().length > 0 || pr()}>
+          <Match when={active() || usage().length > 0 || prs().length > 0}>
             <box flexDirection="row" minWidth={0} flexShrink={props.showDetails && layout().usage ? 0 : 1}>
               <Show when={active()}>
                 <box
@@ -119,18 +122,22 @@ function PromptFooter(props) {
                   {usage().join(" · ")}
                 </text>
               </Show>
-              <Show when={showPr()}>
-                <box
-                  flexShrink={0}
-                  onMouseOver={() => setPrHover(true)}
-                  onMouseOut={() => setPrHover(false)}
-                  onMouseUp={() => props.openUrl(pr().url)}
-                >
-                  <text wrapMode="none" fg={prHover() ? theme.text.base : theme.text.muted}>
-                    {active() || showUsage() ? " · " : ""}
-                    {prText()}
-                  </text>
-                </box>
+              <Show when={showPrs()}>
+                <For each={prs()}>
+                  {(pr, index) => (
+                    <box
+                      flexShrink={0}
+                      onMouseOver={() => setPrHover(pr.url)}
+                      onMouseOut={() => setPrHover(undefined)}
+                      onMouseUp={() => props.openUrl(pr.url)}
+                    >
+                      <text wrapMode="none" fg={prHover() === pr.url ? theme.text.base : theme.text.muted}>
+                        {index() > 0 || active() || showUsage() ? " · " : ""}
+                        {prText(pr)}
+                      </text>
+                    </box>
+                  )}
+                </For>
               </Show>
             </box>
           </Match>
@@ -155,12 +162,12 @@ function PromptFooter(props) {
   );
 }
 
-export const promptFooter = (ctx, runStart, pullRequest, historyUrl, openUrl) => (props) => (
+export const promptFooter = (ctx, runStart, pullRequest, historyUrls, openUrl) => (props) => (
   <PromptFooter
     ctx={ctx}
     runStart={runStart}
     pullRequest={pullRequest}
-    historyUrl={historyUrl}
+    historyUrls={historyUrls}
     openUrl={openUrl}
     sessionID={props.sessionID}
     mode={props.mode}

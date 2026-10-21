@@ -6,40 +6,45 @@ const PR_URL = /https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/pull\/\d+/g;
 
 export const PR_FIELDS = "number,state,isDraft,url";
 
-function lastUrl(value) {
-  if (typeof value !== "string" || !value.includes("/pull/")) return undefined;
-  return value.match(PR_URL)?.at(-1);
+export const MAX_PULL_REQUESTS = 5;
+
+function textUrls(value) {
+  if (typeof value !== "string" || !value.includes("/pull/")) return [];
+  return value.match(PR_URL) ?? [];
 }
 
-function partUrl(part) {
-  if (part.type === "text") return lastUrl(part.text);
-  if (part.type !== "tool" || !part.state?.input?.command?.includes("gh pr create")) return undefined;
-  return (part.state.content ?? []).map((item) => lastUrl(item.text)).findLast(Boolean);
+function partUrls(part) {
+  if (part.type === "text") return textUrls(part.text);
+  if (part.type !== "tool" || !part.state?.input?.command?.includes("gh pr create")) return [];
+  return (part.state.content ?? []).flatMap((item) => textUrls(item.text));
 }
 
-export function findPullRequestUrl(messages) {
-  for (const message of messages.toReversed()) {
-    if (message.type !== "assistant") continue;
-    const url = (message.content ?? []).map(partUrl).findLast(Boolean);
-    if (url) return url;
-  }
-  return undefined;
+function collectUrls(messages) {
+  return messages.flatMap((message) => (message.type === "assistant" ? (message.content ?? []).flatMap(partUrls) : []));
 }
 
-export async function findPullRequestUrlInHistory(listPage, maxPages = 10) {
+export function mergePullRequestUrls(urls, limit = MAX_PULL_REQUESTS) {
+  const latestFirst = [];
+  for (const url of urls.toReversed()) if (!latestFirst.includes(url)) latestFirst.push(url);
+  return latestFirst.slice(0, limit).toReversed();
+}
+
+export function findPullRequestUrls(messages, limit = MAX_PULL_REQUESTS) {
+  return mergePullRequestUrls(collectUrls(messages), limit);
+}
+
+export async function findPullRequestUrlsInHistory(listPage, limit = MAX_PULL_REQUESTS, maxPages = 10) {
+  let found = [];
   try {
     let cursor;
     for (let page = 0; page < maxPages; page++) {
       const { data, cursor: next } = await listPage(cursor);
-      const url = findPullRequestUrl(data.toReversed());
-      if (url) return url;
+      found = [...collectUrls(data.toReversed()), ...found];
       cursor = next?.next;
-      if (!cursor) return undefined;
+      if (!cursor || mergePullRequestUrls(found, Infinity).length >= limit) break;
     }
-  } catch {
-    return undefined;
-  }
-  return undefined;
+  } catch {}
+  return mergePullRequestUrls(found, limit);
 }
 
 export function parsePullRequest(stdout) {
