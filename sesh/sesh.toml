@@ -1,2 +1,4 @@
+blacklist = ["floax"]
+
 [default_session]
 startup_command = "source ~/dotfiles/sesh/default-session.sh"
