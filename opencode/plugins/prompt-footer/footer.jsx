@@ -1,9 +1,12 @@
 /** @jsxImportSource @opentui/solid */
-import { createMemo, createSignal, Match, onCleanup, Show, Switch } from "solid-js";
+import { createEffect, createMemo, createSignal, Match, onCleanup, Show, Switch } from "solid-js";
 import { useTerminalDimensions } from "@opentui/solid";
 import { activityLabel, contextUsage, footerLayout, usageLabel } from "../../lib/prompt-footer.js";
+import { pullRequestSymbol } from "../../lib/pull-request.js";
 
 const TICK_MS = 1000;
+const PR_POLL_MS = 30_000;
+const GITHUB_ICON = "\uf408";
 const currency = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
 
 function PromptFooter(props) {
@@ -45,16 +48,50 @@ function PromptFooter(props) {
     return [context ? usageLabel(context) : undefined, cost > 0 ? currency.format(cost) : undefined].filter(Boolean);
   });
 
+  const [pr, setPr] = createSignal();
+  createEffect(() => {
+    const sessionID = props.sessionID;
+    if (!sessionID) return setPr(undefined);
+    const directory = data.session.get(sessionID)?.location?.directory ?? data.location.default().directory;
+    let live = true;
+    const load = () =>
+      props.pullRequest(directory).then((value) => {
+        if (live) setPr(value);
+      });
+    load();
+    const poll = setInterval(load, PR_POLL_MS);
+    onCleanup(() => {
+      live = false;
+      clearInterval(poll);
+    });
+  });
+  const [prHover, setPrHover] = createSignal(false);
+  const prText = () => (pr() ? `${GITHUB_ICON} #${pr().number} ${pullRequestSymbol(pr().kind)}` : undefined);
+  const prTone = () => {
+    const feedback = theme.text.feedback;
+    const kind = pr()?.kind;
+    if (kind === "open") return feedback.success.base;
+    if (kind === "merged") return feedback.info.base;
+    if (kind === "closed") return feedback.error.base;
+    return theme.text.muted;
+  };
+
   const active = () => Boolean(subagents() || shells());
   const layout = createMemo(() =>
-    footerLayout({ width: dimensions().width, usage: usage(), commands: shortcut("command.palette.show") }),
+    footerLayout({
+      width: dimensions().width,
+      usage: [...usage(), prText()].filter(Boolean),
+      commands: shortcut("command.palette.show"),
+    }),
   );
+  const showUsage = () => props.showDetails && layout().usage && usage().length > 0;
+  const showPr = () => props.showDetails && layout().usage && Boolean(pr());
 
   return (
     <Switch>
       <Match when={props.mode === "normal"}>
         <Switch>
-          <Match when={active() || usage().length > 0}>
+          <Match when={active() || usage().length > 0 || pr()}>
             <box flexDirection="row" minWidth={0} flexShrink={props.showDetails && layout().usage ? 0 : 1}>
               <Show when={active()}>
                 <box
@@ -71,11 +108,25 @@ function PromptFooter(props) {
                   </text>
                 </box>
               </Show>
-              <Show when={props.showDetails && layout().usage && usage().length > 0}>
+              <Show when={showUsage()}>
                 <text wrapMode="none" flexShrink={0} fg={theme.text.muted}>
                   {active() ? " · " : ""}
                   {usage().join(" · ")}
                 </text>
+              </Show>
+              <Show when={showPr()}>
+                <box
+                  flexShrink={0}
+                  onMouseOver={() => setPrHover(true)}
+                  onMouseOut={() => setPrHover(false)}
+                  onMouseUp={() => props.openUrl(pr().url)}
+                >
+                  <text wrapMode="none" fg={prHover() ? theme.text.base : theme.text.muted}>
+                    {active() || showUsage() ? " · " : ""}
+                    {`${GITHUB_ICON} #${pr().number} `}
+                    <span style={{ fg: prTone() }}>{pullRequestSymbol(pr().kind)}</span>
+                  </text>
+                </box>
               </Show>
             </box>
           </Match>
@@ -100,10 +151,12 @@ function PromptFooter(props) {
   );
 }
 
-export const promptFooter = (ctx, runStart) => (props) => (
+export const promptFooter = (ctx, runStart, pullRequest, openUrl) => (props) => (
   <PromptFooter
     ctx={ctx}
     runStart={runStart}
+    pullRequest={pullRequest}
+    openUrl={openUrl}
     sessionID={props.sessionID}
     mode={props.mode}
     showDetails={props.showDetails}

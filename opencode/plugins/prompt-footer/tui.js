@@ -1,4 +1,16 @@
 // Replaces the built-in footer, which is disabled via "-opencode.prompt.footer" in cli.json.
+import { execFile } from "node:child_process";
+import { PR_FIELDS, pullRequestFetcher } from "../../lib/pull-request.js";
+
+const runGh = (directory) =>
+  new Promise((resolve, reject) =>
+    execFile("gh", ["pr", "view", "--json", PR_FIELDS], { cwd: directory, timeout: 10_000 }, (error, stdout) =>
+      error ? reject(error) : resolve(stdout),
+    ),
+  );
+
+const openUrl = (url) => execFile("open", [url], () => {});
+
 const ENDED_EVENTS = [
   "session.execution.succeeded",
   "session.execution.failed",
@@ -22,7 +34,7 @@ export default {
 
     const offSlot = ctx.ui.slot({
       append: "prompt.footer",
-      render: promptFooter(ctx, runStart),
+      render: promptFooter(ctx, runStart, pullRequestFetcher(runGh), openUrl),
     });
 
     return () => {
