@@ -2,7 +2,7 @@
 import { createEffect, createMemo, createSignal, Match, onCleanup, Show, Switch } from "solid-js";
 import { useTerminalDimensions } from "@opentui/solid";
 import { activityLabel, contextUsage, footerLayout, usageLabel } from "../../lib/prompt-footer.js";
-import { pullRequestSymbol } from "../../lib/pull-request.js";
+import { findPullRequestUrl, pullRequestSymbol } from "../../lib/pull-request.js";
 
 const TICK_MS = 1000;
 const PR_POLL_MS = 30_000;
@@ -48,14 +48,27 @@ function PromptFooter(props) {
     return [context ? usageLabel(context) : undefined, cost > 0 ? currency.format(cost) : undefined].filter(Boolean);
   });
 
-  const [pr, setPr] = createSignal();
+  const [historyUrl, setHistoryUrl] = createSignal();
   createEffect(() => {
     const sessionID = props.sessionID;
-    if (!sessionID) return setPr(undefined);
-    const directory = data.session.get(sessionID)?.location?.directory ?? data.location.default().directory;
+    setHistoryUrl(undefined);
+    if (!sessionID) return;
+    let live = true;
+    props.historyUrl(sessionID).then((url) => {
+      if (live) setHistoryUrl(url);
+    });
+    onCleanup(() => (live = false));
+  });
+  const prUrl = createMemo(
+    () => (props.sessionID ? findPullRequestUrl(data.session.message.list(props.sessionID)) : undefined) ?? historyUrl(),
+  );
+  const [pr, setPr] = createSignal();
+  createEffect(() => {
+    const url = prUrl();
+    if (!url) return setPr(undefined);
     let live = true;
     const load = () =>
-      props.pullRequest(directory).then((value) => {
+      props.pullRequest(url).then((value) => {
         if (live) setPr(value);
       });
     load();
@@ -67,14 +80,6 @@ function PromptFooter(props) {
   });
   const [prHover, setPrHover] = createSignal(false);
   const prText = () => (pr() ? `${GITHUB_ICON} #${pr().number} ${pullRequestSymbol(pr().kind)}` : undefined);
-  const prTone = () => {
-    const feedback = theme.text.feedback;
-    const kind = pr()?.kind;
-    if (kind === "open") return feedback.success.base;
-    if (kind === "merged") return feedback.info.base;
-    if (kind === "closed") return feedback.error.base;
-    return theme.text.muted;
-  };
 
   const active = () => Boolean(subagents() || shells());
   const layout = createMemo(() =>
@@ -123,8 +128,7 @@ function PromptFooter(props) {
                 >
                   <text wrapMode="none" fg={prHover() ? theme.text.base : theme.text.muted}>
                     {active() || showUsage() ? " · " : ""}
-                    {`${GITHUB_ICON} #${pr().number} `}
-                    <span style={{ fg: prTone() }}>{pullRequestSymbol(pr().kind)}</span>
+                    {prText()}
                   </text>
                 </box>
               </Show>
@@ -151,11 +155,12 @@ function PromptFooter(props) {
   );
 }
 
-export const promptFooter = (ctx, runStart, pullRequest, openUrl) => (props) => (
+export const promptFooter = (ctx, runStart, pullRequest, historyUrl, openUrl) => (props) => (
   <PromptFooter
     ctx={ctx}
     runStart={runStart}
     pullRequest={pullRequest}
+    historyUrl={historyUrl}
     openUrl={openUrl}
     sessionID={props.sessionID}
     mode={props.mode}
