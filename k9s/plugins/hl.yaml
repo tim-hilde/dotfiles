@@ -1,0 +1,35 @@
+plugins:
+  hl-pod:
+    shortCut: Shift-L
+    confirm: false
+    description: Logs (hl)
+    scopes:
+      - pods
+    command: bash
+    background: false
+    args:
+      - -c
+      - >-
+        kubectl logs --follow --all-containers --tail=500
+        $NAME
+        -n $NAMESPACE
+        --context $CONTEXT
+        --kubeconfig $KUBECONFIG
+        2>&1 | hl --paging=never
+  hl-container:
+    shortCut: Shift-L
+    confirm: false
+    description: Logs (hl)
+    scopes:
+      - containers
+    command: bash
+    background: false
+    args:
+      - -c
+      - >-
+        kubectl logs --follow --tail=500
+        -c $NAME $POD
+        -n $NAMESPACE
+        --context $CONTEXT
+        --kubeconfig $KUBECONFIG
+        2>&1 | hl --paging=never

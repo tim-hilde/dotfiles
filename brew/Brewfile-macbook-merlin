@@ -141,6 +141,8 @@ brew "libpq", link: true
 brew "harlequin"
 # Convert source code to formatted text with syntax highlighting
 brew "highlight"
+# Log viewer that translates JSON and logfmt into human-readable representation
+brew "hl"
 # Improved top (interactive process viewer)
 brew "htop"
 # Review-first terminal diff viewer for agent-authored changesets
