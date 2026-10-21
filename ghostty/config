@@ -42,3 +42,10 @@ keybind = ctrl+cmd+k=text:\x1b[1;7A
 
 # open folder with fzf
 keybind = option+c=esc:c
+
+# tmux-floax: C-M-b/s/f/r/e
+keybind = ctrl+alt+s=text:\x1b\x13
+keybind = ctrl+alt+b=text:\x1b\x02
+keybind = ctrl+alt+f=text:\x1b\x06
+keybind = ctrl+alt+r=text:\x1b\x12
+keybind = ctrl+alt+e=text:\x1b\x05
