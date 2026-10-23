@@ -1,16 +1,4 @@
 // Replaces the built-in footer, which is disabled via "-opencode.prompt.footer" in cli.json.
-import { execFile } from "node:child_process";
-import { findPullRequestUrlsInHistory, PR_FIELDS, pullRequestFetcher } from "../../lib/pull-request.js";
-
-const runGh = (url) =>
-  new Promise((resolve, reject) =>
-    execFile("gh", ["pr", "view", url, "--json", PR_FIELDS], { timeout: 10_000 }, (error, stdout) =>
-      error ? reject(error) : resolve(stdout),
-    ),
-  );
-
-const openUrl = (url) => execFile("open", [url], () => {});
-
 const ENDED_EVENTS = [
   "session.execution.succeeded",
   "session.execution.failed",
@@ -32,22 +20,9 @@ export default {
     // Runs already in progress when the TUI started have no start event; their session creation time is the best guess.
     const runStart = (sessionID) => runStarts.get(sessionID) ?? ctx.data.session.get(sessionID)?.time.created;
 
-    // The TUI store only holds a recent window of a session; older messages are read once per session from the server.
-    const histories = new Map();
-    const historyUrls = (sessionID) => {
-      if (!histories.has(sessionID)) {
-        const page = (cursor) =>
-          ctx.client.message.list(
-            cursor ? { sessionID, limit: 200, cursor } : { sessionID, limit: 200, order: "desc" },
-          );
-        histories.set(sessionID, findPullRequestUrlsInHistory(page));
-      }
-      return histories.get(sessionID);
-    };
-
     const offSlot = ctx.ui.slot({
       append: "prompt.footer",
-      render: promptFooter(ctx, runStart, pullRequestFetcher(runGh), historyUrls, openUrl),
+      render: promptFooter(ctx, runStart),
     });
 
     return () => {

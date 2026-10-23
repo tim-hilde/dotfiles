@@ -11,7 +11,14 @@ import {
 } from "./pull-request.js";
 
 const gh = (overrides) =>
-  JSON.stringify({ number: 482, state: "OPEN", isDraft: false, url: "https://github.com/o/r/pull/482", ...overrides });
+  JSON.stringify({
+    number: 482,
+    title: "Fix retry loop",
+    state: "OPEN",
+    isDraft: false,
+    url: "https://github.com/o/r/pull/482",
+    ...overrides,
+  });
 
 const url = (number) => `https://github.com/o/r/pull/${number}`;
 const text = (value) => ({ type: "text", text: value });
@@ -102,7 +109,12 @@ test("history search returns what it found when reading a page fails", async () 
 });
 
 test("parses an open pull request", () => {
-  assert.deepEqual(parsePullRequest(gh()), { number: 482, url: "https://github.com/o/r/pull/482", kind: "open" });
+  assert.deepEqual(parsePullRequest(gh()), {
+    number: 482,
+    title: "Fix retry loop",
+    url: "https://github.com/o/r/pull/482",
+    kind: "open",
+  });
 });
 
 test("parses draft, merged, and closed pull requests", () => {
@@ -120,6 +132,7 @@ test("returns undefined for empty, invalid, or unknown output", () => {
   assert.equal(parsePullRequest("not json"), undefined);
   assert.equal(parsePullRequest(gh({ state: "WEIRD" })), undefined);
   assert.equal(parsePullRequest(gh({ number: undefined })), undefined);
+  assert.equal(parsePullRequest(gh({ title: undefined })), undefined);
 });
 
 test("symbols distinguish the four kinds", () => {

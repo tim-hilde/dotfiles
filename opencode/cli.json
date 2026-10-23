@@ -18,7 +18,8 @@
     "-opencode.prompt.footer",
     "@slkiser/opencode-quota@5.0.3",
     "@cortexkit/opencode-magic-context@0.49.12",
-    "./tui-plugins/mcp-sidebar"
+    "./tui-plugins/mcp-sidebar",
+    "./tui-plugins/pr-sidebar"
   ],
   "diffs": {
     "wrap": "word",

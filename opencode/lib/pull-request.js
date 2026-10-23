@@ -4,7 +4,7 @@ const KINDS = { OPEN: "open", MERGED: "merged", CLOSED: "closed" };
 const SYMBOLS = { open: "●", draft: "◌", merged: "✓", closed: "✗" };
 const PR_URL = /https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/pull\/\d+/g;
 
-export const PR_FIELDS = "number,state,isDraft,url";
+export const PR_FIELDS = "number,title,state,isDraft,url";
 
 export const MAX_PULL_REQUESTS = 5;
 
@@ -55,8 +55,10 @@ export function parsePullRequest(stdout) {
     return undefined;
   }
   const kind = data?.state === "OPEN" && data.isDraft ? "draft" : KINDS[data?.state];
-  if (!kind || !Number.isInteger(data.number) || typeof data.url !== "string") return undefined;
-  return { number: data.number, url: data.url, kind };
+  if (!kind || !Number.isInteger(data.number) || typeof data.title !== "string" || typeof data.url !== "string") {
+    return undefined;
+  }
+  return { number: data.number, title: data.title, url: data.url, kind };
 }
 
 export function pullRequestSymbol(kind) {
