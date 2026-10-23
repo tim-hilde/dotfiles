@@ -84,32 +84,32 @@ function PullRequestsView(props: {
           </text>
         </box>
         <Show when={!collapsible() || view.open}>
-        <For each={pullRequests()}>
-          {(pr: any) => (
-            <box
-              flexDirection="row"
-              gap={1}
-              minWidth={0}
-              onMouseOver={() => setHovered(pr.url)}
-              onMouseOut={() => setHovered(undefined)}
-              onMouseUp={() => openUrl(pr.url)}
-            >
-              <text
-                fg={hovered() === pr.url ? theme.text.base : theme.text.muted}
-                wrapMode="none"
-                truncate
-                flexGrow={1}
-                flexShrink={1}
+          <For each={pullRequests()}>
+            {(pr: any) => (
+              <box
+                flexDirection="row"
+                gap={1}
                 minWidth={0}
+                onMouseOver={() => setHovered(pr.url)}
+                onMouseOut={() => setHovered(undefined)}
+                onMouseUp={() => openUrl(pr.url)}
               >
-                {`#${pr.number} ${pr.title}`}
-              </text>
-              <text flexShrink={0} fg={hovered() === pr.url ? theme.text.base : theme.text.muted}>
-                {pullRequestSymbol(pr.kind)}
-              </text>
-            </box>
-          )}
-        </For>
+                <text
+                  fg={hovered() === pr.url ? theme.text.base : theme.text.muted}
+                  wrapMode="none"
+                  truncate
+                  flexGrow={1}
+                  flexShrink={1}
+                  minWidth={0}
+                >
+                  {`#${pr.number} ${pr.title}`}
+                </text>
+                <text flexShrink={0} fg={hovered() === pr.url ? theme.text.base : theme.text.muted}>
+                  {pullRequestSymbol(pr.kind)}
+                </text>
+              </box>
+            )}
+          </For>
         </Show>
       </box>
     </Show>
