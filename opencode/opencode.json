@@ -31,7 +31,11 @@
       "model": "anthropic/claude-sonnet-5-5"
     },
     "explore": {
-      "model": "opencode-go/deepseek-v4.1-flash"
+      "model": {
+        "providerID": "opencode-go",
+        "model": "deepseek-v4.1-flash",
+        "variant": "max"
+      }
     }
   },
   "mcp": {
