@@ -25,20 +25,13 @@
     "auto": false,
     "prune": false
   },
+  "warming": true,
   "agents": {
     "general": {
-      "model": {
-        "providerID": "anthropic",
-        "model": "claude-sonnet-5-5",
-        "variant": "default"
-      }
+      "model": "anthropic/claude-sonnet-5-5"
     },
     "explore": {
-      "model": {
-        "providerID": "anthropic",
-        "model": "claude-sonnet-5-5",
-        "variant": "default"
-      }
+      "model": "opencode-go/deepseek-v4.1-flash"
     }
   },
   "mcp": {
