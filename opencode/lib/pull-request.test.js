@@ -8,6 +8,7 @@ import {
   parsePullRequest,
   pullRequestFetcher,
   pullRequestSymbol,
+  truncateEnd,
 } from "./pull-request.js";
 
 const gh = (overrides) =>
@@ -133,6 +134,14 @@ test("returns undefined for empty, invalid, or unknown output", () => {
   assert.equal(parsePullRequest(gh({ state: "WEIRD" })), undefined);
   assert.equal(parsePullRequest(gh({ number: undefined })), undefined);
   assert.equal(parsePullRequest(gh({ title: undefined })), undefined);
+});
+
+test("truncateEnd keeps text that fits and cuts the end with an ellipsis otherwise", () => {
+  assert.equal(truncateEnd("#12 Fix", 7), "#12 Fix");
+  assert.equal(truncateEnd("#12 Fix retry loop", 10), "#12 Fix r…");
+  assert.equal(truncateEnd("abc", 1), "…");
+  assert.equal(truncateEnd("abc", 0), "");
+  assert.equal(truncateEnd("abc", undefined), "abc");
 });
 
 test("symbols distinguish the four kinds", () => {

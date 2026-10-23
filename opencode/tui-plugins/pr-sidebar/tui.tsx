@@ -9,6 +9,7 @@ import {
   PR_FIELDS,
   pullRequestFetcher,
   pullRequestSymbol,
+  truncateEnd,
 } from "../../lib/pull-request.js"
 
 const POLL_MS = 30_000
@@ -33,6 +34,7 @@ function PullRequestsView(props: {
   const [history, setHistory] = createSignal<string[]>([])
   const [pullRequests, setPullRequests] = createSignal<any[]>([])
   const [hovered, setHovered] = createSignal<string>()
+  const [titleWidth, setTitleWidth] = createSignal<number>()
   const [view, updateView] = props.context.storage.store("view", { initial: { open: true } })
 
   createEffect(() => {
@@ -94,16 +96,18 @@ function PullRequestsView(props: {
                 onMouseOut={() => setHovered(undefined)}
                 onMouseUp={() => openUrl(pr.url)}
               >
-                <text
-                  fg={hovered() === pr.url ? theme.text.base : theme.text.muted}
-                  wrapMode="none"
-                  truncate
+                <box
                   flexGrow={1}
                   flexShrink={1}
                   minWidth={0}
+                  onSizeChange={function (this: any) {
+                    setTitleWidth(this.width)
+                  }}
                 >
-                  {`#${pr.number} ${pr.title}`}
-                </text>
+                  <text fg={hovered() === pr.url ? theme.text.base : theme.text.muted} wrapMode="none">
+                    {truncateEnd(`#${pr.number} ${pr.title}`, titleWidth())}
+                  </text>
+                </box>
                 <text flexShrink={0} fg={hovered() === pr.url ? theme.text.base : theme.text.muted}>
                   {pullRequestSymbol(pr.kind)}
                 </text>

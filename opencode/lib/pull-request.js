@@ -61,6 +61,12 @@ export function parsePullRequest(stdout) {
   return { number: data.number, title: data.title, url: data.url, kind };
 }
 
+export function truncateEnd(text, width) {
+  if (width === undefined || text.length <= width) return text;
+  if (width <= 0) return "";
+  return `${text.slice(0, width - 1)}…`;
+}
+
 export function pullRequestSymbol(kind) {
   return SYMBOLS[kind];
 }
