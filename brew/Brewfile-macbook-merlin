@@ -21,6 +21,7 @@ tap "localsend/localsend", trusted: true
 tap "mgmeyers/pdfannots2json", trusted: true
 tap "morantron/tmux-fingers", trusted: true
 tap "nikitabobko/tap", trusted: true
+tap "omlahore/tap"
 tap "osx-cross/arm", trusted: true
 tap "osx-cross/avr", trusted: true
 tap "peak/tap", trusted: true
@@ -141,7 +142,7 @@ brew "libpq", link: true
 brew "harlequin"
 # Convert source code to formatted text with syntax highlighting
 brew "highlight"
-# Log viewer that translates JSON and logfmt into human-readable representation
+# Fast and powerful log viewer and processor
 brew "hl"
 # Improved top (interactive process viewer)
 brew "htop"
@@ -291,6 +292,8 @@ brew "joshmedeski/sesh/sesh"
 brew "mgmeyers/pdfannots2json/pdfannots2json"
 # mouseless terminal interaction
 brew "morantron/tmux-fingers/tmux-fingers"
+# Debloat macOS: turn off Apple Intelligence, analytics, ads and pop-ups
+brew "omlahore/tap/removemacai", trusted: true
 # Parallel S3 and local filesystem execution tool
 brew "peak/tap/s5cmd"
 # Quantum Mechanical Keyboard (QMK) Firmware
@@ -372,6 +375,8 @@ cask "shottr"
 cask "slack"
 # Stand reminder and break screen for macOS
 cask "yagizdo/tap/standlock", trusted: true
+# System monitor for the menu bar
+cask "stats"
 # Video game digital distribution service
 cask "steam"
 # Quicklook extension for source files
@@ -380,8 +385,6 @@ cask "syntax-highlight"
 cask "thaw"
 # To-do list
 cask "todoist-app"
-# Speech-to-text and AI text processing
-cask "typewhisper"
 # Menu bar app for USB-C cable diagnostics
 cask "whatcable"
 # Menu bar utility for viewing and switching Spaces
