@@ -32,6 +32,14 @@
     },
     "explore": {
       "model": "anthropic/claude-sonnet-5-5"
+    },
+    "spec and plan writer": {
+      "description": "Writes specs and plans.",
+      "model": {
+        "providerID": "anthropic",
+        "model": "claude-opus-5-5",
+        "variant": "xhigh"
+      }
     }
   },
   "mcp": {
