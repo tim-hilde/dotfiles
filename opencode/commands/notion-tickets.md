@@ -1,7 +1,6 @@
 ---
 description: Under-Review-Tickets aus dem Notion-ZIP-Export verarbeiten und als HTML mit E-Mail-Vorlagen ausgeben
-model: opencode-go/deepseek-v4.1-flash
-reasoningEffort: max
+model: opencode-go/deepseek-v4.1-flash#max
 agent: build
 ---
 

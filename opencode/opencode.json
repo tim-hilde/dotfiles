@@ -1,6 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "plugin": [
+  "plugins": [
     "@cortexkit/opencode-anthropic-auth@2.0.3",
     "@mohak34/opencode-notifier@1.1.1",
     "superpowers@git+https://github.com/obra/superpowers.git#v7.0.1",
@@ -9,21 +9,33 @@
     "@cortexkit/opencode-magic-context@0.49.12",
     "~/code/opencode-keepalive"
   ],
-  "subagent_depth": 2,
   "experimental": {
-    "disable_paste_summary": true,
     "subagent_depth": 2
   },
-  "permission": {
-    "external_directory": {
-      "~/Zettelkasten/_career-log/**": "allow",
-      "~/code/Merlin/**": "allow",
-      "/tmp/**": "allow"
+  "permissions": [
+    {
+      "action": "external_directory",
+      "resource": "*",
+      "effect": "ask"
+    },
+    {
+      "action": "external_directory",
+      "resource": "~/Zettelkasten/_career-log/*",
+      "effect": "allow"
+    },
+    {
+      "action": "external_directory",
+      "resource": "~/code/Merlin/*",
+      "effect": "allow"
+    },
+    {
+      "action": "external_directory",
+      "resource": "/tmp/*",
+      "effect": "allow"
     }
-  },
+  ],
   "compaction": {
-    "auto": false,
-    "prune": false
+    "auto": false
   },
   "warming": true,
   "agents": {
@@ -35,89 +47,88 @@
     }
   },
   "mcp": {
-    "ris": {
-      "type": "remote",
-      "url": "http://127.0.0.1:8765/mcp",
-      "enabled": false,
-      "oauth": false,
-      "headers": {
-        "Authorization": "Bearer {env:RIS_BEARER}"
+    "servers": {
+      "ris": {
+        "type": "remote",
+        "url": "http://127.0.0.1:8765/mcp",
+        "oauth": false,
+        "headers": {
+          "Authorization": "Bearer {env:RIS_BEARER}"
+        },
+        "disabled": true
+      },
+      "livekit-docs": {
+        "type": "remote",
+        "url": "https://docs.livekit.io/mcp"
+      },
+      "langfuse-docs": {
+        "type": "remote",
+        "url": "https://langfuse.com/api/mcp",
+        "disabled": true
+      },
+      "notion": {
+        "type": "remote",
+        "url": "https://mcp.notion.com/mcp",
+        "disabled": true
+      },
+      "open-design": {
+        "type": "local",
+        "command": [
+          "/Applications/Open Design.app/Contents/Frameworks/Open Design Helper.app/Contents/MacOS/Open Design Helper",
+          "/Applications/Open Design.app/Contents/Resources/app/prebundled/daemon/daemon-cli.mjs",
+          "mcp"
+        ],
+        "environment": {
+          "OD_DATA_DIR": "/Users/tim/Library/Application Support/Open Design/namespaces/release-stable/data",
+          "OD_SIDECAR_IPC_PATH": "/tmp/open-design/ipc/release-stable/daemon.sock",
+          "ELECTRON_RUN_AS_NODE": "1"
+        },
+        "disabled": true
+      },
+      "chrome-devtools": {
+        "type": "local",
+        "command": [
+          "npx",
+          "-y",
+          "chrome-devtools-mcp@latest"
+        ],
+        "disabled": true
+      },
+      "firefox-devtools": {
+        "type": "local",
+        "command": [
+          "npx",
+          "-y",
+          "@mozilla/firefox-devtools-mcp@latest",
+          "--viewport",
+          "1280x720",
+          "--enable-script"
+        ],
+        "environment": {
+          "START_URL": "about:blank"
+        },
+        "disabled": true
+      },
+      "exa": {
+        "type": "remote",
+        "url": "https://mcp.exa.ai/mcp"
+      },
+      "context7": {
+        "type": "remote",
+        "url": "https://mcp.context7.com/mcp"
+      },
+      "axiom": {
+        "type": "remote",
+        "url": "https://mcp.axiom.co/mcp",
+        "disabled": true
       }
-    },
-    "livekit-docs": {
-      "type": "remote",
-      "url": "https://docs.livekit.io/mcp",
-      "enabled": true
-    },
-    "langfuse-docs": {
-      "type": "remote",
-      "url": "https://langfuse.com/api/mcp",
-      "enabled": false
-    },
-    "notion": {
-      "type": "remote",
-      "url": "https://mcp.notion.com/mcp",
-      "enabled": false
-    },
-    "open-design": {
-      "type": "local",
-      "command": [
-        "/Applications/Open Design.app/Contents/Frameworks/Open Design Helper.app/Contents/MacOS/Open Design Helper",
-        "/Applications/Open Design.app/Contents/Resources/app/prebundled/daemon/daemon-cli.mjs",
-        "mcp"
-      ],
-      "environment": {
-        "OD_DATA_DIR": "/Users/tim/Library/Application Support/Open Design/namespaces/release-stable/data",
-        "OD_SIDECAR_IPC_PATH": "/tmp/open-design/ipc/release-stable/daemon.sock",
-        "ELECTRON_RUN_AS_NODE": "1"
-      },
-      "enabled": false
-    },
-    "chrome-devtools": {
-      "type": "local",
-      "command": [
-        "npx",
-        "-y",
-        "chrome-devtools-mcp@latest"
-      ],
-      "enabled": false
-    },
-    "firefox-devtools": {
-      "type": "local",
-      "command": [
-        "npx",
-        "-y",
-        "@mozilla/firefox-devtools-mcp@latest",
-        "--viewport",
-        "1280x720",
-        "--enable-script"
-      ],
-      "environment": {
-        "START_URL": "about:blank"
-      },
-      "enabled": false
-    },
-    "exa": {
-      "type": "remote",
-      "url": "https://mcp.exa.ai/mcp",
-      "enabled": true
-    },
-    "context7": {
-      "type": "remote",
-      "url": "https://mcp.context7.com/mcp",
-      "enabled": true
-    },
-    "axiom": {
-      "type": "remote",
-      "url": "https://mcp.axiom.co/mcp",
-      "enabled": false
     }
   },
-  "provider": {
+  "providers": {
     "lmstudio": {
-      "npm": "@ai-sdk/openai-compatible",
+      "package": "aisdk:@ai-sdk/openai-compatible",
       "name": "LM Studio (local)",
-      "options": {
+      "settings": {
         "baseURL": "http://127.0.0.1:1234/v1"
       },
       "models": {

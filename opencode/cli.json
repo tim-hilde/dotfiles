@@ -46,6 +46,10 @@
     "mono": false,
     "work_spinner": "block-soft-sweep",
     "splash": "show",
-    "footer": "show"
+    "footer": "show",
+    "thinking": "hide",
+    "tools": "hide",
+    "shell_output": "hide",
+    "turn_summary": "show"
   }
 }
