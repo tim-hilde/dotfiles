@@ -1,0 +1,22 @@
+// OpenCode Quota server settings, converted on 2026-10-28 from:
+//   /Users/tim/.config/opencode/opencode-quota/quota-toast.json
+// The old file was left in place; OpenCode Quota no longer reads it.
+// Only the settings you chose there are here; a missing key uses its default.
+// Every setting and its default: https://github.com/slkiser/opencode-quota/blob/main/docs/readme/configuration.md
+{
+  "version": 6,
+  "sidebar": {
+    "show": true,
+    "sessionTokens": false
+  },
+  "toast": {
+    "show": false,
+    "sessionTokens": false
+  },
+  "words": {
+    "percent": "used"
+  },
+  "providers": {
+    "off": []
+  }
+}
