@@ -9,6 +9,9 @@
     "show": true,
     "sessionTokens": false
   },
+  "layout": {
+  "evenUse": false
+  },
   "toast": {
     "show": false,
     "sessionTokens": false
