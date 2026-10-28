@@ -27,6 +27,7 @@ tap "osx-cross/avr", trusted: true
 tap "peak/tap", trusted: true
 tap "qmk/qmk", trusted: true
 tap "shihanng/gig", trusted: true
+tap "stackitcloud/tap"
 tap "supabase/tap", trusted: true
 tap "tw93/tap", trusted: true
 tap "typewhisper/tap", trusted: true
@@ -373,6 +374,8 @@ cask "qmk-toolbox"
 cask "shottr"
 # Team communication and collaboration software
 cask "slack"
+# A command-line interface to manage STACKIT resources.
+cask "stackitcloud/tap/stackit", trusted: true
 # Stand reminder and break screen for macOS
 cask "yagizdo/tap/standlock", trusted: true
 # System monitor for the menu bar
