@@ -74,8 +74,8 @@ function pi() {
 # Only an untracked .infisical.yaml and a modified next-env.d.ts may remain in them.
 function wt-prune() {
   local root=${${1:-$HOME/code/merlin/worktrees}:A}
-  local gitfile wt rel branch dirty head main slug out line pr answer i
-  local -a rels mains branches prs
+  local gitfile wt rel branch dirty head main slug out line pr answer i err parent
+  local -a rels mains branches prs entries
 
   for gitfile in $root/{*,*/*,*/*/*}/.git(N.); do
     [[ $(<$gitfile) == *"/.git/worktrees/"* ]] || continue
@@ -119,6 +119,26 @@ function wt-prune() {
     print "Abgebrochen, nichts gelöscht."
     return 0
   fi
+
+  for (( i = 1; i <= $#rels; i++ )); do
+    wt=$root/${rels[i]}
+    if ! err=$(git -C ${mains[i]} worktree remove --force $wt 2>&1); then
+      print -u2 "Fehler: ${rels[i]}: $err"
+      continue
+    fi
+    git -C ${mains[i]} branch -D ${branches[i]} >/dev/null
+    git -C ${mains[i]} worktree prune
+    print "gelöscht: ${rels[i]}"
+
+    parent=${wt:h}
+    while [[ $parent != $root ]]; do
+      entries=($parent/*(DN))
+      (( ${#${entries:#*/.DS_Store}} )) && break
+      rm -f $parent/.DS_Store
+      rmdir $parent || break
+      parent=${parent:h}
+    done
+  done
 }
 
 alias tt=taskwarrior-tui

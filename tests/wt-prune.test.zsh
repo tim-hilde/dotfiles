@@ -104,6 +104,20 @@ out=$(print y | wt-prune $tmp/empty-root)
 assert_contains "$out" "Keine sicher löschbaren Worktrees."
 assert_not_contains "$out" "Abgebrochen"
 
+# test_y_deletes_safe_worktrees_and_branches
+out=$(print y | wt-prune $tmp/wts 2>$tmp/err)
+for p in $safe; assert_contains "$out" "gelöscht: $p"
+for p in $safe; assert_true "[[ ! -e $tmp/wts/$p ]]"
+for b in feat/merged-clean fix/merged-infisical fix/merged-nextenv feat/combo docs/only-merged; do
+  assert_true "! git -C $tmp/origin-a show-ref --verify --quiet refs/heads/$b"
+done
+for p in $kept; assert_true "[[ -d $tmp/wts/$p ]]"
+assert_true "git -C $tmp/origin-a show-ref --verify --quiet refs/heads/feat/head-differs"
+assert_true "[[ ! -e $tmp/wts/docs ]]"
+assert_true "[[ ! -e $tmp/wts/feat/combo ]]"
+assert_true "[[ -d $tmp/wts/feat ]]"
+assert_true "(( \$(git -C $tmp/origin-a worktree list | wc -l) == 6 ))"
+
 if (( fails )); then
   print "$fails assertion(s) failed"
   exit 1
