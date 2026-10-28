@@ -31,6 +31,8 @@ macos-auto-secure-input = true
 macos-secure-input-indication = true
 macos-window-shadow = false
 
+drag-handle=never
+
 # keybindings
 # needed for snacks picker
 keybind = option+shift+h=esc:H
