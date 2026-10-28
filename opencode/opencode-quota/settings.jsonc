@@ -17,6 +17,6 @@
     "percent": "used"
   },
   "providers": {
-    "off": []
+    "off": ["opencode-zen"]
   }
 }

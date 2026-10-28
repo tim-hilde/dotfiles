@@ -13,5 +13,23 @@
       "dreamer": false,
       "stats": false
     }
+  },
+   "anthropic-auth": {
+    "forceToTop": false,
+    "order": 160,
+    "startCollapsed": false,
+    "rememberCollapsed": true,
+    "pollMs": 1500,
+    "refreshDebounceMs": 200,
+    "header": { "label": "CLAUDE", "showVersion": true },
+    "sections": {
+      "quota": false,
+      "fallbackAccounts": false,
+      "routing": false,
+      "cache": false,
+      "health": false,
+      "pacing": false
+    },
+    "collapsed": false
   }
 }
