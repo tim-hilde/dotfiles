@@ -70,4 +70,55 @@ function pi() {
     command pi --plan "$@"
 }
 
+# List worktrees whose merged PR head equals the local HEAD and delete them after one prompt.
+# Only an untracked .infisical.yaml and a modified next-env.d.ts may remain in them.
+function wt-prune() {
+  local root=${${1:-$HOME/code/merlin/worktrees}:A}
+  local gitfile wt rel branch dirty head main slug out line pr answer i
+  local -a rels mains branches prs
+
+  for gitfile in $root/{*,*/*,*/*/*}/.git(N.); do
+    [[ $(<$gitfile) == *"/.git/worktrees/"* ]] || continue
+    wt=${gitfile:h}
+    rel=${wt#$root/}
+    branch=$(git -C $wt branch --show-current)
+    [[ -n $branch ]] || continue
+    dirty=$(git -C $wt status --porcelain | grep -vxF -e '?? .infisical.yaml' -e ' M next-env.d.ts')
+    [[ -z $dirty ]] || continue
+
+    head=$(git -C $wt rev-parse HEAD)
+    main=$(git -C $wt rev-parse --path-format=absolute --git-common-dir)
+    slug=$(git -C $wt remote get-url origin)
+    slug=${${slug%.git}#*github.com[:/]}
+    if ! out=$(gh pr list --repo $slug --head $branch --state merged \
+        --json number,headRefOid --jq '.[] | "\(.number) \(.headRefOid)"' </dev/null 2>/dev/null); then
+      print -u2 "gh-Fehler bei $rel, übersprungen"
+      continue
+    fi
+    pr=""
+    for line in ${(f)out}; do
+      [[ ${line#* } == $head ]] && pr=${line%% *}
+    done
+    [[ -n $pr ]] || continue
+
+    rels+=$rel
+    mains+=${main:h}
+    branches+=$branch
+    prs+=$pr
+  done
+
+  if (( ! $#rels )); then
+    print "Keine sicher löschbaren Worktrees."
+    return 0
+  fi
+  for (( i = 1; i <= $#rels; i++ )); do
+    print "  ${rels[i]}  (${mains[i]:t}, PR #${prs[i]})"
+  done
+  read "answer?Alle $#rels löschen? [y/N] "
+  if [[ $answer != [yY] ]]; then
+    print "Abgebrochen, nichts gelöscht."
+    return 0
+  fi
+}
+
 alias tt=taskwarrior-tui
