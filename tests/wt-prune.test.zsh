@@ -76,6 +76,8 @@ mkwt detached --detach 0
 mkwt feat/combo/repo-a feat/combo 0;               merged feat/combo/repo-a feat/combo 16
 mkwt chore/gh-fails chore/gh-fails 0;              print "chore/gh-fails FAIL" >> $FAKE_GH_MAP
 mkwt docs/only-merged docs/only-merged 0;          merged docs/only-merged docs/only-merged 17
+mkwt fix/broken-index fix/broken-index 1;          merged fix/broken-index fix/broken-index 18
+print garbage > $(git -C $wts/fix/broken-index rev-parse --path-format=absolute --git-path index)
 
 touch $wts/fix/merged-infisical/.infisical.yaml
 print "// regenerated" >> $wts/fix/merged-nextenv/next-env.d.ts
@@ -83,7 +85,7 @@ touch $wts/fix/merged-dirty/notes.md
 touch $wts/docs/.DS_Store
 
 safe=(feat/merged-clean fix/merged-infisical fix/merged-nextenv feat/combo/repo-a docs/only-merged)
-kept=(fix/merged-dirty feat/head-differs feat/no-pr detached chore/gh-fails)
+kept=(fix/merged-dirty feat/head-differs feat/no-pr detached chore/gh-fails fix/broken-index)
 
 # test_lists_safe_and_cancels_on_n
 out=$(print n | wt-prune $tmp/wts 2>$tmp/err)
@@ -91,6 +93,7 @@ for p in $safe; assert_contains "$out" "$p"
 assert_contains "$out" "  feat/merged-clean  (origin-a, PR #11)"
 for p in $kept; assert_not_contains "$out" "$p"
 assert_contains "$(<$tmp/err)" "gh-Fehler bei chore/gh-fails, übersprungen"
+assert_contains "$(<$tmp/err)" "git-Fehler bei fix/broken-index, übersprungen"
 assert_contains "$out" "Abgebrochen, nichts gelöscht."
 for p in $safe $kept; assert_true "[[ -d $tmp/wts/$p ]]"
 
@@ -116,7 +119,7 @@ assert_true "git -C $tmp/origin-a show-ref --verify --quiet refs/heads/feat/head
 assert_true "[[ ! -e $tmp/wts/docs ]]"
 assert_true "[[ ! -e $tmp/wts/feat/combo ]]"
 assert_true "[[ -d $tmp/wts/feat ]]"
-assert_true "(( \$(git -C $tmp/origin-a worktree list | wc -l) == 6 ))"
+assert_true "(( \$(git -C $tmp/origin-a worktree list | wc -l) == 7 ))"
 
 if (( fails )); then
   print "$fails assertion(s) failed"

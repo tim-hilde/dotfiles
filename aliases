@@ -83,7 +83,11 @@ function wt-prune() {
     rel=${wt#$root/}
     branch=$(git -C $wt branch --show-current)
     [[ -n $branch ]] || continue
-    dirty=$(git -C $wt status --porcelain | grep -vxF -e '?? .infisical.yaml' -e ' M next-env.d.ts')
+    if ! dirty=$(git -C $wt status --porcelain 2>/dev/null); then
+      print -u2 "git-Fehler bei $rel, übersprungen"
+      continue
+    fi
+    dirty=$(print -r -- $dirty | grep -vxF -e '?? .infisical.yaml' -e ' M next-env.d.ts')
     [[ -z $dirty ]] || continue
 
     head=$(git -C $wt rev-parse HEAD)
