@@ -2,3 +2,7 @@
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
 	ignore = dirty
+[submodule "opencode/skills/obsidian-skills"]
+	path = opencode/skills/obsidian-skills
+	url = https://github.com/kepano/obsidian-skills.git
+	ignore = dirty
