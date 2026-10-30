@@ -66,7 +66,11 @@ merged() {
   print "$2 $3 $(git -C $wts/$1 rev-parse ${4:-HEAD})" >> $FAKE_GH_MAP
 }
 
-mkwt feat/merged-clean feat/merged-clean 1;        merged feat/merged-clean feat/merged-clean 11
+mkwt feat/merged-clean feat/merged-clean 1
+dd if=/dev/zero of=$wts/feat/merged-clean/big.bin bs=1024 count=2048 2>/dev/null
+git -C $wts/feat/merged-clean add big.bin
+git -C $wts/feat/merged-clean commit -qm big
+merged feat/merged-clean feat/merged-clean 11
 mkwt fix/merged-infisical fix/merged-infisical 1;  merged fix/merged-infisical fix/merged-infisical 12
 mkwt fix/merged-nextenv fix/merged-nextenv 1;      merged fix/merged-nextenv fix/merged-nextenv 13
 mkwt fix/merged-dirty fix/merged-dirty 1;          merged fix/merged-dirty fix/merged-dirty 14
@@ -84,13 +88,31 @@ print "// regenerated" >> $wts/fix/merged-nextenv/next-env.d.ts
 touch $wts/fix/merged-dirty/notes.md
 touch $wts/docs/.DS_Store
 
+kb() {
+  local s=$(du -sk $wts/$1)
+  print ${s%%[[:space:]]*}
+}
+
+# test_size_formats_kilo_mega_giga
+assert_true '[[ $(_wt_prune_size 20) == 20K ]]'
+assert_true '[[ $(_wt_prune_size 1023) == 1023K ]]'
+assert_true '[[ $(_wt_prune_size 1024) == 1.0M ]]'
+assert_true '[[ $(_wt_prune_size 1536) == 1.5M ]]'
+assert_true '[[ $(_wt_prune_size 1048576) == 1.0G ]]'
+assert_true '[[ $(_wt_prune_size 3460300) == 3.3G ]]'
+assert_true '[[ $(LC_ALL=de_DE.UTF-8 _wt_prune_size 1536) == 1.5M ]]'
+
 safe=(feat/merged-clean fix/merged-infisical fix/merged-nextenv feat/combo/repo-a docs/only-merged)
 kept=(fix/merged-dirty feat/head-differs feat/no-pr detached chore/gh-fails fix/broken-index)
 
 # test_lists_safe_and_cancels_on_n
 out=$(print n | wt-prune $tmp/wts 2>$tmp/err)
 for p in $safe; assert_contains "$out" "$p"
-assert_contains "$out" "  feat/merged-clean  (origin-a, PR #11)"
+assert_contains "$out" "  feat/merged-clean  (origin-a, PR #11, 2.0M)"
+assert_contains "$out" "  docs/only-merged  (origin-a, PR #17, $(kb docs/only-merged)K)"
+total_kb=0
+for p in $safe; (( total_kb += $(kb $p) ))
+assert_contains "$out" "Alle 5 löschen (insgesamt $(_wt_prune_size $total_kb))? [y/N] "
 for p in $kept; assert_not_contains "$out" "$p"
 assert_contains "$(<$tmp/err)" "gh-Fehler bei chore/gh-fails, übersprungen"
 assert_contains "$(<$tmp/err)" "git-Fehler bei fix/broken-index, übersprungen"
