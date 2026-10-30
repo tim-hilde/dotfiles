@@ -18,7 +18,7 @@
     "-opencode.prompt.footer",
     "-cortexkit.anthropic-auth",
     "@slkiser/opencode-quota@6.0.0",
-    "@cortexkit/opencode-magic-context@0.49.30",
+    "@cortexkit/opencode-magic-context@0.49.31",
     "./tui-plugins/mcp-sidebar",
     "./tui-plugins/pr-sidebar"
   ],
