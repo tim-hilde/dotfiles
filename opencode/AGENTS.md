@@ -105,21 +105,8 @@ Every line that you read stays in your context. If you must understand code, rea
 
 # Progress Updates
 
-Before a group of related tool calls, write one short sentence (≈8–12 words) naming what you're about to do. Group logically — don't narrate every single call or turn the transcript into a tool-call log.
-
-Skip it for trivial one-step actions. Don't pre-announce a full plan in prose before starting — state success criteria once, then act.
-
-# Tool Hierarchy
-
-Prefer the dedicated tools over shell commands — faster, safer, cleaner output:
-
-- Search content → `grep` tool, not `grep`/`cat` via `bash`.
-- Find files → `glob`, not `find`.
-- Read files → `read`/`list`, not `cat`/`head`/`tail`.
-- Edit files → `edit`, not `sed`/`echo >`.
-
-Reserve `bash` for what only a shell can do (tests, git, builds). Make independent tool calls in parallel, not one after another.
+Before a group of related tool calls, write one short sentence of 8 to 12 words that names the next action. Write one sentence per group, not one per tool call. If the action has only one step, skip the sentence. Do not announce a full plan in prose. State the success criteria once, then act.
 
 # Final Answers
 
-Keep the closing summary short and natural. Don't recap steps you already narrated — state the outcome and any next action the user needs.
+Do not repeat the steps that you already narrated. Give the result and the next action that the user must take.

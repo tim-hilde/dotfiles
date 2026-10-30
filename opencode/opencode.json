@@ -62,6 +62,32 @@
         },
         "disabled": true
       },
+      "grafana": {
+        "disabled": true,
+        "type": "local",
+        "command": [
+          "env",
+          "-u",
+          "LOG_LEVEL",
+          "infisical",
+          "run",
+          "--env=prod",
+          "--silent",
+          "--path=/merlin-grafana/tim",
+          "--projectId=a5658b56-4e33-4ae0-b21c-a412ff82a370",
+          "--",
+          "uvx",
+          "mcp-grafana@2.1.1",
+          "--disable-write",
+          "--usage-stats=disabled",
+          "--loki-guardrail-mode=enforce",
+          "--loki-guardrail-max-bytes=2147483648",
+          "--max-loki-log-limit=1000"
+        ],
+        "environment": {
+          "GRAFANA_URL": "https://grafana.hallomerlin.de"
+        }
+      },
       "livekit-docs": {
         "type": "remote",
         "url": "https://docs.livekit.io/mcp"
