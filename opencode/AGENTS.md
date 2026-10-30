@@ -30,9 +30,10 @@ Do not restate the code, narrate decisions, or write changelog comments ("switch
 
 The `using-git-worktrees` skill owns the worktree workflow. These conventions apply on top of it:
 
-- Create worktrees with the native `worktree_create` tool. The tool puts them under `~/.local/share/opencode/worktree/` and starts them on a detached HEAD.
-- Give the worktree the name of its branch: `<type>/<kebab-slug>`, with `<type>` one of `feat`, `fix`, `chore`, `refactor`.
-- In the new worktree, run `git fetch origin`, then create the branch from its base with `git switch -c <type>/<kebab-slug> origin/<base>`. The base is `main`, `staging`, or `dev`. If the task needs another base (`release/*`, another open feature branch), ask first.
+- Location: `../worktrees/<branch-name>/`, next to the repository. Never put a worktree inside the repository (for example `.worktrees/`), because globs, linters, and CI pick it up.
+- Create worktrees with `git worktree add`. Do not use the native `worktree_create` tool, because it ignores this location.
+- Branch name: `<type>/<kebab-slug>`, with `<type>` one of `feat`, `fix`, `chore`, `refactor`.
+- Branch off `origin/main`, `staging`, or `dev`. If the task needs another base (`release/*`, another open feature branch), ask first.
 
 # Debugging
 
