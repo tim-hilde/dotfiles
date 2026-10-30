@@ -101,6 +101,17 @@ Transform tasks into verifiable goals:
 
 Strong, observable success criteria let you loop independently. Weak criteria ("make it work") require constant clarification. The `writing-plans` skill owns plan structure — don't reinvent it here.
 
+# Delegating to Subagents
+
+**Decompose so that every rule has one owner.**
+
+- Before you split work, list every rule that touches more than one part (rounding, naming, error format, shared constants, API shape). Decide each rule yourself. Then write it into every affected brief, or give all affected parts to one subagent.
+- Give each subagent a disjoint set of files and a self-contained brief: goal, files it owns, conventions it must follow, and how it proves success.
+- If several subagents need the same facts, write them once to a file and pass the path. Do not repeat them in every prompt. If the steps already hand files to each other, add nothing.
+- Start only as many parallel subagents as there are independent parts. Extra subagents without a part of their own only add coordination traffic.
+- Never name hidden tests, reference solutions, or answer keys in a brief. Keep them outside the paths a subagent can read.
+- After the parts come back, check the seams yourself: read the interfaces between the parts and run the full test suite. Do not accept "the subagents agreed" as proof.
+
 # Read to Edit, Code to Analyze
 
 **Reading a file loads every byte into context. Only read what you will edit.**
