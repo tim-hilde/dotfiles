@@ -18,109 +18,90 @@ THE REPLY (every chat reply, in every mode). Answer in prose: no headers, no bul
 
 # Commit messages
 
-Commit messages should always be English.
-
-# Skills
-
-**Skills aren't optional. Before creating any file, writing any code, or running any tool, check `<available_skills>` and read every plausibly relevant SKILL.md first.**
-
-The check is unconditional. Don't first decide whether a task "needs" a skill — the skills themselves define what they cover. Multiple skills can apply to one task; read all that might fit, not just the most obvious one.
-
-- Read the skill before acting, even if the format feels familiar. Skills encode environment-specific constraints (available libraries, output paths, rendering quirks) that aren't in training data.
-- User-uploaded skills take priority — they're almost certainly relevant to the current request.
-- Skill-Mapping isn't always obvious from the name: a "create a chart" task may need the data-analysis skill, a "write a report" task the docx skill, a "build a component" task the frontend-design skill.
+Write commit messages in English, in the Conventional Commits format: `<type>(<scope>): <summary>`, for example `fix(tmux): keep pane state after restart`. The scope is optional. Use one of these types: `feat`, `fix`, `refactor`, `perf`, `docs`, `test`, `build`, `ci`, `chore`, `style`, `revert`. If a change breaks a public interface, write `!` after the type and add a `BREAKING CHANGE:` footer.
 
 # Comments
 
-Default to no comments — let naming and structure carry the meaning. Add one only when the code can't: to explain *why* something non-obvious is done, warn about a footgun, or link to external context (bug, spec, ticket).
+Default to no comments. Names and structure carry the meaning. Add a comment only when the code cannot: to explain why the code does something non-obvious, to warn about a trap, or to link to external context (bug, specification, ticket).
 
-Don't restate code, narrate decisions, or leave changelog comments ("switched from X to Y").
+Do not restate the code, narrate decisions, or write changelog comments ("switched from X to Y").
 
 # Worktrees
 
-The `using-git-worktrees` skill owns the worktree workflow. Project-specific conventions on top of it:
+The `using-git-worktrees` skill owns the worktree workflow. These conventions apply on top of it:
 
-- Location: `../worktrees/<branch-name>/`, sibling of the repo — never inside it (globs/linters/CI pick it up).
-- Branch name: `<type>/<kebab-slug>`, `<type>` ∈ `feat | fix | chore | refactor`.
-- Branch off `origin/main`, `staging`, or `dev` — ask before branching off anything else (`release/*`, another open feature branch).
+- Create worktrees with the native `worktree_create` tool. The tool puts them under `~/.local/share/opencode/worktree/` and starts them on a detached HEAD.
+- Give the worktree the name of its branch: `<type>/<kebab-slug>`, with `<type>` one of `feat`, `fix`, `chore`, `refactor`.
+- In the new worktree, run `git fetch origin`, then create the branch from its base with `git switch -c <type>/<kebab-slug> origin/<base>`. The base is `main`, `staging`, or `dev`. If the task needs another base (`release/*`, another open feature branch), ask first.
 
 # Debugging
 
-- Vor JEDEM Bugfix: systematic-debugging-Skill. Erst Call-Chain, Logs und Root-Cause mappen — dann Code anfassen. Keine Fixes vor der Diagnose.
+Before every bug fix, use the `systematic-debugging` skill. Map the call chain, the logs, and the root cause first, then change the code. Do not write a fix before the diagnosis.
 
 # Think Before Coding
 
-**Don't assume. Don't hide confusion. Surface tradeoffs.**
+Do not assume. Do not hide confusion. Name the tradeoffs.
 
-Before implementing:
+Before you implement:
 
-- State your assumptions explicitly. If uncertain, ask.
-- If multiple interpretations exist, present them - don't pick silently.
-- If a simpler approach exists, say so. Push back when warranted.
-- If something is unclear, stop. Name what's confusing. Ask.
+- State your assumptions. If you are not sure, ask.
+- If a request has more than one meaning, show the meanings. Do not pick one silently.
+- If a simpler approach exists, say so. If you disagree with the request, say so and give the reason.
+- If something is unclear, stop, name what is unclear, and ask.
+- When you ask, give the options and mark the one that you recommend.
 
 # Simplicity First
 
-**Minimum code that solves the problem. Nothing speculative.**
+Write the minimum code that solves the problem. Add nothing speculative.
 
-- No features beyond what was asked.
-- No abstractions for single-use code.
-- No "flexibility" or "configurability" that wasn't requested.
-- No error handling for impossible scenarios.
-- If you write 200 lines and it could be 50, rewrite it.
+- No features beyond the request.
+- No abstractions for code with one use.
+- No flexibility or configuration that nobody requested.
+- No error handling for impossible cases.
+- If you write 200 lines and 50 lines can do the job, rewrite it.
 
-Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
+Ask yourself: "Will a senior engineer call this overcomplicated?" If yes, simplify.
 
 # Surgical Changes
 
-**Touch only what you must. Clean up only your own mess.**
+Change only what the task needs. Clean up only the mess that you made.
 
-When editing existing code:
+When you edit existing code:
 
-- Don't "improve" adjacent code, comments, or formatting.
-- Don't refactor things that aren't broken.
-- Match existing style, even if you'd do it differently.
-- If you notice unrelated dead code, mention it - don't delete it.
+- Do not improve adjacent code, comments, or formatting.
+- Do not refactor code that works.
+- Match the existing style, even if you prefer a different one.
+- If you find unrelated dead code, mention it. Do not delete it.
 
-When your changes create orphans:
+If your changes leave imports, variables, or functions unused, remove them. Do not remove dead code that existed before, unless the user asks.
 
-- Remove imports/variables/functions that YOUR changes made unused.
-- Don't remove pre-existing dead code unless asked.
-
-The test: Every changed line should trace directly to the user's request.
+The test: every changed line traces directly to the request.
 
 # Goal-Driven Execution
 
-**Define success criteria. Loop until verified.**
+Define success criteria. Work in a loop until you can show that the criteria are met.
 
-Transform tasks into verifiable goals:
+Turn each task into a goal that you can test:
 
-- "Add validation" → "Write tests for invalid inputs, then make them pass"
-- "Fix the bug" → "Write a test that reproduces it, then make it pass"
-- "Refactor X" → "Ensure tests pass before and after"
+- "Add validation" → "Write tests for invalid inputs, then make them pass."
+- "Fix the bug" → "Write a test that reproduces the bug, then make it pass."
+- "Refactor X" → "Make sure that the tests pass before and after."
 
-Strong, observable success criteria let you loop independently. Weak criteria ("make it work") require constant clarification. The `writing-plans` skill owns plan structure — don't reinvent it here.
+Clear, observable criteria let you work in a loop without help. Weak criteria ("make it work") need constant clarification. For the structure of a plan, use the `writing-plans` skill.
 
 # Delegating to Subagents
 
-**Decompose so that every rule has one owner.**
+Decompose so that every rule has one owner.
 
 - Before you split work, list every rule that touches more than one part (rounding, naming, error format, shared constants, API shape). Decide each rule yourself. Then write it into every affected brief, or give all affected parts to one subagent.
 - Give each subagent a disjoint set of files and a self-contained brief: goal, files it owns, conventions it must follow, and how it proves success.
 - If several subagents need the same facts, write them once to a file and pass the path. Do not repeat them in every prompt. If the steps already hand files to each other, add nothing.
 - Start only as many parallel subagents as there are independent parts. Extra subagents without a part of their own only add coordination traffic.
-- Never name hidden tests, reference solutions, or answer keys in a brief. Keep them outside the paths a subagent can read.
-- After the parts come back, check the seams yourself: read the interfaces between the parts and run the full test suite. Do not accept "the subagents agreed" as proof.
+- After the parts come back, make sure that the seams fit: read the interfaces between the parts and run the full test suite. Do not accept "the subagents agreed" as proof.
 
-# Read to Edit, Code to Analyze
+# Large Files
 
-**Reading a file loads every byte into context. Only read what you will edit.**
-
-- Reading to **edit** → use `Read`. The edit tool needs the exact bytes in context to match against.
-- Reading to **analyze, count, search, summarize, or extract** → run code over it (e.g. `ctx_execute_file` if available, otherwise a sandboxed script). Print only the derived answer; the raw bytes stay out of context.
-- **Multiple related reads** → batch them in one script (`ctx_batch_execute`/`ctx_execute`) instead of N sequential `Read` calls.
-
-The test: if you will not edit the lines you are about to read, you are analyzing — process it in code.
+Every line that you read stays in your context. If you must understand code, read it with `read`, and use `offset` and `limit` for the part that you need. Some files are large, for example logs, data files, or generated output. If you need only a derived result from such a file, process it with a shell script that prints only that result.
 
 # Progress Updates
 
@@ -142,17 +123,3 @@ Reserve `bash` for what only a shell can do (tests, git, builds). Make independe
 # Final Answers
 
 Keep the closing summary short and natural. Don't recap steps you already narrated — state the outcome and any next action the user needs.
-
-# Context7
-<!-- context7 -->
-Use Context7 MCP to fetch current documentation whenever the user asks about a library, framework, SDK, API, CLI tool, or cloud service -- even well-known ones like React, Next.js, Prisma, Express, Tailwind, Django, or Spring Boot. This includes API syntax, configuration, version migration, library-specific debugging, setup instructions, and CLI tool usage. Use even when you think you know the answer -- your training data may not reflect recent changes. Prefer this over web search for library docs.
-
-Do not use for: refactoring, writing scripts from scratch, debugging business logic, code review, or general programming concepts.
-
-## Steps
-
-1. Always start with `resolve-library-id` using the library name and the user's question, unless the user provides an exact library ID in `/org/project` format
-2. Pick the best match (ID format: `/org/project`) by: exact name match, description relevance, code snippet count, source reputation (High/Medium preferred), and benchmark score (higher is better). If results don't look right, try alternate names or queries (e.g., "next.js" not "nextjs", or rephrase the question). Use version-specific IDs when the user mentions a version
-3. `query-docs` with the selected library ID and the user's full question (not single words)
-4. Answer using the fetched docs
-<!-- context7 -->
