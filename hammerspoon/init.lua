@@ -9,7 +9,6 @@ spoon.ReloadConfiguration:start()
 require("dotfiles")
 require("clipboard")
 require("agent-fleet")
-require("keyboard-backlight")
 
 utils.notify("Hammerspoon configuration loaded")
 
