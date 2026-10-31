@@ -10,7 +10,8 @@
     "opencode-keepalive@git+https://github.com/tim-hilde/opencode-keepalive.git"
   ],
   "experimental": {
-    "subagent_depth": 2
+    "subagent_depth": 2,
+    "artifacts": true
   },
   "permissions": [
     {
