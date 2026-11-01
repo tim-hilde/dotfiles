@@ -2,11 +2,11 @@
   "$schema": "https://opencode.ai/config.json",
   "plugins": [
     "@cortexkit/opencode-anthropic-auth@2.4.10",
-    "@mohak34/opencode-notifier@1.1.1",
+    "@mohak34/opencode-notifier@1.1.2",
     "superpowers@git+https://github.com/obra/superpowers.git#v7.0.1",
     "opencode-update-notifier",
     "@slkiser/opencode-quota@6.0.0",
-    "@cortexkit/opencode-magic-context@0.49.31",
+    "@cortexkit/opencode-magic-context@0.49.35",
     "opencode-keepalive@git+https://github.com/tim-hilde/opencode-keepalive.git"
   ],
   "experimental": {
