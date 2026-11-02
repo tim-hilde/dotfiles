@@ -95,8 +95,7 @@
       },
       "langfuse-docs": {
         "type": "remote",
-        "url": "https://langfuse.com/api/mcp",
-        "disabled": true
+        "url": "https://langfuse.com/api/mcp"
       },
       "notion": {
         "type": "remote",
