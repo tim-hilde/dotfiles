@@ -1,16 +1,18 @@
 ---
-description: Erstellt eine PR-Zusammenfassung und öffnet einen GitHub PR gegen staging oder dev
+description: Erstellt eine PR-Zusammenfassung und öffnet einen GitHub PR
 agent: build
 model: anthropic/claude-haiku-5-5
 ---
 
-Erstelle einen GitHub Pull Request für den Branch `$ARGUMENTS`. Gehe so vor:
+Erstelle einen GitHub Pull Request für `$ARGUMENTS`.
+
+Gehe so vor:
 
 ## Setup
 
 1. Falls `$ARGUMENTS` leer ist, nicht aus dem Kontext klar ersichtlich ist oder der Branch nicht existiert, brich ab und melde einen Fehler.
 2. Führe `git fetch origin` aus.
-3. Prüfe ob `origin/staging` oder `origin/dev` existiert — nimm den ersten, der vorhanden ist, als Target. Falls beide fehlen, frage den User. Verwende **niemals** `main` als Target.
+3. Prüfe ob `origin/staging` oder `origin/dev` existiert — nimm den ersten, der vorhanden ist, als Target. Falls beide fehlen, frage den User. `main` nur verwenden, wenn explizit angegeben.
 4. Falls der Diff leer ist, melde dass es keine Änderungen gibt und erstelle keinen PR.
 
 ## Diff
