@@ -111,3 +111,7 @@ Before a group of related tool calls, write one short sentence of 8 to 12 words 
 # Final Answers
 
 Do not repeat the steps that you already narrated. Give the result and the next action that the user must take.
+
+# On Finishing
+
+Before claiming you have finished an implementation, make sure to have run a successful `review-loop` using the respective command.
