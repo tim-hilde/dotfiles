@@ -7,7 +7,8 @@
   "version": 6,
   "sidebar": {
     "show": true,
-    "sessionTokens": false
+    "sessionTokens": false,
+    "runsOut": false
   },
   "layout": {
   "evenUse": false
@@ -17,7 +18,8 @@
     "sessionTokens": false
   },
   "words": {
-    "percent": "used"
+    "percent": "used",
+    "rowNames": "full"
   },
   "providers": {
     "off": ["opencode-zen"]
