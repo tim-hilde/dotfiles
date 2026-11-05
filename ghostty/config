@@ -23,7 +23,7 @@ clipboard-read = allow
 clipboard-write = allow
 
 shell-integration = detect
-shell-integration-features = cursor, sudo, title, ssh-env
+shell-integration-features = cursor, title, ssh-env
 
 # macos
 macos-titlebar-style = hidden
