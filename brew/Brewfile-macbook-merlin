@@ -141,6 +141,8 @@ brew "gum"
 brew "libpq", link: true
 # Easy, fast, and beautiful database client for the terminal
 brew "harlequin"
+# Command-line interface for Hetzner Cloud
+brew "hcloud"
 # Convert source code to formatted text with syntax highlighting
 brew "highlight"
 # Fast and powerful log viewer and processor
