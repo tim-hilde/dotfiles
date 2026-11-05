@@ -1,7 +1,6 @@
 ---
 description: Erstellt eine PR-Zusammenfassung und öffnet einen GitHub PR
 agent: build
-model: anthropic/claude-haiku-5-5
 ---
 
 Erstelle einen GitHub Pull Request für `$ARGUMENTS`.
