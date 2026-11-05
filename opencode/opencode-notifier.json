@@ -2,5 +2,10 @@
   "sound": false,
   "notification": true,
   "notificationSystem": "ghostty",
-  "suppressWhenFocused": false
+  "suppressWhenFocused": false,
+  "events": {
+    "subagent_complete": {
+      "command": false
+    }
+  }
 }
