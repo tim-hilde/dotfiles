@@ -51,6 +51,13 @@ test("keeps only the most recently named pull requests up to the limit", () => {
   assert.deepEqual(findPullRequestUrls(messages, 2), [url(3), url(4)]);
 });
 
+test("by default keeps the ten most recently named pull requests", () => {
+  const messages = Array.from({ length: 12 }, (_, index) => named(index + 1));
+  const urls = findPullRequestUrls(messages);
+  assert.equal(urls.length, 10);
+  assert.deepEqual([urls[0], urls.at(-1)], [url(3), url(12)]);
+});
+
 test("ignores user messages, tool input, and output of other commands", () => {
   const messages = [
     { type: "user", text: `Schau auf ${url(3)}` },

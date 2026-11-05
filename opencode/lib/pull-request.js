@@ -6,7 +6,7 @@ const PR_URL = /https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/pull\/\d+/g;
 
 export const PR_FIELDS = "number,title,state,isDraft,url";
 
-export const MAX_PULL_REQUESTS = 5;
+export const MAX_PULL_REQUESTS = 10;
 
 function textUrls(value) {
   if (typeof value !== "string" || !value.includes("/pull/")) return [];
