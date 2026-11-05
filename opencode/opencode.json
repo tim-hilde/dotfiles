@@ -56,6 +56,7 @@
     "servers": {
       "grafana": {
         "type": "local",
+        "disabled": true,
         "command": [
           "env",
           "-u",
