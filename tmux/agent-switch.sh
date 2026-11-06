@@ -157,7 +157,12 @@ rows=$(wc -l <"$fzf_input" | tr -d ' ')
 height=$((rows + 4))
 [ "$height" -lt 4 ] && height=4
 
-selection=$(fzf-tmux -p -w 80 -h "$height" -- \
+portfile=$(mktemp)
+listfile=$(mktemp)
+selection_file=$(mktemp)
+
+fzf-tmux -p -w 80 -h "$height" -- \
+  --listen --track --id-nth=2 \
   --delimiter=$'\t' --with-nth=1 \
   --no-sort --exact --ansi \
   --info=hidden --reverse --cycle \
@@ -165,7 +170,33 @@ selection=$(fzf-tmux -p -w 80 -h "$height" -- \
   --border=rounded \
   --color='bg:#1e1e2e,bg+:#313244,fg:#cdd6f4,fg+:#cdd6f4,pointer:#cba6f7,label:#cba6f7,border:#cba6f7,separator:#6D7085,prompt:#89b4fa' \
   --bind 'ctrl-space:execute-silent(~/.config/tmux/agent-switch.sh --jump {2}),tab:down,btab:up' \
-  <"$fzf_input")
+  --bind "start:execute-silent:echo \$FZF_PORT > $portfile" \
+  <"$fzf_input" >"$selection_file" &
+fzf_pid=$!
+
+(
+  for _ in $(seq 1 50); do
+    [ -s "$portfile" ] && break
+    sleep 0.1
+  done
+  port=$(cat "$portfile" 2>/dev/null)
+  [ -n "$port" ] || exit 0
+  while kill -0 "$fzf_pid" 2>/dev/null; do
+    build_list >"$listfile"
+    if [ -s "$listfile" ]; then
+      curl -s -XPOST "localhost:$port" -d "reload(cat $listfile)" >/dev/null 2>&1
+    else
+      curl -s -XPOST "localhost:$port" -d 'abort' >/dev/null 2>&1
+    fi
+    sleep 1
+  done
+) &
+loop_pid=$!
+wait "$fzf_pid"
+kill "$loop_pid" 2>/dev/null
+wait "$loop_pid" 2>/dev/null
+selection=$(cat "$selection_file")
+rm -f "$selection_file" "$portfile" "$listfile"
 
 [ -n "$selection" ] || exit 0
 

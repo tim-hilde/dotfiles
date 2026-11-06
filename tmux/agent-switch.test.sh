@@ -34,3 +34,19 @@ out=$(OC_TMUX_STATE_DIR="$tmp/empty-state" PATH="$tmp/bin:/usr/bin:/bin" \
 [ -z "$out" ] || { echo "expected empty output"; exit 1; }
 
 echo PASS
+
+cat >"$tmp/bin/fzf-tmux" <<'STUB'
+#!/usr/bin/env bash
+printf '%s\n' "$@" >"$FZF_ARGS_FILE"
+exit 0
+STUB
+chmod +x "$tmp/bin/fzf-tmux"
+
+FZF_ARGS_FILE="$tmp/args" OC_TMUX_STATE_DIR="$tmp/state" \
+  PATH="$tmp/bin:/usr/bin:/bin" "$script_dir/agent-switch.sh" >/dev/null
+
+grep -qx -- '--listen' "$tmp/args" || { echo "missing --listen"; exit 1; }
+grep -qx -- '--track' "$tmp/args" || { echo "missing --track"; exit 1; }
+grep -qx -- '--id-nth=2' "$tmp/args" || { echo "missing --id-nth=2"; exit 1; }
+
+echo PASS
