@@ -159,20 +159,19 @@ if [ ! -s "$fzf_input" ]; then
 fi
 
 rows=$(wc -l <"$fzf_input" | tr -d ' ')
-height=$((rows + 2))
+height=$((rows + 4))
 [ "$height" -lt 4 ] && height=4
 
 selection=$(fzf-tmux -p -w 80 -h "$height" -- \
   --track --id-nth=2 \
   --delimiter=$'\t' --with-nth=1 \
   --no-sort --exact --ansi \
-  --no-input \
   --info=hidden --reverse --cycle \
   --height="$height" \
   --border=rounded \
   --color='bg:#1e1e2e,bg+:#313244,fg:#cdd6f4,fg+:#cdd6f4,pointer:#cba6f7,label:#cba6f7,border:#cba6f7,separator:#6D7085,prompt:#89b4fa' \
   --bind 'ctrl-space:execute-silent(~/.config/tmux/agent-switch.sh --jump {2}),tab:down,btab:up' \
-  --bind 'j:down,k:up' \
+  --bind 'ctrl-j:down,ctrl-k:up' \
   --bind "every(1):transform:$script_path --list $term_width $current_window > $listfile; if ! cmp -s $listfile $lastfile; then cp $listfile $lastfile; echo \"reload(cat $lastfile)\"; fi" \
   --bind 'load:transform:[ "$FZF_TOTAL_COUNT" -eq 0 ] && echo abort' \
   <"$fzf_input")
