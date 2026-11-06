@@ -11,7 +11,7 @@ import {
   pullRequestFetcher,
   pullRequestSymbol,
   truncateEnd,
-} from "../../lib/pull-request.js"
+} from "../../../lib/pull-request.js"
 
 const POLL_MS = 30_000
 const GITHUB_ICON = "\uf408"
