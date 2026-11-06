@@ -146,9 +146,12 @@ term_width=$(tput cols 2>/dev/null)
 current_window=$(tmux display -p '#{window_id}' 2>/dev/null)
 
 fzf_input=$(mktemp)
-trap 'rm -f "$fzf_input"' EXIT
+listfile=$(mktemp)
+lastfile=$(mktemp)
+trap 'rm -f "$fzf_input" "$listfile" "$lastfile"' EXIT
 
 build_list >"$fzf_input"
+cp "$fzf_input" "$lastfile"
 
 if [ ! -s "$fzf_input" ]; then
   tmux display-message "No active agents"
@@ -168,7 +171,7 @@ selection=$(fzf-tmux -p -w 80 -h "$height" -- \
   --border=rounded \
   --color='bg:#1e1e2e,bg+:#313244,fg:#cdd6f4,fg+:#cdd6f4,pointer:#cba6f7,label:#cba6f7,border:#cba6f7,separator:#6D7085,prompt:#89b4fa' \
   --bind 'ctrl-space:execute-silent(~/.config/tmux/agent-switch.sh --jump {2}),tab:down,btab:up' \
-  --bind "every(1):reload:$script_path --list $term_width $current_window" \
+  --bind "every(1):transform:$script_path --list $term_width $current_window > $listfile; if ! cmp -s $listfile $lastfile; then cp $listfile $lastfile; echo \"reload(cat $lastfile)\"; fi" \
   --bind 'load:transform:[ "$FZF_TOTAL_COUNT" -eq 0 ] && echo abort' \
   <"$fzf_input")
 

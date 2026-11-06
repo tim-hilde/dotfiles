@@ -45,7 +45,8 @@ FZF_ARGS_FILE="$tmp/args" OC_TMUX_STATE_DIR="$tmp/state" \
 
 grep -qx -- '--track' "$tmp/args" || { echo "missing --track"; exit 1; }
 grep -qx -- '--id-nth=2' "$tmp/args" || { echo "missing --id-nth=2"; exit 1; }
-grep -q 'every(1):reload:' "$tmp/args" || { echo "missing every(1):reload"; exit 1; }
+grep -q 'every(1):transform:' "$tmp/args" || { echo "missing every(1):transform"; exit 1; }
+grep -q 'reload(cat' "$tmp/args" || { echo "missing reload(cat"; exit 1; }
 grep -q 'load:transform:' "$tmp/args" || { echo "missing load:transform"; exit 1; }
 ! grep -qx -- '--listen' "$tmp/args" || { echo "unexpected --listen"; exit 1; }
 
