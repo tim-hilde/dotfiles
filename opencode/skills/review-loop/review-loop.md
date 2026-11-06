@@ -1,6 +1,5 @@
 ---
 description: Review the current branch with the reviewer subagent, fix blockers, and re-review until clean; then triage remaining Important/Nit findings and surface anything left open. Best-effort review loop — not a hard merge gate.
-agent: build
 ---
 
 Run a review-fix-reverify loop on the branch `$ARGUMENTS` (default: the current branch). This is a best-effort loop driven by you, the agent — it is NOT a deterministic gate. Be honest in the summary about anything left unresolved.
