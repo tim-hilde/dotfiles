@@ -7,6 +7,7 @@
 
 state_dir="${OC_TMUX_STATE_DIR:-$HOME/.cache/opencode-tmux}"
 US=$'\x1f'
+script_path=$(cd "$(dirname "$0")" && pwd)/$(basename "$0")
 
 command -v tmux >/dev/null 2>&1 || exit 0
 [ -d "$state_dir" ] || exit 0
@@ -23,13 +24,11 @@ c_green=$'\033[32m'
 
 build_list() {
   local -a raw_rows=()
-  local current_window f content pid state updated_at title prio
+  local f content pid state updated_at title prio
   local pane_id session_name window_name window_id
   local sorted_file max_session_len prefix_width usable_width last_session
   local sess prefix status plain_status sess_shown status_width title_shown
   local max_title_len plain_name pad
-
-  current_window=$(tmux display -p '#{window_id}' 2>/dev/null)
 
   while IFS="$US" read -r pane_id session_name window_name window_id; do
     [ "$window_id" = "$current_window" ] && continue
@@ -117,6 +116,7 @@ build_list() {
 
 if [ "${1:-}" = "--list" ]; then
   term_width="${2:-80}"
+  current_window="${3:-}"
   build_list
   exit 0
 fi
@@ -143,6 +143,8 @@ fi
 term_width=$(tput cols 2>/dev/null)
 [[ "$term_width" =~ ^[0-9]+$ ]] || term_width=80
 
+current_window=$(tmux display -p '#{window_id}' 2>/dev/null)
+
 fzf_input=$(mktemp)
 trap 'rm -f "$fzf_input"' EXIT
 
@@ -157,12 +159,8 @@ rows=$(wc -l <"$fzf_input" | tr -d ' ')
 height=$((rows + 4))
 [ "$height" -lt 4 ] && height=4
 
-portfile=$(mktemp)
-listfile=$(mktemp)
-selection_file=$(mktemp)
-
-fzf-tmux -p -w 80 -h "$height" -- \
-  --listen --track --id-nth=2 \
+selection=$(fzf-tmux -p -w 80 -h "$height" -- \
+  --track --id-nth=2 \
   --delimiter=$'\t' --with-nth=1 \
   --no-sort --exact --ansi \
   --info=hidden --reverse --cycle \
@@ -170,33 +168,9 @@ fzf-tmux -p -w 80 -h "$height" -- \
   --border=rounded \
   --color='bg:#1e1e2e,bg+:#313244,fg:#cdd6f4,fg+:#cdd6f4,pointer:#cba6f7,label:#cba6f7,border:#cba6f7,separator:#6D7085,prompt:#89b4fa' \
   --bind 'ctrl-space:execute-silent(~/.config/tmux/agent-switch.sh --jump {2}),tab:down,btab:up' \
-  --bind "start:execute-silent:echo \$FZF_PORT > $portfile" \
-  <"$fzf_input" >"$selection_file" &
-fzf_pid=$!
-
-(
-  for _ in $(seq 1 50); do
-    [ -s "$portfile" ] && break
-    sleep 0.1
-  done
-  port=$(cat "$portfile" 2>/dev/null)
-  [ -n "$port" ] || exit 0
-  while kill -0 "$fzf_pid" 2>/dev/null; do
-    build_list >"$listfile"
-    if [ -s "$listfile" ]; then
-      curl -s -XPOST "localhost:$port" -d "reload(cat $listfile)" >/dev/null 2>&1
-    else
-      curl -s -XPOST "localhost:$port" -d 'abort' >/dev/null 2>&1
-    fi
-    sleep 1
-  done
-) &
-loop_pid=$!
-wait "$fzf_pid"
-kill "$loop_pid" 2>/dev/null
-wait "$loop_pid" 2>/dev/null
-selection=$(cat "$selection_file")
-rm -f "$selection_file" "$portfile" "$listfile"
+  --bind "every(1):reload:$script_path --list $term_width $current_window" \
+  --bind 'load:transform:[ "$FZF_TOTAL_COUNT" -eq 0 ] && echo abort' \
+  <"$fzf_input")
 
 [ -n "$selection" ] || exit 0
 
