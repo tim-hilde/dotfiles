@@ -4,6 +4,7 @@ import assert from "node:assert/strict";
 import {
   findPullRequestUrls,
   findPullRequestUrlsInHistory,
+  isPullRequestVisible,
   mergePullRequestUrls,
   parsePullRequest,
   pullRequestFetcher,
@@ -122,6 +123,7 @@ test("parses an open pull request", () => {
     title: "Fix retry loop",
     url: "https://github.com/o/r/pull/482",
     kind: "open",
+    closedAt: null,
   });
 });
 
@@ -129,6 +131,33 @@ test("parses draft, merged, and closed pull requests", () => {
   assert.equal(parsePullRequest(gh({ isDraft: true }))?.kind, "draft");
   assert.equal(parsePullRequest(gh({ state: "MERGED" }))?.kind, "merged");
   assert.equal(parsePullRequest(gh({ state: "CLOSED" }))?.kind, "closed");
+});
+
+test("keeps the close time of a closed pull request", () => {
+  const closedAt = "2026-11-04T09:00:00Z";
+  assert.equal(parsePullRequest(gh({ state: "MERGED", closedAt }))?.closedAt, closedAt);
+});
+
+const NOW = Date.parse("2026-11-06T12:00:00Z");
+const DAY_MS = 24 * 60 * 60 * 1000;
+const closedAgo = (ms) => new Date(NOW - ms).toISOString();
+
+test("hides merged and closed pull requests that closed more than two days ago", () => {
+  for (const kind of ["merged", "closed"]) {
+    assert.equal(isPullRequestVisible({ kind, closedAt: closedAgo(2 * DAY_MS + 1) }, NOW), false);
+  }
+});
+
+test("keeps closed pull requests within the last two days", () => {
+  assert.equal(isPullRequestVisible({ kind: "merged", closedAt: closedAgo(1 * DAY_MS) }, NOW), true);
+  assert.equal(isPullRequestVisible({ kind: "closed", closedAt: closedAgo(2 * DAY_MS) }, NOW), true);
+});
+
+test("keeps open pull requests and closed pull requests without a valid close time", () => {
+  assert.equal(isPullRequestVisible({ kind: "open", closedAt: null }, NOW), true);
+  assert.equal(isPullRequestVisible({ kind: "draft", closedAt: null }, NOW), true);
+  assert.equal(isPullRequestVisible({ kind: "closed", closedAt: null }, NOW), true);
+  assert.equal(isPullRequestVisible({ kind: "merged", closedAt: "not a date" }, NOW), true);
 });
 
 test("a merged pull request that was a draft is merged", () => {

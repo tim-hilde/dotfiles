@@ -5,6 +5,7 @@ import { createEffect, createMemo, createSignal, For, onCleanup, Show } from "so
 import {
   findPullRequestUrls,
   findPullRequestUrlsInHistory,
+  isPullRequestVisible,
   mergePullRequestUrls,
   PR_FIELDS,
   pullRequestFetcher,
@@ -54,7 +55,9 @@ function PullRequestsView(props: {
     if (current.length === 0) return setPullRequests([])
     let live = true
     const load = () =>
-      Promise.all(current.map(props.fetchPullRequest)).then((list) => live && setPullRequests(list.filter(Boolean)))
+      Promise.all(current.map(props.fetchPullRequest)).then(
+        (list) => live && setPullRequests(list.filter((pr) => pr && isPullRequestVisible(pr))),
+      )
     load()
     const poll = setInterval(load, POLL_MS)
     onCleanup(() => {

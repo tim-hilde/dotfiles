@@ -4,9 +4,11 @@ const KINDS = { OPEN: "open", MERGED: "merged", CLOSED: "closed" };
 const SYMBOLS = { open: "●", draft: "◌", merged: "✓", closed: "✗" };
 const PR_URL = /https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/pull\/\d+/g;
 
-export const PR_FIELDS = "number,title,state,isDraft,url";
+export const PR_FIELDS = "number,title,state,isDraft,url,closedAt";
 
 export const MAX_PULL_REQUESTS = 10;
+
+const CLOSED_VISIBLE_MS = 2 * 24 * 60 * 60 * 1000;
 
 function textUrls(value) {
   if (typeof value !== "string" || !value.includes("/pull/")) return [];
@@ -58,7 +60,13 @@ export function parsePullRequest(stdout) {
   if (!kind || !Number.isInteger(data.number) || typeof data.title !== "string" || typeof data.url !== "string") {
     return undefined;
   }
-  return { number: data.number, title: data.title, url: data.url, kind };
+  return { number: data.number, title: data.title, url: data.url, kind, closedAt: data.closedAt ?? null };
+}
+
+export function isPullRequestVisible(pr, now = Date.now()) {
+  if (pr.kind === "open" || pr.kind === "draft") return true;
+  const closedAt = Date.parse(pr.closedAt ?? "");
+  return Number.isNaN(closedAt) || now - closedAt <= CLOSED_VISIBLE_MS;
 }
 
 export function truncateEnd(text, width) {
