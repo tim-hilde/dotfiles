@@ -7,11 +7,11 @@
 # Usage: bash wait-review.sh [PR-NUMBER] [MAX-MINUTES] [SHA]
 #   PR-NUMBER    defaults to the pull request of the current branch
 #   MAX-MINUTES  defaults to 30
-#   SHA          the commit you pushed. Defaults to the local HEAD when the
-#                current branch is the head branch of the PR. The script waits
-#                until the PR head is this commit or a later one (for example a
-#                commit of the migration bot), so it never returns the review
-#                of the push before.
+#   SHA          the commit you pushed, full or short. Defaults to the local
+#                HEAD when the current branch is the head branch of the PR. The
+#                script waits until the PR head is this commit or a later one
+#                (for example a commit of the migration bot), so it never
+#                returns the review of the push before.
 # Exit 0: the review of the current head is on stdout.
 # Exit 1: no review came in time.
 # Exit 2: the PR is a draft. codex-review.yml skips drafts, so no review comes.
@@ -21,37 +21,49 @@ pr=${1:-$(gh pr view --json number --jq .number)}
 max=${2:-30}
 expected=${3:-}
 marker='<!-- codex-review -->'
+ref=$(gh pr view "$pr" --json headRefName --jq .headRefName)
 
 if [[ -z $expected ]]; then
   branch=$(git branch --show-current 2>/dev/null || true)
-  if [[ -n $branch && $branch == "$(gh pr view "$pr" --json headRefName --jq .headRefName)" ]]; then
-    expected=$(git rev-parse HEAD)
-  fi
+  [[ -n $branch && $branch == "$ref" ]] && expected=$(git rev-parse HEAD)
+elif full=$(git rev-parse --verify --quiet "$expected^{commit}" 2>/dev/null); then
+  expected=$full
 fi
 
-# True when the PR head is the expected commit or a commit after it.
-head_has_expected() {
-  [[ -z $expected || $1 == "$expected" ]] && return 0
-  [[ $(gh api "repos/{owner}/{repo}/compare/$expected...$1" --jq .status 2>/dev/null || true) == ahead ]]
+# True when commit $2 is commit $1 or a commit after it. GitHub's compare
+# answers "identical" for the same commit, also when $1 is a short sha.
+at_or_after() {
+  [[ $1 == "$2" ]] && return 0
+  local status
+  status=$(gh api "repos/{owner}/{repo}/compare/$1...$2" --jq .status 2>/dev/null || true)
+  [[ $status == identical || $status == ahead ]]
 }
 
-# The id of the newest review comment that is younger than the head commit
-# and younger than the newest codex-review.yml run for the head. The run
-# matters when one commit gets several runs, for example a skipped run while
-# the PR was a draft and a second run after "gh pr ready".
+# The id of the newest review comment for the PR head $1, or nothing. The
+# review belongs to the newest codex-review.yml run that really ran (not
+# skipped, as for the migration bot's pushes) for a commit between the
+# expected commit and the head; the comment must be younger than that run.
+# Without such a run there is no review yet: a comment of an older run must
+# never count as the review of this head.
 review_of() {
-  local since run
-  since=$(gh api "repos/{owner}/{repo}/commits/$1" --jq .commit.committer.date)
-  run=$(gh api "repos/{owner}/{repo}/actions/workflows/codex-review.yml/runs?head_sha=$1&per_page=100" \
-    --jq '[.workflow_runs[].created_at] | max // empty' 2>/dev/null || true)
-  [[ -n $run && $run > $since ]] && since=$run
+  local runs sha created since=''
+  runs=$(gh api "repos/{owner}/{repo}/actions/workflows/codex-review.yml/runs?branch=$ref&per_page=50" \
+    --jq '.workflow_runs[] | select(.conclusion != "skipped") | "\(.head_sha) \(.created_at)"' 2>/dev/null) || return 0
+  while read -r sha created; do
+    [[ -n $sha ]] || continue
+    if at_or_after "$sha" "$1" && { [[ -z $expected ]] || at_or_after "$expected" "$sha"; }; then
+      since=$created
+      break
+    fi
+  done <<< "$runs"
+  [[ -n $since ]] || return 0
   gh api --paginate "repos/{owner}/{repo}/issues/$pr/comments?per_page=100" \
-    --jq ".[] | select(.created_at > \"$since\" and (.body | startswith(\"$marker\"))) | .id" | tail -n 1
+    --jq ".[] | select(.created_at > \"$since\" and (.body | startswith(\"$marker\"))) | .id" 2>/dev/null | tail -n 1
 }
 
 for ((minute = 0; minute < max; minute++)); do
   read -r head draft < <(gh pr view "$pr" --json headRefOid,isDraft --jq '"\(.headRefOid) \(.isDraft)"')
-  if head_has_expected "$head"; then
+  if [[ -z $expected ]] || at_or_after "$expected" "$head"; then
     id=$(review_of "$head")
     if [[ -n $id ]]; then
       echo "Codex review of $head (comment $id):" >&2
