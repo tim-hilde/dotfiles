@@ -121,6 +121,7 @@
         "url": "https://mcp.context7.com/mcp"
       },
       "axiom": {
+        "disabled": true,
         "type": "remote",
         "url": "https://mcp.axiom.co/mcp"
       }

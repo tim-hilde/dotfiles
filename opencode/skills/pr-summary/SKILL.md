@@ -109,16 +109,24 @@ If the PR is in another organization, skip this step: there is no such comment, 
 If the user wants the review of a push, or wants the PR checked until it is approved, run the bundled script from a checkout of the repository. Run it in every case, also when the review is probably already there: then it returns at once. Do not read the comments by hand and do not map workflow runs to commits. The script is the match.
 
 ```bash
-bash ~/.config/opencode/skills/pr-summary/scripts/wait-review.sh <PR-NUMBER> [MAX-MINUTES]
+bash ~/.config/opencode/skills/pr-summary/scripts/wait-review.sh <PR-NUMBER> [MAX-MINUTES] [SHA]
 ```
 
-The script reads the commit date of the PR head, waits for a `<!-- codex-review -->` comment newer than that date, and prints the comment. `PR-NUMBER` defaults to the PR of the current branch, `MAX-MINUTES` to 30. Run it in the background when the review can still take minutes. Exit 1 means that no review came in time. If that happens, read `gh pr checks <PR-NUMBER>`: the job `review` shows whether the workflow ran.
+The script waits until the PR head is the pushed commit or a later one, for example the commit of the migration bot. Then it waits for a `<!-- codex-review -->` comment that is newer than the head commit and newer than the last `codex-review.yml` run for that head, and prints it. `PR-NUMBER` defaults to the PR of the current branch, and `MAX-MINUTES` to 30. `SHA` defaults to the local HEAD when the current branch is the head branch of the PR. If you run the script from another checkout, pass the pushed commit as `SHA`, or the script can return the review of the push before.
+
+Exit codes:
+
+- 0: the review is on stdout.
+- 1: no review came in time. Read `gh pr checks <PR-NUMBER>`: the job `review` shows whether the workflow ran.
+- 2: the PR is a draft. `codex-review.yml` skips drafts, so no review comes. Run `gh pr ready <PR-NUMBER>` only when the user agreed that the PR leaves draft, then run the script again.
+
+Run the script in the foreground, with a shell timeout above `MAX-MINUTES` (for example 2,700,000 ms for 40 minutes). A background run only helps when the same session stays active until the notification arrives. If a subagent ends its turn while the script still runs in the background, nobody reads the review.
 
 Loop until the PR is approved:
 
 1. Run the script and read the printed review.
 2. If `Required Changes` is not `None.`, fix the blocking findings with the `receiving-code-review` skill, run the tests, commit, and push.
-3. Run the script again. Each push gets a new review, and the script only accepts a review that is newer than the pushed commit.
+3. Run the script again. Each push gets a new review, and the script only accepts a review of the pushed commit or a later one.
 4. Stop when `Required Changes` is `None.` and the `Verdict` is Approve. Report the verdict and anything the review left open.
 
 ---
