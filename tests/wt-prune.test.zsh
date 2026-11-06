@@ -161,6 +161,20 @@ out=$(wt-prune $wts --yes </dev/null 2>&1)
 assert_contains "$out" "gelöscht: feat/yes-last"
 assert_true "[[ ! -e $wts/feat/yes-last ]]"
 
+# test_unknown_option_is_rejected
+mkwt feat/yes-typo feat/yes-typo 1;    merged feat/yes-typo feat/yes-typo 23
+out=$(wt-prune -y $wts </dev/null 2>&1)
+assert_true "(( $? == 2 ))"
+assert_contains "$out" "Aufruf: wt-prune [--yes] [Ordner]"
+assert_true "[[ -d $wts/feat/yes-typo ]]"
+
+# test_empty_root_argument_uses_default
+wts=$tmp/home/code/merlin/worktrees
+mkwt feat/yes-default feat/yes-default 1; merged feat/yes-default feat/yes-default 24
+out=$(HOME=$tmp/home wt-prune "" --yes </dev/null 2>&1)
+assert_contains "$out" "gelöscht: feat/yes-default"
+assert_true "[[ ! -e $wts/feat/yes-default ]]"
+
 if (( fails )); then
   print "$fails assertion(s) failed"
   exit 1

@@ -85,16 +85,19 @@ function _wt_prune_size() {
 # With --yes, delete them without the prompt.
 # Only an untracked .infisical.yaml and a modified next-env.d.ts may remain in them.
 function wt-prune() {
-  local root=$HOME/code/merlin/worktrees arg
+  local root arg
   local -i yes=0
   for arg; do
     if [[ $arg == --yes ]]; then
       yes=1
+    elif [[ $arg == -* ]]; then
+      print -u2 "Aufruf: wt-prune [--yes] [Ordner]"
+      return 2
     else
       root=$arg
     fi
   done
-  root=${root:A}
+  root=${${root:-$HOME/code/merlin/worktrees}:A}
   local gitfile wt rel branch dirty head main slug out line pr answer i err parent kb
   local -i total=0
   local -a rels mains branches prs sizes entries
