@@ -143,6 +143,24 @@ assert_true "[[ ! -e $tmp/wts/feat/combo ]]"
 assert_true "[[ -d $tmp/wts/feat ]]"
 assert_true "(( \$(git -C $tmp/origin-a worktree list | wc -l) == 7 ))"
 
+# test_yes_flag_deletes_without_prompt
+wts=$tmp/wts-yes
+mkwt feat/yes-first feat/yes-first 1;  merged feat/yes-first feat/yes-first 21
+mkwt fix/yes-kept fix/yes-kept 1
+out=$(wt-prune --yes $wts </dev/null 2>&1)
+assert_contains "$out" "  feat/yes-first  (origin-a, PR #21, "
+assert_contains "$out" "gelöscht: feat/yes-first"
+assert_not_contains "$out" "[y/N]"
+assert_not_contains "$out" "Abgebrochen"
+assert_true "[[ ! -e $wts/feat/yes-first ]]"
+assert_true "[[ -d $wts/fix/yes-kept ]]"
+
+# test_yes_flag_after_root
+mkwt feat/yes-last feat/yes-last 1;    merged feat/yes-last feat/yes-last 22
+out=$(wt-prune $wts --yes </dev/null 2>&1)
+assert_contains "$out" "gelöscht: feat/yes-last"
+assert_true "[[ ! -e $wts/feat/yes-last ]]"
+
 if (( fails )); then
   print "$fails assertion(s) failed"
   exit 1

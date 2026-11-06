@@ -82,9 +82,19 @@ function _wt_prune_size() {
 }
 
 # List worktrees whose merged PR head equals the local HEAD and delete them after one prompt.
+# With --yes, delete them without the prompt.
 # Only an untracked .infisical.yaml and a modified next-env.d.ts may remain in them.
 function wt-prune() {
-  local root=${${1:-$HOME/code/merlin/worktrees}:A}
+  local root=$HOME/code/merlin/worktrees arg
+  local -i yes=0
+  for arg; do
+    if [[ $arg == --yes ]]; then
+      yes=1
+    else
+      root=$arg
+    fi
+  done
+  root=${root:A}
   local gitfile wt rel branch dirty head main slug out line pr answer i err parent kb
   local -i total=0
   local -a rels mains branches prs sizes entries
@@ -134,11 +144,15 @@ function wt-prune() {
   for (( i = 1; i <= $#rels; i++ )); do
     print "  ${rels[i]}  (${mains[i]:t}, PR #${prs[i]}, ${sizes[i]})"
   done
-  print -n "Alle $#rels löschen (insgesamt $(_wt_prune_size $total))? [y/N] "
-  read answer
-  if [[ $answer != [yY] ]]; then
-    print "Abgebrochen, nichts gelöscht."
-    return 0
+  if (( yes )); then
+    print "Lösche alle $#rels (insgesamt $(_wt_prune_size $total))."
+  else
+    print -n "Alle $#rels löschen (insgesamt $(_wt_prune_size $total))? [y/N] "
+    read answer
+    if [[ $answer != [yY] ]]; then
+      print "Abgebrochen, nichts gelöscht."
+      return 0
+    fi
   fi
 
   for (( i = 1; i <= $#rels; i++ )); do
