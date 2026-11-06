@@ -168,6 +168,12 @@ assert_true "(( $? == 2 ))"
 assert_contains "$out" "Aufruf: wt-prune [--yes] [Ordner]"
 assert_true "[[ -d $wts/feat/yes-typo ]]"
 
+# test_second_root_is_rejected
+out=$(wt-prune --yes $wts $tmp/empty-root </dev/null 2>&1)
+assert_true "(( $? == 2 ))"
+assert_contains "$out" "Aufruf: wt-prune [--yes] [Ordner]"
+assert_true "[[ -d $wts/feat/yes-typo ]]"
+
 # test_empty_root_argument_uses_default
 wts=$tmp/home/code/merlin/worktrees
 mkwt feat/yes-default feat/yes-default 1; merged feat/yes-default feat/yes-default 24

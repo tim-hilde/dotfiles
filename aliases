@@ -90,7 +90,7 @@ function wt-prune() {
   for arg; do
     if [[ $arg == --yes ]]; then
       yes=1
-    elif [[ $arg == -* ]]; then
+    elif [[ $arg == -* || -n $root ]]; then
       print -u2 "Aufruf: wt-prune [--yes] [Ordner]"
       return 2
     else
