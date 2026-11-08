@@ -46,7 +46,7 @@
   "warming": true,
   "agents": {
     "general": {
-      "model": "anthropic/claude-sonnet-5-5"
+      "model": "opencode-go/deepseek-v4.1-flash#max"
     },
     "explore": {
       "model": "anthropic/claude-sonnet-5-5"
