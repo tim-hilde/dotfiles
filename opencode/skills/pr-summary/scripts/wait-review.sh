@@ -43,7 +43,10 @@ at_or_after() {
 # review belongs to the newest codex-review.yml run that really ran (not
 # skipped, as for the migration bot's pushes) for a commit between the
 # expected commit and the head; the comment must be younger than that run.
-# Without such a run there is no review yet: a comment of an older run must
+# A run started by hand (`gh workflow run`, no --ref) belongs to no branch:
+# GitHub records it on the default branch, so its branch filter finds nothing.
+# For that case the comment must be younger than the expected commit itself.
+# Without either time there is no review yet: a comment of an older run must
 # never count as the review of this head.
 review_of() {
   local runs sha created since=''
@@ -56,6 +59,9 @@ review_of() {
       break
     fi
   done <<< "$runs"
+  if [[ -z $since ]]; then
+    since=$(git show -s --format=%cI "$expected" 2>/dev/null || true)
+  fi
   [[ -n $since ]] || return 0
   gh api --paginate "repos/{owner}/{repo}/issues/$pr/comments?per_page=100" \
     --jq ".[] | select(.created_at > \"$since\" and (.body | startswith(\"$marker\"))) | .id" 2>/dev/null | tail -n 1
