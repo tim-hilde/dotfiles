@@ -60,11 +60,11 @@ review_of() {
     fi
   done <<< "$runs"
   if [[ -z $since ]]; then
-    since=$(git show -s --format=%cI "$expected" 2>/dev/null || true)
+    since=$(TZ=UTC git show -s --format=%cd --date=format-local:%Y-%m-%dT%H:%M:%SZ "$expected" 2>/dev/null || true)
   fi
   [[ -n $since ]] || return 0
   gh api --paginate "repos/{owner}/{repo}/issues/$pr/comments?per_page=100" \
-    --jq ".[] | select(.created_at > \"$since\" and (.body | startswith(\"$marker\"))) | .id" 2>/dev/null | tail -n 1
+    --jq ".[] | select((.created_at | fromdateiso8601) > (\"$since\" | fromdateiso8601) and (.body | startswith(\"$marker\"))) | .id" 2>/dev/null | tail -n 1
 }
 
 for ((minute = 0; minute < max; minute++)); do
