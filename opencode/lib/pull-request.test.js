@@ -138,8 +138,9 @@ test("parses an open pull request", () => {
   });
 });
 
-const run = (conclusion, status = "COMPLETED") => ({ __typename: "CheckRun", name: "job", status, conclusion });
-const context = (state) => ({ __typename: "StatusContext", context: "ci/status", state });
+let runs = 0;
+const run = (conclusion, status = "COMPLETED") => ({ __typename: "CheckRun", name: `job-${runs++}`, status, conclusion });
+const context = (state) => ({ __typename: "StatusContext", context: `ci/status-${runs++}`, state });
 
 test("asks gh for the checks, the comments, and the commits", () => {
   for (const field of ["statusCheckRollup", "comments", "commits"]) assert.ok(PR_FIELDS.split(",").includes(field));
@@ -169,6 +170,52 @@ test("ciState is pending while a check runs or waits", () => {
 
 test("ciState reports a failure even while other checks are pending", () => {
   assert.equal(ciState([run("FAILURE"), run("", "IN_PROGRESS")]), "failure");
+});
+
+test("ciState is failure for every finished check that did not pass", () => {
+  for (const conclusion of ["ACTION_REQUIRED", "STARTUP_FAILURE", "STALE"]) {
+    assert.equal(ciState([run("SUCCESS"), run(conclusion)]), "failure");
+  }
+});
+
+const check = (name, conclusion, startedAt, status = "COMPLETED", workflowName = name) => ({
+  __typename: "CheckRun",
+  name,
+  workflowName,
+  status,
+  conclusion,
+  startedAt,
+});
+
+test("ciState judges only the newest run of a re-run check", () => {
+  const failed = check("migration-ok", "FAILURE", "2026-11-09T12:31:17Z");
+  const passed = check("migration-ok", "SUCCESS", "2026-11-09T12:32:25Z");
+  assert.equal(ciState([failed, passed]), "success");
+  assert.equal(ciState([passed, failed]), "success");
+});
+
+test("ciState shows a failure when the newest run of a check failed", () => {
+  const passed = check("tests", "SUCCESS", "2026-11-09T12:31:17Z");
+  const failed = check("tests", "FAILURE", "2026-11-09T12:32:25Z");
+  assert.equal(ciState([passed, failed]), "failure");
+});
+
+test("ciState is pending when a re-run replaced a failed run and still runs", () => {
+  const failed = check("tests", "FAILURE", "2026-11-09T12:31:17Z");
+  const running = check("tests", "", "2026-11-09T12:32:25Z", "IN_PROGRESS");
+  assert.equal(ciState([failed, running]), "pending");
+});
+
+test("ciState keeps checks with the same name in different workflows apart", () => {
+  const failed = check("build", "FAILURE", "2026-11-09T12:31:17Z", "COMPLETED", "ci");
+  const passed = check("build", "SUCCESS", "2026-11-09T12:32:25Z", "COMPLETED", "release");
+  assert.equal(ciState([failed, passed]), "failure");
+});
+
+test("ciState judges only the newest status of a context", () => {
+  const failed = { __typename: "StatusContext", context: "deploy", state: "FAILURE", startedAt: "2026-11-09T12:31:17Z" };
+  const passed = { __typename: "StatusContext", context: "deploy", state: "SUCCESS", startedAt: "2026-11-09T12:32:25Z" };
+  assert.equal(ciState([failed, passed]), "success");
 });
 
 const codex = (verdict, createdAt = "2026-11-06T10:30:00Z", overrides = {}) => ({

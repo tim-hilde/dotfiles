@@ -8,7 +8,7 @@ const CI_TONES = { success: "success", failure: "error", pending: "warning", non
 const REVIEW_SYMBOLS = { approved: "✓", comments: "!", changes: "✗", stale: "~", none: "–" };
 const REVIEW_TONES = { approved: "success", comments: "warning", changes: "error", stale: "warning", none: "muted" };
 const PR_URL = /https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/pull\/\d+/g;
-const FAILED_CONCLUSIONS = new Set(["FAILURE", "TIMED_OUT", "CANCELLED"]);
+const PASSED_CONCLUSIONS = new Set(["SUCCESS", "NEUTRAL", "SKIPPED"]);
 const FAILED_CONTEXT_STATES = new Set(["FAILURE", "ERROR"]);
 const PENDING_CONTEXT_STATES = new Set(["PENDING", "EXPECTED"]);
 const CODEX_MARKER = "<!-- codex-review -->";
@@ -59,16 +59,31 @@ export async function findPullRequestUrlsInHistory(listPage, limit = MAX_PULL_RE
   return mergePullRequestUrls(found, limit);
 }
 
+const startedAt = (check) => Date.parse(check.startedAt ?? "") || 0;
+
+// gh lists every run on the head commit, so a re-run check appears more than once. Only the newest run counts.
+function newestChecks(rollup) {
+  const newest = new Map();
+  for (const check of rollup) {
+    const key =
+      check.__typename === "StatusContext" ? `context:${check.context}` : `run:${check.workflowName ?? ""}:${check.name}`;
+    const seen = newest.get(key);
+    if (!seen || startedAt(check) >= startedAt(seen)) newest.set(key, check);
+  }
+  return [...newest.values()];
+}
+
 export function ciState(rollup) {
   if (!Array.isArray(rollup) || rollup.length === 0) return "none";
   let pending = false;
-  for (const check of rollup) {
+  for (const check of newestChecks(rollup)) {
     if (check.__typename === "StatusContext") {
       if (FAILED_CONTEXT_STATES.has(check.state)) return "failure";
       if (PENDING_CONTEXT_STATES.has(check.state)) pending = true;
-    } else {
-      if (FAILED_CONCLUSIONS.has(check.conclusion)) return "failure";
-      if (check.status !== "COMPLETED") pending = true;
+    } else if (check.status !== "COMPLETED") {
+      pending = true;
+    } else if (!PASSED_CONCLUSIONS.has(check.conclusion)) {
+      return "failure";
     }
   }
   return pending ? "pending" : "success";
