@@ -3,6 +3,8 @@ import { Plugin } from "@opencode/plugin/tui"
 import { execFile } from "node:child_process"
 import { createEffect, createMemo, createSignal, For, onCleanup, Show } from "solid-js"
 import {
+  ciSymbol,
+  ciTone,
   findPullRequestUrls,
   findPullRequestUrlsInHistory,
   isPullRequestVisible,
@@ -10,6 +12,10 @@ import {
   PR_FIELDS,
   pullRequestFetcher,
   pullRequestSymbol,
+  pullRequestTone,
+  reviewSymbol,
+  reviewTone,
+  showsChecks,
   truncateEnd,
 } from "../../../lib/pull-request.js"
 
@@ -67,6 +73,7 @@ function PullRequestsView(props: {
   })
 
   const collapsible = () => pullRequests().length > 2
+  const toneColor = (tone: string) => (tone === "muted" ? theme.text.muted : theme.text.feedback[tone].base)
 
   return (
     <Show when={pullRequests().length > 0}>
@@ -111,9 +118,13 @@ function PullRequestsView(props: {
                     {truncateEnd(`#${pr.number} ${pr.title}`, titleWidth())}
                   </text>
                 </box>
-                <text flexShrink={0} fg={hovered() === pr.url ? theme.text.base : theme.text.muted}>
-                  {pullRequestSymbol(pr.kind)}
-                </text>
+                <box flexDirection="row" gap={1} flexShrink={0}>
+                  <text fg={toneColor(pullRequestTone(pr.kind))}>{pullRequestSymbol(pr.kind)}</text>
+                  <Show when={showsChecks(pr)} fallback={<text>{"   "}</text>}>
+                    <text fg={toneColor(ciTone(pr.ci))}>{ciSymbol(pr.ci)}</text>
+                    <text fg={toneColor(reviewTone(pr.review))}>{reviewSymbol(pr.review)}</text>
+                  </Show>
+                </box>
               </box>
             )}
           </For>

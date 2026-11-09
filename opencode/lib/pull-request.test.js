@@ -2,13 +2,22 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
+  ciState,
+  ciSymbol,
+  ciTone,
+  codexReviewState,
   findPullRequestUrls,
   findPullRequestUrlsInHistory,
   isPullRequestVisible,
   mergePullRequestUrls,
   parsePullRequest,
+  PR_FIELDS,
   pullRequestFetcher,
   pullRequestSymbol,
+  pullRequestTone,
+  reviewSymbol,
+  reviewTone,
+  showsChecks,
   truncateEnd,
 } from "./pull-request.js";
 
@@ -124,7 +133,99 @@ test("parses an open pull request", () => {
     url: "https://github.com/o/r/pull/482",
     kind: "open",
     closedAt: null,
+    ci: "none",
+    review: "none",
   });
+});
+
+const run = (conclusion, status = "COMPLETED") => ({ __typename: "CheckRun", name: "job", status, conclusion });
+const context = (state) => ({ __typename: "StatusContext", context: "ci/status", state });
+
+test("asks gh for the checks, the comments, and the commits", () => {
+  for (const field of ["statusCheckRollup", "comments", "commits"]) assert.ok(PR_FIELDS.split(",").includes(field));
+});
+
+test("ciState is none without any check", () => {
+  assert.equal(ciState([]), "none");
+  assert.equal(ciState(undefined), "none");
+  assert.equal(ciState(null), "none");
+});
+
+test("ciState is success when every check passed, was skipped, or was neutral", () => {
+  assert.equal(ciState([run("SUCCESS"), run("SKIPPED"), run("NEUTRAL"), context("SUCCESS")]), "success");
+});
+
+test("ciState is failure when a check failed, timed out, was cancelled, or errored", () => {
+  for (const check of [run("FAILURE"), run("TIMED_OUT"), run("CANCELLED"), context("FAILURE"), context("ERROR")]) {
+    assert.equal(ciState([run("SUCCESS"), check]), "failure");
+  }
+});
+
+test("ciState is pending while a check runs or waits", () => {
+  for (const check of [run("", "IN_PROGRESS"), run("", "QUEUED"), run(null, "PENDING"), context("PENDING"), context("EXPECTED")]) {
+    assert.equal(ciState([run("SUCCESS"), check]), "pending");
+  }
+});
+
+test("ciState reports a failure even while other checks are pending", () => {
+  assert.equal(ciState([run("FAILURE"), run("", "IN_PROGRESS")]), "failure");
+});
+
+const codex = (verdict, createdAt = "2026-11-06T10:30:00Z", overrides = {}) => ({
+  author: { login: "github-actions" },
+  createdAt,
+  body: `<!-- codex-review -->\n## Summary\nText\n\n## Verdict\n${verdict}\n\n## Required Changes\nNone\n`,
+  ...overrides,
+});
+const HEAD = "2026-11-06T10:00:00Z";
+
+test("codexReviewState is none without a Codex comment", () => {
+  assert.equal(codexReviewState([], HEAD), "none");
+  assert.equal(codexReviewState(undefined, HEAD), "none");
+});
+
+test("codexReviewState reads the Verdict section in both forms", () => {
+  assert.equal(codexReviewState([codex("- [x] 🔄 Request Changes — fix the race")], HEAD), "changes");
+  assert.equal(codexReviewState([codex("**Request Changes** — fix the race")], HEAD), "changes");
+  assert.equal(codexReviewState([codex("- [x] ✅ Approve")], HEAD), "approved");
+  assert.equal(codexReviewState([codex("Approve with nits")], HEAD), "approved");
+  assert.equal(codexReviewState([codex("- [x] 💬 Comment")], HEAD), "comments");
+});
+
+test("codexReviewState ignores comments of other authors and without the marker", () => {
+  const quoted = codex("Approve", "2026-11-06T10:30:00Z", { author: { login: "tim-hilde" } });
+  const plain = codex("Approve", "2026-11-06T10:30:00Z", { body: "## Verdict\nApprove" });
+  assert.equal(codexReviewState([quoted, plain], HEAD), "none");
+});
+
+test("codexReviewState uses the newest Codex comment", () => {
+  const older = codex("Request Changes", "2026-11-06T10:10:00Z");
+  const newer = codex("Approve", "2026-11-06T10:40:00Z");
+  assert.equal(codexReviewState([newer, older], HEAD), "approved");
+});
+
+test("codexReviewState is stale when a commit is newer than the review", () => {
+  assert.equal(codexReviewState([codex("Approve", "2026-11-06T09:00:00Z")], HEAD), "stale");
+  assert.equal(codexReviewState([codex("Approve", "2026-11-06T09:00:00Z")], undefined), "approved");
+});
+
+test("parsePullRequest derives the CI and review state", () => {
+  const pr = parsePullRequest(
+    gh({
+      statusCheckRollup: [run("FAILURE")],
+      comments: [codex("Request Changes", "2026-11-06T10:30:00Z")],
+      commits: [{ committedDate: "2026-11-06T09:00:00Z" }, { committedDate: HEAD }],
+    }),
+  );
+  assert.equal(pr?.ci, "failure");
+  assert.equal(pr?.review, "changes");
+});
+
+test("shows the checks only for open and draft pull requests", () => {
+  assert.equal(showsChecks({ kind: "open" }), true);
+  assert.equal(showsChecks({ kind: "draft" }), true);
+  assert.equal(showsChecks({ kind: "merged" }), false);
+  assert.equal(showsChecks({ kind: "closed" }), false);
 });
 
 test("parses draft, merged, and closed pull requests", () => {
@@ -180,9 +281,26 @@ test("truncateEnd keeps text that fits and cuts the end with an ellipsis otherwi
   assert.equal(truncateEnd("abc", undefined), "abc");
 });
 
-test("symbols distinguish the four kinds", () => {
+test("symbols distinguish the four kinds with the GitHub pull request icons", () => {
   const symbols = ["open", "draft", "merged", "closed"].map(pullRequestSymbol);
-  assert.deepEqual(symbols, ["●", "◌", "✓", "✗"]);
+  assert.deepEqual(symbols, ["\uf407", "\uf4dd", "\uf419", "\uf4dc"]);
+});
+
+test("CI and review symbols match the pr dashboard", () => {
+  assert.deepEqual(["success", "failure", "pending", "none"].map(ciSymbol), ["✓", "✗", "…", "–"]);
+  assert.deepEqual(
+    ["approved", "comments", "changes", "stale", "none"].map(reviewSymbol),
+    ["✓", "!", "✗", "~", "–"],
+  );
+});
+
+test("tones follow the state", () => {
+  assert.deepEqual(["open", "draft", "merged", "closed"].map(pullRequestTone), ["success", "muted", "info", "error"]);
+  assert.deepEqual(["success", "failure", "pending", "none"].map(ciTone), ["success", "error", "warning", "muted"]);
+  assert.deepEqual(
+    ["approved", "comments", "changes", "stale", "none"].map(reviewTone),
+    ["success", "warning", "error", "warning", "muted"],
+  );
 });
 
 test("fetcher runs gh once per URL within the cache time", async () => {
