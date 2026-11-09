@@ -73,6 +73,7 @@ function PullRequestsView(props: {
   })
 
   const collapsible = () => pullRequests().length > 2
+  const numberWidth = createMemo(() => Math.max(...pullRequests().map((pr: any) => String(pr.number).length + 1)))
   const toneColor = (tone: string) => (tone === "muted" ? theme.text.muted : theme.text.feedback[tone].base)
 
   return (
@@ -106,6 +107,16 @@ function PullRequestsView(props: {
                 onMouseOut={() => setHovered(undefined)}
                 onMouseUp={() => openUrl(pr.url)}
               >
+                <text flexShrink={0} fg={hovered() === pr.url ? theme.text.base : theme.text.muted} wrapMode="none">
+                  {`#${pr.number}`.padEnd(numberWidth())}
+                </text>
+                <box flexDirection="row" gap={1} flexShrink={0}>
+                  <text fg={toneColor(pullRequestTone(pr.kind))}>{pullRequestSymbol(pr.kind)}</text>
+                  <Show when={showsChecks(pr)} fallback={<text>{"   "}</text>}>
+                    <text fg={toneColor(ciTone(pr.ci))}>{ciSymbol(pr.ci)}</text>
+                    <text fg={toneColor(reviewTone(pr.review))}>{reviewSymbol(pr.review)}</text>
+                  </Show>
+                </box>
                 <box
                   flexGrow={1}
                   flexShrink={1}
@@ -115,15 +126,8 @@ function PullRequestsView(props: {
                   }}
                 >
                   <text fg={hovered() === pr.url ? theme.text.base : theme.text.muted} wrapMode="none">
-                    {truncateEnd(`#${pr.number} ${pr.title}`, titleWidth())}
+                    {truncateEnd(pr.title, titleWidth())}
                   </text>
-                </box>
-                <box flexDirection="row" gap={1} flexShrink={0}>
-                  <text fg={toneColor(pullRequestTone(pr.kind))}>{pullRequestSymbol(pr.kind)}</text>
-                  <Show when={showsChecks(pr)} fallback={<text>{"   "}</text>}>
-                    <text fg={toneColor(ciTone(pr.ci))}>{ciSymbol(pr.ci)}</text>
-                    <text fg={toneColor(reviewTone(pr.review))}>{reviewSymbol(pr.review)}</text>
-                  </Show>
                 </box>
               </box>
             )}
