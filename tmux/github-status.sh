@@ -24,7 +24,7 @@ fi
 
 if [[ $age -ge $cache_ttl ]]; then
   indicator=$(curl -fsS --max-time 5 https://www.githubstatus.com/api/v2/status.json 2>/dev/null \
-    | sed -n 's/.*"indicator":[[:space:]]*"\([a-z]*\)".*/\1/p')
+    | sed -n 's/.*"indicator":[[:space:]]*"\([^"]*\)".*/\1/p')
   if [[ -n "$indicator" ]]; then
     printf '%s\n' "$indicator" > "$cache_file"
   else
