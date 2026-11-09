@@ -239,6 +239,24 @@ test("codexReviewState reads the Verdict section in both forms", () => {
   assert.equal(codexReviewState([codex("- [x] 💬 Comment")], HEAD), "comments");
 });
 
+test("codexReviewState ignores the unticked options of a checklist verdict", () => {
+  const checklist = (approve, comment, changes) =>
+    codex(
+      [
+        `**[${approve}] ✅ Approve**  `,
+        `**[${comment}] 💬 Comment**  `,
+        `**[${changes}] 🔄 Request Changes** — text`,
+      ].join("\n"),
+    );
+  assert.equal(codexReviewState([checklist("x", " ", " ")], HEAD), "approved");
+  assert.equal(codexReviewState([checklist(" ", "x", " ")], HEAD), "comments");
+  assert.equal(codexReviewState([checklist(" ", " ", "x")], HEAD), "changes");
+  const list = codex("- [ ] ✅ Approve\n- [ ] 💬 Comment\n- [x] 🔄 **Request Changes** — text");
+  assert.equal(codexReviewState([list], HEAD), "changes");
+  const approved = codex("- [x] ✅ Approve\n- [ ] 💬 Comment\n- [ ] 🔄 **Request Changes**");
+  assert.equal(codexReviewState([approved], HEAD), "approved");
+});
+
 test("codexReviewState ignores comments of other authors and without the marker", () => {
   const quoted = codex("Approve", "2026-11-06T10:30:00Z", { author: { login: "tim-hilde" } });
   const plain = codex("Approve", "2026-11-06T10:30:00Z", { body: "## Verdict\nApprove" });

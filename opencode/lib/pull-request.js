@@ -94,7 +94,11 @@ function verdictSection(body) {
   const start = lines.findIndex((line) => line.trim() === "## Verdict");
   if (start === -1) return "";
   const end = lines.findIndex((line, index) => index > start && line.startsWith("## "));
-  return lines.slice(start + 1, end === -1 ? undefined : end).join("\n");
+  // Some comments list all three options as a checklist and tick one; the unticked options do not count.
+  return lines
+    .slice(start + 1, end === -1 ? undefined : end)
+    .filter((line) => !line.includes("[ ]"))
+    .join("\n");
 }
 
 export function codexReviewState(comments, headCommittedAt) {
