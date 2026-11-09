@@ -9,7 +9,7 @@ import {
   findPullRequestUrlsInHistory,
   isPullRequestVisible,
   mergePullRequestUrls,
-  PR_FIELDS,
+  PR_QUERY_ARGS,
   pullRequestFetcher,
   pullRequestSymbol,
   pullRequestTone,
@@ -24,11 +24,11 @@ const POLL_MS = 30_000
 const GITHUB_ICON = "\uf408"
 
 const runGh = (url: string) =>
-  new Promise<string>((resolve, reject) =>
-    execFile("gh", ["pr", "view", url, "--json", PR_FIELDS], { timeout: 10_000 }, (error, stdout) =>
-      error ? reject(error) : resolve(stdout),
-    ),
-  )
+  new Promise<string>((resolve, reject) => {
+    const args = PR_QUERY_ARGS(url)
+    if (args === undefined) return reject(new Error(`not a pull request url: ${url}`))
+    execFile("gh", args, { timeout: 10_000 }, (error, stdout) => (error ? reject(error) : resolve(stdout)))
+  })
 
 const openUrl = (url: string) => execFile("open", [url], () => {})
 

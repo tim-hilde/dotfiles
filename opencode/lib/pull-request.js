@@ -1,6 +1,6 @@
 // Pull request named in a session's chat, with its state read through `gh pr view`.
 
-import { sharedCache, PR_CACHE_TTL_MS } from "./pr-cache.js"
+import { sharedCache, PR_CACHE_TTL_MS, pullRequestRef } from "./pr-cache.js"
 
 const KINDS = { OPEN: "open", MERGED: "merged", CLOSED: "closed" };
 const SYMBOLS = { open: "\uf407", draft: "\uf4dd", merged: "\uf419", closed: "\uf4dc" };
@@ -10,13 +10,17 @@ const CI_TONES = { success: "success", failure: "error", pending: "warning", non
 const REVIEW_SYMBOLS = { approved: "✓", comments: "!", changes: "✗", stale: "~", none: "–" };
 const REVIEW_TONES = { approved: "success", comments: "warning", changes: "error", stale: "warning", none: "muted" };
 const PR_URL = /https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/pull\/\d+/g;
-const PASSED_CONCLUSIONS = new Set(["SUCCESS", "NEUTRAL", "SKIPPED"]);
-const FAILED_CONTEXT_STATES = new Set(["FAILURE", "ERROR"]);
-const PENDING_CONTEXT_STATES = new Set(["PENDING", "EXPECTED"]);
 const CODEX_MARKER = "<!-- codex-review -->";
 const CODEX_AUTHOR = "github-actions";
 
-export const PR_FIELDS = "number,title,state,isDraft,url,closedAt,statusCheckRollup,comments,commits";
+// One request per pull request. `statusCheckRollup.state` is GitHub's own overall state, the same value the dashboard reads.
+export const PR_QUERY = `query($owner: String!, $repo: String!, $number: Int!) { repository(owner: $owner, name: $repo) { pullRequest(number: $number) { number title state isDraft url closedAt comments(last: 100) { nodes { body url createdAt author { login } } } commits(last: 1) { nodes { commit { committedDate statusCheckRollup { state } } } } } } }`;
+
+export const PR_QUERY_ARGS = (url) => {
+  const ref = pullRequestRef(url);
+  if (!ref) return undefined;
+  return ["api", "graphql", "-f", `query=${PR_QUERY}`, "-f", `owner=${ref.owner}`, "-f", `repo=${ref.repo}`, "-F", `number=${ref.number}`];
+};
 
 export const MAX_PULL_REQUESTS = 10;
 
@@ -61,39 +65,11 @@ export async function findPullRequestUrlsInHistory(listPage, limit = MAX_PULL_RE
   return mergePullRequestUrls(found, limit);
 }
 
-// A run that has not started has no start time (gh prints the zero time), and it is newer than any finished run.
-const startedAt = (check) => {
-  const time = Date.parse(check.startedAt ?? "");
-  if (time > 0) return time;
-  return check.status !== undefined && check.status !== "COMPLETED" ? Infinity : 0;
-};
+const ROLLUP_STATES = { SUCCESS: "success", FAILURE: "failure", ERROR: "failure" };
 
-// gh lists every run on the head commit, so a re-run check appears more than once. Only the newest run counts.
-function newestChecks(rollup) {
-  const newest = new Map();
-  for (const check of rollup) {
-    const key =
-      check.__typename === "StatusContext" ? `context:${check.context}` : `run:${check.workflowName ?? ""}:${check.name}`;
-    const seen = newest.get(key);
-    if (!seen || startedAt(check) >= startedAt(seen)) newest.set(key, check);
-  }
-  return [...newest.values()];
-}
-
-export function ciState(rollup) {
-  if (!Array.isArray(rollup) || rollup.length === 0) return "none";
-  let pending = false;
-  for (const check of newestChecks(rollup)) {
-    if (check.__typename === "StatusContext") {
-      if (FAILED_CONTEXT_STATES.has(check.state)) return "failure";
-      if (PENDING_CONTEXT_STATES.has(check.state)) pending = true;
-    } else if (check.status !== "COMPLETED") {
-      pending = true;
-    } else if (!PASSED_CONCLUSIONS.has(check.conclusion)) {
-      return "failure";
-    }
-  }
-  return pending ? "pending" : "success";
+export function ciFromRollup(state) {
+  if (state === null || state === undefined) return "none";
+  return ROLLUP_STATES[state] ?? "pending";
 }
 
 function verdictSection(body) {
@@ -129,7 +105,7 @@ export function codexReviewState(comments, headCommittedAt) {
 export function parsePullRequest(stdout) {
   let data;
   try {
-    data = JSON.parse(stdout);
+    data = JSON.parse(stdout)?.data?.repository?.pullRequest;
   } catch {
     return undefined;
   }
@@ -137,15 +113,15 @@ export function parsePullRequest(stdout) {
   if (!kind || !Number.isInteger(data.number) || typeof data.title !== "string" || typeof data.url !== "string") {
     return undefined;
   }
-  const headCommittedAt = data.commits?.at(-1)?.committedDate;
+  const head = data.commits?.nodes?.at(-1)?.commit;
   return {
     number: data.number,
     title: data.title,
     url: data.url,
     kind,
     closedAt: data.closedAt ?? null,
-    ci: ciState(data.statusCheckRollup),
-    review: codexReviewState(data.comments, headCommittedAt),
+    ci: ciFromRollup(head?.statusCheckRollup?.state),
+    review: codexReviewState(data.comments?.nodes, head?.committedDate),
   };
 }
 

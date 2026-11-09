@@ -15,10 +15,16 @@ export function sharedCacheBase() {
   return join(process.env.XDG_CACHE_HOME ?? join(homedir(), ".cache"), "pr-data")
 }
 
-export function sharedPullRequestPath(url, base = sharedCacheBase()) {
+export function pullRequestRef(url) {
   const match = /^https:\/\/github\.com\/([\w.-]+)\/([\w.-]+)\/pull\/(\d+)$/.exec(url ?? "")
   if (!match) return undefined
-  return join(base, `${match[1]}__${match[2]}__${match[3]}.json`)
+  return { owner: match[1], repo: match[2], number: Number(match[3]) }
+}
+
+export function sharedPullRequestPath(url, base = sharedCacheBase()) {
+  const ref = pullRequestRef(url)
+  if (!ref) return undefined
+  return join(base, `${ref.owner}__${ref.repo}__${ref.number}.json`)
 }
 
 function isPullRequest(value) {
