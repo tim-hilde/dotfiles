@@ -13,8 +13,8 @@ const PR_URL = /https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/pull\/\d+/g;
 const CODEX_MARKER = "<!-- codex-review -->";
 const CODEX_AUTHOR = "github-actions";
 
-// One request per pull request. `statusCheckRollup.state` is GitHub's own overall state, the same value the dashboard reads.
-export const PR_QUERY = `query($owner: String!, $repo: String!, $number: Int!) { repository(owner: $owner, name: $repo) { pullRequest(number: $number) { number title state isDraft url closedAt comments(last: 100) { nodes { body url createdAt author { login } } } commits(last: 1) { nodes { commit { committedDate statusCheckRollup { state } } } } } } }`;
+// One request per pull request. The CI state comes from the checks of the head commit, like the dashboard (`mapCi` in pr-dashboard/src/ci.ts).
+export const PR_QUERY = `query($owner: String!, $repo: String!, $number: Int!) { repository(owner: $owner, name: $repo) { pullRequest(number: $number) { number title state isDraft url closedAt comments(last: 100) { nodes { body url createdAt author { login } } } commits(last: 1) { nodes { commit { committedDate statusCheckRollup { state contexts(first: 100) { pageInfo { hasNextPage } nodes { __typename ... on CheckRun { name status conclusion startedAt checkSuite { workflowRun { event workflow { name } } } } ... on StatusContext { context state createdAt } } } } } } } } } }`;
 
 export function pullRequestQueryArgs(url) {
   const ref = pullRequestRef(url);
@@ -65,11 +65,60 @@ export async function findPullRequestUrlsInHistory(listPage, limit = MAX_PULL_RE
   return mergePullRequestUrls(found, limit);
 }
 
-const ROLLUP_STATES = { SUCCESS: "success", FAILURE: "failure", ERROR: "failure" };
+const PASSED_CONCLUSIONS = new Set(["SUCCESS", "NEUTRAL", "SKIPPED"]);
+const FAILED_CONTEXT_STATES = new Set(["FAILURE", "ERROR"]);
+const PENDING_CONTEXT_STATES = new Set(["PENDING", "EXPECTED"]);
 
-export function ciFromRollup(state) {
+// A check without a start time is unfinished, so it is newer than any finished check.
+const startedAt = (node) => {
+  const time = Date.parse(node.startedAt ?? node.createdAt ?? "");
+  if (time > 0) return time;
+  return node.status != null && node.status !== "COMPLETED" ? Infinity : 0;
+};
+
+// GitHub's own overall state, used when the check list is missing or cut off by the page size.
+function ciFromAggregate(state) {
   if (state === null || state === undefined) return "none";
-  return ROLLUP_STATES[state] ?? "pending";
+  if (state === "SUCCESS") return "success";
+  if (state === "FAILURE" || state === "ERROR") return "failure";
+  return "pending";
+}
+
+// GitHub lists every run on the head commit, so a re-run check appears more than once. Only the newest run counts.
+function newestChecks(nodes) {
+  const newest = new Map();
+  for (const node of nodes) {
+    const suite = node.checkSuite?.workflowRun;
+    const key =
+      node.__typename === "StatusContext"
+        ? `context:${node.context}`
+        : `run:${suite?.event ?? ""}:${suite?.workflow?.name ?? ""}:${node.name}`;
+    const seen = newest.get(key);
+    if (!seen || startedAt(node) >= startedAt(seen)) newest.set(key, node);
+  }
+  return [...newest.values()];
+}
+
+// A check that still runs keeps the pull request yellow, even when another one already failed.
+export function ciState(rollup) {
+  const contexts = rollup?.contexts;
+  const nodes = contexts?.nodes ?? [];
+  if (nodes.length === 0 || contexts?.pageInfo?.hasNextPage) return ciFromAggregate(rollup?.state);
+  const newest = newestChecks(nodes);
+  if (newest.some(running)) return "pending";
+  return newest.some(failed) ? "failure" : "success";
+}
+
+function running(node) {
+  return node.__typename === "StatusContext"
+    ? PENDING_CONTEXT_STATES.has(node.state)
+    : node.status != null && node.status !== "COMPLETED";
+}
+
+function failed(node) {
+  return node.__typename === "StatusContext"
+    ? FAILED_CONTEXT_STATES.has(node.state)
+    : !PASSED_CONCLUSIONS.has(node.conclusion);
 }
 
 function verdictSection(body) {
@@ -120,7 +169,7 @@ export function parsePullRequest(stdout) {
     url: data.url,
     kind,
     closedAt: data.closedAt ?? null,
-    ci: ciFromRollup(head?.statusCheckRollup?.state),
+    ci: ciState(head?.statusCheckRollup),
     review: codexReviewState(data.comments?.nodes, head?.committedDate),
   };
 }

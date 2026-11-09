@@ -2,7 +2,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
-  ciFromRollup,
+  ciState,
   ciSymbol,
   ciTone,
   codexReviewState,
@@ -34,7 +34,29 @@ const gh = (overrides) =>
           url: "https://github.com/o/r/pull/482",
           closedAt: null,
           comments: { nodes: [] },
-          commits: { nodes: [{ commit: { committedDate: "2026-11-06T10:00:00Z", statusCheckRollup: { state: "SUCCESS" } } }] },
+          commits: {
+            nodes: [
+              {
+                commit: {
+                  committedDate: "2026-11-06T10:00:00Z",
+                  statusCheckRollup: {
+                    state: "SUCCESS",
+                    contexts: {
+                      nodes: [
+                        {
+                          __typename: "CheckRun",
+                          name: "unit",
+                          status: "COMPLETED",
+                          conclusion: "SUCCESS",
+                          startedAt: "2026-11-06T09:55:00Z",
+                        },
+                      ],
+                    },
+                  },
+                },
+              },
+            ],
+          },
           ...overrides,
         },
       },
@@ -152,7 +174,7 @@ test("parses an open pull request", () => {
 test("asks for the comments, the last commit, and its rollup state", () => {
   assert.match(PR_QUERY, /comments\(last: 100\)/);
   assert.match(PR_QUERY, /commits\(last: 1\)/);
-  assert.match(PR_QUERY, /statusCheckRollup \{ state \}/);
+  assert.match(PR_QUERY, /statusCheckRollup \{ state contexts/);
 });
 
 test("builds the gh arguments from the pull request url", () => {
@@ -171,14 +193,114 @@ test("parsePullRequest survives a missing pull request and a head without checks
   assert.equal(pr?.ci, "none");
 });
 
-test("ciFromRollup uses GitHub's own overall state", () => {
-  assert.equal(ciFromRollup("SUCCESS"), "success");
-  assert.equal(ciFromRollup("FAILURE"), "failure");
-  assert.equal(ciFromRollup("ERROR"), "failure");
-  assert.equal(ciFromRollup("PENDING"), "pending");
-  assert.equal(ciFromRollup("EXPECTED"), "pending");
-  assert.equal(ciFromRollup(null), "none");
-  assert.equal(ciFromRollup(undefined), "none");
+test("ciState is none without any check", () => {
+  assert.equal(ciState(undefined), "none");
+  assert.equal(ciState(null), "none");
+  assert.equal(ciState({ state: null, contexts: { nodes: [] } }), "none");
+  assert.equal(ciState({ state: null, contexts: null }), "none");
+});
+
+test("ciState falls back to GitHub's overall state when the check list is missing or cut off", () => {
+  assert.equal(ciState({ state: "SUCCESS", contexts: { nodes: [] } }), "success");
+  assert.equal(
+    ciState({ state: "FAILURE", contexts: { nodes: [], pageInfo: { hasNextPage: true } } }),
+    "failure",
+  );
+  const passed = { __typename: "CheckRun", name: "unit", status: "COMPLETED", conclusion: "SUCCESS" };
+  assert.equal(
+    ciState({ state: "FAILURE", contexts: { nodes: [passed], pageInfo: { hasNextPage: true } } }),
+    "failure",
+  );
+});
+
+test("ciState keeps a job with the same name in a different event or workflow apart", () => {
+  const suite = (event, workflow) => ({ workflowRun: { event, workflow: { name: workflow } } });
+  const checkRun = (conclusion, startedAt, event, workflow) => ({
+    __typename: "CheckRun",
+    name: "test",
+    status: "COMPLETED",
+    conclusion,
+    startedAt,
+    checkSuite: suite(event, workflow),
+  });
+  const failedPush = checkRun("FAILURE", "2026-11-09T12:31:17Z", "push", "ci");
+  const passedPr = checkRun("SUCCESS", "2026-11-09T12:32:25Z", "pull_request", "ci");
+  const passedRelease = checkRun("SUCCESS", "2026-11-09T12:33:25Z", "push", "release");
+  assert.equal(ciState({ state: "FAILURE", contexts: { nodes: [failedPush, passedPr] } }), "failure");
+  assert.equal(ciState({ state: "SUCCESS", contexts: { nodes: [passedPr, failedPush] } }), "failure");
+  assert.equal(ciState({ state: "FAILURE", contexts: { nodes: [failedPush, passedRelease] } }), "failure");
+});
+
+test("ciState is success when every check passed, was skipped, or was neutral", () => {
+  const rollup = (nodes) => ({ state: "SUCCESS", contexts: { nodes } });
+  assert.equal(
+    ciState(
+      rollup([
+        { __typename: "CheckRun", name: "a", status: "COMPLETED", conclusion: "SUCCESS" },
+        { __typename: "CheckRun", name: "b", status: "COMPLETED", conclusion: "SKIPPED" },
+        { __typename: "CheckRun", name: "c", status: "COMPLETED", conclusion: "NEUTRAL" },
+      ]),
+    ),
+    "success",
+  );
+});
+
+test("ciState is failure for a finished check that did not pass", () => {
+  const nodes = (conclusion) => [{ __typename: "CheckRun", name: "unit", status: "COMPLETED", conclusion }];
+  for (const conclusion of ["FAILURE", "TIMED_OUT", "CANCELLED", "ACTION_REQUIRED", "STARTUP_FAILURE", "STALE"]) {
+    assert.equal(ciState({ state: "FAILURE", contexts: { nodes: nodes(conclusion) } }), "failure", conclusion);
+  }
+});
+
+test("ciState stays pending while any check still runs, even after a failure", () => {
+  const failing = { __typename: "CheckRun", name: "data-layer", status: "COMPLETED", conclusion: "FAILURE" };
+  const runningCheck = { __typename: "CheckRun", name: "unit", status: "IN_PROGRESS", conclusion: null };
+  const pendingContext = { __typename: "StatusContext", context: "deploy", state: "PENDING" };
+  const rollup = (nodes) => ({ state: "FAILURE", contexts: { nodes } });
+  assert.equal(ciState(rollup([failing, runningCheck])), "pending");
+  assert.equal(ciState(rollup([failing])), "failure");
+  assert.equal(ciState(rollup([failing, pendingContext])), "pending");
+});
+
+const check = (name, conclusion, startedAt, status = "COMPLETED") => ({
+  __typename: "CheckRun",
+  name,
+  status,
+  conclusion,
+  startedAt,
+});
+
+test("ciState judges only the newest run of a re-run check", () => {
+  const cancelled = check("data-layer", "CANCELLED", "2026-11-09T15:48:18Z");
+  const passed = check("data-layer", "SUCCESS", "2026-11-09T15:57:23Z");
+  assert.equal(ciState({ state: "FAILURE", contexts: { nodes: [cancelled, passed] } }), "success");
+  assert.equal(ciState({ state: "FAILURE", contexts: { nodes: [passed, cancelled] } }), "success");
+});
+
+test("ciState shows a failure when the newest run of a check failed", () => {
+  const passed = check("tests", "SUCCESS", "2026-11-09T12:31:17Z");
+  const failed = check("tests", "FAILURE", "2026-11-09T12:32:25Z");
+  assert.equal(ciState({ state: "FAILURE", contexts: { nodes: [passed, failed] } }), "failure");
+});
+
+test("ciState is pending when a re-run replaced a failed run and still runs", () => {
+  const failed = check("tests", "FAILURE", "2026-11-09T12:31:17Z");
+  const runningCheck = check("tests", "", "2026-11-09T12:32:25Z", "IN_PROGRESS");
+  assert.equal(ciState({ state: "FAILURE", contexts: { nodes: [failed, runningCheck] } }), "pending");
+});
+
+test("ciState is pending when a queued re-run has no start time yet", () => {
+  const failed = check("tests", "FAILURE", "2026-11-09T12:31:17Z");
+  const queuedZero = check("tests", "", "0001-01-01T00:00:00Z", "QUEUED");
+  const queuedNull = check("tests", "", null, "QUEUED");
+  assert.equal(ciState({ state: "FAILURE", contexts: { nodes: [failed, queuedZero] } }), "pending");
+  assert.equal(ciState({ state: "FAILURE", contexts: { nodes: [queuedNull, failed] } }), "pending");
+});
+
+test("ciState judges a status context by its newest state", () => {
+  const failed = { __typename: "StatusContext", context: "deploy", state: "FAILURE", createdAt: "2026-11-09T12:31:17Z" };
+  const passed = { __typename: "StatusContext", context: "deploy", state: "SUCCESS", createdAt: "2026-11-09T12:32:25Z" };
+  assert.equal(ciState({ state: "FAILURE", contexts: { nodes: [failed, passed] } }), "success");
 });
 
 const codex = (verdict, createdAt = "2026-11-06T10:30:00Z", overrides = {}) => ({
@@ -252,7 +374,14 @@ test("parsePullRequest derives the CI and review state", () => {
           {
             commit: {
               committedDate: HEAD,
-              statusCheckRollup: { state: "FAILURE" },
+              statusCheckRollup: {
+                state: "FAILURE",
+                contexts: {
+                  nodes: [
+                    { __typename: "CheckRun", name: "unit", status: "COMPLETED", conclusion: "FAILURE" },
+                  ],
+                },
+              },
             },
           },
         ],
