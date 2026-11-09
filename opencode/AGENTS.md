@@ -98,7 +98,19 @@ Decompose so that every rule has one owner.
 - Give each subagent a disjoint set of files and a self-contained brief: goal, files it owns, conventions it must follow, and how it proves success.
 - If several subagents need the same facts, write them once to a file and pass the path. Do not repeat them in every prompt. If the steps already hand files to each other, add nothing.
 - Start only as many parallel subagents as there are independent parts. Extra subagents without a part of their own only add coordination traffic.
-- After the parts come back, make sure that the seams fit: read the interfaces between the parts and run the full test suite. Do not accept "the subagents agreed" as proof.
+- After the parts come back, make sure that the seams fit: read the interfaces between the parts and run the tests that cover them (see Tests). Do not accept "the subagents agreed" as proof.
+
+# Tests
+
+Do not run a full test suite on this machine. Several sessions share it, and two full suites at once overload CPU and RAM. CI runs the full suite on every pull request.
+
+Locally, run only the tests that cover your change:
+
+- Vitest: `npx vitest run <test files>` or `npx vitest related <changed files> --run`.
+- Database tests: only the `*.db.test.ts` and pgTAP files of the changed area.
+- pytest: only the test files of the changed modules, without `-n auto`.
+
+This rule applies to every agent: subagents, the `reviewer`, and the test command of `review-loop`. If CI fails, reproduce only the failing files locally. If the user asks for a full run, run it.
 
 # Large Files
 

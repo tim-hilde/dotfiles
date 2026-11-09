@@ -22,6 +22,8 @@ Find how this project runs its tests, in this order:
 
 Preserve any required prefix/wrapper exactly as documented (env loaders, runners, etc.). This is for verifying your own fixes below — it is never passed to the reviewer.
 
+Narrow it to the tests that cover the changed files (see `# Tests` in the global `AGENTS.md`). Never run the full suite: CI runs it on the pull request.
+
 ## Loop (max 6 rounds)
 
 Repeat until a round comes back clean, or stop after 6 rounds:
