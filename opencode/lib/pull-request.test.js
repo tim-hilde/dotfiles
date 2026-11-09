@@ -12,7 +12,7 @@ import {
   mergePullRequestUrls,
   parsePullRequest,
   PR_QUERY,
-  PR_QUERY_ARGS,
+  pullRequestQueryArgs,
   pullRequestFetcher,
   pullRequestSymbol,
   pullRequestTone,
@@ -156,13 +156,19 @@ test("asks for the comments, the last commit, and its rollup state", () => {
 });
 
 test("builds the gh arguments from the pull request url", () => {
-  const args = PR_QUERY_ARGS("https://github.com/Merlin-Digital-Solutions/merlin-dashboard/pull/890");
+  const args = pullRequestQueryArgs("https://github.com/Merlin-Digital-Solutions/merlin-dashboard/pull/890");
   assert.equal(args?.[0], "api");
   assert.equal(args?.[1], "graphql");
   assert.ok(args?.includes("owner=Merlin-Digital-Solutions"));
   assert.ok(args?.includes("repo=merlin-dashboard"));
   assert.ok(args?.includes("number=890"));
-  assert.equal(PR_QUERY_ARGS("https://example.test/x"), undefined);
+  assert.equal(pullRequestQueryArgs("https://example.test/x"), undefined);
+});
+
+test("parsePullRequest survives a missing pull request and a head without checks", () => {
+  assert.equal(parsePullRequest(JSON.stringify({ data: { repository: { pullRequest: null } } })), undefined);
+  const pr = parsePullRequest(gh({ commits: { nodes: [{ commit: { committedDate: HEAD, statusCheckRollup: null } }] } }));
+  assert.equal(pr?.ci, "none");
 });
 
 test("ciFromRollup uses GitHub's own overall state", () => {

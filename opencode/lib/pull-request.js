@@ -1,4 +1,4 @@
-// Pull request named in a session's chat, with its state read through `gh pr view`.
+// Pull request named in a session's chat, with its state read through one `gh api graphql` request.
 
 import { sharedCache, PR_CACHE_TTL_MS, pullRequestRef } from "./pr-cache.js"
 
@@ -16,11 +16,11 @@ const CODEX_AUTHOR = "github-actions";
 // One request per pull request. `statusCheckRollup.state` is GitHub's own overall state, the same value the dashboard reads.
 export const PR_QUERY = `query($owner: String!, $repo: String!, $number: Int!) { repository(owner: $owner, name: $repo) { pullRequest(number: $number) { number title state isDraft url closedAt comments(last: 100) { nodes { body url createdAt author { login } } } commits(last: 1) { nodes { commit { committedDate statusCheckRollup { state } } } } } } }`;
 
-export const PR_QUERY_ARGS = (url) => {
+export function pullRequestQueryArgs(url) {
   const ref = pullRequestRef(url);
   if (!ref) return undefined;
   return ["api", "graphql", "-f", `query=${PR_QUERY}`, "-f", `owner=${ref.owner}`, "-f", `repo=${ref.repo}`, "-F", `number=${ref.number}`];
-};
+}
 
 export const MAX_PULL_REQUESTS = 10;
 
