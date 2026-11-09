@@ -112,7 +112,7 @@ function PullRequestsView(props: {
                 </text>
                 <box flexDirection="row" gap={1} flexShrink={0}>
                   <text fg={toneColor(pullRequestTone(pr.kind))}>{pullRequestSymbol(pr.kind)}</text>
-                  <Show when={showsChecks(pr)} fallback={<text>{"   "}</text>}>
+                  <Show when={showsChecks(pr)}>
                     <text fg={toneColor(ciTone(pr.ci))}>{ciSymbol(pr.ci)}</text>
                     <text fg={toneColor(reviewTone(pr.review))}>{reviewSymbol(pr.review)}</text>
                   </Show>
