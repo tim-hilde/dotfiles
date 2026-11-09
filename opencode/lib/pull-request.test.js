@@ -206,6 +206,13 @@ test("ciState is pending when a re-run replaced a failed run and still runs", ()
   assert.equal(ciState([failed, running]), "pending");
 });
 
+test("ciState is pending when a queued re-run has no start time yet", () => {
+  const failed = check("tests", "FAILURE", "2026-11-09T12:31:17Z");
+  const queued = check("tests", "", "0001-01-01T00:00:00Z", "QUEUED");
+  assert.equal(ciState([failed, queued]), "pending");
+  assert.equal(ciState([queued, failed]), "pending");
+});
+
 test("ciState keeps checks with the same name in different workflows apart", () => {
   const failed = check("build", "FAILURE", "2026-11-09T12:31:17Z", "COMPLETED", "ci");
   const passed = check("build", "SUCCESS", "2026-11-09T12:32:25Z", "COMPLETED", "release");
@@ -255,6 +262,12 @@ test("codexReviewState ignores the unticked options of a checklist verdict", () 
   assert.equal(codexReviewState([list], HEAD), "changes");
   const approved = codex("- [x] ✅ Approve\n- [ ] 💬 Comment\n- [ ] 🔄 **Request Changes**");
   assert.equal(codexReviewState([approved], HEAD), "approved");
+});
+
+test("codexReviewState takes the first option named in the verdict, not a later mention", () => {
+  assert.equal(codexReviewState([codex("**💬 Comment** — No blockers. Approve after the nits.")], HEAD), "comments");
+  assert.equal(codexReviewState([codex("**✅ Approve** — nothing here warrants Request Changes.")], HEAD), "approved");
+  assert.equal(codexReviewState([codex("**🔄 Request Changes** — do not Approve yet.")], HEAD), "changes");
 });
 
 test("codexReviewState ignores comments of other authors and without the marker", () => {

@@ -59,7 +59,12 @@ export async function findPullRequestUrlsInHistory(listPage, limit = MAX_PULL_RE
   return mergePullRequestUrls(found, limit);
 }
 
-const startedAt = (check) => Date.parse(check.startedAt ?? "") || 0;
+// A run that has not started has no start time (gh prints the zero time), and it is newer than any finished run.
+const startedAt = (check) => {
+  const time = Date.parse(check.startedAt ?? "");
+  if (time > 0) return time;
+  return check.status !== undefined && check.status !== "COMPLETED" ? Infinity : 0;
+};
 
 // gh lists every run on the head commit, so a re-run check appears more than once. Only the newest run counts.
 function newestChecks(rollup) {
@@ -108,10 +113,12 @@ export function codexReviewState(comments, headCommittedAt) {
   if (reviews.length === 0) return "none";
   const latest = reviews.reduce((a, b) => (Date.parse(b.createdAt) >= Date.parse(a.createdAt) ? b : a));
   const verdict = verdictSection(latest.body);
-  let state = "none";
-  if (verdict.includes("Request Changes")) state = "changes";
-  else if (verdict.includes("Approve")) state = "approved";
-  else if (verdict.includes("Comment")) state = "comments";
+  const named = [
+    ["changes", verdict.indexOf("Request Changes")],
+    ["approved", verdict.indexOf("Approve")],
+    ["comments", verdict.indexOf("Comment")],
+  ].filter(([, index]) => index !== -1);
+  const state = named.length === 0 ? "none" : named.reduce((a, b) => (b[1] < a[1] ? b : a))[0];
   const head = Date.parse(headCommittedAt ?? "");
   const written = Date.parse(latest.createdAt);
   return !Number.isNaN(head) && !Number.isNaN(written) && written < head ? "stale" : state;
