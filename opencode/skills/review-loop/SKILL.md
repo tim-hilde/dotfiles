@@ -1,4 +1,5 @@
 ---
+name: review-loop
 description: Review the current branch with the reviewer subagent, fix blockers, and re-review until clean; then triage remaining Important/Nit findings and surface anything left open. Best-effort review loop — not a hard merge gate.
 ---
 
