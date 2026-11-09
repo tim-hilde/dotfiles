@@ -1,5 +1,7 @@
 // Pull request named in a session's chat, with its state read through `gh pr view`.
 
+import { sharedCache } from "./pr-cache.js"
+
 const KINDS = { OPEN: "open", MERGED: "merged", CLOSED: "closed" };
 const SYMBOLS = { open: "\uf407", draft: "\uf4dd", merged: "\uf419", closed: "\uf4dc" };
 const TONES = { open: "success", draft: "muted", merged: "info", closed: "error" };
@@ -187,12 +189,30 @@ export function reviewTone(state) {
   return REVIEW_TONES[state];
 }
 
-export function pullRequestFetcher(run, ttl = 60_000, clock = Date.now) {
+export function pullRequestFetcher(run, ttl = 60_000, clock = Date.now, shared = sharedCache) {
   const cache = new Map();
   return (url) => {
     const hit = cache.get(url);
     if (hit && clock() - hit.at < ttl) return hit.result;
-    const result = run(url).then(parsePullRequest, () => undefined);
+    let stored;
+    try {
+      stored = shared.read(url, clock(), ttl);
+    } catch {}
+    if (stored) {
+      const result = Promise.resolve(stored);
+      cache.set(url, { at: clock(), result });
+      return result;
+    }
+    const result = run(url)
+      .then(parsePullRequest, () => undefined)
+      .then((pr) => {
+        if (pr) {
+          try {
+            shared.write(pr, clock());
+          } catch {}
+        }
+        return pr;
+      });
     cache.set(url, { at: clock(), result });
     return result;
   };

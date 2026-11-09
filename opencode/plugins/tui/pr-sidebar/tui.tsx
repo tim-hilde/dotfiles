@@ -18,6 +18,7 @@ import {
   showsChecks,
   truncateEnd,
 } from "../../../lib/pull-request.js"
+import { PR_CACHE_TTL_MS } from "../../../lib/pr-cache.js"
 
 const POLL_MS = 30_000
 const GITHUB_ICON = "\uf408"
@@ -36,6 +37,7 @@ function PullRequestsView(props: {
   sessionID: string
   fetchPullRequest: (url: string) => Promise<any>
   historyUrls: (sessionID: string) => Promise<string[]>
+  track: (sessionID: string, urls: string[]) => void
 }) {
   const { data, theme } = props.context
   const [history, setHistory] = createSignal<string[]>([])
@@ -58,6 +60,7 @@ function PullRequestsView(props: {
 
   createEffect(() => {
     const current = urls()
+    props.track(props.sessionID, current)
     if (current.length === 0) return setPullRequests([])
     let live = true
     const load = () =>
@@ -155,6 +158,22 @@ export default Plugin.define({
       return histories.get(sessionID)!
     }
 
+    // Keep the shared cache warm while the TUI runs, also when the sidebar is not on screen.
+    const tracked = new Map<string, string[]>()
+    const track = (sessionID: string, urls: string[]) => {
+      tracked.delete(sessionID)
+      tracked.set(sessionID, urls)
+      while (tracked.size > 5) {
+        const oldest = tracked.keys().next().value
+        if (oldest === undefined) break
+        tracked.delete(oldest)
+      }
+    }
+    const background = setInterval(() => {
+      for (const urls of tracked.values()) for (const url of urls) void fetchPullRequest(url)
+    }, PR_CACHE_TTL_MS)
+    background.unref?.()
+
     return context.ui.slot({
       append: "sidebar.content",
       render: (props: { sessionID: string }) => (
@@ -163,6 +182,7 @@ export default Plugin.define({
           sessionID={props.sessionID}
           fetchPullRequest={fetchPullRequest}
           historyUrls={historyUrls}
+          track={track}
         />
       ),
     })

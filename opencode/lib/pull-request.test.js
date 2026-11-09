@@ -32,6 +32,7 @@ const gh = (overrides) =>
   });
 
 const url = (number) => `https://github.com/o/r/pull/${number}`;
+const noShared = { read: () => undefined, write: () => {} };
 const text = (value) => ({ type: "text", text: value });
 const assistant = (...content) => ({ type: "assistant", content });
 const named = (number) => assistant(text(`PR: ${url(number)}`));
@@ -384,7 +385,7 @@ test("tones follow the state", () => {
 test("fetcher runs gh once per URL within the cache time", async () => {
   let now = 0;
   const calls = [];
-  const fetchPr = pullRequestFetcher(async (target) => (calls.push(target), gh()), 60_000, () => now);
+  const fetchPr = pullRequestFetcher(async (target) => (calls.push(target), gh()), 60_000, () => now, noShared);
   const first = await fetchPr("/a");
   now = 59_000;
   const second = await fetchPr("/a");
@@ -396,7 +397,7 @@ test("fetcher runs gh once per URL within the cache time", async () => {
 test("fetcher runs gh again after the cache time", async () => {
   let now = 0;
   let calls = 0;
-  const fetchPr = pullRequestFetcher(async () => (calls++, gh()), 60_000, () => now);
+  const fetchPr = pullRequestFetcher(async () => (calls++, gh()), 60_000, () => now, noShared);
   await fetchPr("/a");
   now = 60_000;
   await fetchPr("/a");
@@ -404,8 +405,51 @@ test("fetcher runs gh again after the cache time", async () => {
 });
 
 test("fetcher returns undefined when gh fails", async () => {
-  const fetchPr = pullRequestFetcher(async () => {
-    throw new Error("no pull requests found for branch");
-  });
+  const fetchPr = pullRequestFetcher(
+    async () => {
+      throw new Error("no pull requests found for branch");
+    },
+    60_000,
+    Date.now,
+    noShared,
+  );
   assert.equal(await fetchPr("/a"), undefined);
+});
+
+const shared = (stored) => ({
+  reads: [],
+  writes: [],
+  read(url, now, ttl) {
+    this.reads.push([url, now, ttl]);
+    return stored;
+  },
+  write(pr, now) {
+    this.writes.push([pr, now]);
+  },
+});
+
+test("fetcher reads the shared cache and does not run gh on a hit", async () => {
+  let calls = 0;
+  const store = shared({ number: 7, title: "cached", url: "/a", kind: "open", closedAt: null, ci: "success", review: "approved" });
+  const fetchPr = pullRequestFetcher(async () => (calls++, gh()), 60_000, () => 0, store);
+  assert.equal((await fetchPr("/a")).number, 7);
+  assert.equal(calls, 0);
+  assert.deepEqual(store.reads, [["/a", 0, 60_000]]);
+});
+
+test("fetcher writes a fetched pull request to the shared cache", async () => {
+  let now = 0;
+  const store = shared(undefined);
+  const fetchPr = pullRequestFetcher(async () => gh(), 60_000, () => now, store);
+  await fetchPr("/a");
+  assert.equal(store.writes.length, 1);
+  assert.equal(store.writes[0][0].number, 482);
+  assert.equal(store.writes[0][1], 0);
+});
+
+test("fetcher does not write when gh returns nothing it can parse", async () => {
+  const store = shared(undefined);
+  const fetchPr = pullRequestFetcher(async () => "not json", 60_000, () => 0, store);
+  assert.equal(await fetchPr("/a"), undefined);
+  assert.deepEqual(store.writes, []);
 });
