@@ -102,7 +102,7 @@ feat: add user avatar upload with S3 storage
 
 ### Step 5 — Wait for the Codex review (Merlin-Digital-Solutions only)
 
-Repositories of the GitHub organization `Merlin-Digital-Solutions` run the workflow `codex-review.yml` (merlin-spricht, merlin-dashboard, merlin-cluster, scraping-infrastructure). After every push to a PR, it posts a comment that starts with `<!-- codex-review -->`, about 10 to 15 minutes later. The comment has the sections `Required Changes` (🔴 blocking findings), `Important Suggestions`, `Minor Suggestions` and `Verdict`.
+Repositories of the GitHub organization `Merlin-Digital-Solutions` run the workflow `codex-review.yml` (merlin-spricht, merlin-schreibt, merlin-dashboard, merlin-cluster, scraping-infrastructure). After every push to a PR, it posts a comment that starts with `<!-- codex-review -->`, about 10 to 15 minutes later. The comment has the sections `Required Changes` (🔴 blocking findings), `Important Suggestions`, `Minor Suggestions` and `Verdict`.
 
 If the PR is in another organization, skip this step: there is no such comment, and the script waits for nothing.
 
