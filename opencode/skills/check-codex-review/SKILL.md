@@ -30,7 +30,7 @@ description: Use it when the user wants to wait for, check, or fetch the automat
 6. Führe die Tests des Projekts aus (Befehl aus `AGENTS.md` oder `CLAUDE.md`, sonst aus `package.json`, `Makefile`, `pyproject.toml` usw.). Committe erst, wenn sie grün sind.
 7. Committe auf Englisch im Conventional-Commit-Format und pushe ohne Force. Setze `<SHA>` auf den neuen Commit (`git rev-parse HEAD`) und beginne die nächste Runde.
 
-Ist auch die 5. Runde blockiert, brich ab und melde die offenen Blocker.
+Sollten die Reviews immer weiter auf Edge Cases der Implementierung verweisen, brich ab und hinterfrage, ob der gewählte Ansatz der richtige ist und ob es eine Alternative gibt. Besprich das mit dem User.
 
 ## Abschlussbericht
 
