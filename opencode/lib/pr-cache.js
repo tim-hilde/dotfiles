@@ -1,5 +1,5 @@
 // Shared pull request data for the dashboard (`prs`) and the OpenCode pr sidebar.
-// One small file per pull request, so both programs see the same state and neither refetches what the other already has.
+// One small file per pull request. The dashboard writes what it fetches, and the sidebar reads it before it runs gh itself.
 
 import { mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs"
 import { homedir } from "node:os"
@@ -54,7 +54,7 @@ export function writeSharedPullRequest(pr, now = Date.now(), base = sharedCacheB
   if (!path) return false
   try {
     mkdirSync(dirname(path), { recursive: true, mode: 0o700 })
-    const temporary = `${path}.tmp`
+    const temporary = `${path}.${process.pid}.tmp`
     writeFileSync(temporary, JSON.stringify({ version: 1, fetchedAt: new Date(now).toISOString(), pr }), {
       mode: 0o600,
     })

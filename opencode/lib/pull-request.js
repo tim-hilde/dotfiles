@@ -1,6 +1,6 @@
 // Pull request named in a session's chat, with its state read through `gh pr view`.
 
-import { sharedCache } from "./pr-cache.js"
+import { sharedCache, PR_CACHE_TTL_MS } from "./pr-cache.js"
 
 const KINDS = { OPEN: "open", MERGED: "merged", CLOSED: "closed" };
 const SYMBOLS = { open: "\uf407", draft: "\uf4dd", merged: "\uf419", closed: "\uf4dc" };
@@ -189,7 +189,7 @@ export function reviewTone(state) {
   return REVIEW_TONES[state];
 }
 
-export function pullRequestFetcher(run, ttl = 60_000, clock = Date.now, shared = sharedCache) {
+export function pullRequestFetcher(run, ttl = PR_CACHE_TTL_MS, clock = Date.now, shared = sharedCache) {
   const cache = new Map();
   return (url) => {
     const hit = cache.get(url);
@@ -198,11 +198,8 @@ export function pullRequestFetcher(run, ttl = 60_000, clock = Date.now, shared =
     try {
       stored = shared.read(url, clock(), ttl);
     } catch {}
-    if (stored) {
-      const result = Promise.resolve(stored);
-      cache.set(url, { at: clock(), result });
-      return result;
-    }
+    // A hit from the shared file is not pinned in memory: the file is the clock, so the next call reads it again.
+    if (stored) return Promise.resolve(stored);
     const result = run(url)
       .then(parsePullRequest, () => undefined)
       .then((pr) => {

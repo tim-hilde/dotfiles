@@ -421,7 +421,7 @@ const shared = (stored) => ({
   writes: [],
   read(url, now, ttl) {
     this.reads.push([url, now, ttl]);
-    return stored;
+    return typeof stored === "function" ? stored(now) : stored;
   },
   write(pr, now) {
     this.writes.push([pr, now]);
@@ -435,6 +435,21 @@ test("fetcher reads the shared cache and does not run gh on a hit", async () => 
   assert.equal((await fetchPr("/a")).number, 7);
   assert.equal(calls, 0);
   assert.deepEqual(store.reads, [["/a", 0, 60_000]]);
+});
+
+test("fetcher reads the shared file again instead of pinning a hit in memory", async () => {
+  let now = 0;
+  let calls = 0;
+  const pr = { number: 7, title: "cached", url: "/a", kind: "open", closedAt: null, ci: "success", review: "approved" };
+  const store = shared((at) => (at < 60_000 ? pr : undefined));
+  const fetchPr = pullRequestFetcher(async () => (calls++, gh()), 60_000, () => now, store);
+  assert.equal((await fetchPr("/a")).number, 7);
+  now = 59_999;
+  assert.equal((await fetchPr("/a")).number, 7);
+  assert.equal(calls, 0);
+  now = 60_000;
+  assert.equal((await fetchPr("/a")).number, 482);
+  assert.equal(calls, 1);
 });
 
 test("fetcher writes a fetched pull request to the shared cache", async () => {
