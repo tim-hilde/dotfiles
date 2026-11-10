@@ -1,7 +1,7 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "plugins": [
-    "@cortexkit/opencode-anthropic-auth@2.7.1",
+    "@cortexkit/opencode-anthropic-auth@2.8.0",
     "@mohak34/opencode-notifier@1.1.2",
     "superpowers@git+https://github.com/obra/superpowers.git#v7.0.2",
     "opencode-update-notifier",
@@ -119,11 +119,6 @@
       "context7": {
         "type": "remote",
         "url": "https://mcp.context7.com/mcp"
-      },
-      "axiom": {
-        "disabled": true,
-        "type": "remote",
-        "url": "https://mcp.axiom.co/mcp"
       }
     }
   },
