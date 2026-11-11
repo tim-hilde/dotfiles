@@ -82,4 +82,4 @@ Anschließend den PR im Browser öffnen
 
 ## Codex-Review abarbeiten (nur Merlin-Digital-Solutions)
 
-Nutze den `receiving-codex-review` skill.
+Nutze den `check-codex-review` skill.
