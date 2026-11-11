@@ -84,6 +84,42 @@ test("finds the pull request URL printed by gh pr create", () => {
   assert.deepEqual(findPullRequestUrls(messages), [url(7)]);
 });
 
+test("finds the pull request URL printed by gh pr view", () => {
+  const output = "title:\tFix retry loop\nnumber:\t951\nurl:\thttps://github.com/o/r/pull/951\n";
+  assert.deepEqual(findPullRequestUrls([assistant(shell("gh pr view 951", output))]), [url(951)]);
+});
+
+test("finds the pull request URL printed by a shell in ctx_execute", () => {
+  const part = {
+    type: "tool",
+    name: "ctx_execute",
+    state: {
+      status: "completed",
+      input: { language: "shell", code: "gh pr view 951 --json url --jq .url" },
+      content: [text(`${url(951)}\n`)],
+    },
+  };
+  assert.deepEqual(findPullRequestUrls([assistant(part)]), [url(951)]);
+});
+
+test("ignores a code tool that does not run a shell", () => {
+  const part = {
+    type: "tool",
+    name: "ctx_execute",
+    state: {
+      status: "completed",
+      input: { language: "javascript", code: "console.log('gh pr view 951')" },
+      content: [text(url(951))],
+    },
+  };
+  assert.deepEqual(findPullRequestUrls([assistant(part)]), []);
+});
+
+test("ignores a tool part without input", () => {
+  const part = { type: "tool", name: "shell", state: { status: "running", content: [text(url(6))] } };
+  assert.deepEqual(findPullRequestUrls([assistant(part)]), []);
+});
+
 test("finds several pull requests in the order of their last mention", () => {
   const messages = [named(1), assistant(text(`Neu: ${url(2)} und ${url(3)}`)), named(1), assistant(text("Fertig."))];
   assert.deepEqual(findPullRequestUrls(messages), [url(2), url(3), url(1)]);

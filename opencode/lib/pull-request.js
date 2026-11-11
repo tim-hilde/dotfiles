@@ -31,10 +31,19 @@ function textUrls(value) {
   return value.match(PR_URL) ?? [];
 }
 
+const URL_COMMANDS = /\bgh\s+pr\s+(?:create|view)\b/;
+
+function commandText(part) {
+  const input = part.state?.input;
+  if (typeof input?.command === "string") return input.command;
+  if (input?.language === "shell" && typeof input.code === "string") return input.code;
+  return "";
+}
+
 function partUrls(part) {
   if (part.type === "text") return textUrls(part.text);
-  if (part.type !== "tool" || !part.state?.input?.command?.includes("gh pr create")) return [];
-  return (part.state.content ?? []).flatMap((item) => textUrls(item.text));
+  if (part.type !== "tool" || !URL_COMMANDS.test(commandText(part))) return [];
+  return (part.state?.content ?? []).flatMap((item) => textUrls(item.text));
 }
 
 function collectUrls(messages) {
