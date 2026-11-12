@@ -1,8 +1,7 @@
 ---
 name: check-codex-review
-description: Use it when the user wants to wait for, check, or fetch the automated Codex
-  review of a pull request in the Merlin-Digital-Solutions GitHub organization, or
-  asks to check PR comments until the PR is approved.
+description: Use it when the user wants to wait for, check, or fetch the automated Codex review of a pull request in the Merlin-Digital-Solutions GitHub organization, or
+  asks to check PR comments until the PR is approved. Also use it when you opened a PR in the Merlin-Digital-Solutions org yourself.
 
 ---
 
