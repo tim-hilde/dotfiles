@@ -56,7 +56,8 @@
     "servers": {
       "gmail": {
         "type": "remote",
-        "url": "https://gmailmcp.googleapis.com/mcp/v1"
+        "url": "https://gmailmcp.googleapis.com/mcp/v1",
+        "disabled": true
       },
       "grafana": {
         "type": "local",
