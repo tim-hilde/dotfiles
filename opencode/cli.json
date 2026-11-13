@@ -19,7 +19,7 @@
     "-opencode.notifications",
     "-cortexkit.anthropic-auth",
     "@slkiser/opencode-quota@6.2.2",
-    "@cortexkit/opencode-magic-context@0.49.52",
+    "@cortexkit/opencode-magic-context@0.49.55",
     "./plugins/tui/mcp-sidebar",
     "./plugins/tui/pr-sidebar"
   ],
