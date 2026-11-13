@@ -1,7 +1,7 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "plugins": [
-    "@cortexkit/opencode-anthropic-auth@2.11.2",
+    "@cortexkit/opencode-anthropic-auth@2.11.3",
     "@mohak34/opencode-notifier@1.1.2",
     "superpowers@git+https://github.com/obra/superpowers.git#v7.0.2",
     "opencode-update-notifier",
