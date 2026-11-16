@@ -18,8 +18,8 @@
     "-opencode.prompt.footer",
     "-opencode.notifications",
     "-cortexkit.anthropic-auth",
-    "@slkiser/opencode-quota@6.2.2",
-    "@cortexkit/opencode-magic-context@0.49.55",
+    "@slkiser/opencode-quota@6.3.0",
+    "@cortexkit/opencode-magic-context@0.49.56",
     "./plugins/tui/mcp-sidebar",
     "./plugins/tui/pr-sidebar"
   ],
