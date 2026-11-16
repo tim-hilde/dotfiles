@@ -52,3 +52,4 @@ tmux/agent-status-proposals.html
 # @cortexkit/opencode-anthropic-auth: state, *.lock and *.lock.evicting/ (files or dirs), *.partial, *.tmp
 /opencode/anthropic-auth*
 /opencode/.anthropic-auth*
+/cortexkit/anthropic-auth*
