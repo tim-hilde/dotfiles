@@ -6,7 +6,7 @@
     "superpowers@git+https://github.com/obra/superpowers.git#v7.0.2",
     "opencode-update-notifier",
     "@slkiser/opencode-quota@6.3.0",
-    "@cortexkit/opencode-magic-context@0.49.56",
+    "@cortexkit/opencode-magic-context@0.49.59",
     "opencode-keepalive@git+https://github.com/tim-hilde/opencode-keepalive.git"
   ],
   "experimental": {
