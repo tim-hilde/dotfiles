@@ -119,6 +119,18 @@
       "context7": {
         "type": "remote",
         "url": "https://mcp.context7.com/mcp"
+      },
+      "browse": {
+        "type": "local",
+        "command": [
+          "/Users/tim/.local/bin/browse",
+          "mcp"
+        ],
+        "cwd": "/Users/tim",
+        "pool": true,
+        "environment": {
+          "OPENCODE_BROWSER_RUNTIME": "auto-update"
+        }
       }
     }
   },
