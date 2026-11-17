@@ -137,11 +137,28 @@ test("by default keeps the ten most recently named pull requests", () => {
   assert.deepEqual([urls[0], urls.at(-1)], [url(3), url(12)]);
 });
 
-test("ignores user messages, tool input, and output of other commands", () => {
+test("finds the pull request URL printed by gh pr comment", () => {
+  const messages = [assistant(shell("gh pr comment 951 --repo o/r --body-file r.md", `${url(951)}#issuecomment-1\n`))];
+  assert.deepEqual(findPullRequestUrls(messages), [url(951)]);
+});
+
+test("finds the pull request URL printed by gh pr edit", () => {
+  const messages = [assistant(shell("gh pr edit 951 --title Fix", `${url(951)}\n`))];
+  assert.deepEqual(findPullRequestUrls(messages), [url(951)]);
+});
+
+test("finds a pull request URL in a user message", () => {
+  const messages = [{ type: "user", text: `Schau auf ${url(3)}` }, named(4)];
+  assert.deepEqual(findPullRequestUrls(messages), [url(3), url(4)]);
+});
+
+test("ignores tool input and output of commands that list pull requests", () => {
   const messages = [
-    { type: "user", text: `Schau auf ${url(3)}` },
     assistant(shell("gh pr list", url(4))),
-    assistant(shell(`echo ${url(5)}`, "ok")),
+    assistant(shell("gh pr status", url(5))),
+    assistant(shell("gh pr checks 6", url(6))),
+    assistant(shell("gh pr diff 7", url(7))),
+    assistant(shell(`echo ${url(8)}`, "ok")),
   ];
   assert.deepEqual(findPullRequestUrls(messages), []);
 });

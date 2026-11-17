@@ -31,7 +31,7 @@ function textUrls(value) {
   return value.match(PR_URL) ?? [];
 }
 
-const URL_COMMANDS = /\bgh\s+pr\s+(?:create|view)\b/;
+const URL_COMMANDS = /\bgh\s+pr\s+(?:create|view|comment|edit)\b/;
 
 function commandText(part) {
   const input = part.state?.input;
@@ -46,8 +46,14 @@ function partUrls(part) {
   return (part.state?.content ?? []).flatMap((item) => textUrls(item.text));
 }
 
+function messageUrls(message) {
+  if (message.type === "user") return textUrls(message.text);
+  if (message.type === "assistant") return (message.content ?? []).flatMap(partUrls);
+  return [];
+}
+
 function collectUrls(messages) {
-  return messages.flatMap((message) => (message.type === "assistant" ? (message.content ?? []).flatMap(partUrls) : []));
+  return messages.flatMap(messageUrls);
 }
 
 export function mergePullRequestUrls(urls, limit = MAX_PULL_REQUESTS) {
