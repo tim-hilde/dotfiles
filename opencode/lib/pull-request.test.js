@@ -152,7 +152,7 @@ test("finds a pull request URL in a user message", () => {
   assert.deepEqual(findPullRequestUrls(messages), [url(3), url(4)]);
 });
 
-test("ignores tool input and output of commands that list pull requests", () => {
+test("ignores the output of other gh and shell commands", () => {
   const messages = [
     assistant(shell("gh pr list", url(4))),
     assistant(shell("gh pr status", url(5))),
