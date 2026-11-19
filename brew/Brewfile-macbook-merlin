@@ -206,7 +206,7 @@ brew "poppler"
 # Object-relational database system
 brew "postgresql@17"
 # Fast Git hook manager written in Rust, drop-in alternative to pre-commit
-brew "prek"
+brew "prek", link: false
 # Python version management
 brew "pyenv"
 # Pyenv plugin to manage virtualenv
@@ -218,7 +218,7 @@ brew "rclone"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # Extremely fast Python linter, written in Rust
-brew "ruff"
+brew "ruff", link: false
 # Safe, concurrent, practical language
 brew "rust"
 # Software for mathematics, science, and engineering
