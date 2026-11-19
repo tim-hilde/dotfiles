@@ -54,6 +54,14 @@
   },
   "mcp": {
     "servers": {
+      "merlin-tickets": {
+        "type": "remote",
+        "url": "https://dashboard.hallomerlin.de/api/mcp",
+        "oauth": {
+          "client_id": "merlin-dashboard-mcp",
+          "callback_port": 33421
+        }
+      },
       "grafana": {
         "type": "local",
         "disabled": true,
