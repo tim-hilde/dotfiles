@@ -78,4 +78,4 @@ yabai -m rule --add app="^Tailscale$" manage=off
 yabai -m rule --apply
 
 # JankyBorders
-pkill borders; borders active_color='0xffcba6f7' inactive_color='0xff636369' width=3 hidpi=on ax_focus=on &
+# pkill borders; borders active_color='0xffcba6f7' inactive_color='0xff636369' width=3 hidpi=on ax_focus=on &
