@@ -6,3 +6,11 @@
 	path = opencode/skills/obsidian-skills
 	url = https://github.com/kepano/obsidian-skills.git
 	ignore = dirty
+[submodule "opencode/skills/diagram-design"]
+	path = opencode/skills/diagram-design
+	url = https://github.com/cathrynlavery/diagram-design.git
+	ignore = dirty
+[submodule "opencode/skills/langfuse-skills"]
+	path = opencode/skills/langfuse-skills
+	url = https://github.com/langfuse/skills.git
+	ignore = dirty

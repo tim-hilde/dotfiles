@@ -55,8 +55,20 @@ local function syncDotfiles()
 		:start()
 end
 
+-- Update skill submodules, then sync so the new pointers get committed
+local function updateSkillSubmodules()
+	hs.task
+		.new("~/dotfiles/update-skill-submodules.sh", function(exitCode, stdout, stderr)
+			if exitCode ~= 0 then
+				print(("⚠️ skill submodule update failed: %s"):format(stderr))
+			end
+			syncDotfiles()
+		end)
+		:start()
+end
+
 -- Initialize dotfiles sync
-syncDotfiles()
+updateSkillSubmodules()
 -- NOTE: the timer object MUST be kept referenced (here on the module table,
 -- which `require` caches in package.loaded) or Lua's GC will collect it and
 -- the timer silently stops firing. See Hammerspoon issues #1713/#3300.
@@ -79,7 +91,14 @@ dotfiles.brewTimer = hs.timer
 	end)
 	:start()
 
+dotfiles.skillsTimer = hs.timer
+	.doEvery(6 * 3600, function()
+		updateSkillSubmodules()
+	end)
+	:start()
+
 dotfiles.sync = syncDotfiles
+dotfiles.updateSkills = updateSkillSubmodules
 dotfiles.brewDump = runBrewBundleDump
 
 return dotfiles
