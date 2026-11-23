@@ -81,9 +81,47 @@ function _wt_prune_size() {
   fi
 }
 
-# List worktrees whose merged PR head equals the local HEAD and delete them after one prompt.
-# With --yes, delete them without the prompt.
-# Only an untracked .infisical.yaml and a modified next-env.d.ts may remain in them.
+function _wt_prune_age() {
+  local -i s=$1 n
+  local -a unit
+  if (( s < 60 )); then
+    print "gerade eben"
+    return
+  elif (( s < 3600 )); then
+    n=s/60; unit=(Minute Minuten)
+  elif (( s < 86400 )); then
+    n=s/3600; unit=(Stunde Stunden)
+  elif (( s < 1209600 )); then
+    n=s/86400; unit=(Tag Tagen)
+  elif (( s < 6048000 )); then
+    n=s/604800; unit=(Woche Wochen)
+  else
+    n=s/2592000; unit=(Monat Monaten)
+  fi
+  print "vor $n ${unit[n == 1 ? 1 : 2]}"
+}
+
+function _wt_prune_changes() {
+  local st line
+  st=$(git -C $1 status --porcelain 2>/dev/null) || return 1
+  for line in ${(f)st}; do
+    case $line in
+      ('?? .infisical.yaml'|' M next-env.d.ts'|' M package-lock.json'|'?? AGENTS.md'|'?? '*node_modules|'?? '*node_modules/) ;;
+      (*) print -r -- $line ;;
+    esac
+  done
+}
+
+function _wt_prune_base() {
+  local b
+  for b in $2 staging dev main; do
+    git -C $1 rev-parse -q --verify refs/remotes/origin/$b >/dev/null && { print origin/$b; return 0 }
+  done
+  return 1
+}
+
+# Show all worktrees under the root in numbered groups with their sizes and ask which ones to delete.
+# With --yes, delete the group "Sicher löschbar" without the prompt.
 function wt-prune() {
   local root arg
   local -i yes=0
@@ -98,85 +136,171 @@ function wt-prune() {
     fi
   done
   root=${${root:-$HOME/code/merlin/worktrees}:A}
-  local gitfile wt rel branch dirty head main slug out line pr answer i err parent kb
-  local -i total=0
-  local -a rels mains branches prs sizes entries
+
+  local gitfile wt rel main branch slug out line base cherry changes prnote answer d
+  local -i g i n gi gc gk total ahead localonly nchanges ghfail now kb
+  local -a wts prs parts chg plus notes others files
+  local -aU repos
+  local -a u_rels u_mains u_branches u_groups u_kbs u_locals u_changes u_texts o_idx
+  local -a groups=("Sicher löschbar" "Ohne eigene Arbeit" "PR offen" "Eigene Commits" "Nicht committete Änderungen")
 
   for gitfile in $root/{*,*/*,*/*/*}/.git(N.); do
-    [[ $(<$gitfile) == *"/.git/worktrees/"* ]] || continue
-    wt=${gitfile:h}
+    [[ $(<$gitfile) == *"/.git/worktrees/"* ]] && wts+=${gitfile:h}
+  done
+  if (( ! $#wts )); then
+    print "Keine Worktrees in $root."
+    return 0
+  fi
+  print -u2 "Prüfe $#wts Worktrees …"
+  for wt in $wts; do
+    main=$(git -C $wt rev-parse --path-format=absolute --git-common-dir 2>/dev/null) && repos+=${main:h}
+  done
+  for main in $repos; do
+    git -C $main fetch --quiet --prune origin >/dev/null 2>&1 ||
+      print -u2 "fetch fehlgeschlagen bei ${main:t}, Stand kann veraltet sein"
+  done
+  now=$(date +%s)
+
+  for wt in $wts; do
     rel=${wt#$root/}
-    branch=$(git -C $wt branch --show-current)
-    [[ -n $branch ]] || continue
-    if ! dirty=$(git -C $wt status --porcelain 2>/dev/null); then
+    if ! changes=$(_wt_prune_changes $wt); then
       print -u2 "git-Fehler bei $rel, übersprungen"
       continue
     fi
-    dirty=$(print -r -- $dirty | grep -vxF -e '?? .infisical.yaml' -e ' M next-env.d.ts')
-    [[ -z $dirty ]] || continue
+    chg=(${(f)changes})
+    nchanges=$#chg
+    main=${$(git -C $wt rev-parse --path-format=absolute --git-common-dir):h}
+    branch=$(git -C $wt branch --show-current)
+    localonly=$(git -C $wt rev-list --count HEAD --not --remotes)
 
-    head=$(git -C $wt rev-parse HEAD)
-    main=$(git -C $wt rev-parse --path-format=absolute --git-common-dir)
-    slug=$(git -C $wt remote get-url origin)
-    slug=${${slug%.git}#*github.com[:/]}
-    if ! out=$(gh pr list --repo $slug --head $branch --state merged \
-        --json number,headRefOid --jq '.[] | "\(.number) \(.headRefOid)"' </dev/null 2>/dev/null); then
-      print -u2 "gh-Fehler bei $rel, übersprungen"
-      continue
+    prs=()
+    ghfail=0
+    if [[ -n $branch ]]; then
+      slug=$(git -C $main config --get remote.origin.url)
+      slug=${${slug%.git}#*github.com[:/]}
+      if out=$(gh pr list --repo $slug --head $branch --state all \
+          --json number,state,baseRefName,headRefOid \
+          --jq '.[] | "\(.number) \(.state) \(.baseRefName) \(.headRefOid)"' </dev/null 2>/dev/null); then
+        prs=(${(f)out})
+      else
+        ghfail=1
+      fi
     fi
-    pr=""
-    for line in ${(f)out}; do
-      [[ ${line#* } == $head ]] && pr=${line%% *}
+
+    g=0
+    prnote=""
+    for line in $prs; do
+      parts=(${=line})
+      [[ $parts[2] == OPEN ]] && { g=3; prnote="PR #$parts[1] offen"; break }
     done
-    [[ -n $pr ]] || continue
+    if (( ! g && ! nchanges )); then
+      for line in $prs; do
+        parts=(${=line})
+        [[ $parts[2] == (MERGED|CLOSED) ]] || continue
+        git -C $wt cat-file -e "$parts[4]^{commit}" 2>/dev/null || continue
+        base=$(_wt_prune_base $wt $parts[3]) || continue
+        cherry=$(git -C $wt cherry $base HEAD $parts[4] 2>/dev/null) || continue
+        [[ $cherry == *+* ]] && continue
+        g=1
+        if [[ $parts[2] == MERGED ]]; then
+          prnote="PR #$parts[1] gemergt"
+        else
+          prnote="PR #$parts[1] geschlossen"
+        fi
+        break
+      done
+    fi
 
-    rels+=$rel
-    mains+=${main:h}
-    branches+=$branch
-    prs+=$pr
-    kb=$(du -sk $wt 2>/dev/null)
-    kb=${kb%%[[:space:]]*}
-    sizes+=$(_wt_prune_size ${kb:-0})
-    (( total += ${kb:-0} ))
+    ahead=0
+    if (( g != 1 )) && base=$(_wt_prune_base $wt ""); then
+      plus=(${(M)${(f)"$(git -C $wt cherry $base HEAD 2>/dev/null)"}:#+*})
+      ahead=$#plus
+      if (( ahead )) && out=$(git -C $wt merge-tree --write-tree $base HEAD 2>/dev/null) &&
+          [[ ${out%%$'\n'*} == $(git -C $wt rev-parse "$base^{tree}") ]]; then
+        ahead=0
+      fi
+    fi
+    if (( ! g )); then
+      if (( nchanges )); then
+        g=5
+      elif (( ahead )); then
+        g=4
+      else
+        g=2
+      fi
+    fi
+    if [[ -z $prnote && -n $prs[1] ]]; then
+      parts=(${=prs[1]})
+      case $parts[2] in
+        (MERGED) prnote="PR #$parts[1] gemergt" ;;
+        (CLOSED) prnote="PR #$parts[1] geschlossen" ;;
+        (*) prnote="PR #$parts[1] offen" ;;
+      esac
+    fi
+
+    out=$(du -sk $wt 2>/dev/null)
+    kb=${out%%[[:space:]]*}
+    notes=(${main:t})
+    [[ -n $prnote ]] && notes+=$prnote
+    [[ -z $branch ]] && notes+=detached
+    if (( g != 1 )); then
+      (( ahead == 1 )) && notes+="1 Commit"
+      (( ahead > 1 )) && notes+="$ahead Commits"
+      (( localonly )) && notes+="$localonly nur lokal"
+      (( nchanges == 1 )) && notes+="1 Änderung"
+      (( nchanges > 1 )) && notes+="$nchanges Änderungen"
+    fi
+    (( ghfail )) && notes+="PR-Status unbekannt"
+    notes+=$(_wt_prune_size $kb)
+    notes+=$(_wt_prune_age $(( now - $(git -C $wt log -1 --format=%ct) )))
+
+    u_rels+=("$rel")
+    u_mains+=("$main")
+    u_branches+=("$branch")
+    u_groups+=($g)
+    u_kbs+=($kb)
+    u_locals+=($localonly)
+    u_changes+=($nchanges)
+    u_texts+=("${(j:, :)notes}")
   done
 
-  if (( ! $#rels )); then
-    print "Keine sicher löschbaren Worktrees."
-    return 0
-  fi
-  for (( i = 1; i <= $#rels; i++ )); do
-    print "  ${rels[i]}  (${mains[i]:t}, PR #${prs[i]}, ${sizes[i]})"
-  done
-  if (( yes )); then
-    print "Lösche alle $#rels (insgesamt $(_wt_prune_size $total))."
-  else
-    print -n "Alle $#rels löschen (insgesamt $(_wt_prune_size $total))? [y/N] "
-    read answer
-    if [[ $answer != [yY] ]]; then
-      print "Abgebrochen, nichts gelöscht."
-      return 0
-    fi
-  fi
-
-  for (( i = 1; i <= $#rels; i++ )); do
-    wt=$root/${rels[i]}
-    if ! err=$(git -C ${mains[i]} worktree remove --force $wt 2>&1); then
-      print -u2 "Fehler: ${rels[i]}: $err"
-      continue
-    fi
-    git -C ${mains[i]} branch -D ${branches[i]} >/dev/null
-    git -C ${mains[i]} worktree prune
-    print "gelöscht: ${rels[i]}"
-
-    parent=${wt:h}
-    while [[ $parent != $root ]]; do
-      entries=($parent/*(DN))
-      (( ${#${entries:#*/.DS_Store}} )) && break
-      rm -f $parent/.DS_Store
-      rmdir $parent || break
-      parent=${parent:h}
+  for (( gi = 1; gi <= 5; gi++ )); do
+    gc=0
+    gk=0
+    for (( i = 1; i <= $#u_rels; i++ )); do
+      (( u_groups[i] == gi )) && (( gc += 1, gk += u_kbs[i] ))
     done
+    (( gc )) || continue
+    print "$groups[gi] ($gc, $(_wt_prune_size $gk))"
+    for (( i = 1; i <= $#u_rels; i++ )); do
+      (( u_groups[i] == gi )) || continue
+      (( n += 1 ))
+      o_idx+=($i)
+      printf '%4d  %s  (%s)\n' $n "$u_rels[i]" "$u_texts[i]"
+    done
+    (( total += gk ))
   done
+  print "Gesamt: $n Worktrees, $(_wt_prune_size $total)"
+
+  for d in $root/*(/N) $root/*/*(/N); do
+    [[ -e $d/.git ]] && continue
+    [[ ${d:h} != $root && -e ${d:h}/.git ]] && continue
+    (( ${wts[(I)$d/*]} )) && continue
+    [[ ${d:h} != $root ]] && (( ! ${wts[(I)${d:h}/*]} )) && continue
+    files=($d/**/*(.DN))
+    files=(${files:#*/.DS_Store})
+    case $#files in
+      (0) others+="${d#$root/} (leer)" ;;
+      (1) others+="${d#$root/} (1 Datei)" ;;
+      (*) others+="${d#$root/} ($#files Dateien)" ;;
+    esac
+  done
+  (( $#others )) && print "Andere Ordner: ${(j:, :)others}"
+
+  print -n "Welche löschen? Nummern oder Bereiche wie 3-9, s für alle sicheren, Enter für keine: "
+  read answer
+  print "Abgebrochen, nichts gelöscht."
+  return 0
 }
 
 alias tt=taskwarrior-tui

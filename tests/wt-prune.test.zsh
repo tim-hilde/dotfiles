@@ -3,7 +3,7 @@
 
 source ${0:A:h}/../aliases
 
-tmp=$(mktemp -d)
+tmp=${$(mktemp -d):A}
 trap 'rm -rf $tmp' EXIT
 
 export GIT_CONFIG_GLOBAL=/dev/null GIT_CONFIG_NOSYSTEM=1
@@ -21,6 +21,30 @@ assert_true() {
   eval "$1" || { print -r -- "FAIL: $1"; (( fails++ )) }
 }
 
+group_of() {
+  setopt localoptions extendedglob
+  local line group=""
+  for line in ${(f)1}; do
+    if [[ $line == (#b)([^\ ]*)' ('<->', '* ]]; then
+      group=$match[1]
+    elif [[ $line == ' '#<->'  '"$2"'  ('* ]]; then
+      print -r -- $group
+      return
+    fi
+  done
+}
+num_of() {
+  setopt localoptions extendedglob
+  local line
+  for line in ${(f)1}; do
+    [[ $line == (#b)' '#(<->)'  '"$2"'  ('* ]] && { print $match[1]; return }
+  done
+}
+assert_group() {
+  local got=$(group_of "$out" $1)
+  [[ $got == "$2" ]] || { print -r -- "FAIL: $1 is in group [$got], expected [$2]"; (( fails++ )) }
+}
+
 mkdir -p $tmp/bin $tmp/empty-root
 cat > $tmp/bin/gh <<'EOF'
 #!/usr/bin/env zsh
@@ -29,10 +53,10 @@ while (( $# )); do
   [[ $1 == --head ]] && { head=$2; break }
   shift
 done
-while read -r branch number oid; do
+while read -r branch number state base oid; do
   [[ $branch == $head ]] || continue
   [[ $number == FAIL ]] && { print -u2 "fake gh: request failed"; exit 1 }
-  print "$number $oid"
+  print "$number $state $base $oid"
 done < $FAKE_GH_MAP
 EOF
 chmod +x $tmp/bin/gh
@@ -40,13 +64,19 @@ export PATH=$tmp/bin:$PATH
 export FAKE_GH_MAP=$tmp/gh-map
 : > $FAKE_GH_MAP
 
-origin=$tmp/origin-a
-wts=$tmp/wts
-git init -q -b main $origin
-git -C $origin remote add origin git@github.com:test/repo-a.git
-print "/// <reference types=\"next\" />" > $origin/next-env.d.ts
-git -C $origin add next-env.d.ts
-git -C $origin commit -qm base
+mkrepo() {
+  local name=$1
+  git init -q --bare -b main $tmp/remote-$name.git
+  git init -q -b main $tmp/origin-$name
+  git -C $tmp/origin-$name remote add origin git@github.com:test/repo-$name.git
+  git -C $tmp/origin-$name config url.$tmp/remote-$name.git.insteadOf git@github.com:test/repo-$name.git
+  print "/// <reference types=\"next\" />" > $tmp/origin-$name/next-env.d.ts
+  print "{}" > $tmp/origin-$name/package-lock.json
+  git -C $tmp/origin-$name add next-env.d.ts package-lock.json
+  git -C $tmp/origin-$name commit -qm base
+  git -C $tmp/origin-$name push -q origin main main:staging
+  git -C $tmp/origin-$name fetch -q origin
+}
 
 mkwt() {
   local rel=$1 branch=$2 commits=$3 i
@@ -56,42 +86,103 @@ mkwt() {
     git -C $origin worktree add -q -b $branch $wts/$rel main
   fi
   for (( i = 1; i <= commits; i++ )); do
-    print "$rel $i" > $wts/$rel/file-$i
-    git -C $wts/$rel add file-$i
-    git -C $wts/$rel commit -qm "commit $i"
+    commit $rel $i
   done
 }
-
-merged() {
-  print "$2 $3 $(git -C $wts/$1 rev-parse ${4:-HEAD})" >> $FAKE_GH_MAP
+commit() {
+  local file=${1//\//_}-$2.txt
+  print "$1 $2" > $wts/$1/$file
+  git -C $wts/$1 add $file
+  git -C $wts/$1 commit -qm "$1 commit $2"
+}
+pr() {
+  print "$2 $3 $4 $5 $(git -C $wts/$1 rev-parse ${6:-HEAD})" >> $FAKE_GH_MAP
 }
 
-mkwt feat/merged-clean feat/merged-clean 1
-dd if=/dev/zero of=$wts/feat/merged-clean/big.bin bs=1024 count=2048 2>/dev/null
-git -C $wts/feat/merged-clean add big.bin
-git -C $wts/feat/merged-clean commit -qm big
-merged feat/merged-clean feat/merged-clean 11
-mkwt fix/merged-infisical fix/merged-infisical 1;  merged fix/merged-infisical fix/merged-infisical 12
-mkwt fix/merged-nextenv fix/merged-nextenv 1;      merged fix/merged-nextenv fix/merged-nextenv 13
-mkwt fix/merged-dirty fix/merged-dirty 1;          merged fix/merged-dirty fix/merged-dirty 14
-mkwt feat/head-differs feat/head-differs 2;        merged feat/head-differs feat/head-differs 15 HEAD~1
+mkrepo a
+origin=$tmp/origin-a
+wts=$tmp/wts
+
+mkwt fix/merged-same fix/merged-same 1
+dd if=/dev/zero of=$wts/fix/merged-same/big.bin bs=1024 count=2048 2>/dev/null
+git -C $wts/fix/merged-same add big.bin
+git -C $wts/fix/merged-same commit -qm big
+pr fix/merged-same fix/merged-same 11 MERGED staging
+mkwt fix/merged-behind fix/merged-behind 2;            pr fix/merged-behind fix/merged-behind 12 MERGED staging
+git -C $wts/fix/merged-behind reset -q --hard HEAD~1
+mkwt fix/merged-landed fix/merged-landed 1;            pr fix/merged-landed fix/merged-landed 13 MERGED staging
+commit fix/merged-landed 2
+mkwt fix/closed-same fix/closed-same 1;                pr fix/closed-same fix/closed-same 14 CLOSED staging
+git -C $wts/fix/closed-same push -q origin fix/closed-same
+mkwt fix/merged-leftovers fix/merged-leftovers 1;      pr fix/merged-leftovers fix/merged-leftovers 16 MERGED staging
+mkwt feat/combo/repo-a feat/combo 0;                   pr feat/combo/repo-a feat/combo 19 MERGED staging
+mkwt docs/only-merged docs/only-merged 0;              pr docs/only-merged docs/only-merged 20 MERGED staging
+mkwt fix/merged-gone-base fix/merged-gone-base 1;      pr fix/merged-gone-base fix/merged-gone-base 21 MERGED release/x
+mkwt feat/open-pr feat/open-pr 1;                      pr feat/open-pr feat/open-pr 18 OPEN staging
+mkwt renovate/stack renovate/stack 2;                  pr renovate/stack renovate/stack 23 OPEN staging
+pr renovate/stack renovate/stack 22 MERGED staging HEAD~1
+mkwt fix/merged-dirty fix/merged-dirty 1;              pr fix/merged-dirty fix/merged-dirty 17 MERGED staging
+mkwt detached-dirty --detach 0
+mkwt fix/closed-more fix/closed-more 2;                pr fix/closed-more fix/closed-more 15 CLOSED staging HEAD~1
+mkwt fix/merged-missing-head fix/merged-missing-head 1
+print "fix/merged-missing-head 24 MERGED staging aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" >> $FAKE_GH_MAP
 mkwt feat/no-pr feat/no-pr 1
+mkwt feat/no-pr-pushed feat/no-pr-pushed 1
+git -C $wts/feat/no-pr-pushed push -q origin feat/no-pr-pushed
+mkwt chore/gh-fails chore/gh-fails 1;                  print "chore/gh-fails FAIL" >> $FAKE_GH_MAP
+mkwt chore/empty chore/empty 0
 mkwt detached --detach 0
-mkwt feat/combo/repo-a feat/combo 0;               merged feat/combo/repo-a feat/combo 16
-mkwt chore/gh-fails chore/gh-fails 0;              print "chore/gh-fails FAIL" >> $FAKE_GH_MAP
-mkwt docs/only-merged docs/only-merged 0;          merged docs/only-merged docs/only-merged 17
-mkwt fix/broken-index fix/broken-index 1;          merged fix/broken-index fix/broken-index 18
+mkwt fix/landed-no-pr fix/landed-no-pr 1
+mkwt feat/squashed feat/squashed 2
+mkwt fix/broken-index fix/broken-index 1
 print garbage > $(git -C $wts/fix/broken-index rev-parse --path-format=absolute --git-path index)
 
-touch $wts/fix/merged-infisical/.infisical.yaml
-print "// regenerated" >> $wts/fix/merged-nextenv/next-env.d.ts
-touch $wts/fix/merged-dirty/notes.md
-touch $wts/docs/.DS_Store
+touch $wts/fix/merged-leftovers/.infisical.yaml $wts/fix/merged-leftovers/AGENTS.md
+print "// regenerated" >> $wts/fix/merged-leftovers/next-env.d.ts
+print "{ }" >> $wts/fix/merged-leftovers/package-lock.json
+ln -s /nonexistent/node_modules $wts/fix/merged-leftovers/node_modules
+touch $wts/fix/merged-dirty/notes.md $wts/detached-dirty/x.txt $wts/docs/.DS_Store
+mkdir -p $wts/_brief $wts/leer $wts/fix/notes
+touch $wts/_brief/a.md $wts/fix/notes/x.md
 
-kb() {
-  local s=$(du -sk $wts/$1)
-  print ${s%%[[:space:]]*}
-}
+# Land commits on the remote staging without updating origin/staging in the main repo.
+stale=$(git -C $origin rev-parse origin/staging)
+git -C $origin worktree add -q --detach $tmp/landing origin/staging
+git -C $tmp/landing cherry-pick $(git -C $wts/fix/merged-landed rev-parse HEAD) >/dev/null
+git -C $tmp/landing cherry-pick $(git -C $wts/fix/landed-no-pr rev-parse HEAD) >/dev/null
+git -C $tmp/landing checkout -q $(git -C $wts/feat/squashed rev-parse HEAD) -- feat_squashed-1.txt feat_squashed-2.txt
+git -C $tmp/landing commit -qm squash
+git -C $tmp/landing push -q $tmp/remote-a.git HEAD:refs/heads/staging
+git -C $origin worktree remove --force $tmp/landing
+git -C $origin update-ref refs/remotes/origin/staging $stale
+
+mkrepo b
+git -C $tmp/origin-b worktree add -q -b feat/offline $tmp/wts-offline/feat/offline main
+mv $tmp/remote-b.git $tmp/remote-b-gone.git
+
+typeset -A expected=(
+  fix/merged-same "Sicher löschbar"
+  fix/merged-behind "Sicher löschbar"
+  fix/merged-landed "Sicher löschbar"
+  fix/closed-same "Sicher löschbar"
+  fix/merged-leftovers "Sicher löschbar"
+  feat/combo/repo-a "Sicher löschbar"
+  docs/only-merged "Sicher löschbar"
+  fix/merged-gone-base "Sicher löschbar"
+  feat/open-pr "PR offen"
+  renovate/stack "PR offen"
+  fix/merged-dirty "Nicht committete Änderungen"
+  detached-dirty "Nicht committete Änderungen"
+  fix/closed-more "Eigene Commits"
+  fix/merged-missing-head "Eigene Commits"
+  feat/no-pr "Eigene Commits"
+  feat/no-pr-pushed "Eigene Commits"
+  chore/gh-fails "Eigene Commits"
+  chore/empty "Ohne eigene Arbeit"
+  detached "Ohne eigene Arbeit"
+  fix/landed-no-pr "Ohne eigene Arbeit"
+  feat/squashed "Ohne eigene Arbeit"
+)
 
 # test_size_formats_kilo_mega_giga
 assert_true '[[ $(_wt_prune_size 20) == 20K ]]'
@@ -102,84 +193,70 @@ assert_true '[[ $(_wt_prune_size 1048576) == 1.0G ]]'
 assert_true '[[ $(_wt_prune_size 3460300) == 3.3G ]]'
 assert_true '[[ $(LC_ALL=de_DE.UTF-8 _wt_prune_size 1536) == 1.5M ]]'
 
-safe=(feat/merged-clean fix/merged-infisical fix/merged-nextenv feat/combo/repo-a docs/only-merged)
-kept=(fix/merged-dirty feat/head-differs feat/no-pr detached chore/gh-fails fix/broken-index)
-
-# test_lists_safe_and_cancels_on_n
-out=$(print n | wt-prune $tmp/wts 2>$tmp/err)
-for p in $safe; assert_contains "$out" "$p"
-assert_contains "$out" "  feat/merged-clean  (origin-a, PR #11, 2.0M)"
-assert_contains "$out" "  docs/only-merged  (origin-a, PR #17, $(kb docs/only-merged)K)"
-total_kb=0
-for p in $safe; (( total_kb += $(kb $p) ))
-assert_contains "$out" "Alle 5 löschen (insgesamt $(_wt_prune_size $total_kb))? [y/N] "
-for p in $kept; assert_not_contains "$out" "$p"
-assert_contains "$(<$tmp/err)" "gh-Fehler bei chore/gh-fails, übersprungen"
-assert_contains "$(<$tmp/err)" "git-Fehler bei fix/broken-index, übersprungen"
-assert_contains "$out" "Abgebrochen, nichts gelöscht."
-for p in $safe $kept; assert_true "[[ -d $tmp/wts/$p ]]"
-
-# test_empty_answer_deletes_nothing
-out=$(print "" | wt-prune $tmp/wts 2>/dev/null)
-assert_contains "$out" "Abgebrochen, nichts gelöscht."
-for p in $safe; assert_true "[[ -d $tmp/wts/$p ]]"
-
-# test_no_candidates_skips_prompt
-out=$(print y | wt-prune $tmp/empty-root)
-assert_contains "$out" "Keine sicher löschbaren Worktrees."
-assert_not_contains "$out" "Abgebrochen"
-
-# test_y_deletes_safe_worktrees_and_branches
-out=$(print y | wt-prune $tmp/wts 2>$tmp/err)
-for p in $safe; assert_contains "$out" "gelöscht: $p"
-for p in $safe; assert_true "[[ ! -e $tmp/wts/$p ]]"
-for b in feat/merged-clean fix/merged-infisical fix/merged-nextenv feat/combo docs/only-merged; do
-  assert_true "! git -C $tmp/origin-a show-ref --verify --quiet refs/heads/$b"
+# test_age_german
+for s want in 30 "gerade eben" 60 "vor 1 Minute" 120 "vor 2 Minuten" 3600 "vor 1 Stunde" 7200 "vor 2 Stunden" \
+    86400 "vor 1 Tag" 172800 "vor 2 Tagen" 604800 "vor 7 Tagen" 1209600 "vor 2 Wochen" 2592000 "vor 4 Wochen" \
+    6048000 "vor 2 Monaten"; do
+  got=$(_wt_prune_age $s 2>&1)
+  [[ $got == "$want" ]] || { print -r -- "FAIL: _wt_prune_age $s gave [$got], expected [$want]"; (( fails++ )) }
 done
-for p in $kept; assert_true "[[ -d $tmp/wts/$p ]]"
-assert_true "git -C $tmp/origin-a show-ref --verify --quiet refs/heads/feat/head-differs"
-assert_true "[[ ! -e $tmp/wts/docs ]]"
-assert_true "[[ ! -e $tmp/wts/feat/combo ]]"
-assert_true "[[ -d $tmp/wts/feat ]]"
-assert_true "(( \$(git -C $tmp/origin-a worktree list | wc -l) == 7 ))"
 
-# test_yes_flag_deletes_without_prompt
-wts=$tmp/wts-yes
-mkwt feat/yes-first feat/yes-first 1;  merged feat/yes-first feat/yes-first 21
-mkwt fix/yes-kept fix/yes-kept 1
-out=$(wt-prune --yes $wts </dev/null 2>&1)
-assert_contains "$out" "  feat/yes-first  (origin-a, PR #21, "
-assert_contains "$out" "gelöscht: feat/yes-first"
-assert_not_contains "$out" "[y/N]"
-assert_not_contains "$out" "Abgebrochen"
-assert_true "[[ ! -e $wts/feat/yes-first ]]"
-assert_true "[[ -d $wts/fix/yes-kept ]]"
+# test_changes_filters_leftovers
+assert_true '[[ -z "$(_wt_prune_changes $wts/fix/merged-leftovers 2>&1)" ]]'
+assert_true '[[ "$(_wt_prune_changes $wts/fix/merged-dirty 2>&1)" == "?? notes.md" ]]'
+assert_true '! _wt_prune_changes $wts/fix/broken-index >/dev/null 2>&1'
 
-# test_yes_flag_after_root
-mkwt feat/yes-last feat/yes-last 1;    merged feat/yes-last feat/yes-last 22
-out=$(wt-prune $wts --yes </dev/null 2>&1)
-assert_contains "$out" "gelöscht: feat/yes-last"
-assert_true "[[ ! -e $wts/feat/yes-last ]]"
+# test_overview_groups_and_cancel
+out=$(print "" | wt-prune $wts 2>$tmp/err)
+for rel grp in ${(kv)expected}; assert_group $rel $grp
+assert_contains "$out" "Sicher löschbar (8, "
+assert_contains "$out" "Ohne eigene Arbeit (4, "
+assert_contains "$out" "PR offen (2, "
+assert_contains "$out" "Eigene Commits (5, "
+assert_contains "$out" "Nicht committete Änderungen (2, "
+assert_contains "$out" "  fix/merged-same  (origin-a, PR #11 gemergt, 2.0M, "
+assert_contains "$out" "  fix/closed-same  (origin-a, PR #14 geschlossen, "
+assert_contains "$out" "  fix/closed-more  (origin-a, PR #15 geschlossen, 2 Commits, 2 nur lokal, "
+assert_contains "$out" "  feat/no-pr-pushed  (origin-a, 1 Commit, "
+assert_not_contains "$out" "  feat/no-pr-pushed  (origin-a, 1 Commit, 1 nur lokal"
+assert_contains "$out" "  feat/open-pr  (origin-a, PR #18 offen, 1 Commit, 1 nur lokal, "
+assert_contains "$out" "  renovate/stack  (origin-a, PR #23 offen, "
+assert_contains "$out" "  fix/merged-dirty  (origin-a, PR #17 gemergt, 1 Commit, 1 nur lokal, 1 Änderung, "
+assert_contains "$out" "  detached  (origin-a, detached, "
+assert_contains "$out" "  chore/gh-fails  (origin-a, 1 Commit, 1 nur lokal, PR-Status unbekannt, "
+assert_contains "$out" "Gesamt: 21 Worktrees, "
+assert_contains "$out" "_brief (1 Datei)"
+assert_contains "$out" "leer (leer)"
+assert_contains "$out" "fix/notes (1 Datei)"
+assert_not_contains "$out" "fix/broken-index  ("
+assert_contains "$(<$tmp/err)" "git-Fehler bei fix/broken-index, übersprungen"
+assert_contains "$out" "Welche löschen? Nummern oder Bereiche wie 3-9, s für alle sicheren, Enter für keine: "
+assert_contains "$out" "Abgebrochen, nichts gelöscht."
+for rel in ${(k)expected} fix/broken-index; assert_true "[[ -d $wts/$rel ]]"
+
+# test_eof_deletes_nothing
+out=$(wt-prune $wts </dev/null 2>/dev/null)
+assert_contains "$out" "Abgebrochen, nichts gelöscht."
+for rel in ${(k)expected}; assert_true "[[ -d $wts/$rel ]]"
+
+# test_fetch_failure_warns
+out=$(print "" | wt-prune $tmp/wts-offline 2>$tmp/err)
+assert_contains "$(<$tmp/err)" "fetch fehlgeschlagen bei origin-b, Stand kann veraltet sein"
+assert_contains "$out" "  feat/offline  (origin-b, "
+
+# test_no_worktrees
+out=$(wt-prune $tmp/empty-root </dev/null 2>&1)
+assert_contains "$out" "Keine Worktrees in $tmp/empty-root."
 
 # test_unknown_option_is_rejected
-mkwt feat/yes-typo feat/yes-typo 1;    merged feat/yes-typo feat/yes-typo 23
 out=$(wt-prune -y $wts </dev/null 2>&1)
 assert_true "(( $? == 2 ))"
 assert_contains "$out" "Aufruf: wt-prune [--yes] [Ordner]"
-assert_true "[[ -d $wts/feat/yes-typo ]]"
 
 # test_second_root_is_rejected
 out=$(wt-prune --yes $wts $tmp/empty-root </dev/null 2>&1)
 assert_true "(( $? == 2 ))"
 assert_contains "$out" "Aufruf: wt-prune [--yes] [Ordner]"
-assert_true "[[ -d $wts/feat/yes-typo ]]"
-
-# test_empty_root_argument_uses_default
-wts=$tmp/home/code/merlin/worktrees
-mkwt feat/yes-default feat/yes-default 1; merged feat/yes-default feat/yes-default 24
-out=$(HOME=$tmp/home wt-prune "" --yes </dev/null 2>&1)
-assert_contains "$out" "gelöscht: feat/yes-default"
-assert_true "[[ ! -e $wts/feat/yes-default ]]"
 
 if (( fails )); then
   print "$fails assertion(s) failed"
