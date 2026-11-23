@@ -160,7 +160,7 @@ function wt-prune() {
   root=${${root:-$HOME/code/merlin/worktrees}:A}
 
   local gitfile wt rel main branch slug out line base cherry changes prnote answer d sha name
-  local -i g i j n gi gc gk total ahead localonly nchanges ghfail now kb
+  local -i g i j n gi gc gk total ahead localonly nchanges ghfail now kb nobase
   local -a wts prs parts chg plus notes others files safe_idx sel risky logl
   local -aU repos
   local -a u_rels u_mains u_branches u_groups u_kbs u_locals u_changes u_texts o_idx
@@ -234,7 +234,10 @@ function wt-prune() {
     fi
 
     ahead=0
-    if (( g != 1 )) && base=$(_wt_prune_base $wt ""); then
+    nobase=0
+    if (( g != 1 )) && ! base=$(_wt_prune_base $wt ""); then
+      nobase=1
+    elif (( g != 1 )); then
       plus=(${(M)${(f)"$(git -C $wt cherry $base HEAD 2>/dev/null)"}:#+*})
       ahead=$#plus
       if (( ahead )) && out=$(git -C $wt merge-tree --write-tree $base HEAD 2>/dev/null) &&
@@ -245,7 +248,7 @@ function wt-prune() {
     if (( ! g )); then
       if (( nchanges )); then
         g=5
-      elif (( ahead )); then
+      elif (( ahead || nobase )); then
         g=4
       else
         g=2
@@ -272,6 +275,7 @@ function wt-prune() {
       (( nchanges == 1 )) && notes+="1 Änderung"
       (( nchanges > 1 )) && notes+="$nchanges Änderungen"
     fi
+    (( nobase )) && notes+="Basis unbekannt"
     (( ghfail )) && notes+="PR-Status unbekannt"
     notes+=$(_wt_prune_size $kb)
     notes+=$(_wt_prune_age $(( now - $(git -C $wt log -1 --format=%ct) )))
@@ -391,7 +395,7 @@ function wt-prune() {
     fi
     git -C $main worktree prune
     print "gelöscht: $u_rels[j]"
-    if (( u_groups[j] != 1 && u_locals[j] )); then
+    if (( u_locals[j] )); then
       name=${u_branches[j]:-${u_rels[j]:t}}
       print "  wiederherstellen: git -C $main branch $name $sha"
     fi

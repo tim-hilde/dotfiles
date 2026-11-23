@@ -244,6 +244,23 @@ out=$(print "" | wt-prune $tmp/wts-offline 2>$tmp/err)
 assert_contains "$(<$tmp/err)" "fetch fehlgeschlagen bei origin-b, Stand kann veraltet sein"
 assert_contains "$out" "  feat/offline  (origin-b, "
 
+# test_no_base_branch_counts_as_own_commits
+git init -q --bare -b master $tmp/remote-c.git
+git init -q -b master $tmp/origin-c
+git -C $tmp/origin-c remote add origin $tmp/remote-c.git
+print c > $tmp/origin-c/c.txt
+git -C $tmp/origin-c add c.txt
+git -C $tmp/origin-c commit -qm base
+git -C $tmp/origin-c push -q origin master
+git -C $tmp/origin-c worktree add -q -b feat/no-base $tmp/wts-nobase/feat/no-base master
+print x > $tmp/wts-nobase/feat/no-base/x.txt
+git -C $tmp/wts-nobase/feat/no-base add x.txt
+git -C $tmp/wts-nobase/feat/no-base commit -qm work
+git -C $tmp/wts-nobase/feat/no-base push -q origin feat/no-base
+out=$(print "" | wt-prune $tmp/wts-nobase 2>/dev/null)
+assert_contains "$out" "Eigene Commits (1, "
+assert_contains "$out" "  feat/no-base  (origin-c, Basis unbekannt, "
+
 # test_no_worktrees
 out=$(wt-prune $tmp/empty-root </dev/null 2>&1)
 assert_contains "$out" "Keine Worktrees in $tmp/empty-root."
@@ -290,8 +307,19 @@ assert_true "[[ ! -e $wts/chore/empty && ! -e $wts/detached ]]"
 assert_true "! git -C $origin show-ref --verify --quiet refs/heads/chore/empty"
 unset 'expected[chore/empty]' 'expected[detached]'
 
+# test_changes_alone_need_second_confirmation
+out=$(print "" | wt-prune $wts 2>&1)
+out=$(print "$(num_of "$out" detached-dirty)\nn" | wt-prune $wts 2>&1)
+assert_contains "$out" "detached-dirty: 1 Änderung"
+assert_contains "$out" "      ?? x.txt"
+assert_contains "$out" "Abgebrochen, nichts gelöscht."
+assert_true "[[ -d $wts/detached-dirty ]]"
+
 # test_s_deletes_safe_only
+sha_same=$(git -C $wts/fix/merged-same rev-parse --short=12 HEAD)
 out=$(print s | wt-prune $wts 2>&1)
+assert_contains "$out" "  wiederherstellen: git -C $origin branch fix/merged-same $sha_same"
+assert_not_contains "$out" "branch fix/closed-same "
 assert_not_contains "$out" "Trotzdem löschen"
 for rel grp in ${(kv)expected}; do
   if [[ $grp == "Sicher löschbar" ]]; then
