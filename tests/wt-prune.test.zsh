@@ -248,6 +248,89 @@ assert_contains "$out" "  feat/offline  (origin-b, "
 out=$(wt-prune $tmp/empty-root </dev/null 2>&1)
 assert_contains "$out" "Keine Worktrees in $tmp/empty-root."
 
+# test_select
+assert_true '[[ "$(_wt_prune_select "1 3-4,s 3" 9 7 8 2>&1)" == "1 3 4 7 8" ]]'
+assert_true '[[ -z "$(_wt_prune_select "" 9 2>&1)" ]]'
+assert_true '[[ -z "$(_wt_prune_select s 9 2>&1)" ]]'
+for bad in x 0 10 4-2 3- -; assert_true "! _wt_prune_select '$bad' 9 >/dev/null 2>&1"
+
+# test_invalid_selection_deletes_nothing
+out=$(print "abc" | wt-prune $wts 2>&1); rc=$?
+assert_true "(( rc == 1 ))"
+assert_contains "$out" 'Ungültige Eingabe "abc". Erlaubt sind Nummern, Bereiche wie 3-9 und s. Nichts gelöscht.'
+for rel in ${(k)expected}; assert_true "[[ -d $wts/$rel ]]"
+
+# test_second_confirmation_n_keeps_work
+n=$(num_of "$out" feat/no-pr)
+out=$(print "$n\nn" | wt-prune $wts 2>&1)
+assert_contains "$out" "Diese Worktrees enthalten Arbeit, die nur hier liegt:"
+assert_contains "$out" "  $n  feat/no-pr: 1 Commit nur lokal"
+assert_contains "$out" "      $(git -C $wts/feat/no-pr log -1 --format='%h %s')"
+assert_contains "$out" "Trotzdem löschen? [y/N] "
+assert_contains "$out" "Abgebrochen, nichts gelöscht."
+assert_true "[[ -d $wts/feat/no-pr ]]"
+
+# test_second_confirmation_y_deletes_and_prints_restore
+sha=$(git -C $wts/feat/no-pr rev-parse --short=12 HEAD)
+out=$(print "$n\ny" | wt-prune $wts 2>&1)
+assert_contains "$out" "gelöscht: feat/no-pr"
+assert_contains "$out" "  wiederherstellen: git -C $origin branch feat/no-pr $sha"
+assert_true "[[ ! -e $wts/feat/no-pr ]]"
+assert_true "! git -C $origin show-ref --verify --quiet refs/heads/feat/no-pr"
+unset 'expected[feat/no-pr]'
+
+# test_no_local_work_needs_no_second_confirmation
+out=$(print "" | wt-prune $wts 2>&1)
+out=$(print "$(num_of "$out" chore/empty) $(num_of "$out" detached)" | wt-prune $wts 2>&1)
+assert_not_contains "$out" "Trotzdem löschen"
+assert_contains "$out" "gelöscht: chore/empty"
+assert_contains "$out" "gelöscht: detached"
+assert_not_contains "$out" "wiederherstellen"
+assert_true "[[ ! -e $wts/chore/empty && ! -e $wts/detached ]]"
+assert_true "! git -C $origin show-ref --verify --quiet refs/heads/chore/empty"
+unset 'expected[chore/empty]' 'expected[detached]'
+
+# test_s_deletes_safe_only
+out=$(print s | wt-prune $wts 2>&1)
+assert_not_contains "$out" "Trotzdem löschen"
+for rel grp in ${(kv)expected}; do
+  if [[ $grp == "Sicher löschbar" ]]; then
+    assert_contains "$out" "gelöscht: $rel"
+    assert_true "[[ ! -e $wts/$rel ]]"
+  else
+    assert_true "[[ -d $wts/$rel ]]"
+  fi
+done
+for b in fix/merged-same fix/merged-behind fix/merged-landed fix/closed-same fix/merged-leftovers feat/combo \
+    docs/only-merged fix/merged-gone-base; do
+  assert_true "! git -C $origin show-ref --verify --quiet refs/heads/$b"
+done
+assert_true "git -C $origin show-ref --verify --quiet refs/heads/fix/closed-more"
+assert_true "[[ ! -e $wts/docs && ! -e $wts/feat/combo && -d $wts/feat ]]"
+
+# test_yes_deletes_safe_without_prompt
+wts=$tmp/wts-yes
+mkwt feat/yes-merged feat/yes-merged 1;   pr feat/yes-merged feat/yes-merged 31 MERGED staging
+mkwt feat/yes-kept feat/yes-kept 1
+out=$(wt-prune --yes $wts </dev/null 2>&1)
+assert_contains "$out" "Lösche alle 1 sicheren Worktrees (insgesamt "
+assert_contains "$out" "gelöscht: feat/yes-merged"
+assert_not_contains "$out" "Welche löschen?"
+assert_not_contains "$out" "Trotzdem löschen"
+assert_true "[[ ! -e $wts/feat/yes-merged && -d $wts/feat/yes-kept ]]"
+
+# test_yes_without_safe
+out=$(wt-prune --yes $wts </dev/null 2>&1)
+assert_contains "$out" "Keine sicher löschbaren Worktrees."
+assert_true "[[ -d $wts/feat/yes-kept ]]"
+
+# test_empty_root_argument_uses_default
+wts=$tmp/home/code/merlin/worktrees
+mkwt feat/yes-default feat/yes-default 1; pr feat/yes-default feat/yes-default 32 MERGED staging
+out=$(HOME=$tmp/home wt-prune "" --yes </dev/null 2>&1)
+assert_contains "$out" "gelöscht: feat/yes-default"
+assert_true "[[ ! -e $wts/feat/yes-default ]]"
+
 # test_unknown_option_is_rejected
 out=$(wt-prune -y $wts </dev/null 2>&1)
 assert_true "(( $? == 2 ))"

@@ -120,6 +120,28 @@ function _wt_prune_base() {
   return 1
 }
 
+function _wt_prune_select() {
+  local answer=$1 tok
+  local -i count=$2 a b i
+  shift 2
+  local -a safe=($@) picked
+  for tok in ${(s:,:)${answer// /,}}; do
+    case $tok in
+      (s) picked+=($safe) ;;
+      (<->)
+        (( tok >= 1 && tok <= count )) || return 1
+        picked+=($tok) ;;
+      (<->-<->)
+        a=${tok%-*}
+        b=${tok#*-}
+        (( a >= 1 && a <= b && b <= count )) || return 1
+        for (( i = a; i <= b; i++ )); do picked+=($i); done ;;
+      (*) return 1 ;;
+    esac
+  done
+  print -- ${(nu)picked}
+}
+
 # Show all worktrees under the root in numbered groups with their sizes and ask which ones to delete.
 # With --yes, delete the group "Sicher löschbar" without the prompt.
 function wt-prune() {
@@ -137,9 +159,9 @@ function wt-prune() {
   done
   root=${${root:-$HOME/code/merlin/worktrees}:A}
 
-  local gitfile wt rel main branch slug out line base cherry changes prnote answer d
-  local -i g i n gi gc gk total ahead localonly nchanges ghfail now kb
-  local -a wts prs parts chg plus notes others files
+  local gitfile wt rel main branch slug out line base cherry changes prnote answer d sha name
+  local -i g i j n gi gc gk total ahead localonly nchanges ghfail now kb
+  local -a wts prs parts chg plus notes others files safe_idx sel risky logl
   local -aU repos
   local -a u_rels u_mains u_branches u_groups u_kbs u_locals u_changes u_texts o_idx
   local -a groups=("Sicher löschbar" "Ohne eigene Arbeit" "PR offen" "Eigene Commits" "Nicht committete Änderungen")
@@ -297,10 +319,92 @@ function wt-prune() {
   done
   (( $#others )) && print "Andere Ordner: ${(j:, :)others}"
 
-  print -n "Welche löschen? Nummern oder Bereiche wie 3-9, s für alle sicheren, Enter für keine: "
-  read answer
-  print "Abgebrochen, nichts gelöscht."
-  return 0
+  for (( i = 1; i <= $#o_idx; i++ )); do
+    (( u_groups[o_idx[i]] == 1 )) && safe_idx+=($i)
+  done
+
+  if (( yes )); then
+    if (( ! $#safe_idx )); then
+      print "Keine sicher löschbaren Worktrees."
+      return 0
+    fi
+    sel=($safe_idx)
+    gk=0
+    for i in $sel; do
+      (( gk += u_kbs[o_idx[i]] ))
+    done
+    print "Lösche alle $#sel sicheren Worktrees (insgesamt $(_wt_prune_size $gk))."
+  else
+    print -n "Welche löschen? Nummern oder Bereiche wie 3-9, s für alle sicheren, Enter für keine: "
+    read answer
+    if ! out=$(_wt_prune_select "$answer" $n $safe_idx); then
+      print "Ungültige Eingabe \"$answer\". Erlaubt sind Nummern, Bereiche wie 3-9 und s. Nichts gelöscht."
+      return 1
+    fi
+    sel=(${=out})
+    if (( ! $#sel )); then
+      print "Abgebrochen, nichts gelöscht."
+      return 0
+    fi
+
+    for i in $sel; do
+      j=$o_idx[i]
+      (( u_groups[j] != 1 && (u_locals[j] || u_changes[j]) )) && risky+=($i)
+    done
+    if (( $#risky )); then
+      print "Diese Worktrees enthalten Arbeit, die nur hier liegt:"
+      for i in $risky; do
+        j=$o_idx[i]
+        wt=$root/$u_rels[j]
+        notes=()
+        (( u_locals[j] == 1 )) && notes+="1 Commit nur lokal"
+        (( u_locals[j] > 1 )) && notes+="$u_locals[j] Commits nur lokal"
+        (( u_changes[j] == 1 )) && notes+="1 Änderung"
+        (( u_changes[j] > 1 )) && notes+="$u_changes[j] Änderungen"
+        printf '%4d  %s: %s\n' $i "$u_rels[j]" "${(j:, :)notes}"
+        logl=(${(f)"$(git -C $wt log --format='%h %s' HEAD --not --remotes -3)"})
+        chg=(${(f)"$(_wt_prune_changes $wt)"})
+        for line in $logl $chg[1,3]; do
+          print -r -- "      $line"
+        done
+      done
+      print -n "Trotzdem löschen? [y/N] "
+      read answer
+      if [[ $answer != [yY] ]]; then
+        print "Abgebrochen, nichts gelöscht."
+        return 0
+      fi
+    fi
+  fi
+
+  for i in $sel; do
+    j=$o_idx[i]
+    wt=$root/$u_rels[j]
+    main=$u_mains[j]
+    sha=$(git -C $wt rev-parse --short=12 HEAD)
+    if ! out=$(git -C $main worktree remove --force $wt 2>&1); then
+      print -u2 "Fehler: $u_rels[j]: $out"
+      continue
+    fi
+    if [[ -n $u_branches[j] ]]; then
+      git -C $main branch -D $u_branches[j] >/dev/null 2>&1 || print -u2 "Branch $u_branches[j] nicht gelöscht"
+    fi
+    git -C $main worktree prune
+    print "gelöscht: $u_rels[j]"
+    if (( u_groups[j] != 1 && u_locals[j] )); then
+      name=${u_branches[j]:-${u_rels[j]:t}}
+      print "  wiederherstellen: git -C $main branch $name $sha"
+    fi
+
+    d=${wt:h}
+    while [[ $d != $root ]]; do
+      files=($d/*(DN))
+      (( ${#${files:#*/.DS_Store}} )) && break
+      rm -f $d/.DS_Store
+      rmdir $d || break
+      d=${d:h}
+    done
+  done
 }
 
 alias tt=taskwarrior-tui
