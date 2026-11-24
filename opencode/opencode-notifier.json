@@ -3,6 +3,7 @@
   "notification": true,
   "notificationSystem": "ghostty",
   "suppressWhenFocused": false,
+  "deferCompleteUntilChildrenIdle": true,
   "events": {
     "subagent_complete": {
       "command": false
