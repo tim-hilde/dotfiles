@@ -1,5 +1,5 @@
 ---
-description: Erstellt einen GitHub PR und arbeitet das Codex-Review bis zum Approve ab
+description: Erstellt einen GitHub PR mit Beschreibung
 agent: build
 ---
 
@@ -74,12 +74,10 @@ One concise paragraph: what this changes for users/the system; any side effects,
 
 ## PR erstellen
 
+In einem Repo von Merlin-Digital-Solutions erstellst du den PR nach `PR-WORKFLOW.md` aus merlin-ci (`gh api repos/Merlin-Digital-Solutions/merlin-ci/contents/PR-WORKFLOW.md --jq .content | base64 -d`), nicht mit dem Befehl unten.
+
 ```bash
 gh pr create --base <target> --head $ARGUMENTS --title "<conventional-commit-title>" --body "<pr-beschreibung>"
 ```
 
 Anschließend den PR im Browser öffnen
-
-## Codex-Review abarbeiten (nur Merlin-Digital-Solutions)
-
-Nutze den `check-codex-review` skill.

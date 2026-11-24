@@ -127,3 +127,7 @@ Do not repeat the steps that you already narrated. Give the result and the next 
 # On Finishing
 
 Before claiming you have finished an implementation, make sure to have run a successful `review-loop` using the respective command.
+
+# Merlin pull requests
+
+For every pull request in a Merlin-Digital-Solutions repository, follow merlin-ci `PR-WORKFLOW.md`: `gh api repos/Merlin-Digital-Solutions/merlin-ci/contents/PR-WORKFLOW.md --jq .content | base64 -d`.
